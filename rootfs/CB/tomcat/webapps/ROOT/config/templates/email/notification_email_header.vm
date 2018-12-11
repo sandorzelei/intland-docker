@@ -1,0 +1,418 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<style type="text/css">
+
+body, td, th, p {
+	background-color: #ffffff;
+	font-family: 'arial', 'helvetica', 'verdana';
+	font-size: 12px;
+	color: #2b2b2b;
+}
+
+body {
+	padding: 20px;
+}
+
+a {
+	color: #0093B8;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+img {
+	border: none;
+}
+
+.project-style, .admin-style, .document-style, .tracker-style {
+	color: black;
+	background-color: white;
+	font-weight: bold;
+	text-align: left;
+	white-space: nowrap;
+	padding: 0px 4px 0px 4px;	/* top right bottom left */
+}
+
+div.heading, div.separator {
+	border-bottom: solid 1px #d1d1d1;
+	font-weight:bold;
+	font-size: 14px;
+	color: #2b2b2b;
+	padding-bottom: 8px;
+	margin-bottom: 6px;
+}
+div.separator {
+	margin-top: 18px;
+	margin-bottom: 10px;
+}
+
+div.account {
+	font-weight: normal;
+	font-size: 11px;
+	color: #2b2b2b;
+	margin-bottom: 20px;
+}
+
+div.emailPart, pre.commitmessage {
+	border: solid 1px #d1d1d1;
+	padding: 8px;
+	margin: 8px 0;
+}
+
+h3.partHeader {
+	font-size: 14px;
+	font-weight: bold;
+	color: #2b2b2b;
+	margin: 20px 0 8px 0;
+	padding: 0;
+}
+
+div.footer {
+	margin-top: 30px;
+	font-size:11px;
+	line-height: 18px;
+	padding: 8px;
+	background-color: #f5f5f5;
+	border: solid 1px #d1d1d1;
+	color: #858585
+}
+div.footer * {
+	font-size: 11px;
+}
+p.emailReplyHint {
+	font-size: 11px;
+	color: #858585;
+	background-color: transparent;
+	margin:0;
+	padding:0;
+}
+
+#*
+special css class is used for tables added by emails to avoid changing the look of other tables
+like tables in wikis
+*#
+
+table.emailTable {
+	border: none;
+	border-collapse: collapse;
+	margin:0;
+	padding: 0;
+}
+
+table.emailTable >thead tr {
+	border-bottom: solid 1px #d1d1d1;
+}
+
+table.emailTable th {
+	font-weight: bold;
+}
+
+table.emailTable >tbody >tr {
+	 border-top: 1px solid #F5F5F5;
+	 vertical-align: top;
+}
+
+table.emailTable >tbody >tr.firstRow {
+	border-top: none;
+}
+
+table.emailTable >thead >tr >td, table.emailTable >tbody >tr >td,
+table.emailTable >thead >tr >th, table.emailTable >tbody >tr >th
+##, table.emailTable td, table.emailTable th
+{
+	padding: 8px 20px 8px 0 !important;
+	text-align: left;
+}
+
+table.emailTable tr.odd {
+}
+
+table.emailTable tr.even {
+}
+
+.numberData {
+	white-space: nowrap;
+	text-align: left;
+	/* top right bottom left */
+	padding: 0px 4px 0px 4px;
+}
+
+.textData {
+	text-align: left;
+	/* top right bottom left */
+	padding: 0px 4px 0px 4px;
+}
+
+.textField {
+	white-space: nowrap;
+	text-align: right;
+	/* top right bottom left */
+	padding: 0px 4px 0px 4px;
+}
+
+.closedItem {
+	text-decoration: line-through;
+}
+
+pre.wiki {
+	white-space: pre;
+	margin: 1em 2em 1em 2em;
+	background-color: #fafafa;
+	border: 1px dotted #3c78b5;
+	font-family: 'Courier';
+	font-size: 12px;
+	color: #2b2b2b;
+	border: 1px dotted #d1d1d1;
+	padding: 10px;
+}
+
+span.wiki-error {
+	background: #FFDDDD;
+}
+
+ul.commitProperties {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+
+ul.commitProperties li {
+	margin: 0 0 4px 0;
+}
+
+.scmChangeType {
+	margin: 0 3px 0 0;
+}
+
+div.added .scmChangeType {
+	color: #00A65D;
+}
+
+div.deleted .scmChangeType {
+	color: #B21317;
+}
+
+div.modified .scmChangeType {
+	color: #d9923b;
+}
+
+.changeFileBox  {
+	display: inline-block;
+	text-align: right;
+	min-width: 60px;
+}
+
+span.linesadded {
+	color: #00a85d;
+	margin-left: 5px;
+}
+
+span.linesdeleted {
+	color: #b31317;
+}
+
+span.highlight {
+	background-color: #FFFFCC;
+	color: #FF0000;
+	font-weight: bold;
+}
+
+div.comment-box {
+	background-color: #CCF4FF;
+	border: none;
+	padding: 8px;
+	margin-bottom: 20px;
+	font-size: 11px;
+	color: #2B2B2B;
+}
+
+div.information, div.warning, div.error,
+span.information, span.warning, span.error {
+	display: block;
+	padding: 1.5em 1em 1.5em 1em;
+	margin: 1em .5em;
+}
+
+div.information,
+span.information {
+	background-color: #D8E4F1;
+	border: 1px solid #3C78B5;
+}
+
+div.warning,
+span.warning {
+	background-color: #FFFFCE;
+	border: 1px solid #F0C000;
+}
+
+div.error,
+span.error {
+	background-color: #FFCCCC;
+	border: 1px solid #CC0000;
+}
+
+span.approvedStep {
+	padding: 1px;
+	color: #FFF;
+	background: #009900;
+}
+
+span.rejectedStep {
+	padding: 1px;
+	color: #FFF;
+	background: #AA0000;
+}
+
+pre.commitmessage {
+	font-family: 'arial', 'helvetica', 'verdana'; /* even if it's preformatted, no reason to use monospace font */
+}
+
+table.changeset {
+	border:none;
+}
+table.changeset td {
+	margin:0;
+	padding:0 !important;
+	border:none;
+	white-space: nowrap;
+}
+
+table.changeset tr {
+	border: 0px;
+}
+
+table.changeset >tbody >tr {
+	 border-top: 0px !important;
+}
+
+table.changeset >tbody >tr >td {
+	padding: 0px !important;
+}
+
+table.diff td {
+	font-family: monospace;
+	white-space: nowrap;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+table.diff td.diff-annotation {
+	font-size: smaller;
+	color: #858585;
+	background-color: #FFFFFF;
+}
+
+.diff-added, table.diff td.diff-added {
+	background-color: #ccffe8;
+	border-left: 1px solid #ccffe8;
+	border-right: 1px solid #ccffe8;
+}
+
+.diff-deleted, table.diff td.diff-deleted {
+	background-color: #ffe8e9;
+	border-left: 1px solid #ffe8e9;
+	border-right: 1px solid #ffe8e9;
+}
+
+.diff-added-inline {
+	background-color: #93f5c9;
+}
+
+.diff-deleted-inline {
+	background-color: #ffb5b8;
+}
+
+.diff-selected {
+	border-left: solid 3px blue !important;
+}
+
+.diff-unchanged {
+	background-color: #fff;
+}
+
+blockquote {
+	margin: 1em 0.5em 1em 2em;
+	padding-left: 15px;
+	border-left: 2px solid #ccc;
+}
+
+.trackerItemNotificationReason b {
+	font-weight: normal !important;
+}
+
+li {
+	line-height: 22px;
+}
+
+ul ul, ol ul {
+	list-style-type: disc;
+}
+
+li ul , li ol{
+	padding-left: 16px;
+	line-height: 18px;
+}
+
+table.wikitable {
+	border: 0;
+	background: #e5e5e5;
+	border-spacing: 1px;
+	border-collapse: separate;
+}
+
+table.wikitable th {
+	background: #f5f5f5;
+	font-weight: bold;
+}
+
+table.wikitable th, table.wikitable td {
+	border: 0;
+	color: #2b2b2b;
+	padding: 5px;
+}
+
+table.wikitable tr {
+	background: #FFF;
+}
+.referenceSettingBadge {
+    color: white !important;
+    padding: 1px 3px;
+    font-weight: bold !important;
+    border-radius: 2px;
+    font-size: 11px;
+    margin: 0 0.2em;
+    white-space: nowrap;
+    cursor: default;
+
+}
+
+.versionSettingBadge {
+    background-color: #7388AB;
+}
+
+.psSettingBadge {
+    background-color: #C6D8F2;
+    text-transform: uppercase;
+}
+
+.psSettingBadge.active {
+    background-color: #b31317;
+    cursor: pointer;
+}
+
+.tooltip-marker {
+	display: inline-block;
+	margin-right: 5px;
+}
+.tooltip-marker + a {
+	vertical-align: top;
+}
+
+</style>
+</head>
+
+<body>

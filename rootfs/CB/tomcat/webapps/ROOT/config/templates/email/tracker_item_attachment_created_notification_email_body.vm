@@ -1,0 +1,23 @@
+#parse("notification_email_header.vm")
+
+#define($footerText) 
+#trackerItemReason(${trackerItem})
+#end
+
+<div class="heading">
+${textFormatter.getMessage('attachment.created.title')} #linkTrackerItem(${trackerItem})
+</div>
+
+#account(${originator})
+
+#partHeader("${textFormatter.getMessage('comment.description.label')}") 
+#partStart() $textFormatter.format(${attachment.description}, ${attachment.descriptionFormat}, ${wikiContext}) #partEnd()
+
+#partHeader("${textFormatter.getMessage('attachments.label')}") <ul>
+#foreach($attachment in ${attachments})
+	<li>
+	<a href="${cbBaseUrl}/displayDocument/${textFormatter.encodeURL(${attachment.dto.name})}?task_id=${attachment.trackerItem.id}&artifact_id=${attachment.id}">${attachment.dto.name}</a>
+	</li>
+#end
+</ul>
+#parse("notification_email_footer.vm")

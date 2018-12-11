@@ -1,0 +1,396 @@
+
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+.jstree-grid-header {
+	background-color: white !important;
+	border: none;
+	border-bottom: 1px solid;
+	color: #858585 !important;
+	padding: 1px 2px;
+	width: 100%;
+	position: relative;
+}
+
+.jstree-grid-cell-last {
+	padding-right: 5px;
+}
+
+.wideProgressBar {
+	width: 100%;
+}
+
+#filterForm select {
+	margin-right: 5px;
+	max-width: 300px;
+}
+
+.ui-layout-center {
+	overflow-x: hidden;
+}
+
+.ui-layout-pane {
+	border: none;
+}
+
+div.jstree-grid-header-regular {
+	padding: 0px 2px !important;
+	text-align: center;
+}
+
+.jstree li {
+	line-height: 1em;
+}
+
+.totalColumn {
+	margin-left: -8px !important;
+	text-align: center;
+}
+.totalColumn span {
+	padding-right: 10px;
+}
+
+/**
+ * ensuring that the elements in the coverage browser has the same height
+ */
+#coverageTree .jstree-grid-col-0 {
+	margin: 1px;
+}
+
+#coverageTree .jstree-grid-cell {
+	margin: 1px ;
+	height: 20px;
+	line-height: 16px;
+}
+
+#coverageTree .miniprogressbar {
+	height: 16px;
+}
+
+#coverageTree li {
+	cursor: pointer;
+	margin-top: 1px;
+}
+
+/**
+ * fixing the header look in the coverage browser
+ */
+.newskin .jstree-grid-separator {
+	height: 21px;
+	visibility: hidden;
+}
+
+.newskin div.jstree-grid-header-regular {
+	padding-top: 4px !important;
+	line-height: 21px;
+}
+
+#filters {
+	height: auto !important;
+	min-height: 26px;
+}
+
+/* style of the input box in the header */
+#filterBox {
+    padding: 10px;
+    padding-bottom: 0px;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+#filterBox * {
+	float:none;
+}
+#filterBox input {
+	width: auto;
+	height: 1em !important;
+}
+#filterBox input[type="checkbox"] {
+	padding: 0;
+}
+#searchAll {
+	vertical-align: text-bottom;
+	margin: 0 5px 0 5px;
+}
+
+.showResizable {
+	visibility: visible !important;
+	position: absolute;
+	z-index: 9999;
+}
+
+.firstHeader {
+	min-width: 280px;
+}
+
+.jstree .jstree-search {
+	background-color: transparent;
+}
+
+
+.ui-multiselect-menu li.testRunResultTablet {
+	display: block;
+	&.testRunPassed {
+		background: #00a85d;
+	}
+
+	&.testRunPartly_passed {
+		background: #00BF6A;	/* slightly lighter green than passed */
+	}
+
+	&.testRunFailed {
+		background: #b31317;
+	}
+
+	&.testRunBlocked {
+		background: #777777;
+	}
+
+	&.testRunNotrun {
+		background: #ffd9ab !important;
+	}
+}
+
+.tableItem .calendarAnchorLink {
+	margin-right: 10px;
+}
+
+h3 .filter-warning {
+	text-transform: none;
+	color: red;
+}
+
+.stats-table {
+	td {
+		padding: 6px 5px;
+	    vertical-align: middle;
+	    text-align: center;
+	    border: 1px solid #f5f5f5;
+
+	    &.row-label {
+	    	text-align: left;
+	    }
+	}
+
+	thead td {
+		text-transform: uppercase;
+    	color: white;
+    	font-weight: bold;
+    	font-size: 11px;
+
+    	&.total {
+    		color: black;
+    	}
+	}
+}
+
+.analysisHeader, .analysisColumn {
+	width: 25%;
+	min-width: 150px;
+
+	&:noRuns {
+		width: 35%;
+	}
+}
+
+.runAt {
+	width: 8% !important;
+	min-width: 70px;
+}
+
+.last10ResultsColumn {
+	min-width: 185px;
+	width: 9% !important;
+}
+
+a.resultBox {
+	min-width: 10px;
+	width: 11px;
+	height: 12px;
+	margin-right: 4px;
+
+	&:hover {
+		background-position: 7px 0px;
+	}
+}
+
+.newskin .propertyTable .tableItem {
+	height: 25px;
+}
+
+.block-hint {
+	margin: 5px;
+}
+
+.newskin button.ui-multiselect {
+	max-width: 225px;
+}
+
+.form-box {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 40px;
+}
+
+/* hides the optgroup clearing buttons for single select lists */
+.ui-multiselect-single .optgroup-clearer {
+	display: none;
+}
+
+li.non-matching-striked > a.jstree-anchor {
+	text-decoration: line-through;
+
+	&:hover {
+		text-decoration: line-through underline;
+	}
+}
+
+tr.subtotal {
+	background-color: #f5f5f5;
+}
+
+.newskin .ui-multiselect-menu.ui-widget {
+	max-width: 400px;
+}
+
+.newskin .ui-multiselect-menu div.filter.option-filter .ui-icon {
+	right: auto;
+}
+
+.newskin .ui-multiselect-single div.filter.option-filter input {
+	width: 85%;
+}
+
+.newskin .ui-multiselect-single div.filter.option-filter .ui-icon {
+	right: 0;
+}
+
+.newskin .ui-multiselect-menu .ui-multiselect-header {
+	display: block;
+
+	.ui-helper-reset  {
+		display: none;
+	}
+
+	.clear-all {
+		display: block;
+		cursor: pointer;
+        margin: 5px;
+        list-style: none;
+    }
+}
+
+.jstree-grid-column {
+	padding: 10px;
+}
+
+.jstree-grid-column .testRunResultTablet {
+	margin-bottom: 3px;
+	height: 14px;
+	padding: 2px 3px;
+}
+
+.jstree-grid-wrapper {
+	border-top: 1px solid silver;
+}
+
+div.jstree-grid-cell-root-coverageTree {
+	height: 21px;
+	overflow: visible !important;
+}
+
+#coverageTree li {
+	min-height: 21px;
+}
+
+.chooseReferences {
+	border: solid 1px #d1d1d1;
+	border-collapse: separate;
+}
+
+#coverageTree .matching-node .firstColumn .itemUrl {
+    background-color: #ffeea0;
+    border: none;
+    border-radius: 3px;
+    margin: 0 0 1px 0;
+    padding: 2px 7px 2px 3px;
+    margin-left: -3px;
+}
+
+#coverageTree .firstColumn .itemUrl.branchItem {
+    color: #187a6d;
+}
+
+.itemUrl .icon {
+	vertical-align: middle;
+}
+
+#coverageTree {
+	width: 100%;
+
+	tr:hover {
+	    background-color: #f5f5f5;
+	}
+
+	thead td {
+		color: #858585;
+		text-align: center;
+		padding: 8px 0px;
+	}
+
+	.firstHeader .ui-resizable-handle.ui-resizable-e {
+		background-color: #d0d0d0;
+	    width: 2px;
+	    cursor: ew-resize;
+	}
+
+	/* this css snippet makes the first column resizing smooth */
+	.firstColumn {
+		white-space: nowrap;
+	    overflow-x: hidden;
+	    text-overflow: ellipsis;
+	    display: block;
+    }
+
+    .coverageColumn {
+    	text-align: center;
+    }
+
+    .colorColumn {
+    	text-align: center;
+    }
+
+}
+
+.highlight-editor {
+	cursor: pointer;
+}
+
+div.referring-trackers {
+  	button.ui-multiselect {
+            /* somehow the multiselect is positioned badly: to the center ???: the 25% width makes that look nicer as the control is not that wide... */
+		    width: 25%;
+		    max-width: 25%;
+		    padding: 6px;
+	}
+
+	td.tableItem {
+		width: 100%;
+	}
+}
+
+.ui-multiselect-menu li.branchTracker.top-level {
+    padding-left: 2px !important;
+}
+
+.ui-multiselect-menu {
+    overflow: hidden;
+}

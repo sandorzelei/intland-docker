@@ -1,0 +1,28 @@
+#parse("notification_email_header.vm")
+
+#partHeader("${textFormatter.getMessage('customer.label')}")
+
+#parse("user_data_notification_email_body.vm")
+
+#partHeader("${textFormatter.getMessage('sysadmin.license.label')}")
+
+#tableOpen()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('sysadmin.license.product')}")
+	#tdText($textFormatter.escape($installed.toString()))
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('sysadmin.license.hostid')}")
+	#tdText($hostId)
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('sysadmin.license.validUntil')}")
+	#tdText($textFormatter.formatDate($user, $validUntil))
+#trClose()
+
+#tableClose()
+
+#parse("notification_email_footer.vm")

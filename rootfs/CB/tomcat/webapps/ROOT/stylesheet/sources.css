@@ -1,0 +1,91 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ *
+ * $Revision$ $Date$
+ */
+
+TD.head {
+	color: white;
+	font-size: 9pt;
+}
+
+TD.compact {
+	font-size: 70%;
+}
+
+PRE.logmessage {
+	color:black;
+	background-color: #CCCC99;
+	font-size: 8pt;
+}
+
+.editor {
+	font-family:Courier New,Courier;
+	font-size: 8pt;
+}
+
+.editor_bold {
+	font-family: Courier New,Courier;
+	font-weight: bold;
+}
+
+.editor_focus_symbol {
+	font-family: Courier New,Courier;
+	font-size: 8pt;
+	font-weight: bold;
+	background: #FFD633;
+	color: red;
+}
+
+A.trackerlink {
+	font-family: Courier,Courier New;
+	background: red;
+	color: white; font-size: 8pt;
+	text-decoration:underline;
+}
+
+/* Editor highlighting. */
+SPAN.selection {
+	font-family: Courier New,Courier;
+	font-size: 8pt;
+	background: #FFD633;
+	/* display selected as a block to paint the complete line */
+	display: block;
+}
+
+SPAN.rem {
+	color: #009900;
+	font-weight: normal;
+}
+
+SPAN.string {
+	color: purple;
+	font-weight: normal;
+}
+
+SPAN.cursor {
+	color: black;
+	background: #FFD633;
+	font-weight: normal;
+}
+
+SPAN.key {
+	color: #0000FF;
+	font-weight: bold;
+}
+
+PRE.diff {
+	font-family:Helvetica,Arial,sans-serif;
+	font-size: 8pt;
+}
+
+
+

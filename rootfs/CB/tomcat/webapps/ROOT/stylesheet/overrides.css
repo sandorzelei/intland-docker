@@ -1,0 +1,9 @@
+/**
+ * Custom CSS overrides for Lufthansa.
+ *
+ */
+
+/* project.css/summary.css/workspace.css */
+table.CBwikiTable th, .projectModule th, .workspaceModule th {
+	background-color: #0F7ACC !important;
+}

@@ -1,0 +1,39 @@
+#wikiBoxOpen(${command})
+	#wikiBoxTitle("$!{command.title}", "#if(${release})${release.name}#end ${textFormatter.getMessage('cmdb.release.stats.remaining.time.title')}")
+	<table class="embedded">
+		<tbody>
+			#trOpen
+				#if(${daysRemaining})
+					<td class="indicator">
+						#if(${daysRemaining} >= 0)
+							#if(${daysRemaining} > 1)
+								$textFormatter.getMessage('cmdb.release.stats.remaining.time.days.until.end.plural', ${daysRemaining}, $textFormatter.getMessage($dayTypeKey), ${releaseName})
+							#else
+								$textFormatter.getMessage('cmdb.release.stats.remaining.time.days.until.end', ${daysRemaining}, $textFormatter.getMessage($dayTypeKey), ${releaseName})
+							#end
+						#else
+							#set($daysRemaining = 0 - $daysRemaining)
+							#if(${daysRemaining} > 1)
+								$textFormatter.getMessage('cmdb.release.stats.remaining.time.days.after.end.plural', ${daysRemaining}, $textFormatter.getMessage($dayTypeKey), ${releaseName})
+							#else
+								$textFormatter.getMessage('cmdb.release.stats.remaining.time.days.after.end', ${daysRemaining}, $textFormatter.getMessage($dayTypeKey), ${releaseName})
+							#end
+						#end
+					</td>
+				#else
+					<td>
+						#if(${release})
+							#if(${release.endDate})
+								${textFormatter.getMessage('cmdb.release.stats.remaining.time.not.available')}
+							#else
+								$textFormatter.getMessage('cmdb.release.stats.remaining.time.release.date.not.set', "#linkReferableDto($release)")
+							#end
+						#else
+							${textFormatter.getMessage('cmdb.release.stats.burndown.chart.not.sprint')}
+						#end
+					</td>
+				#end
+			#trClose
+		</tbody>
+	</table>
+#wikiBoxClose()

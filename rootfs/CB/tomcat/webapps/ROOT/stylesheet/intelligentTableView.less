@@ -1,0 +1,159 @@
+/**
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+.levelsTable {
+	.fieldControlLabel {
+		vertical-align: top;
+		padding-top: 16px;
+		padding-right: 10px;
+		text-align: right;
+	}
+
+	.initialTrackers .trackerEntity {
+		border: none;
+		background: none;
+	}
+
+	.directionTr {
+		.directionTrLabel {
+			text-align: right;
+			padding: 10px 10px 0 5px;
+		}
+		.directionControl {
+			padding-top: 10px;
+			input {
+				position: relative;
+				top: 1px;
+			}
+			label {
+				margin: 0 10px 0 0;
+			}
+		}
+	}
+}
+
+.fieldControl {
+	margin-bottom: 1.5em;
+	padding: 1px 0;
+	width: 100%;
+	margin-top: 3px;
+	.fieldControlTable {
+		td.entities {
+			.controlContainer {
+				width: 100%;
+				padding: 1px 0;
+				min-height: 26px;
+				margin-bottom: 0;
+				.entityContainer {
+					margin: 3px 3px 1px 0;
+					&.placeholderContainer {
+						border: none;
+						padding: 0;
+						margin: 3px 0 1px 0;
+					}
+					white-space: nowrap;
+					.issueHandle {
+						cursor: move;
+						width: 10px;
+						display: inline-block;
+						height: 100%;
+						background: url("../images/newskin/action/dragbar-dark.png") 3px center no-repeat;
+						background-color: #d1d1d1;
+						margin-right: 0.5em;
+					}
+				}
+			}
+			.addFieldButton {
+				display: inline-block;
+				color: #0093b8;
+				cursor: pointer;
+				position: relative;
+				top: -5px;
+				margin-left: 0.5em;
+				line-height: 0;
+				margin-top: 20px;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
+
+.trackerItems {
+	.levelHeaderCell {
+		padding: 0 5px !important;
+		font-size: 11px !important;
+		font-weight: bold !important;
+		border: none !important;
+	}
+
+	.trackerItems.innerTable {
+		border: 1px solid #d5d5d5;
+		background-color: white;
+	}
+
+	td.withInnerTable {
+		padding: 10px 10px 10px 50px !important;
+		background-color: #fafafa;
+		&:hover {
+			background-color: #f5f5f5;
+		}
+	}
+
+	.innerTable {
+		width: auto;
+	}
+
+	td.referenceType {
+		text-align: center !important;
+	}
+
+	th.referenceHeaderCell {
+		font-size: 10px !important;
+		font-weight: bold !important;
+		text-align: center !important;
+		padding-top: 9px !important;
+	}
+}
+
+#addFieldSelector {
+	display: none;
+}
+
+button.filterSelector {
+	display: none;
+}
+
+.ui-multiselect-menu.filterSelector {
+	.ui-multiselect-filter input {
+		margin: 0;
+	}
+	.ui-multiselect-optgroup {
+		padding: 0;
+		a {
+			border-bottom: 1px solid #d1d1d1;
+		}
+	}
+	.ui-multiselect-checkboxes li {
+		padding-left: 10px;
+		label {
+			cursor: pointer;
+		}
+		&:hover {
+			background-color: #eeeeee !important;
+		}
+		input {
+			display: none;
+		}
+	}
+}

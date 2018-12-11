@@ -1,0 +1,32 @@
+#if ($projectSelector)
+	${projectSelector}
+#end
+
+<div class="form-field">
+	<label for="${fieldName}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+	<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end multiple="multiple">
+	</select>
+
+	<script type="text/javascript" src="${trackerEditorJsUrl}"></script>
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			#if ($isMultipleChoiceAllowed)
+				codebeamer.dashboard.multiSelect.init("${selectorId}", "trackerSelector:tracker:changed");
+			#else
+				codebeamer.dashboard.multiSelect.initSingleSelect("${selectorId}", "trackerSelector:tracker:changed");
+			#end
+
+			var selectedProject = $("select[name='params[projectId]'] option:selected").val();
+			if (selectedProject !== undefined && selectedProject != null) {
+				codebeamer.dashboard.groupedTrackerEditor.getTrackers(selectedProject, "${groupedTrackerUrl}", "${selectorId}", [${selectedTrackers}]);
+			}
+			
+			codebeamer.dashboard.multiSelect.attachEventListener("projectSelector:project:changed", function(projectId) {
+				codebeamer.dashboard.groupedTrackerEditor.getTrackers(projectId, "${groupedTrackerUrl}", "${selectorId}");
+			});
+		});
+	</script>
+
+</div>

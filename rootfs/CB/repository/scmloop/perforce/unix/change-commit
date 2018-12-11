@@ -1,0 +1,4 @@
+#!/bin/sh
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+# This is the change-content trigger hook
+exec "/your_install_dir/scmloop/scmloop" -scmType perforce -mode post_receive -background "$@"

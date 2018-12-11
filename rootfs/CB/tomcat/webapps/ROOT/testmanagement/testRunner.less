@@ -1,0 +1,729 @@
+
+.popupBody {
+	padding-top: 5px;
+}
+
+.newskin .infobar {
+	background-color: #5f5f5f;
+	padding: 20px;
+	padding-bottom: 10px;
+	font-family: arial;
+	font-size: 11px !important;
+	color: #f5f5f5;
+}
+
+.newskin .infobar a {
+	font-size: 11px !important;
+	font-weight: bold;
+	color: #f5f5f5;
+}
+
+.progressSection {
+	width: 100%;
+}
+
+.progressSection .subtext {
+	font-size: 14px !important;
+	font-weight: bold;
+	color: #f5f5f5;
+}
+
+.progressSection label {
+	font-size: 13px !important;
+	font-weight: bold;
+}
+
+#totalRunTimeContainer {
+	float: right;
+}
+
+#totalRunTimeContainer label {
+	padding-left: 25px;
+	font-size: 12px !important;
+	font-weight: normal !important;
+}
+
+#totalTime {
+	display: inline-block;
+	width: 8em;
+}
+
+.miniprogressbar {
+	width: 33%;
+	height: 20px !important;
+}
+
+.miniprogressbar label {
+	padding-top: 5px;
+	font-family: arial;
+	font-size: 12px !important;
+	color: black;
+}
+
+#inforRow {
+	margin-top: 5px;
+}
+
+#pauseTitleStepper {
+	height: auto;
+	min-height: 40px;
+	vertical-align: middle;
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #ababab;
+}
+
+#ptsTable {
+	width: 100%;
+}
+
+#timer {
+	display: inline;
+	padding-left: 8px;
+	font-family: arial;
+	font-size: 18px !important;
+	font-weight: bold;
+	color: #2b2b2b;
+}
+
+#pauseTd {
+	width: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.pauseButton img, .continueButton img {
+	margin-left: 20px;
+}
+
+/* hide buttons when timer is suspended */
+.timerSuspended .pauseButton, .timerSuspended .actionBar button, .continueButton {
+	display: none;
+}
+
+.timerSuspended #passMore, .timerSuspended #failMore, .timerSuspended #blockMore {
+	display: none;
+}
+
+.timerSuspended .continueButton {
+	display: inline !important;
+	vertical-align: middle;
+}
+
+.timerSuspended .continueButton span {
+	color: #2b2b2b;
+}
+
+#timerTd {
+	width: 170px;
+}
+
+#summaryTd {
+	text-align: center;
+
+	h2 {
+		a {
+			font-family: arial;
+			font-size: 18px !important;
+			font-weight: bold;
+			margin-left: 5px;
+	   }
+	   a.pathItem, span.pathItem {
+			font-size: 10px !important;
+			margin-left: 0px;
+	   }
+
+       .versionSettingBadge {
+       		position: relative;
+       		top: -2px;
+       		font-size: 10px !important;
+       }
+    }
+}
+
+#stepperTd {
+	width: 200px;
+	text-align: right;
+	padding-right: 15px;
+}
+
+/* Test case navigation */
+.navigationLinks {
+	white-space:nowrap;
+
+	* {
+		vertical-align: middle;
+	}
+	div {
+		padding: 0 10px;
+		display: inline;
+	}
+	img {
+		margin: 0 10px;
+		background-repeat: no-repeat;
+	}
+
+	/* control_start_blue.png*/
+	#first img {
+		background-image: url('../images/newskin/action/testrunner-testcase-first-a.png');
+		width: 12px; height:12px;
+	}
+	/* control_play_back_blue.png*/
+	#prev img {
+		background-image: url('../images/newskin/action/testrunner-testcase-prev-a.png');
+		width: 10px; height:10px;
+	}
+	/* control_play_blue.png*/
+	#next img {
+		background-image: url('../images/newskin/action/testrunner-testcase-next-a.png');
+		width: 9px; height:10px;
+	}
+	/* control_end_blue.png*/
+	#last img {
+		background-image: url('../images/newskin/action/testrunner-testcase-last-a.png');
+		width: 12px; height:12px;
+	}
+
+	.navDisabled {
+		cursor: default;
+	}
+
+	/* control_start_disabled.png*/
+	#first.navDisabled img {
+		background-image: url('../images/newskin/action/testrunner-testcase-first-b.png');
+	}
+	/* control_play_back_disabled.png*/
+	#prev.navDisabled img {
+		background-image: url('../images/newskin/action/testrunner-testcase-prev-b.png');
+	}
+	/* control_play_disabled.png*/
+	#next.navDisabled img {
+		background-image: url('../images/newskin/action/testrunner-testcase-next-b.png');
+	}
+	/* control_end_disabled.png*/
+	#last.navDisabled img {
+		background-image: url('../images/newskin/action/testrunner-testcase-last-b.png');
+	}
+}
+
+.description, #preAction .wikiContent, #postAction .wikiContent {
+	display: block;
+	padding: 5px;
+	overflow: auto;
+}
+
+.contentWithMargins {
+	margin-top: 10px !important;
+	margin-left: 20px !important;
+	margin-right: 20px !important;
+}
+
+#description, #preAction, #testSteps, #postAction, #conclusionRow {
+	label.subtitle {
+		font-family: arial;
+		font-size: 18px !important;
+		color: #2b2b2b;
+		margin-bottom: 0px;
+	}
+}
+
+#testSteps {
+	padding-top: 22px;
+}
+
+#preAction .wikiContent, #testSteps .wikiContent, #postAction .wikiContent {
+	padding-top: 0px;
+	overflow: auto;
+	display: block;
+}
+
+#testStepsTable {
+	width: 100% !important;
+
+
+
+	> thead > tr > th {
+		padding: 5px;
+		text-align: left;
+	}
+
+	> thead > tr > th:nth-of-type(1),
+	th.criticalColumnHeader {
+		padding-left: 20px !important;
+	}
+
+	th.criticalColumnHeader {
+		text-align: center;
+	}
+
+	th.expectedResultColumnHeader {
+		padding-left: 20px;
+	}
+
+	> tbody > tr > td {
+	  padding-top: 5px;
+	  padding-bottom: 5px;
+	  cursor: pointer;
+    }
+
+    td.actionColumn {
+		border-right: 1px solid #f5f5f5;
+		padding-right: 20px;
+	}
+
+	td.expectedResultColumn {
+		padding-left: 20px;
+	}
+
+	.criticalColumn {
+		text-align: center;
+	}
+
+	.firstColumn {
+		padding-left: 15px;
+		background-position: 5px 5px;
+		background-repeat: no-repeat;
+		min-width: 30px;
+
+		position: relative;
+	}
+
+	&.criticalColumnHidden {
+		th.firstColumn {
+			width: 16px !important;
+			min-width: 16px !important;
+		}
+	}
+
+	.stepPASSED .firstColumn {
+		background-image: url("../images/newskin/action/testrun-ok.png");
+	}
+
+	.stepFAILED .firstColumn {
+		background-image: url("../images/newskin/action/testrun-fail.png");
+	}
+
+	.stepBLOCKED .firstColumn {
+		background-image: url("../images/newskin/action/testrun-block.png");
+	}
+
+	.textData {
+		white-space: normal;
+		word-wrap: break-word;
+	}
+
+	td.actualResult {
+		width: 32%;
+	}
+
+	.currentStepIndicator {
+		width: 16px;
+		height: 16px;
+		visibility: hidden;
+		float:right;
+		position: absolute;
+		left: -18px;
+		top: 20px;
+	}
+	.currentStep .currentStepIndicator {
+		background-image: url(../images/newskin/action/testrun-running.png);
+		background-position: 0 0;
+		background-repeat: no-repeat;
+		visibility: visible;
+	}
+
+	.imagePasteAwareEditor {
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	/* move the #1 test step indexes to a bit left */
+	> tbody > tr:not(.empty) td:first-child:before {
+		left: -5px;
+	}
+
+}
+
+
+td.actualResult {
+	textarea, input {
+		display: none;
+	}
+	.editor-wrapper {
+		cursor: auto;
+	}
+}
+
+tr.currentStep {
+	> td {
+		background-color: #ffffee !important;
+	}
+
+	td.actualResult {
+		div.resultsContainer {
+			width: 372px;
+			min-height: 150px;
+			background: white;
+			padding: 2px;
+			border: 1px solid;
+			border-color: rgb(169, 169, 169);
+			overflow: auto;
+		}
+	}
+	div.renderedActualResult {
+		display: none;
+	}
+}
+
+.ui-layout-south {
+	/*height: 82px !important;*/
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+
+	overflow: hidden;
+	border: 0;
+	border-top: solid 1px silver;
+}
+
+#buttonContainer {
+	padding: 0;
+	min-height: 80px;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+#buttonContainer button {
+	width: 100%;
+	height: 82px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.buttonsContainer {
+	width: 100%;
+	height: 80px;
+	position: relative;
+}
+
+/* adjust that IE9/IE10/IE11 slightly differently lay out td-s here */
+body.IE {
+	#buttonTable tr td {
+		width: 1% !important;
+	}
+}
+
+#buttonTable {
+	width: 100%;
+	margin: 0px;
+	border-spacing: 0px;
+
+	td {
+		padding: 0px;
+	}
+	button {
+		position: relative;
+	}
+
+	button img {
+		display: block;
+		margin-right: auto;
+		margin-left: auto;
+		margin-bottom: 5px;
+	}
+}
+
+.timerSuspended #buttonTable {
+	display: none;
+}
+
+.multiStepButton {
+	height: 40px !important;
+	top: 40%;
+	display: none;
+	width: auto !important;
+	white-space:nowrap;
+	padding: 0 10px !important;
+}
+.multiStepButton img {
+	display: inline !important;
+}
+
+#passAll , #failAll , #blockAll {
+	line-height: 35px;
+	z-index: 100;
+}
+
+#passAll *, #failAll *, #blockAll * {
+	vertical-align: middle;
+}
+
+#passAll img, #failAll img, #blockAll img {
+	margin-bottom: 4px !important;
+}
+
+#passMore, #failMore, #blockMore {
+	cursor: pointer;
+	background-image: url('../images/newskin/action/testrunner-more.png');
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-repeat: no-repeat;
+	width: 20px;
+	height: 20px;
+}
+
+.summary {
+	display:inline;
+}
+
+div.clearer {
+	clear: both;
+	height: 0;
+}
+
+/**
+ * attachments
+ */
+.attachmentGroup {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+.attachmentGroup li {
+	display: inline;
+	margin-right: 10px;
+}
+.attachmentGroup .attachmentFile img {
+	vertical-align: sub;
+}
+
+.row {
+ 	> label {
+		margin-left: 3em;
+		margin-right: 0.1em;
+		width: 10em;
+	}
+	> label:first-child {
+		margin-left: 0;
+	}
+
+	label.subtitle {
+		font-weight: bold;
+		color: #CCC;
+		display: block;
+		margin-bottom: 0.25em;
+	}
+}
+
+#currentStepEditor {
+	border: solid 1px silver;
+	padding-bottom:0;
+}
+#currentStepEditor * {
+	font-size: 14px; /* a bit larger font, because this is important part */
+}
+
+#currentStepEditor label, #currentStepEditor div {
+	float:left;
+}
+#currentStepEditor .row {
+ 	clear: both;
+}
+textarea#actualResult {
+	width: 99%;
+}
+
+.actionBar {
+	text-align: center;
+}
+.actionBar button, #reportBugLink button {
+	min-width: 9em;
+}
+.actionBar button img, #reportBugLink button img {
+	margin-right: 3px;
+}
+
+
+#progressRow {
+	line-height: 16px;
+	vertical-align: bottom;
+}
+
+.progressSection, .progressSection > label, .progressSection .miniprogressbar {
+	float:left;
+}
+.progressSection > label {
+	width: auto;
+}
+.progressSection .miniprogressbar {
+	margin-left: 10px;
+}
+
+.actionBar button, .actionBar button *, #reportBugLink, #reportBugLink * {
+	vertical-align: text-bottom;
+}
+.actionBar button, #reportBugLink button {
+	padding: 2px 5px;
+}
+
+
+/* for border-layout */
+body {
+	padding-bottom: 0;
+	/*overflow-y: hidden; */ /* TODO: safer to disable that if the layout is broken then the scrollbar will appear */
+}
+
+#reportBugLink {
+	text-decoration: none;
+	padding: 2px;
+}
+
+/* to avoid that the 'south' part is jumping when the layout initializes
+	it is hidden at the start, and only displayed when the layout is initialized */
+.ui-layout-south {
+	visibility: hidden;
+}
+.ui-layout-container .ui-layout-south {
+	visibility: visible;
+}
+
+.ui-layout-center {
+	border: none;
+}
+
+.warning > h3 {
+	margin-top:0;
+}
+
+.cbModalDialog .yui-panel .ft .button-group button {
+	margin-left: 0px !important;
+}
+
+.wiki-warning {
+	color: black;
+}
+
+.floatingBox {
+	float: right;
+	width: 25%;
+	min-width: 25%;
+	border: solid 1px #ababab;
+	overflow: auto;
+	padding: 5px;
+	margin: 5px;
+}
+
+.parametersInfoBox {
+	.floatingBox;
+
+	.warning {
+		font-size: 13px;
+		margin: 10px 0 0 0;
+	}
+
+	.wikiContent {
+		display:block;
+	}
+
+	.subtitle {
+		font-family: arial;
+		font-size: 18px !important;
+		font-weight: bold;
+		color: #2b2b2b;
+		margin-bottom: 0px;
+	}
+
+	#skipParameters, #selectParameter {
+		float: right;
+		margin-left: 5px;
+	}
+
+	/* hide the label of the TestRunParameters */
+	label.TestRunParametersPluginLabel {
+		display: none;
+	}
+
+}
+
+.IE div[contenteditable=true] p {
+	margin: 0px;
+}
+
+/**
+ * CSS for when timer is disabled, hidding timing informations
+ */
+body.hideTimer {
+	#pauseTd,#timerTd,#totalRunTimeContainer {
+		visibility: hidden;
+	}
+}
+
+#conclusionRow {
+	margin: 5px 10px 10px 10px;
+
+	fieldset {
+		margin-top: 0;
+		border: none !important;
+	}
+	fieldset.collapsingBorder_collapsed {
+		border-top: solid 1px #d1d1d1 !important;
+	}
+
+}
+
+#conclusion, textarea#conclusionInDialog {
+	width: 100%;
+	box-sizing: border-box;
+	min-height: 5em;
+	height: 10vh;
+}
+
+.prevStep, .nextStep {
+	position: absolute;
+	left: 5px;
+	width: auto;
+
+	>img {
+		height: 10px;
+	}
+}
+
+img.runner {
+	position: absolute;
+	left: 3px;
+	top: 30px;
+}
+
+.prevStep {
+	top: 5px;
+}
+
+.nextStep {
+	bottom: 5px;
+}
+
+.missingParameterTableContainer table {
+	margin: 0 !important;
+
+  	th, td {
+		padding: 0.5em !important;
+		font-family: 'courier new', 'courier', monospace !important;
+  	}
+
+	textarea {
+		width: 100%;
+		resize: vertical;
+		font-family: 'courier new', 'courier', monospace !important;
+	}
+}
+
+#missingParameterDialog {
+  display: none;
+}
+
+.stepCursor {
+	cursor: pointer;
+}
+
+div.renderedActualResult + textarea {
+	display: none !important;
+}

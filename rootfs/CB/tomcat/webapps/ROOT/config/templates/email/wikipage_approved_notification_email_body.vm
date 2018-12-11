@@ -1,0 +1,22 @@
+#parse("notification_email_header.vm")
+
+#artifactApprovalReason(${wikiPage})
+
+${textFormatter.getMessage('document.type.wikiPage')} #if(${artifactApprovalHistoryEntry.approved}) #if(${artifactApprovalHistoryEntry.step.finalStep}) ${textFormatter.getMessage('artifact.approval.released')} #else ${textFormatter.getMessage('artifact.approval.approved')} #end #else <span style="color: #AA0000">${textFormatter.getMessage('artifact.approval.rejected')}</span>#end:
+
+<div class="heading">
+[#${wikiPage.id}] #linkWikiPage(${wikiPage})
+</div>
+
+#account(${originator})
+
+#partHeader("${textFormatter.getMessage('document.version.label')}") ${artifactApprovalHistoryEntry.version}
+#partHeader("Step") <span class="#if(${artifactApprovalHistoryEntry.approved})approvedStep#else rejectedStep#end">$textFormatter.escape(${artifactApprovalHistoryEntry.step.name})</span>
+#if(${artifactApprovalHistoryEntry.step.finalStep} && ${artifactApprovalHistoryEntry.approved})
+	${textFormatter.getMessage('artifact.approval.released.message', ${artifactApprovalHistoryEntry.version})}
+#end
+#br()
+#partHeader("${textFormatter.getMessage('artifact.approval.comment.label')}") 
+#partStart() $textFormatter.escape(${artifactApprovalHistoryEntry.comment}) #partEnd()
+
+#parse("notification_email_footer.vm")

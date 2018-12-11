@@ -1,0 +1,90 @@
+/**
+ * CSS definitions and style overrides for custom popups in the wysiwyg editor.
+ * This file should be included as the last stylesheet.
+ */
+html, body {
+	background: #FFFFFF;
+}
+
+body {
+	margin: 0 !important;
+}
+
+.fr-modal {
+
+	h1,h2,h3,h4,h5,h6 {
+		color: #000000;
+	}
+
+	.actionMenuBarIcon {
+		background-image: none !important;
+		width: auto !important;
+		height: auto !important;
+	}
+
+	.menuTitle {
+		font-weight: bold;
+		font-size: 15px;
+	}
+
+	input[type=radio] {
+		background: none;
+	}
+
+	.form {
+		margin: 10px 0px 10px 10px;
+
+		.form-line {
+			margin-top: 2.5px;
+			margin-bottom: 2.5px;
+
+			h3 {
+			    margin-top: 6px;
+			}
+		}
+
+		label {
+			float: left;
+			text-align: left;
+			margin-right: 10px;
+		}
+
+		.input-container {
+			overflow: hidden;
+			padding-right: 10px;
+			padding-top: 2px;
+		}
+
+		input[type=text] {
+			width: 100%;
+		}
+	}
+
+	.actionBar {
+		.button {
+			border: 1px solid #d1d1d1;
+			padding: 2px 20px 2px 20px;
+			margin: 0px 10px 0px 5px;
+			width: auto;
+			height: auto;
+			background: none;
+			float: none;
+			font-family: arial, hevetica, clean, sans-serif;
+			text-align: center;
+			lien-height: 1.231em;
+		}
+
+		.cancelButton {
+			border: 0px;
+		}
+
+		.button:hover {
+			border-color: #ababab;
+		}
+
+		.cancelButton:hover {
+			border: 0px;
+		}
+	}
+
+}

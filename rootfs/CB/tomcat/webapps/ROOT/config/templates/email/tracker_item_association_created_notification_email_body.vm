@@ -1,0 +1,28 @@
+#parse("notification_email_header.vm")
+
+#define($footerText) 
+#trackerItemReason(${trackerItem})
+#end
+
+<div class="heading">
+${textFormatter.getMessage('association.created.title')} #linkTrackerItemAssociation(${trackerItem})
+</div>
+
+#account(${originator})
+
+#tableOpen()
+#trOpen()
+    #tdField("${textFormatter.getMessage('association.typeId.label')}")
+    #tdText(${textFormatter.getMessageWithDefault("association.typeId.${assocType.name}", $!{assocType.name})})
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('association.target.label')}")
+    <td class="textData">#linkAssociationDetails(${association})</td>
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('association.description.label')}")
+    #tdText( $textFormatter.format(${association.description}, ${association.descriptionFormat}, ${wikiContext}) )
+#trClose()
+#tableClose()
+
+#parse("notification_email_footer.vm")

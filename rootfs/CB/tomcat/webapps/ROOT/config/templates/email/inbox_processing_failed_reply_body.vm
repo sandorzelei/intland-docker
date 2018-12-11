@@ -1,0 +1,7 @@
+## $Revision: 23943:f5c76e8d52e5 $ $Date: 2009-11-27 16:11 +0100 $
+
+#parse("notification_email_header.vm")
+
+${textFormatter.getMessage('inbox.processing.failed.message')}: ${reason}
+
+#parse("notification_email_footer.vm")

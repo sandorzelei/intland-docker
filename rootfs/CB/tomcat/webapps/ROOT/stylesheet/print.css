@@ -1,0 +1,228 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+/*
+	This is the CSS for printing!
+ */
+@media print {
+
+/* style for parts will not appear in printing */
+.noPrint {
+	display:none;
+}
+
+/* style for parts only appear in printing */
+.onlyInPrint {
+	display: inherit;
+}
+
+/*  Do not underline links in printing */
+a {
+	text-decoration: none;
+}
+
+/* make some border for table rows in printing*/
+TR {
+	border-bottom: solid 1px silver;
+}
+
+/* Hide buttons in printing */
+INPUT.button {
+	display:none;
+}
+
+INPUT.smallButton {
+	display:none;
+}
+
+/**
+	ActionBar won't print,but ActionMenuBar will, because it contains information like doc name or orther meta data
+ */
+.actionBar {
+	display:none;
+}
+/*
+	Hide gray background image of ActionBar/actionMenuBar
+ */
+.actionBar, .actionMenuBar {
+	background-image: none;
+	color: black;
+	border: solid 1px silver;
+}
+
+/** do not print YUI menus like Action Menu */
+.yuimenubar {
+	display:none !important;
+}
+
+
+/**
+ * The ditch... selectors below will expand the ditchnet-tab's contents in printing, so all tab's contents will be shown
+ * below each other
+ */
+.ditch-tab-wrap {
+	display: none !important;
+	position:static !important; /* fixes that IE6/7 does not print 2nd pages otherwise */
+}
+
+.ditch-tab-pane-wrap {
+	display: block !important;
+	position:static !important; /* fixes that IE6/7 does not print 2nd pages otherwise */
+}
+
+/**
+ * Define some border around each tab's content
+ */
+.ditch-tab-pane {
+	/*display: block !important; */
+	border-top: solid 1px silver;
+	padding: 0px 2px 2px 2px;
+	margin-bottom: 15px;
+}
+
+/**
+ * The title for each tab's content
+ */
+.ditch-tab-pane .ditch-tab-title {
+	display: block !important;
+	background-color: #B0B0B0;
+	color: black;
+	font-weight: bold;
+	font-size: 110%;
+
+	margin-bottom: 3px;
+	padding: 2px 2px 2px 2px;
+}
+
+#pagecontent span.editsection {
+	display: none;
+}
+
+
+td.tableItem {
+	white-space: normal !important;
+}
+
+.forumMessage {
+	border: solid 1px #CCCCCC;
+	margin-bottom: 2px;
+}
+
+.forumMessage .messageHeader {
+	border-bottom: solid 1px #F2F2F2;
+}
+
+div.exportlinks {
+	display: none;
+}
+
+.floatingOverlay {
+	display: none;
+}
+
+.jstree {
+	display: none !important;
+}
+
+.button {
+	display: none !important;
+}
+
+.ui-layout-west {
+	display: none !important;
+}
+
+.ui-layout-pane-center {
+	left: 0 !important;
+}
+
+.actionMenuBar {
+	display:none !important;
+}
+
+/* reconfigure jquery layout elements in printing, otherwise won't print just the 1st page */
+.ui-layout-container, .ui-layout-center {
+	overflow: visible !important;
+	height: auto !important;
+	position: static !important;
+	width: auto !important;
+	display: block !important;
+}
+#northPane, .ui-layout-north, .ui-layout-west, .ui-layout-east, .ui-layout-south, .ui-layout-resizer {
+	display: none !important;
+}
+
+/* hide the yui menus may be still open */
+.yuimenu {
+	display: none;
+}
+
+body.wikiModule #rightPane {
+	height: auto !important;
+}
+
+body.wikiModule .wikilayout {
+	width: 100% !important;
+}
+
+body.wikiModule .wikilayout td.main {
+	width: 100% !important;
+	border: 1px solid white !important;
+}
+
+body.wikiModule .wikilayout td.navigation {
+	display: none !important;
+}
+
+body.wikiModule .sectionEditable.highlighted:hover {
+	box-shadow: none;
+	outline: none;
+}
+
+/**
+ * force shrinking on very wide images in printing, to avoid page cuts
+ * also force shrinking tables and cells should wrap in printing
+ */
+img {
+	max-width: 100% !important;
+	max-height: 100% !important;	/* note: seems not possible to keep aspect ratio of the resized image ? */
+}
+
+/**
+ * force wrap on tables in printings : http://stackoverflow.com/questions/6666532/how-to-force-table-cell-td-content-to-wrap
+ */
+table.wikitable {
+	table-layout: fixed;
+	max-width: 100% !important;
+	width: 100% !important;
+
+	& > tbody, & > thead {
+		& > tr {
+			& > td, & > th {
+				/* use css-3 to force breaking of long text in table cells */
+				word-wrap: break-word !important;
+
+				white-space: -o-pre-wrap !important;
+				white-space: pre-wrap !important;
+				white-space: -moz-pre-wrap !important;
+				white-space: -pre-wrap !important;
+			}
+		}
+	}
+}
+
+
+#requirements td.control-bar {
+	display: none;
+}
+
+}  /* end of @media */

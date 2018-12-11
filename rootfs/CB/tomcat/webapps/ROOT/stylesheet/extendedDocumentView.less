@@ -1,0 +1,328 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+/**
+ * CSS for the extended document view
+ */
+
+.read-only {
+	padding: 1px 5px;
+	padding-bottom: 2px;
+	background-color: #fff7eb;
+}
+
+.newskin #requirements {
+	margin-left: 0px;
+	table-layout: auto !important; /* this makes the whole table horizontally scrollable. this is necessary when there are many fields */
+	width: ~"calc(100% - 1px)";
+}
+
+#requirements th {
+	cursor: move;
+}
+
+#requirements, .stickyTable {
+	th[data-fieldlayoutid] {
+		text-align: left !important;
+	}
+}
+
+#requirements.JColResizer, .resizeableColumns.stickyTable {
+	th[data-fieldlayoutid] {
+		white-space: normal !important;
+		vertical-align: middle !important;
+		text-overflow: ellipsis;
+		label {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+	td.fieldColumn {
+		overflow: hidden;
+	}
+}
+
+td.description-field .editor-wrapper {
+	max-width: 80vw !important;
+}
+
+table.displaytag th.description-field {
+	width: 0.15%;
+}
+
+#requirements .fieldLabel {
+	display: none;
+}
+
+div.fr-wrapper div[style*="z-index: 9999"]{
+  display: none;
+}
+
+/* sticky table header */
+#main-header th {
+	border-bottom: 0px;
+  	&.control-bar {
+		background-color: #F5F5F5;
+	}
+	.removeColumn {
+		cursor: pointer;
+	}
+}
+
+#main-header-sticky th.control-bar {
+	background-color: #F5F5F5;
+}
+
+#main-header th div {
+    position: absolute;
+    background-color: white;
+    z-index: 2;
+	padding: 8px 5px 3px 10px;
+    line-height: normal;
+    width: 100%;
+    top: 59px;
+    border-left: 1px solid #d1d1d1;
+    border-bottom: 1px solid #d1d1d1;
+    margin-left: -12px;
+    cursor: default;
+  	.tracker-context-menu {
+	  	top: -1px !important;
+	  	padding: 0 !important;
+	}
+  	.removeColumn {
+	  	top: -2px !important;
+	}
+}
+
+#main-header th div label {
+	max-width: 106%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#main-header th div.not-editable {
+	top: 31px;
+}
+
+#main-header th:first-child div {
+  margin-left: -11px;
+}
+
+.stickyContainer {
+	position: fixed;
+	background-color: white;
+	z-index: 2;
+	.stickyTable {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+}
+
+
+#toolbarContainer .fr-toolbar {
+	border-top: 0px;
+}
+
+.field-editor {
+	overflow: hidden;
+}
+
+.field-editor input, .field-editor select {
+	margin-top: 15px;
+}
+
+.field-editor input, .field-editor .dataCell .chooseReferences {
+	border: 1px solid transparent;
+}
+
+.field-editor:hover input, .field-editor:hover .dataCell .chooseReferences,
+.field-editor:focus input, .field-editor:focus .dataCell .chooseReferences  {
+	border: 1px solid #d1d1d1;
+}
+
+.field-editor.summary-editor {
+	display: inline-block;
+	width: 86%;
+}
+
+.field-editor.summary-editor input {
+	width: 100%;
+	margin-top: 0px;
+	min-width: 300px;
+}
+
+.editWikiInOverlayContainer {
+	min-width: 10vw;
+	z-index: 1;
+}
+
+.fieldInputControl {
+  	padding-left: 0 !important;
+  	padding-right: 25px !important;
+}
+
+.fieldInputControl.mandatory.empty {
+	background-color: #f9e9e9 !important;
+}
+
+.description-field {
+	overflow: hidden;
+}
+
+.description-field .name.empty-name {
+	display: block;
+}
+
+.description-field .name {
+	min-width: 300px;
+}
+
+/* top margin for table fields */
+div.fieldType_table.fieldValue {
+	margin-top: 10px;
+}
+
+ul.dragtable-sortable + table thead {
+	display: none;
+}
+
+ul.dragtable-sortable th {
+	padding-top: 3px !important;
+	padding-bottom: 3px !important;
+}
+
+#requirements .description-field .name {
+	margin-top: 12px;
+}
+
+td.control-bar, th.control-bar {
+	width: 35px;
+	max-width: 35px;
+}
+
+body.IE {
+	.description-field.column-minwidth {
+		width: auto !important;
+
+	}
+}
+
+table.displaytag td.action-column-minwidth, table.displaytag td.column-minwidth,
+table.displaytag td.checkbox-column-minwidth, table.displaytag th.action-column-minwidth,
+table.displaytag th.column-minwidth, table.displaytag th.checkbox-column-minwidth {
+	width: auto;
+}
+
+#requirements .requirementTr.dirty td.control-bar,
+#requirements .requirement-active.dirty td.control-bar,
+#requirements .requirementTr.selected.dirty td.control-bar {
+    border-right: 5px solid #EF6575;
+}
+
+#requirements .requirementTr.dirty:hover td.control-bar {
+	border-right: 5px solid pink;
+}
+
+.field-editor.editor-wrapper:not(.editable) .fr-wrapper {
+  border: 1px solid transparent !important;
+}
+
+#rightPane {
+	overflow-x: scroll;
+}
+
+.actionMenuBar .viewsMenuContainer.large .viewsMenu .active {
+	margin-top: 3px;
+}
+
+#requirements > tbody > tr > td {
+    border: 1px solid #f0f0f0;
+}
+
+#requirements > tbody > tr:hover > td {
+    border-top: 1px solid #b1b1b1;
+    border-bottom: 1px solid #b1b1b1;
+}
+
+#requirements > tbody > tr > td.control-bar {
+    border-right: 5px solid transparent;
+	padding-left: 0;
+}
+
+#requirements > tbody > tr:hover {
+    border: 1px solid #b1b1b1;
+}
+
+#requirements > tbody > tr.requirementTr.row-preceeding-active > td {
+	border-bottom: 0;
+}
+
+#requirements .chooseReferences td {
+	border: 0 !important;
+	padding: 0 !important;
+}
+
+#requirements td .field-editor .fieldInputControl .chooseReferences {
+	margin-top: 10px;
+}
+
+.actionBarColumn {
+  	.menuArrowDown.actionBarIcon {
+	  	top: 2px !important;
+	}
+	input.button, a.cancelButton {
+		position: relative;
+		top: -1px;
+		margin: 0 !important;
+	}
+}
+
+div.wysiwyg .fr-toolbar {
+	z-index: 1;
+}
+
+.fr-element {
+	cursor: text;
+}
+
+.fr-element a {
+	cursor: pointer;
+}
+
+.description-field .editor-wrapper:not(.highlight-on-hover) {
+	margin-top: 6px;
+    padding-left: 5px;
+}
+
+.inputText.urlField {
+	margin-top: 0px;
+}
+
+.JColResizer .chooseReferences .token-input-token-facebook .name {
+	white-space: normal !important;
+}
+
+/*
+  maximum width for images in froala editor
+ */
+.editor-wrapper img {
+	max-width: 600px;
+}
+
+#requirements .name .releaseid {
+  display: inline-block;
+  margin-top: 5px;
+  vertical-align: top;
+}

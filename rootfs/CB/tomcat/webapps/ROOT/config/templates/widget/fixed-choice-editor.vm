@@ -1,0 +1,65 @@
+<div class="form-field" id="${fieldName}">
+	<div id="fixed-choice${selectorId}">
+		<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+		<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end #if ($isMultipleChoiceAllowed) multiple=multiple #end>
+			#foreach ($value in $values)
+				<option value="$value.id"  #if ($value.selected) selected="selected" #end>$value.value</option>
+			#end
+		</select>
+	</div>
+
+	<script type="text/javascript">
+		jQuery(function($) {
+			#if ($isMultipleChoiceAllowed)
+				codebeamer.dashboard.multiSelect.init("${selectorId}", "fixedChoice:${fieldName}:changed");
+			#else
+				codebeamer.dashboard.multiSelect.initSingleSelect("${selectorId}", "fixedChoice:${fieldName}:changed");
+			#end
+
+            if ('${fieldName}' == 'types') {
+                codebeamer.dashboard.multiSelect.attachEventListener("trackerSelector:tracker:changed", function(value) {
+                    $('#${selectorId}').multiselect('uncheckAll');
+                });
+            }
+
+			#if ($hide)
+
+				codebeamer.dashboard.visibilityManager.init("fixed-choice${selectorId}");
+
+				codebeamer.dashboard.multiSelect.attachEventListener("querySelector:advancedQuery:changed", function(value) {
+
+					codebeamer.dashboard.visibilityManager.updateFirstSwitchState("fixed-choice${selectorId}", false);
+
+				});
+
+				codebeamer.dashboard.multiSelect.attachEventListener("query:orderByAggregate", function() {
+					$("#" + "${selectorId}").data("aggrFunc", arguments);
+				});
+
+				codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:changed", function(value) {
+					codebeamer.dashboard.visibilityManager.updateFirstSwitchState("fixed-choice${selectorId}", true);
+
+				});
+
+				codebeamer.dashboard.multiSelect.attachEventListener("boolean:enabled", function(value) {
+					if (value === "showOnlyGroups") {
+						var aggrFunc= $("#" + "${selectorId}").data("aggrFunc");
+						var show = !(aggrFunc && aggrFunc.length > 0);
+						codebeamer.dashboard.visibilityManager.updateSecondSwitchState("fixed-choice${selectorId}", show);
+					}
+				});
+
+				codebeamer.dashboard.multiSelect.attachEventListener("boolean:disabled", function(value) {
+					if (value === "showOnlyGroups") {
+						codebeamer.dashboard.visibilityManager.updateSecondSwitchState("fixed-choice${selectorId}", false);
+					}
+				});
+			#end
+
+		});
+
+
+	</script>
+
+</div>

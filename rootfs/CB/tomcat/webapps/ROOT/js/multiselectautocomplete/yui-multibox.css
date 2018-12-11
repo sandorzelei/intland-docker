@@ -1,0 +1,136 @@
+
+.yui-multibox {
+	height: auto !important;
+	margin: 0;
+	_height: 1%; 	/* IE6 haslayout hack */
+}
+
+.yui-multibox .box {
+	margin: 2px;
+	background: #DEE7F8;
+	border:1px solid #CAD8F3;
+	padding: 2px 8px;
+	position:relative;
+	text-decoration: none;
+
+	display: block;
+	float: left;
+/*	white-space: nowrap;*/
+
+	outline: 0;
+}
+
+.yui-multibox .box:visited {
+	color: black;
+}
+
+.yui-multibox .box:hover {
+	background: #BBCEF1;
+	border-color: #6D95E0;
+	color: black;
+}
+
+.yui-multibox .focus, .yui-multibox .focus:hover {
+	background-color: #598BEC !important;
+	border: 1px solid #598BEC !important;	/* TODO: delete when newskin is applied everywhere */
+	color: #FFFFFF !important;
+}
+
+.yui-multibox .box a.deleteButton {
+	cursor:pointer;
+	background: transparent url('close.gif') no-repeat scroll 0px 0px;
+
+	height: 7px;
+	width: 7px;
+	visibility: hidden;	/* TODO: delete when newskin applied everywhere */
+	position: absolute;
+
+	top:0;  /* TODO: delete when newskin applied everywhere */
+	right: 0; /* TODO: delete when newskin applied everywhere */
+
+	outline: none;
+	font-size: 1px; /* hack for IE6 to fix the background image? */
+}
+
+/** choose the nice image from the css sprite for the delete button */
+.yui-multibox .box:hover a.deleteButton {
+	background-position: 0px -7px;
+	visibility: visible;
+}
+.yui-multibox .focus:hover a.deleteButton {
+	background-position: 0px -14px;
+}
+.yui-multibox .box a.deleteButton:hover {
+	background-position: 0px -21px;
+}
+
+/* override the yui-ac-input's CSS */
+.yui-skin-sam .yui-multibox .yui-ac-input, .yui-skin-cb .yui-multibox .yui-ac-input  {
+	position: static;
+	width: 6em;
+	margin-top:1px;
+	float: left;
+	border: solid 1px #DEE7F8;
+}
+
+/**
+ * Overriding autocomplete's location, not relative to top, but moved-to the bottom-left
+ */
+.yui-skin-sam .yui-multibox .yui-ac-container {
+	position: absolute;
+	top: auto;
+	bottom: 5px; /* maybe 0.5 em? */
+	left: 0;
+}
+
+/**
+ * Fixes for the "cb-layout" skins
+ */
+.yui-skin-cb .yui-multibox {
+	position: relative;
+}
+.yui-skin-cb .yui-multibox .yui-ac-container {
+	position: absolute;
+	top: auto;
+	bottom: 5px; /* maybe 0.5 em? */
+	left: 0;
+	width: auto;  /* shrink-wrap the autocomplete's popup */
+}
+
+/**
+ * The clearing div added automatically
+ */
+.yui-multibox .yui-multibox-clear {
+	clear: both;
+}
+
+/**
+ * css class for highlighting the match in the autocomplete's popup. TODO: move this to main css file!
+ */
+.autocomplete-match-highlight {
+	font-weight: bold !important;
+	color:blue;
+	background-color: #FFFF77;
+}
+
+/* Highlighted line in the autocomplete */
+.yui-skin-cb .yui-multibox .yui-ac-container .yui-ac-highlight {
+	background: #DEE7F8;
+	border-bottom: solid 1px #CAD8F3;
+	border-top: solid 1px #CAD8F3;
+}
+
+/* slightly change the look of autocomplete while the ajax request is running */
+.yui-skin-cb .yui-multibox .yui-ac-input-ajax-request-in-progress {
+	border: solid 1px #ABC2ED;
+	background-color: #F3F6FC;
+	/*
+	background-image: url("../../images/ajax-loading_10.gif");
+	background-position: top right;
+	background-repeat: no-repeat;
+	*/
+}
+
+.notEmptyAutocompleteInput {
+	outline: solid 1px red;
+}

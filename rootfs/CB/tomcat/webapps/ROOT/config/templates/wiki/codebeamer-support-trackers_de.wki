@@ -1,0 +1,14 @@
+!! Intland Support: Fragen stellen und Fehler melden
+Wenn Sie uns einen Fehler melden, fügen Sie bitte folgende Informationen bei: \\
+* eine Beschreibung, in welchem Zusammenhang der Fehler auftritt und wie er zu reproduzieren ist.
+* falls sinnvoll, ein Bildschirmfoto (Screenshot), auf dem der Fehler zu sehen ist.
+* die Logdatei {{cb.txt.(datum)}} aus dem Verzeichnis {{~/CB-X.YY/tomcat/logs}}.
+* die exakten Fehlermeldungen, falls vorhanden.
+Bitte geben Sie im Feld __Auswirkung__ an, wie stark dieser Fehler Ihre CodeBeamer Anwendung beeinträchtigt. Weitere Einzelheiten dazu finden Sie auf unserer [Software Subscription and Support|https://codebeamer.com/cb/wiki/12091] Seite.
+*__Kritisch__: Das Produktivsystem ist zeitweise oder gar nicht verfügbar, bzw. geschäftskritische Funktionen sind gänzlich unbenutzbar.
+*__Deutlich__: Das Produktivsystem ist verfügbar, aber geschäftskritische Funktionen sind deutlich beeinträchtigt, allerdings nicht vollständig unbenutzbar.
+*__Merklich__: Der Fehler betrifft eine geschäftskritische Funktion, die Funktionsfähigkeit ist aber im Großen und Ganzen gegeben, bzw. kann durch entsprechende Ausweich-Maßnahmen gewährleistet werden.
+*__Gering__: Der Fehler betrifft keine geschäftskritische Funktionen, bzw. kein Produktivsystem, oder es existieren funktionsfähige Alternativen.
+\\
+Bitte stellen Sie Fragen oder melden Sie uns Fehler nur in Deutsch oder in Englisch. Danke.\\
+\\

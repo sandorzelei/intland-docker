@@ -1,0 +1,45 @@
+<style>
+	span.suspected {
+		display: inline-block;
+		position: relative;
+		top: 2px;
+		margin-left: 2px;
+		background-image: url('../images/newskin/action/suspected_red.png');
+		width: 16px;
+		height: 16px;
+	}
+</style>
+
+#define($suspectedLabel) #i18n('association.suspected.label') #end
+
+<div class="riskTraceabilityMatrixPlugin $command.cssClass" style="$command.cssStyle">
+
+	<table>
+		#if($command.title)
+		<caption>$command.title</caption>
+		#end
+		<thead>
+			<tr>
+				#set($columnWidth = 100 / $trackers.size())
+				#foreach($tracker in $trackers)
+					<th style="width: ${columnWidth}%"><a href="$contextPath$tracker.urlLink">$tracker.name</a></th>
+				#end
+			</tr>
+		</thead>
+		<tbody>
+			#foreach($row in $rows)
+			<tr>
+				#foreach($cell in $row.cells)
+				<td #if($cell.rowSpan > 1) rowspan="$cell.rowSpan"#end>
+					$cell.value
+					#if($cell.isSuspected())
+						<span title="$suspectedLabel" class="suspected"></span>
+					#end
+				</td>
+				#end
+			</tr>
+			#end
+		</tbody>
+	</table>
+
+</div>

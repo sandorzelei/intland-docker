@@ -1,0 +1,128 @@
+##
+## item specific macros
+##
+
+###macro(itemName)
+##    $item.get("name")
+###end
+##
+###macro(itemAssocinTypeName)
+##    $itemAssocinType.get("name")
+###end
+##
+###macro(itemUrlkeyid)
+##    #render_urlkeyid($item)
+###end
+##
+###macro(itemUpstreamUrlkeyid)
+##    #render_urlkeyid($itemUpstream)
+###end
+##
+###macro(itemDownstreamUrlkeyid)
+##    #render_urlkeyid($itemDownstream)
+###end
+##
+###macro(itemAssocinFromUrlkeyid)
+##    #render_urlkeyid($itemAssocinFrom)
+###end
+##
+###macro(itemAssocoutToUrlkeyid)
+##    #render_urlkeyid($itemAssocoutTo)
+###end
+##
+###macro(itemHistoryUrlversion)
+##    #render_urlversion($itemHistory)
+###end
+##
+###macro(itemHistorySubmitterUrlname)
+##    #render_urlname($itemHistorySubmitter)
+###end
+
+##
+## item/testCaseRun/result/name conditional formatting
+##
+
+#macro(itemTestcaserunResultNamepassed)
+    #set($result = $leaf.get("name"))
+    #if($result == "Passed")
+        $result.toUpperCase()
+    #end
+#end
+
+#macro(itemTestcaserunResultNamefailed)
+    #set($result = $leaf.get("name"))
+    #if($result == "Failed")
+        $result.toUpperCase()
+    #end
+#end
+
+#macro(itemTestcaserunResultNameelse)
+    #set($result = $leaf.get("name"))
+    #if($result != "Passed" && $result != "Failed")
+        $result.toUpperCase()
+    #end
+#end
+
+#macro(itemStatusRedname)
+    #set($status = $item.get("status").get("name"))
+    #if($status == "Draft")
+        $status
+    #end
+#end
+
+#macro(itemStatusGreenname)
+    #set($status = $item.get("status").get("name"))
+    #if($status == "Waiting for approval")
+        $status
+    #end
+#end
+
+##
+## meta data macros
+##
+
+#macro(author)
+    $root.get("author")
+#end
+
+##
+## general macros
+##
+
+#macro(urlname)
+    #render_urlname($leaf)
+#end
+
+#macro(urlkeyid)
+    #render_urlkeyid($leaf)
+#end
+
+#macro(urlkeyidname)
+    #render_urlkeyid($leaf) #render_urlname($leaf)
+#end
+
+#macro(urlversion)
+    #render_urlversion($leaf)
+#end
+
+#macro(defaultMacro $mergeFieldName)
+    $defaultValue
+#end
+
+##
+## render helper macros
+##
+
+#macro(render_urlname $object)
+    $object.get("name")
+#end
+
+#macro(render_urlversion $object)
+    #set($String = "string")
+v$String.format("%1$.0f", $object.get("version"))
+#end
+
+#macro(render_urlkeyid $object)
+    #set($String = "string")
+    $object.get("tracker").get("keyName")-$String.format("%1$.0f", $object.get("id"))
+#end

@@ -1,0 +1,120 @@
+@lightGrayFont: #858585;
+@breadcrumbLinkColor: #ffffff;
+
+.selectboxit-container .selectboxit {
+	background: white;
+	border: 1px solid #d1d1d1;
+}
+
+.selectboxit-container .selectboxit-text {
+	max-width: none !important;
+}
+
+.selectboxit-container .selectboxit a {
+	color: black !important;
+}
+
+.selectboxit-option .selectboxit-option-anchor {
+	color: black !important;
+}
+
+.selectboxit-option .selectboxit-option-anchor:hover {
+	cursor: default;
+}
+
+.selectboxit-list > .selectboxit-focus > .selectboxit-option-anchor {
+	background: #29a1ff;
+}
+
+.selectboxit-btn.selectboxit-enabled:hover,
+.selectboxit-btn.selectboxit-enabled:focus,
+.selectboxit-btn.selectboxit-enabled:active {
+	background: none;
+}
+
+.selectboxit-container .selectboxit {
+	cursor: default;
+}
+
+.selectboxit-container .selectboxit,
+.selectboxit-container .selectboxit-options {
+	border-radius: 0;
+}
+
+.selectboxit-container span,
+.selectboxit-container
+.selectboxit-options a {
+	height: 25px;
+	line-height: 25px;
+}
+
+.selectboxit .selectboxit-arrow-container {
+	background: @lightGrayFont;
+	border-left: 1px solid #ccc;
+	width: 20px;
+}
+
+.selectboxit .selectboxit-arrow-container .selectboxit-arrow {
+	top: 45%;
+}
+
+
+/* selectbox in actionMenuBar*/
+.actionMenuBar .selectboxit-container *, .selectboxit-container a.selectboxit-option-anchor {
+	font-size: 13px !important;
+	font-weight: normal !important;
+}
+
+.actionMenuBar .selectboxit-container a.selectboxit-option-anchor,
+.actionMenuBar .selectboxit-container .selectboxit-optgroup-header {
+	background-color: @lightGrayFont !important;
+	color: @breadcrumbLinkColor !important;
+}
+
+.actionMenuBar .selectboxit-container .selectboxit-optgroup-header {
+	font-weight: bold !important;
+}
+
+.actionMenuBar .selectboxit-container .selectboxit-selected .selectboxit-option-anchor {
+	background-color: #5f5f5f !important;
+}
+
+.actionMenuBar .selectboxit-container .selectboxit-text {
+	color: @breadcrumbLinkColor !important;
+	padding-right: 5px;
+}
+
+.actionMenuBar .selectboxit-container .selectboxit-btn,
+.actionMenuBar .selectboxit-container .selectboxit-btn:hover {
+	background-color: @lightGrayFont !important;
+	border: 0px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	height: 17px !important;
+	padding-top: 3px;
+}
+
+
+.actionMenuBar .selectboxit-container .selectboxit-arrow-container {
+	background-color: @lightGrayFont;
+	border: 0;
+}
+
+.actionMenuBar .selectboxit-container .selectboxit-arrow-container .selectboxit-arrow {
+	border-top-color: @breadcrumbLinkColor;
+}
+
+.actionMenuBar .selectboxit-container .selectboxit-options {
+	border: 1px solid @lightGrayFont;
+}
+
+.actionMenuBar .selectboxit-container .selectboxit,
+.actionMenuBar .selectboxit-container .selectboxit span {
+	height: 16px;
+	line-height: 16px;
+}
+
+.actionMenuBar .selectboxit-container {
+	vertical-align: middle;
+}

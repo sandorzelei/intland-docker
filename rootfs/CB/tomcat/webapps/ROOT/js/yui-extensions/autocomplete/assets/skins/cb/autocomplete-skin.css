@@ -1,0 +1,49 @@
+/**
+ * $Id$
+ */
+
+.yui-skin-cb .yui-ac {
+	position:relative;
+}
+
+.yui-skin-cb .yui-ac-input {
+}
+
+.yui-skin-cb .yui-ac-container {
+	position: relative;
+}
+
+.yui-skin-cb .yui-ac-content {
+	border: 1px solid #404040;
+	background: #FFF;
+	overflow: hidden;
+	z-index:9050;
+	position: absolute;
+}
+
+.yui-skin-cb .yui-ac-content ul{
+	margin: 0;
+	padding: 2px 0 2px 0;
+	list-style: none;
+}
+
+.yui-skin-cb .yui-ac-content li {
+	margin: 0;
+	padding: 0 2px 0 2px;
+	cursor: default;
+	white-space: nowrap;
+}
+
+.yui-skin-cb .yui-ac-content li.yui-ac-highlight {
+	background: #FFFF77;
+}
+
+.yui-skin-cb .yui-ac-shadow {
+	position: absolute;
+	margin: 2px;
+	background:#000;
+	-moz-opacity: 0.10;
+	opacity:.10;
+	filter:alpha(opacity=12);
+	z-index:9049;
+}

@@ -1,0 +1,7 @@
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+[codebeamer]
+repositoryId = ${repositoryId}
+[web]
+encoding = UTF-8
+push_ssl = false
+%include ./hgrc-codebeamer

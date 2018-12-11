@@ -1,0 +1,11 @@
+#parse("notification_email_header.vm")
+
+<div class="heading">
+${textFormatter.getMessage('account.new.account.title')}: #linkUser(${user})
+</div>
+
+#partHeader("${textFormatter.getMessage('issue.details.label')}")
+
+#parse("user_data_notification_email_body.vm")
+
+#parse("notification_email_footer.vm")

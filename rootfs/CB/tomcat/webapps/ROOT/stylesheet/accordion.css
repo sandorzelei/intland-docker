@@ -1,0 +1,222 @@
+
+@accordionIconDir: "../images/newskin/action/agile/accordion_header_icons";
+
+.accordion {
+	&.hiddenBeforeInit {
+		visibility: hidden;
+	}
+	.accordion-header {
+		display: block;
+		margin: 0;
+		padding: 7px 10px 7px 10px;
+		border-bottom: 1px solid #e2e2e2;
+		font-family: 'Arial', sans-serif;
+		font-size: 12px;
+		font-weight: normal;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		color: #0093b8;
+		cursor: pointer;
+
+		background: white url("../stylesheet/../images/newskin/action/control-m-2.png") no-repeat;
+		background-position: right 11px center;
+
+		.IE8 & {
+			background-position: 90% center;
+		}
+
+		&.disabled {
+			color: #d1d1d1;
+		}
+
+		&.opened {
+			color: #858585;
+			background-image: url("../stylesheet/../images/newskin/action/control-m-2_up.png");
+		}
+		&:first-of-type:not(.opened) {
+			border-top: 1px solid white;
+		}
+		.icon {
+			width: 16px;
+			height: 16px;
+			margin-right: 5px;
+			display: inline-block;
+			background-repeat: no-repeat;
+			vertical-align: bottom;
+		}
+		&.sprints-title .icon {
+			background-image: url("@{accordionIconDir}/sprint_on.png");
+		}
+		&.sprints-title.opened .icon {
+			background-image: url("@{accordionIconDir}/sprint.png");
+		}
+		&.search-title .icon {
+			background-image: url("@{accordionIconDir}/search_on.png");
+		}
+		&.search-title.opened .icon {
+			background-image: url("@{accordionIconDir}/search.png");
+		}
+		&.teams-title .icon {
+			background-image: url("@{accordionIconDir}/team_on.png");
+			background-position: 0px 3px;
+		}
+		&.teams-title.opened .icon {
+			background-image: url("@{accordionIconDir}/team.png");
+		}
+		&.release-stats-title .icon {
+			background-image: url("@{accordionIconDir}/tc_on.png");
+		}
+		&.release-stats-title.opened .icon {
+			background-image: url("@{accordionIconDir}/tc.png");
+		}
+		&.relations-title .icon {
+			background-image: url("@{accordionIconDir}/rel_on.png");
+		}
+		&.relations-title.opened .icon {
+			background-image: url("@{accordionIconDir}/rel.png");
+		}
+		&.issue-details-title .icon {
+			background-image: url("@{accordionIconDir}/details_on.png");
+		}
+		&.issue-details-title {
+			&.opened .icon,
+			&.disabled .icon {
+				background-image: url("@{accordionIconDir}/details.png");
+			}
+		}
+		&.issue-review-title .icon {
+			background-size: contain;
+			background-image: url("@{accordionIconDir}/icon_stats_blue.png");
+		}
+		&.issue-review-title {
+			&.opened .icon,
+			&.disabled .icon {
+				background-image: url("@{accordionIconDir}/icon_stats_grey.png");
+			}
+		}
+		&.issue-description-title .icon {
+			background-image: url("@{accordionIconDir}/desc_on.png");
+		}
+		&.issue-description-title {
+			&.opened .icon,
+			&.disabled .icon {
+				background-image: url("@{accordionIconDir}/desc.png");
+			}
+		}
+		&.issue-comments-title .icon {
+			background-image: url("@{accordionIconDir}/comment_on.png");
+		}
+		&.issue-comments-title {
+			&.opened .icon,
+			&.disabled .icon {
+				background-image: url("@{accordionIconDir}/comment.png");
+			}
+		}
+
+		&.issue-associations-title .icon {
+			background-size: cover;
+			background-image: url("@{accordionIconDir}/assoc_on.png");
+		}
+		&.issue-associations-title {
+			&.opened .icon,
+			&.disabled .icon {
+				background-image: url("@{accordionIconDir}/assoc.png");
+			}
+		}
+
+		&.issue-references-title .icon {
+			background-size: cover;
+			background-image: url("@{accordionIconDir}/references_on.png");
+		}
+		&.issue-references-title {
+			&.opened .icon,
+			&.disabled .icon {
+				background-image: url("@{accordionIconDir}/references.png");
+			}
+		}
+	}
+
+	.accordion-content {
+		padding: 10px !important;
+		margin: 0;
+		box-sizing: border-box;
+		&.opened {
+			border-bottom: 1px solid #e2e2e2;
+		}
+	}
+}
+
+.quick-icons {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	border-bottom: 3px solid #f5f5f5;
+	border-right: 1px solid #ababab;
+	z-index: 3;
+	position: relative;
+	background-color: white;
+	li {
+		display: inline-block;
+		width: 25%;
+		height: 45px;
+		background: no-repeat center center;
+		margin: 0;
+		padding: 0 !important;
+		border-right: 1px solid #e4e4e4;
+		border-bottom: 1px solid #ababab;
+		cursor: pointer;
+		margin-right: -1px;
+
+		&.sprints { background-image: url("../images/newskin/action/agile/icon_sprints.png"); }
+		&.teams { background-image: url("../images/newskin/action/agile/icon_teams.png"); }
+		&.team-commitment { background-image: url("../images/newskin/action/agile/icon_team_commitment.png"); }
+		&.relations { background-image: url("../images/newskin/action/agile/icon_relations.png"); border-right: none; }
+
+		&.details { background-image: url("../images/newskin/action/agile/icon_details.png"); }
+		&.description { background-image: url("../images/newskin/action/agile/icon_description.png"); }
+		&.comments { background-image: url("../images/newskin/action/agile/icon_comments.png"); border-right: none; }
+
+		&.properties {
+			background-image: url("../images/newskin/action/agile/icon_props.png"); border-right: none;
+
+			&.active {
+				background-image: url("../images/newskin/action/agile/icon_props_blue.png");
+			}
+		}
+		&.requirement-library {
+			background-image: url("../images/newskin/action/agile/icon_reqs.png");
+
+			&.active {
+				background-image: url("../images/newskin/action/agile/icon_reqs_blue.png");
+			}
+		}
+		&.release {
+			background-image: url("../images/newskin/action/agile/icon_release.png");
+
+			&.active {
+				background-image: url("../images/newskin/action/agile/icon_release_blue.png");
+			}
+		}
+		&.test-library {
+			background-image: url("../images/newskin/action/agile/icon_tests.png");
+
+			&.active {
+				background-image: url("../images/newskin/action/agile/icon_tests_blue.png");
+			}
+		}
+
+		&.associations {
+			background-image: url("../images/newskin/action/agile/icon_association.png");
+		}
+
+		&.references {
+			background-image: url("../images/newskin/action/agile/icon_reference.png");
+		}
+	}
+}
+
+.references .reficon {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}

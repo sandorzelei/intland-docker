@@ -1,0 +1,12 @@
+#parse("notification_email_header.vm")
+
+#set($toptext = "${textFormatter.getMessage('wiki.notification.updated.title')}")
+
+#parse("wikipage_notification_email_body.vm")
+
+#if(${diffHtml})
+	#partHeader("${textFormatter.getMessage('wiki.diff.label')}")
+	${diffHtml}
+#end
+
+#parse("notification_email_footer.vm")

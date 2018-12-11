@@ -1,0 +1,113 @@
+<!--
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information").  You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+-->
+<!--
+
+	Ant script installs Perforce triggers: see "https://www.perforce.com/perforce/r14.2/manuals/p4sag/chapter.scripting.html"
+	You need appropriate admin-permissions to install triggers.
+
+	This script will take care if the same trigger is installed already then it will not install it twice.
+
+	to run this:
+	-install Apache ant: http://ant.apache.org/
+	-install Perforce command line: "p4" command should be on path
+	-run using this command: ant -f install_triggers.xml, this will ask for CB repository id and similar information
+-->
+	<project name="cbTriggers" default="install_triggers" basedir=".">
+
+		<!-- IMPORTANT: MODIFY THESE -->
+		<property name="depotDefault" value="//depot" />
+		<property name="charsetDefault" value="UTF-8" />
+		
+		<property name="perforceProtocolDefault" value="tcp" />
+		<!-- the user/password needed for the trigger to fetch change-log from Perforce -->
+		<property name="triggerUserDefault" value="super" />
+
+		<dirname property="dir" file="${ant.file}"/>
+
+		<!-- set the OS property to "windows" or "unix" depending on the OS -->
+		<condition property="OS" value="windows">
+			<os family="windows" />
+		</condition>
+		<condition property="OS" value="unix">
+			<os family="unix" />
+		</condition>
+
+		<condition property="scriptSuffix" value=".bat">
+			<os family="windows" />
+		</condition>
+		<condition property="scriptSuffix" value="">
+			<os family="unix" />
+		</condition>
+
+		<macrodef name="addTrigger">
+			 <attribute name="triggerEvent" />
+			 <sequential>
+			 	<local name="triggerPath"/>
+				<property name="triggerPath" value="${dir}/${OS}/@{triggerEvent}${scriptSuffix}"/>
+				<!-- ensure that trigger is executable -->
+				<chmod file="${triggerPath}" perm="ugo+rx" />
+
+			 	<local name="triggerName" />
+				<property name="triggerName" value="codebeamer-@{triggerEvent}" />
+
+			 	<local name="repoArg"/>
+			 	<property name="repoArg" value="-repositoryId ${repositoryId}" />
+				<property name="userAndPass" value="-triggerUser ${triggerUser} -triggerUserPass ${triggerUserPass}"/>
+
+			 	<local name="triggerDef"/>
+				<property name="triggerDef">${triggerName} @{triggerEvent} ${depot}/... "${triggerPath} ${userAndPass} -user %user% ${repoArg} -perforceUrl ${perforceProtocol}:%serverport%:${depot} -changelist %changelist% -charset ${charset}"</property>
+
+				<!-- remove if the same trigger already exists -->
+			 	<echo>Removing existing trigger: ${triggerName}(.*?)${repoArg}(.*?)</echo>
+				<copy verbose="false" file="triggers.txt" tofile="triggersNew.txt">
+				    <filterchain>
+				        <linecontainsregexp negate="true">
+				        	<regexp pattern="${triggerName}(.*?)${repoArg}(.*?)"/>
+				        </linecontainsregexp>
+				    </filterchain>
+				</copy>
+
+				<echo>Installing trigger: ${triggerDef}</echo>
+				<echo file="triggersNew.txt" append="true"
+						message="    ${triggerDef}${line.separator}" />
+
+				<move verbose="false" file="triggersNew.txt" tofile="triggers.txt" />
+			 </sequential>
+		</macrodef>
+
+		<target name="install_triggers">
+			<input message="Enter id of codeBeamer Perforce repository:" addProperty="repositoryId"/>
+			<input message="Depot:" addProperty="depot" defaultvalue="${depotDefault}"/>
+			<input message="Charset:" addProperty="charset" defaultvalue="${charsetDefault}"/>
+			<input message="Perforce user:" addProperty="triggerUser" defaultvalue="${triggerUserDefault}" />
+			<input message="Perforce password:" addProperty="triggerUserPass" />
+			<input message="Protocol of perforce server (tcp, tcp4, tcp6, tcp46, tcp64, ssl, ssl4, ssl6, ssl46, ssl64):" addProperty="perforceProtocol" defaultvalue="${perforceProtocolDefault}" />
+
+			<echo message="If this script fails please login first using p4 login command!"/>
+
+		 	<delete file="triggers.txt" />
+			<exec executable="p4" output="triggers.txt" failonerror="true">
+				<arg value="triggers"/>
+				<arg value="-o"/>
+			</exec>
+			<copy verbose="false" file="triggers.txt" tofile="triggers-original.txt" />
+
+			<addTrigger triggerevent="change-content"/>
+			<addTrigger triggerevent="change-commit"/>
+
+			<exec executable="p4" input="triggers.txt" failonerror="true">
+				<arg value="triggers"/>
+				<arg value="-i"/>
+			</exec>
+		</target>
+
+	</project>

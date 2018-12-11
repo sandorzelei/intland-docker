@@ -1,0 +1,155 @@
+#* Template for detailed layout *#
+#wikiBoxOpen(${command}, "trackerListPlugin")
+	#set($browseTrackerUrl = "${contextPath}/tracker")
+
+	#set($sumOpenItems = 0)
+	#set($sumTotalItems = 0)
+	#set($sumAssignedToMeItems = 0)
+	#set($sumSubmittedByMeItems = 0)
+
+	#if($revisionId)
+		#set($revisionUrlFragment = "revision=${revisionId}")
+		#set($menuItemsAvailable = "Follow, adminTrackerSubscriptions")
+	#else
+		#set($revisionUrlFragment = "")
+		#set($menuItemsAvailable = "newTrackerItem, customizeTracker, Follow, transitionsGraph, adminTrackerSubscriptions, traceabilityBrowser")
+	#end
+
+    <script src="${contextPath}${uiGenerator.getVersionedURL('/js/TrackerListPlugin.js')}"></script>
+	<script type="text/javascript">
+        $(function() {trackerListPlugin.init('$menuItemsAvailable')});
+    </script>
+
+    #macro(tableHeader $index $hasHidden)
+        <thead>
+            <tr>
+                <th style="vertical-align: middle;">
+                    <label for="showAll-${pluginId}$index" title="$textFormatter.getMessage('tracker.showAll.tooltip')">
+                        #if (${hasHidden})
+                            <input class="showAllCheckbox" id="showAll-${pluginId}$index" type="checkbox" #if (${showAll}) checked="checked" #end autocomplete="off" > $textFormatter.getMessage('tracker.label.showHidden')
+                        #end
+                    </label>
+                </th>
+                <th class="stretched" style="padding-left: 0;"></th>
+                <th class="action-column-minwidth"></th>
+                <th>$textFormatter.getMessage('tracker.key.label')</th>
+                #if(!$revisionId)
+                    <th class="number">$textFormatter.getMessage('issue.flags.Unresolved.label')</th>
+                    <th class="number">$textFormatter.getMessage('tracker.allItems.label')</th>
+                    <th class="number">$textFormatter.getMessage('tracker.assignedToUser.label')</th>
+                    <th class="number">$textFormatter.getMessage('tracker.submittedByUser.label')</th>
+                    <th class="number">$textFormatter.getMessage('tracker.subscribers.label')</th>
+                #end
+                <th class="date lastColumn">$textFormatter.getMessage('tracker.modifiedAt.label')</th>
+            </tr>
+        </thead>
+    #end
+
+    #set($index = 1)
+    #foreach($code in $stats.keySet())
+        #set($trackerStats = $stats.get($code))
+		#if(!$trackerStats.isEmpty())
+        #if($items == "both")
+            <h4>$textFormatter.getMessage($code)</h4>
+        #end
+        <table cellspacing="0" class="displaytag">
+            #tableHeader($index, $trackerStats.hasHidden)
+                <tbody>
+                    #foreach($trackerStat in $trackerStats)
+						#set($hiddenClass = "")
+                        #set($hiddenStyle = "")
+						#set($hidden = (! (${trackerStat.tracker.visible} || ${showAll})) )
+
+                    	#if ($hidden)
+                    		#set($hiddenClass = "hidden")
+                    		#set($hiddenStyle = "style='display:none;'")
+                    	#end
+
+                        #trOpenWithLastRow($trackerStats $!{hiddenClass} $!{hiddenStyle})
+                            <td class="status-icon-minwidth">
+                                $uiGenerator.renderAjaxTagging(${request}, ${trackerStat.tracker}, true)
+                                ## $uiGenerator.renderNotificationBox($request, $GroupType_TRACKER, $trackerSubscriptionsMap.get($trackerStat.tracker.id))
+                                <img style="background-color:${coloredEntityIconProvider.getIconBgColor($trackerStat.tracker)}; margin-right:0;" src="${contextPath}${coloredEntityIconProvider.getIconUrl($trackerStat.tracker)}">
+                            </td>
+                            <td>
+                                #set($url = "${browseTrackerUrl}/${trackerStat.tracker.id}")
+                                <a href="${url}#if($revisionId)?${revisionUrlFragment}#end">$textFormatter.getMessageWithDefault("tracker.${trackerStat.tracker.name}.label", ${trackerStat.tracker.name})</a>
+                                $uiGenerator.renderSubscription($request, $trackerSubscriptionsMap.get($trackerStat.tracker.id))
+                                <div class="subtext trackerDescription" >$textFormatter.format($textFormatter.getMessageWithDefault("tracker.${trackerStat.tracker.name}.tooltip", ${trackerStat.tracker.description}), ${trackerStat.tracker.descriptionFormat}, $trackerStat.tracker.project, $user) </div>
+                            </td>
+                            <td class="tracker-context-menu action-column-minwidth" data-tracker-id="$trackerStat.tracker.id">
+								<img class="menuArrowDown menu-trigger#if($alwaysDisplayContextMenuIcons) always-display-context-menu#end" src="$contextPath/images/space.gif"/>
+								<span class="menu-container"></span>
+                            </td>
+                            <td>
+                                $textFormatter.escape(${trackerStat.tracker.keyName})
+                            </td>
+                            #if(!$revisionId)
+                                <td class="number tracker-open-count">
+									#if (! ${hidden})
+                                    	#set($sumOpenItems = $sumOpenItems + $trackerStat.openItems)
+                                    #end
+									<a href="${browseTrackerUrl}/${trackerStat.tracker.id}?view_id=${UNRESOLVED_VIEW}&reset=open">$textFormatter.formatLong(${trackerStat.openItems})</a>
+                                </td>
+                                <td class="number tracker-all-count">
+                                    #set($sumTotalItems = $sumTotalItems + $trackerStat.allItems)
+									<a href="${browseTrackerUrl}/${trackerStat.tracker.id}?view_id=${ALL_ITEMS_VIEW}&reset=all">$textFormatter.formatLong(${trackerStat.allItems})</a>
+                                </td>
+                                <td class="number tracker-assigned-count">
+                                    #set($sumAssignedToMeItems = $sumAssignedToMeItems + $trackerStat.assignedToUser)
+									<a href="${browseTrackerUrl}/${trackerStat.tracker.id}?view_id=${ASSIGNED_TO_ME_VIEW}&onlyAssignedToUser=true&proj_id=${trackerStat.tracker.project.id}">$textFormatter.formatLong(${trackerStat.assignedToUser})</a>
+                                </td>
+                                <td class="number tracker-submitted-count">
+                                    #set($sumSubmittedByMeItems = $sumSubmittedByMeItems + $trackerStat.submittedByUser)
+									<a href="${browseTrackerUrl}/${trackerStat.tracker.id}?view_id=${SUBMITTED_BY_ME_VIEW}&onlySubmittedByUser=true&proj_id=${trackerStat.tracker.project.id}">$textFormatter.formatLong(${trackerStat.submittedByUser})</a>
+                                </td>
+                                <td class="number">
+                                    ${trackerStat.subscribers}
+                                </td>
+                            #end
+                            <td class="date lastColumn">
+                                #if(${trackerStat.modifiedAt})
+                                    $textFormatter.formatDate(${user}, ${trackerStat.modifiedAt}, false)
+                                #else
+                                    --
+                                #end
+                            </td>
+                        #trClose()
+                    #end
+                </tbody>
+                #if(!$revisionId)
+                <tfoot>
+                    <tr>
+                        <th colspan="4" style="padding-left:0;" >$textFormatter.getMessage('tracker.summary.label'):</th>
+                        <th class="number summary-open">
+                            $textFormatter.formatLong(${sumOpenItems})
+                        </th>
+                        <th class="number summary-total">
+                            $textFormatter.formatLong(${sumTotalItems})
+                        </th>
+                        <th class="number summary-assigned-to-me">
+                            $textFormatter.formatLong(${sumAssignedToMeItems})
+                        </th>
+                        <th class="number summary-submitted-by-me">
+                            $textFormatter.formatLong(${sumSubmittedByMeItems})
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                #end
+#*
+            #else
+                <tbody>
+                    #trOpen()
+                        <td colspan="10">$textFormatter.getMessage('tracker.list.empty')</td>
+                    #trClose()
+                </tbody>
+            #end
+*#
+        </table>
+		#end
+        #set($index = $index + 1)
+    #end
+	<a class="trackerList_toNewLayout" style="cursor:pointer">$textFormatter.getMessage('tracker.newLayout.label')</a>
+#wikiBoxClose()

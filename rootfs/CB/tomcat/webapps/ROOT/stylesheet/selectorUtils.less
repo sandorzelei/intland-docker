@@ -1,0 +1,165 @@
+.level-mixin(@level) {
+	padding-left: @level * 10px!important;
+}
+.selectorUtilDialog {
+
+	position: absolute;
+	width: auto;
+	padding: 0.3em;
+	background-color: white;
+	border: 1px solid #ababab;
+	z-index: 999;
+	display: none;
+
+	label {
+		width: 100px;
+		font-weight: bold;
+		display: inline-block;
+	}
+
+	.rangeContainer {
+		padding: 0.3em;
+		border-bottom: 1px solid #f5f5f5;
+
+		select {
+			display: inline-block;
+			width: 225px;
+			padding: 2px;
+		}
+
+	}
+
+	.dateContainer, .relativeContainer {
+		padding: 0.3em;
+
+		.labelSpan {
+			display: inline-block;
+			margin-right: 0.2em;
+		}
+
+	  	input[type="radio"] {
+			position: relative;
+			top: 2px;
+		}
+
+	  	.invalidDateRange {
+			color: #b31317;
+		  	font-weight: bold;
+		  	font-size: 11px;
+		  	display: none;
+	  	}
+
+	}
+
+  	.dateContainer {
+	  	input[type="text"] {
+			width: 80px;
+			display: inline-block;
+			margin-right: 0.3em;
+		}
+	}
+
+  	.relativeContainer {
+	  	input[type="number"] {
+			width: 40px;
+			display: inline-block;
+			margin-right: 0.3em;
+	  	}
+	  	select {
+		  	margin-right: 0.3em;
+		  	padding: 3px;
+		}
+	  	span {
+		  	margin-right: 0.5em;
+		}
+
+		.fromContainer, .toContainer {
+			display: block;
+			margin-left: 120px;
+			padding-top: 5px;
+		}
+
+		.relativeFromCheckbox, .relativeToCheckbox {
+			position: relative;
+			top: 2px;
+		}
+
+	}
+
+}
+
+.ui-multiselect.ui-widget.ui-state-default.ui-corner-all.ui-date-range {
+	height: 21px;
+}
+
+.trackerSelectorTag {
+	&.ui-multiselect-menu {
+		background: white;
+		border: 1px solid #ababab;
+		padding: 0;
+	}
+	.ui-widget-header {
+		padding: 0;
+		background: none;
+		border-top: hidden;
+		border-right: hidden;
+		border-left: hidden;
+		border-bottom: 1px solid #d1d1d1;
+		margin: 0;
+	}
+	.ui-multiselect-filter {
+		padding: 0.3em;
+		float: none;
+		input {
+			width: 100%;
+			margin: 0;
+		}
+	}
+	.ui-multiselect-optgroup a {
+		border-bottom: 1px solid #d1d1d1 !important;
+	}
+	li input {
+		margin-right: 0 !important;
+	}
+}
+
+.ui-multiselect-menu li.branchTracker {
+	padding-left: 10px !important;
+	span {
+		color: #187a6d;
+	}
+
+	&.level-1 {
+		.level-mixin(1);
+	}
+
+	&.level-2 {
+		.level-mixin(2);
+	}
+
+	&.level-3 {
+		.level-mixin(3);
+	}
+
+	&.level-4 {
+		.level-mixin(4);
+	}
+
+	&.level-5 {
+		.level-mixin(5);
+	}
+
+	&.level-6 {
+		.level-mixin(6);
+	}
+}
+
+.ui-multiselect-menu li.hiddenTracker {
+  	span {
+	  	color: #ababab;
+	}
+}
+
+.ui-multiselect-single .ui-multiselect-checkboxes label {
+	padding: 0 !important;
+}

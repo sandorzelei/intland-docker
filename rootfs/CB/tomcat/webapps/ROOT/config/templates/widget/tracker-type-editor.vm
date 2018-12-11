@@ -1,0 +1,16 @@
+<div class="form-field">
+	<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+	<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end multiple="multiple">
+		#foreach ($trackerType in $trackerTypes)
+			<option value="$trackerType.id"  #if ($trackerType.selected) selected="selected" #end>$trackerType.value</option>
+		#end
+	</select>
+
+	<script type="text/javascript">
+		jQuery(function($) {
+			codebeamer.dashboard.multiSelect.init("${selectorId}", "trackerTypeSelector:changed");
+		});
+	</script>
+
+</div>

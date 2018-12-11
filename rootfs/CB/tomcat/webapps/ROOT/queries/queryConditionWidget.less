@@ -1,0 +1,252 @@
+/**
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+#queryConditionWidgetContainer {
+
+  #ajaxLoadingImg {
+	display: none;
+  }
+
+  .queryCondition {
+
+	width: 100%;
+	border-collapse: collapse;
+
+	td {
+
+	  border: 1px solid #D1D1D1;
+	  height: 20px;
+
+	  &.conditions {
+
+		background-color: white;
+		padding: 1px;
+
+		.addButton {
+		  width: 28px;
+		  display: inline-block;
+		  border: 1px solid #CCD5E4;
+		  background: url("../images/newskin/queries/icon_add.png") no-repeat 7px 3px #EFF2F7;
+		  cursor: pointer;
+		  font-size: 15px;
+		  margin: 1px;
+		}
+	  }
+
+	  .inputSection {
+		display: none;
+		input {
+		  border: none;
+		  width: 99%;
+		  margin: 0;
+		  font-size: 12px;
+		}
+	  }
+
+	  &.searchButton {
+	     cursor: pointer;
+    	 width: 1%;
+    	 padding: 0 1em;
+         font-weight: bold;
+         color: #0093b8;
+         white-space: nowrap;
+	  }
+
+	}
+
+  }
+
+  .queryConditionSelector {
+	height: 20px;
+	display: inline-block;
+	border: 1px solid #CCD5E4;
+	background: #EFF2F7;
+	color: #0093b8;
+	margin: 1px;
+
+	span {
+		color: #0093b8 !important;
+	}
+
+	.meaning, .meaningOption {
+		background-color: #f5f5f5;
+	}
+  }
+}
+
+.headerBody {
+  padding: 0 1em 1em 1em;
+  .conditionSelector {
+	display: inline-block;
+	width: 90%;
+  }
+  .advancedLink {
+	display: inline-block;
+	float: right;
+	text-align: right;
+	position: relative;
+	top: 4px;
+  }
+}
+
+.textFieldMenu, .referenceFieldMenu, .numberFieldMenu, .orderByFieldMenu {
+  padding: 0.2em !important;
+  .textMenuContInfo {
+	padding: 1em 0.5em 0.5em 0.4em;
+	color: #858585;
+	font-size: 11px;
+  }
+  .textMenuCont {
+	padding: 0.2em;
+	font-size: 12px;
+	.fieldLabel {
+	  display: inline-block;
+	  font-size: 12px;
+	  font-weight: bold;
+	  padding: 0 0.3em;
+	}
+	.notCheckBox {
+	  position: relative;
+	  top: 2px;
+	}
+  }
+}
+
+.numberFieldMenu {
+  select {
+	padding: 3px;
+	margin: 0 0.2em;
+  }
+  .numberInput {
+	width: 30px;
+	margin-left: 0.2em;
+  }
+}
+
+.orderByFieldMenu {
+  select {
+	padding: 3px;
+	margin: 0 0.2em;
+  }
+  .descCheckBox {
+	position: relative;
+	top: 2px;
+  }
+}
+
+.numberField {
+  select {
+	padding: 3px;
+	margin: 0 0.2em;
+  }
+}
+
+.dateFieldMenu {
+  padding: 0.2em !important;
+  .dateMenuCont {
+    padding: 0.2em;
+	select {
+	  padding: 3px;
+	  margin: 0 0.2em;
+	}
+	.numberInput {
+	  width: 30px;
+	  margin-right: 0.2em;
+	}
+	span {
+	  font-size: 12px;
+	}
+	.fieldLabel {
+	  width: 40px;
+	  display: inline-block;
+	  font-size: 12px;
+	  font-weight: bold;
+	  text-align: right;
+	  padding: 0 0.3em;
+	}
+  }
+}
+
+.context-menu-item.disabled {
+  cursor: default;
+  color: #BDBDBD;
+}
+
+.ui-icon.deletePlaceholder {
+  background: none;
+}
+
+.ui-icon.removeIcon {
+  background: url("../images/newskin/action/delete-grey-12x12.png") no-repeat 1px 1px;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  margin-left: -16px;
+}
+
+.ui-multiselect-menu.queryConditionSelector {
+  background: white;
+  border: 1px solid #ababab;
+  padding: 0;
+
+  div.showHiddenCheckBox {
+	padding: 0.3em;
+	font-size: 13px;
+	margin: 0;
+  }
+
+  .ui-widget-header {
+	padding: 0;
+	background: none;
+	border-top: hidden;
+	border-right: hidden;
+	border-left: hidden;
+	border-bottom: 1px solid #d1d1d1;
+	margin: 0;
+  }
+  .ui-multiselect-filter {
+	padding: 0.3em;
+	float: none;
+	input {
+	  width: 100%;
+	  margin: 0;
+	}
+  }
+  .ui-multiselect-optgroup a {
+	border-bottom: 1px solid #d1d1d1;
+  }
+}
+
+.referenceSpan {
+  width: 500px;
+  display: block;
+}
+
+.referenceStep {
+  padding: 1em 0 0.2em 0;
+}
+
+.dateTypeLabel {
+  padding: 0.5em 0 0.5em 0;
+  font-size: 12px;
+  font-weight: bold;
+  input[type="radio"] {
+	position: relative;
+	top: 2px;
+  }
+}
+
+.ui-multiselect.referenceProject.ui-state-active,
+.ui-multiselect.referenceTracker.ui-state-active {
+  border: 1px solid #CCCCCC !important;
+}

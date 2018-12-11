@@ -1,0 +1,8 @@
+<div class="baseline-header">$header</div>
+<ul class="reference-version-tooltip">
+#foreach ($baseline in $baselines)
+	<li class="baseline-entry">
+		<a class="baseline-link" href="$contextPath$baseline.urlLink" target="_blank">$baseline.name</a>
+	</li>
+#end
+</ul>

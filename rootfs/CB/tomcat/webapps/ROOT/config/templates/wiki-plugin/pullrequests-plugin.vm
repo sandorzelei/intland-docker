@@ -1,0 +1,60 @@
+#wikiBoxOpen(${command})
+	#if(${command.title}) #wikiBoxTitleNoEscape("$!{command.title}") #else #wikiBoxTitleNoEscape($textFormatter.getMessage('pullRequests.title')) #end
+    <table>
+       	<tbody>
+            #if(!${pullRequests.isEmpty()})
+    			#set($headerRendered = false)
+    			#foreach($pullRequest in $pullRequests)
+    				#if($pullRequest.submitter.id != $user.id)
+    					#if(!$headerRendered)
+    						#set($headerRendered = true)
+    						<tr>
+    							<td class="separator" colspan="2"><b>$textFormatter.getMessage('pullRequests.sentToMe')</b></td>
+    						</tr>
+    					#end
+                    	#trOpen()
+    						<td class="stretched">
+    							<a href="${cbBaseUrl}${pullRequest.urlLink}">$textFormatter.abbreviate($pullRequest.summary, 64)</a>
+    							<div class="subtext excerpt">$textFormatter.abbreviate($pullRequest.description, 128)</div>
+    							<span class="subtext">
+									${textFormatter.getMessage('pullRequests.sentIn', "#linkProject($pullRequest.tracker.project)", "#linkUserShort($pullRequest.submitter)")}
+        							<span class="separator">&bull;</span>
+        							$textFormatter.formatDate(${user}, ${pullRequest.submittedAt}, false)
+                                </span>
+                        	</td>
+    						<td>
+    							$userPhotoTool.render(${pullRequest.submitter}, false)
+    						</td>
+                    	#trClose()
+    				#end
+    			#end
+    			#set($headerRendered = false)
+    			#foreach($pullRequest in $pullRequests)
+    				#if($pullRequest.submitter.id == $user.id)
+    					#if(!$headerRendered)
+    						#set($headerRendered = true)
+                			<tr>
+                				<td class="separator" colspan="2"><b>$textFormatter.getMessage('pullRequests.submittedByMe')</b></td>
+                			</tr>
+    					#end
+                    	#trOpen()
+    						<td colspan="2">
+           						<a href="${cbBaseUrl}${pullRequest.urlLink}">$textFormatter.abbreviate($pullRequest.summary, 64)</a>
+    							<div class="subtext excerpt">$textFormatter.abbreviate($pullRequest.description, 128)</div>
+    							<span class="subtext">
+									${textFormatter.getMessage('pullRequests.submittedTo', "#linkProject($pullRequest.tracker.project)")}
+        							<span class="separator">&bull;</span>
+        							$textFormatter.formatDate(${user}, ${pullRequest.submittedAt}, false)
+                                </span>
+                        	</td>
+                    	#trClose()
+    				#end
+				#end
+            #else
+				#trOpen()
+					<td colspan="2">$textFormatter.getMessage('pullRequests.empty')</td>
+				#trClose()
+        	#end
+    	</tbody>
+    </table>
+#wikiBoxClose()

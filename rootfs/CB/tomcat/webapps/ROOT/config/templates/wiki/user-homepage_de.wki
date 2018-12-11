@@ -1,0 +1,99 @@
+{
+	"id": "6cdc0c77-e41e-4d76-ba28-dfee302c1f67",
+	"layoutType": "two_to_one",
+	"widgets": [[{
+				"attributes": {
+					"markup": {
+						"typeName": "com.intland.codebeamer.dashboard.component.widgets.common.attribute.TextAttribute",
+						"required": true,
+						"validationRequired": false,
+						"value": "%%information\r\nDas hier ist  __Ihre persönliche Startseite__. Sie können den Inhalt über ''Bearbeiten'' völlig individuell gestalten:\r\n* Ersetzen Sie diese allgemeine Begrüssung durch __Ihnen__ wichtige Informationen.\r\n* Prüfen Sie, welche der voreingestellten Plugins Sie wirklich benötigen, und entfernen Sie unnötigen Balast. (Dadurch wird nebenbei auch Ihre Anmeldung schneller.)\r\n* Niemand ausser Ihnen hat Zugriff auf diese Seite, daher können Sie hier unbeschadet private Information, Bilder etc. abspeichern.\r\n* Vielleicht wollen Sie sich auch gegenüber anderen Benutzern ein Gesicht geben?\\\\ Dann laden Sie doch über {{Meines -> Mein Benutzerkonto -> Foto bearbeiten}} ein Bild hoch.\r\n\r\n__Weitere nützliche Informationen__\\\\\r\nWeiterführende Informationen zu CodeBeamer (zur Zeit nur auf Englisch):\r\n* [codeBeamer Knowledge Base|https://codebeamer.com/cb/project/CB]\r\n* [Administrator's guide|https://codebeamer.com/cb/wiki/8797]\r\n* [User's guide|https://codebeamer.com/cb/wiki/8798]\r\n* [Videopräsentationen|http://www.intland.com/products/videos/]\r\n%%"
+					}
+				},
+				"id": "ca1eb2e1-fd14-4088-8052-a84bb63d5b9c",
+				"color": "",
+				"defaultTitleKey": "dashboard.wiki.markup.widget.name",
+				"headerHidden": true,
+				"pinned": true,
+				"pinnedLayout": "",
+				"savedVersion": "1.0.0",
+				"title": "Privates Wiki",
+				"typeName": "com.intland.codebeamer.dashboard.component.widgets.wiki.WikiMarkupWidget",
+				"version": "1.0.0"
+			}, {
+				"attributes": {
+					"showOnlyOpenReviews": {
+						"typeName": "com.intland.codebeamer.dashboard.component.widgets.common.attribute.BooleanAttribute",
+						"required": false,
+						"validationRequired": false,
+						"value": true
+					}
+				},
+				"id": "b3d1dd2f-3e9f-47fa-ab3e-6ce4abc7fee2",
+				"color": "",
+				"defaultTitleKey": "dashboard.myreviews.widget.name",
+				"headerHidden": false,
+				"pinned": false,
+				"pinnedLayout": "",
+				"savedVersion": "1.0.0",
+				"title": "Meine offene Reviews",
+				"typeName": "com.intland.codebeamer.dashboard.component.widgets.project.MyReviewsWidget",
+				"version": "1.0.0"
+			}, {
+				"attributes": {
+					"OnlyIssuesAssignedToMe": {
+						"typeName": "com.intland.codebeamer.dashboard.component.widgets.common.attribute.BooleanAttribute",
+						"required": false,
+						"validationRequired": false,
+						"value": true
+					}
+				},
+				"id": "ec60ecc9-cf6c-446a-a335-ee6c03e78480",
+				"color": "",
+				"defaultTitleKey": "dashboard.myCurrentIssues.widget.name",
+				"headerHidden": false,
+				"pinned": false,
+				"pinnedLayout": "",
+				"savedVersion": "1.0.0",
+				"title": "Meine aktuellen Vorgänge",
+				"typeName": "com.intland.codebeamer.dashboard.component.widgets.personal.MyCurrentIssuesWidget",
+				"version": "1.0.0"
+			}
+		], [{
+				"attributes": {
+					"filter": {
+						"typeName": "com.intland.codebeamer.dashboard.component.widgets.common.attribute.MultiChoiceWidgetAttribute",
+						"enumClass": "com.intland.codebeamer.dashboard.component.widgets.common.attribute.choice.Filter",
+						"required": false,
+						"validationRequired": false,
+						"value": ["COMMIT", "ISSUE", "WIKIPAGE", "DOCUMENT"]
+					},
+					"period": {
+						"typeName": "com.intland.codebeamer.dashboard.component.widgets.common.attribute.FixedChoiceWidgetAttribute",
+						"required": false,
+						"validationRequired": false,
+						"value": {
+							"com.intland.codebeamer.dashboard.component.widgets.common.attribute.choice.LimitedPeriod": "PAST_7_DAYS"
+						}
+					},
+					"max": {
+						"typeName": "com.intland.codebeamer.dashboard.component.widgets.common.attribute.IntegerAttribute",
+						"required": false,
+						"validationRequired": false,
+						"value": 20
+					}
+				},
+				"id": "b6a9a216-051a-4dcb-81f6-20b5bccad86b",
+				"color": "",
+				"defaultTitleKey": "dashboard.activityStream.widget.name",
+				"headerHidden": false,
+				"pinned": false,
+				"pinnedLayout": "",
+				"savedVersion": "1.0.0",
+				"title": "Aktivitätenprotokoll",
+				"typeName": "com.intland.codebeamer.dashboard.component.widgets.project.ActivityStreamWidget",
+				"version": "1.0.0"
+			}
+		]],
+	"typeName": "com.intland.codebeamer.dashboard.component.containers.grid.FixedGridLayout"
+}

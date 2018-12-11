@@ -1,0 +1,45 @@
+
+<div class="newskin">
+#wikiBoxOpen(${command}, "projectInfoPlugin")
+	#define($title) 
+		#set($idTooltip = $textFormatter.getMessage('project.id.label'))
+		#linkProject($project)<label class="projectId" title="${idTooltip}" >#${project.id}</label> 
+	#end
+	#wikiBoxTitleNoEscape("$!{title}")
+    <table>
+    	<tbody>
+			#trOpen("lastRow")
+				#set($tooltip = $textFormatter.getMessage('project.createdBy.label'))
+				<td colspan="2" title="${tooltip}" style='white-space:nowrap'>
+					#set($tooltip = $textFormatter.getMessage('project.createdBy.label'))
+					$userPhotoTool.render(${project.createdBy}, false)
+					#linkUserShort(${project.createdBy})<span class="subtext" style='margin-left:10px;'>$textFormatter.formatDate($user, ${project.createdAt})</span>
+				</td>
+			#trClose()
+    		   		
+#*    		   		
+			#if(${project.startDate})
+				#trOpen()
+					<th>$textFormatter.getMessage('project.startDate.label'):</th><td>$textFormatter.formatDate($user, ${project.startDate})</td>
+				#trClose()
+			#end
+			#if(${project.endDate})
+				#trOpen()
+					<th>$textFormatter.getMessage('project.closeDate.label'):</th><td>$textFormatter.formatDate($user, ${project.endDate})</td>
+				#trClose()
+			#end
+			#if(${project.status})
+				#trOpen()
+					<th>$textFormatter.getMessage('project.status.label'):</th><td>#trimmedEscaped(${project.status})</td>
+				#trClose()
+			#end
+			#if(${project.category})
+				#trOpen()
+					<th>$textFormatter.getMessage('project.category.label'):</th><td>#trimmedEscaped(${textFormatter.getMessageWithDefault("project.category.${project.category}.label", ${project.category})})</td>
+				#trClose()
+			#end
+*#			
+    	</tbody>
+    </table>
+#wikiBoxClose()
+</div>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- $Revision$ $Date$ -->
+
+<!DOCTYPE form-validation PUBLIC
+	"-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+	"http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+	<global>
+		<constant>
+			<constant-name>filename</constant-name>
+			<constant-value>^[^\\/:*?&quot;&lt;&gt;|]+$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>projectName</constant-name>
+			<constant-value>^[^?\t\r\n&quot;&lt;&gt;&#59;]+$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>email_address</constant-name>
+			<constant-value>^.+@.+$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>tracker_name</constant-name>
+			<constant-value>^[^?\t\r\n&quot;&lt;&gt;&#59;]+$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>tracker_key</constant-name>
+			<constant-value>^[^?\t\r\n&quot;&lt;&gt;&#59;]+$</constant-value>
+		</constant>
+		<constant>
+			<constant-name>forum_name</constant-name>
+			<constant-value>^[^?\t\r\n&quot;&lt;&gt;&#59;]+$</constant-value>
+		</constant>
+	</global>
+
+	<formset>
+		<form name="labelForm">
+			<field property="displayName" depends="required">
+				<arg0 key="tag.name.label" />
+			</field>
+		</form>
+
+		<form name="addUpdateTrackerReportForm">
+			<field property="reportName" depends="required">
+				<arg0 key="error.report.name" />
+			</field>
+			<field property="reportDescription" depends="required">
+				<arg0 key="error.report.description" />
+			</field>
+<!--
+			<field property="priority" depends="required">
+				<arg0 key="error.report.priority" />
+			</field>
+			<field property="trackerId" depends="required">
+				<arg0 key="error.report.tracker" />
+			</field>
+-->
+		</form>
+
+		<form name="editWikiPageForm">
+			<field property="name" depends="required">
+				<arg0 key="docs.add.note.name" />
+			</field>
+		</form>
+
+		<form name="importTrackerAssignColumnsForm">
+			<field property="startImportAtRow" depends="required,integer,intRange">
+				<arg0 key="errors.import.startImportAtRow"/>
+				<arg1 name="intRange" key="${var:min}" resource="false"/>
+				<arg2 name="intRange" key="${var:max}" resource="false"/>
+				<var>
+					<var-name>min</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>10</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="miscellaneousForm">
+			<field property="notificationFrom" depends="required,mask">
+				<arg0 key="sysadmin.userRegistration.notificationFrom.label"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${email_address}</var-value>
+				</var>
+			</field>
+
+			<field property="notificationAddress" depends="required,mask">
+				<arg0 key="sysadmin.registration.notification.address"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${email_address}</var-value>
+				</var>
+			</field>
+		</form>
+
+		<form name="isqlForm">
+			<field property="sql_command" depends="required">
+				<arg0 key="sysadmin.isql.command" />
+			</field>
+		</form>
+
+		<form name="addCommentForm">
+			<field property="comment" depends="required">
+				<arg0 key="tracker.comment" />
+			</field>
+		</form>
+
+		<form name="addAttachmentForm">
+			<field property="description" depends="required">
+				<arg0 key="tracker.upload.comment" />
+			</field>
+		</form>
+
+		<form name="inboxSettingsForm">
+			<field property="name" depends="required">
+				<arg0 key="forum.admin.inbox.name" />
+			</field>
+			<field property="description" depends="required">
+				<arg0 key="forum.admin.inbox.description" />
+			</field>
+			<field property="account" depends="required">
+				<arg0 key="forum.admin.inbox.account" />
+			</field>
+			<field property="server" depends="required">
+				<arg0 key="forum.admin.inbox.server" />
+			</field>
+		</form>
+
+		<form name="configSysadminPeriodicalBuildForm">
+			<field property="hour" depends="required,integer,intRange">
+				<arg0 key="sysadmin.build.hour" />
+				<arg1 name="intRange" key="${var:min}" resource="false"/>
+				<arg2 name="intRange" key="${var:max}" resource="false"/>
+				<var>
+					<var-name>min</var-name>
+					<var-value>0</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>23</var-value>
+				</var>
+			</field>
+			<field property="minute" depends="required,integer,intRange">
+				<arg0 key="sysadmin.build.minute" />
+				<arg1 name="intRange" key="${var:min}" resource="false"/>
+				<arg2 name="intRange" key="${var:max}" resource="false"/>
+				<var>
+					<var-name>min</var-name>
+					<var-value>0</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>59</var-value>
+				</var>
+			</field>
+			<field property="period" depends="required,integer">
+				<arg0 key="sysadmin.build.period" />
+			</field>
+		</form>
+
+		<form name="configSysadminMailForm">
+			<field property="serverName" depends="required">
+				<arg0 key="sysadmin.mail.server"/>
+			</field>
+			<field property="hostName" depends="required">
+				<arg0 key="sysadmin.mail.hostname"/>
+			</field>
+			<field property="serverPort" depends="required,integer">
+				<arg0 key="sysadmin.mail.port"/>
+			</field>
+		</form>
+
+		<form name="renameDocumentForm">
+			<field property="name" depends="required,mask">
+				<arg0 key="docs.rename.name"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${filename}</var-value>
+				</var>
+			</field>
+		</form>
+
+   </formset>
+
+</form-validation>

@@ -1,0 +1,9 @@
+## $Id: zsolt 2009-11-27 16:11 +0100 23943:f5c76e8d52e5 cb-5.4 $
+
+#parse("notification_email_header.vm")
+
+${textFormatter.getMessage('wiki.notification.opened.title')}:
+
+#parse("wikipage_notification_email_body.vm")
+
+#parse("notification_email_footer.vm")

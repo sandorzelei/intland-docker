@@ -1,0 +1,2 @@
+#set($newTrackerItem = $textFormatter.getMessage("tracker.type.${trackerItem.typeName}.create.label"))
+#showProjectNameInSubjects("${textFormatter.getMessage('issue.created.subject')} ${trackerItem}")

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+	Deployment descriptor for WebLogic.
+
+	For details see:  http://download.oracle.com/docs/cd/E12839_01/web.1111/e13712/weblogic_xml.htm#insertedID0
+ -->
+<weblogic-web-app
+ xmlns="http://www.bea.com/ns/weblogic/weblogic-web-app"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.bea.com/ns/weblogic/weblogic-web-app
+                     http://www.bea.com/ns/weblogic/weblogic-web-app/1.0/weblogic-web-app.xsd">
+	<container-descriptor>
+		<prefer-web-inf-classes>false</prefer-web-inf-classes>	<!-- this is the default, setting true will cause class-loading problems -->
+		<servlet-reload-check-secs>-1</servlet-reload-check-secs><!-- better performance in production mode -->
+		<filter-dispatched-requests-enabled>false</filter-dispatched-requests-enabled>	<!-- fixes stackoverflow errors -->
+	</container-descriptor>
+	<context-root>/cb</context-root>
+	<session-descriptor>
+		<cookie-http-only>false</cookie-http-only> <!-- Required for Edit in Word applet -->
+		<cookie-name>WEBLOGIC_JSESSION_ID</cookie-name>
+	</session-descriptor>
+	<jsp-descriptor>
+		<page-check-seconds>-1</page-check-seconds>	<!-- better performance in production mode -->
+		<precompile>true</precompile>
+		<precompile-continue>true</precompile-continue>
+		<keepgenerated>false</keepgenerated>
+		<debug>false</debug>
+		<verbose>false</verbose>
+	</jsp-descriptor>
+</weblogic-web-app>

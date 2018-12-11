@@ -1,0 +1,26 @@
+<div class="${classes}">
+	#if(${renderMessageOnly})
+		$xssPreventionTools.sanitizeHtml(${exceptionMessage.toString()})
+	#else
+		${errorMessage}
+		<br/>
+		<div class="widget-error-details">
+			#if(${exception})
+				<div class="widget-rendering-exception #if ($!extraErrorClass) ${extraErrorClass} #end">
+					$xssPreventionTools.sanitizeHtml(${exception.toString()})
+				</div>
+			#elseif(${errorList})
+				<ul>
+					#foreach( $error in $errorList )
+					    <li>$xssPreventionTools.sanitizeHtml($error)</li>
+					  #end
+				</ul>
+			#end
+		</div>
+		<script type="text/javascript">
+			$(".widget-error-details-link").click(function() {
+				$(".widget-error-details").toggle();
+			});
+		</script>
+	#end
+</div>

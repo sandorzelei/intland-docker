@@ -1,0 +1,17 @@
+#wikiBoxOpen(${command}, "myReviewsPlugin")
+    #wikiBoxTitle("$textFormatter.getMessage('my.reviews.label')")
+    #if(${permissionIsMissingMessage})
+        <span class="warning" style="padding-left: 40px;">${permissionIsMissingMessage}</span>
+    #else
+        ${content}
+        <script type="text/javascript">
+            $(function() {
+                var pluginSelector = '#ajaxplugin_${pluginId}',
+                    baseUrl = '${ajaxRefreshURL}',
+                    anchorSelector = '.pagebanner>a,.pagelinks>a,table.reviews th>a';
+
+                codebeamer.AjaxRefreshingWikiPlugin.attachClickHandler($(pluginSelector), anchorSelector, baseUrl);
+            });
+        </script>
+    #end
+#wikiBoxClose()

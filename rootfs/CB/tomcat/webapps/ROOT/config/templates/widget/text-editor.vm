@@ -1,0 +1,6 @@
+<div class="form-field">
+	<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+	${editor}
+	<input type="hidden" name="uploadConversationId" value="$uploadConversationId"></input>
+	<input type="hidden" name="conversationId" value="$uploadConversationId"></input>
+</div>

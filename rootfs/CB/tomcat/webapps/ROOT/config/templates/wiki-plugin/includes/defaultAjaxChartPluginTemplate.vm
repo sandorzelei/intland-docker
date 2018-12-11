@@ -1,0 +1,44 @@
+## Renders the common parts for the ajax-refreshing plugin with time intervals
+#macro(renderAjaxRefreshingChartWithInterval $pluginName $defaultTitle)
+   	#parse("includes/intervalSelect.vm")
+
+	#define($chartControls)
+		#renderIntervalSelect("${pluginId}" "${pluginName}_${pluginId}.updateChart();" "$!{command.period}" "$!{command.grouping}")
+	#end
+
+	#wikiBoxTitle("$!{command.title}", "$defaultTitle", ${chartControls})
+
+    <script type="text/javascript">
+    	var ${pluginName}_${pluginId} = {
+    		updateChart: function() {
+    			var intervalUrlParams = getChartIntervalSelect_${pluginId}();
+
+        		var url = "${ajaxRefreshURL}";
+        		url += "&" + intervalUrlParams;
+
+    			ajaxPluginRendererSupport.updatePlugin('${contextPath}', '${pluginId}', url, ${command.width}, ${command.height});
+    		}
+    	}
+    </script>
+
+	<span id="chart_${pluginId}">
+ 		${chartSupport.chartMarkup}
+    </span>
+#end
+
+#macro(renderAjaxRefreshingPluginWithChartAndTable $pluginName $defaultTitle $tableMarkup)
+    #wikiBoxOpen(${command})
+    	## chart
+        #if(${command.chart})
+    		#renderAjaxRefreshingChartWithInterval("${pluginName}", "${defaultTitle}")
+        #end
+
+        ## table
+        #if(${command.table})
+        	#if(${command.chart} == false)
+        		#wikiBoxTitle("$!{command.title}", "${defaultTitle}")
+			#end
+			${tableMarkup}
+        #end
+    #wikiBoxClose()
+#end

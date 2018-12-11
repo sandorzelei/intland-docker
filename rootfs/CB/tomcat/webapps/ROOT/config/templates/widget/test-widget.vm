@@ -1,0 +1,26 @@
+<div id="${id}">
+${string}
+<br/>
+${integer}
+<br/>
+${project}
+<br/>
+${tracker}
+<br/>
+${team}
+<br/>
+${release}
+<br/>
+${trackerType}
+<br/>
+${user}
+<br/>
+${display}
+<br/>
+${showDropDownFilters}
+<br/>
+${seriespaint}
+<br/>
+${dateRange}
+<br/>
+</div>

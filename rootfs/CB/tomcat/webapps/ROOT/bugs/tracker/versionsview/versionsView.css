@@ -1,0 +1,678 @@
+/* css for versions (versionsView.jsp) */
+
+table.versions {
+	width: 100%;
+}
+
+table.versions td {
+	vertical-align: top;
+}
+
+table.versions td.rightColumn {
+	width: 20%;
+	padding-left: 15px;
+}
+
+
+div.version {
+	border: solid 1px #ababab;
+	margin-top: -1px;	/* this will "collapse" borders of the releases as they follow each other */
+}
+
+/* top level version */
+div.release {
+	margin-top: 15px;
+}
+
+div.firstRelease {
+	margin-top: 0;
+}
+
+/* child version aka sprint */
+div.sprint {
+}
+
+.versionHeader a.version, .versionHeader .version {
+	font-weight: bold;
+}
+
+.versionHeader .large-icon {
+	width: 32px;
+	height: 32px;
+	background-repeat: no-repeat;
+	margin: 0px 10px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.versionHeader .large-icon.backlog {
+	background-image: url("../../../images/newskin/action/agile/icon_backlog.png");
+}
+
+.versionHeader .large-icon.release {
+	background-image: url("../../../images/newskin/action/agile/icon_train_grey_32x32.png");
+}
+
+.versionHeader .large-icon.sprint {
+	background-image: url("../../../images/newskin/action/agile/icon_sprint_2.png");
+}
+
+.released .versionHeader .large-icon.release {
+	background-image: url("../../../images/newskin/action/agile/icon_train_green_32x32.png");
+}
+
+.released .versionHeader .large-icon.sprint {
+	background-image: url("../../../images/newskin/action/agile/icon_sprint_2.png");
+}
+
+.versionHeader .large-icon.sprint {
+	background-image: url("../../../images/newskin/action/agile/icon_sprint_20px.png");
+	width: 20px;
+	height: 20px;
+	background-size: cover;
+}
+
+.release .versionHeader a.version, .release .versionHeader .version {
+	font-size: 21px;
+}
+
+.sprint .versionHeader a.version, .sprint .versionHeader .version {
+	font-size: 14px;
+}
+
+.sprint.firstRelease .versionHeader a.version, .sprint .versionHeader span.version {
+	line-height: 24px;
+	vertical-align: middle;
+}
+
+.versionActionLinks {
+	float: right;
+	height: 105px;
+	margin-left: 15px;
+}
+.versionActionLinks .yuimenubar {
+	margin-bottom: 5px;
+}
+
+.versionActionLinks a {
+	font-weight: normal;
+	margin: 0px;
+}
+
+.versionActionLinks .yuimenuitem a {
+    margin-left: 0;
+}
+
+.versionHeader .dueDate, .versionHeader .plannedReleaseDate {
+	font-size: 11px;
+	font-weight: normal;
+	color: #5f5f5f;
+}
+
+.versionHeader .dueDate {
+	margin-left: 10px;
+	margin-top: 10px;
+	display: block;
+}
+
+.releaseTime {
+	margin-left: 10px;
+	font-size: 14px;
+}
+
+.version .late {
+	color: #b31317;
+}
+
+.version .description {
+	margin-top: 10px;
+}
+
+.version .progressbar {
+	float: left;
+}
+
+.version .progressbar, .version .miniprogressbar {
+	background-color: #ababab;
+	min-height: 15px;
+	overflow: hidden;
+}
+.version .progressbar label, .version .miniprogressbar label {
+	color: #fff;
+	padding-top: 0.1em;
+	font-size: 10px !important;
+	font-weight: normal !important;
+}
+.version .progressbar div {
+	background-color: #00a85d;
+}
+
+.version span.released {
+	font-weight: bold;
+	font-size: 85%;
+	color: #070;
+	text-transform: uppercase;
+}
+
+.version .loading {
+	margin-top: 10px;
+	display: none;
+}
+
+.version .statsNumbers {
+	float:left;
+	white-space: nowrap;
+}
+
+.version .statsNumbers .subtext{
+	margin-left: 10px;
+}
+
+/* filter widget inside the version block */
+.version .filterMenu {
+	float: right;
+	margin: 8px 10px;
+}
+.sprint .filterMenu {
+	margin-top: 0px;
+}
+.backlog .filterMenu {
+	margin-top: 0px;
+}
+
+.version .filterMenu * {
+	font-size: 11px;
+}
+
+.version .filterMenu .yui-menu-button {
+	background-image: url("../../../images/newskin/action/more-blue-xs.png");
+}
+
+.version .filterMenu .yui-menu-button button {
+	color: #0093b8;
+	text-decoration: none;
+	padding-right: 5px;
+}
+
+.version .filterMenu .yui-menu-button button:hover {
+	text-decoration: underline;
+}
+
+div.version table {
+ 	width: 100%;
+}
+
+div.version table tr td {
+	vertical-align: top;
+}
+
+.issuelist {
+}
+
+table.issuelist {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-bottom: none;
+	border-top: solid 1px #eeeeee;
+	padding: 0;
+}
+
+.backlog table.issuelist {
+	border-top: solid 1px #d1d1d1;
+}
+
+table.issuelist tr:hover {
+	background-color: #f5f5f5;
+}
+
+.issuelist td {
+	border-bottom: solid 1px #f5f5f5;
+}
+.issuelist td.priority {
+	padding-left: 10px;
+}
+
+.issuelist td.fixedWidth {
+	min-width: 30px;
+}
+
+.issuelist tr.last-child td {
+	border-bottom: none !important;
+}
+
+.versions table.issuelist tr td {
+	padding: 3px 20px 3px 5px;
+	font-size: 11px;
+	vertical-align: middle;
+}
+
+.issuelist tr td.issueIcon {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.issuelist tr.odd, .issuelist tr.even {
+	background: none;
+}
+
+.issuelist tr.resolvedOrClosed {
+	background-color: #ccffe8;
+	border-bottom: solid 1px white;
+}
+
+.issuelist tr.resolvedOrClosed td {
+	border-bottom: solid 1px white;
+}
+
+.issuelist span.testRunResultTablet {
+	margin-top: 0.2em;
+}
+
+
+.version table.issuelist td.issueName {
+	width: 60%;
+}
+
+.version table.issuelist td.issueName a {
+	font-size: 12px;
+}
+
+.version table.issuelist td.issueAssignedTo {
+	word-break: keep-all;
+}
+
+.version table.issuelist td.teamNames, .version table.issuelist td.teams {
+	width: 10%;
+	min-width: 100px;
+}
+
+.version table.issuelist td.issueKey a,
+.version table.issuelist td.issueKey span {
+	font-size: 11px !important;
+	white-space: nowrap;
+}
+
+.version table.issuelist td.storyPoints {
+	white-space: nowrap;
+}
+
+/* special colors for overdue and overtime parts */
+.version table.issuelist tr.overdue td.issueName a,
+.version table.issuelist tr.overtime td.issueName a,
+.version table.issuelist tr.overdue td.issueKey,
+.version table.issuelist tr.overtime td.issueKey {
+	color: #b31317;
+}
+
+.version .overdue,
+.version .overtime {
+		color: #b31317;
+}
+
+.version .progressOvertime .progressbar {
+	background-color: #b31317;
+}
+
+div.versionShortcuts {
+	padding: 0;
+}
+
+.versionShortcuts h1 {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+}
+
+div.versionShortcuts label {
+	font-size: 80%;
+}
+
+div.versionShortcuts ul {
+	list-style: none;
+	margin: 10px 0;
+	padding: 0;
+}
+
+div.versionShortcuts ul li .released {
+	margin-left: 10px;
+	font-size: 11px;
+	color: #00a65d;
+	display: inline;
+	background: none;
+}
+
+div.versionShortcuts ul li.toggle-by-released {
+	display: none;
+}
+
+.releasesControls {
+	display: table;
+	border-top: 1px solid #f5f5f5;
+	border-bottom: 1px solid #f5f5f5;
+}
+
+.releasesControls .row {
+	display: table-row;
+}
+
+.releasesControls .cell {
+	display: table-cell;
+}
+
+.plannerLink {
+	padding-left: 29px;
+	padding-top: 10px;
+	background: url(../../../images/newskin/action/agile/icon_planner_blue.png) no-repeat left center;
+	margin-right: 3em;
+	height: 26px;
+	display: inline-block;
+}
+
+.planReleasesLink {
+	background: url(../../../images/newskin/action/agile/icon_planner_blue.png) no-repeat left center;
+}
+
+.openBacklog {
+	background: url(../../../images/newskin/action/agile/icon_backlog_blue.png) no-repeat left center;
+}
+
+#showReleasedLabel {
+	white-space: nowrap;
+}
+
+#showReleased {
+	vertical-align: text-bottom;
+	margin: 0 5px 0 0;
+	padding: 0;
+}
+
+a.expander,
+img.jumpToBacklog {
+	float: left;
+	margin: 2px 5px 3px 0px;
+	cursor: pointer;
+}
+
+a.expander {
+	background: url('../../../images/sprite-collapse-expand.png') no-repeat 5px 8px;
+	padding: 5px 5px 8px 5px;
+	margin: -5px 0 0 -5px;
+	width: 9px;
+	height: 9px;
+	position: relative;
+	top: 3px;
+}
+
+.sprint a.expander {
+	top: 0px;
+}
+
+.backlog a.expander {
+	top: 8px;
+}
+
+a.expander.expanded {
+	background-position: -9px 8px;
+}
+
+.firstRelease a.expander {
+	margin-top: 0;
+}
+
+.versionHeaderWithCenteredFragment .leftPart {
+	width: 35%;
+	border-right: solid 1px #eee;
+	margin-right: 20px;
+	min-height: 76px;
+}
+.release .versionHeaderWithCenteredFragment .leftPart {
+	min-height: 105px;
+	flex-basis: 100%;
+}
+
+.headerCenteredFragment {
+	/* this makes it center aligned, see: http://stackoverflow.com/questions/1232096/how-to-horizonatally-center-a-floating-element-of-a-variable-width */
+	/*display: table;*/
+	margin: 0 auto;
+	width: 100%;
+	text-align: left;
+}
+
+.versionHeader {
+	padding: 10px;
+}
+.release .versionHeader, .releaseBacklog .versionHeader {
+	background-color: #f5f5f5;
+}
+
+.released .versionHeader {
+	background-color: #ccffe8;
+}
+.versionHeader .subtext {
+	color: #5f5f5f;
+}
+
+.newskin .versionHeader .subtext ul,
+.newskin .versionHeader .subtext li,
+.newskin .versionHeader .subtext ol {
+	font-size: 11px;
+	color: #5f5f5f;
+}
+
+.versionHeader .menuArrowDown {
+	margin: 0;
+}
+
+/* the statistics at the middle */
+.miniprogressbar {
+	display: inline-block;
+}
+
+.accumulatedStats {
+	margin-bottom:6px;
+}
+
+.accumulatedStats span {
+	width: 8em;
+	white-space: nowrap;
+	display: inline-block;
+	font-size: 11px;
+	color: #5f5f5f;
+	text-align: left;
+}
+
+.accumulatedStats .miniprogressbar {
+	margin-right: 10px;
+}
+
+.accumulatedStats span.overtimeOrOverdue {
+	color: #ae170e;
+}
+
+.versionWithChildren .versionHeader {
+	border-bottom:none;
+}
+
+table.issuelist tr.even:hover img.menuArrowDown,
+table.issuelist tr.odd:hover img.menuArrowDown {
+	background-color: transparent;
+	cursor: default;
+}
+
+table.issuelist .issueTargetRelease {
+	white-space: nowrap;
+}
+
+.actionBar .versionViewControlsContainer {
+	display: inline-block;
+	margin-right: 10px;
+	vertical-align: middle;
+	font-size: 12px;
+	white-space: nowrap;
+	margin-top: -4px;
+}
+
+.actionBar .versionViewControlsContainer > label {
+	vertical-align: middle;
+	font-weight: normal;
+	font-size: 11px;
+}
+
+.actionBar .versionViewControlsContainer > label input {
+	margin-right: 2px;
+	vertical-align: middle;
+}
+
+.actionBar .versionViewControlsContainer > label span {
+	vertical-align: inherit;
+	color: #707070;
+}
+
+.actionBar .versionViewControlsContainer .ajaxLoader {
+	margin-right: 5px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.actionBar .versionFilterContainer {
+	display: inline-block;
+	position: relative;
+	top: 0;
+	color: #0093b8;
+	font-weight: bold;
+	height: 22px;
+}
+
+.actionBar .versionFilterContainer .filterMenu select {
+	color: black;
+	height: 18px;
+	min-width: 225px;
+	visibility: hidden;
+}
+
+.versionHeader a.showArtProgressLink {
+	font-size: 11px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.versionHeader .art-progress-box {
+	float: right;
+}
+
+.art-progress-dialog {
+	padding: 0px;
+	border: 0px;
+}
+
+.art-progress-dialog .ui-dialog-titlebar {
+	background-color: #454545;
+	background-image: none;
+	border: 0px;
+}
+
+#versionsTable .miniprogressbar {
+	width: 60px;
+}
+
+.art-progress-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
+	background-color: transparent !important;
+	background-image: none;
+	border: 0px !important;
+}
+.art-progress-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close .ui-icon-closethick {
+	background-image: url("../../../images/newskin/action/closewindow-round-bgwhite.png");
+	background-position: 0 0;
+}
+
+.art-progress-dialog .miniprogressbar label {
+	color: white;
+	padding-top: 2px;
+}
+
+.art-progress-dialog .progressBarGray {
+	padding-bottom: 2px;
+}
+
+.art-progress-dialog .title-icon {
+	background-image: url("../../../images/newskin/action/agile/icon_train_popup.png");
+	width: 32px;
+	height: 32px;
+	background-size: cover;
+	display: inline-block;
+	float: left;
+	margin-right: 10px;
+}
+
+.art-progress-dialog .ui-dialog-title {
+	padding-top: 7px;
+}
+
+.art-process-dialog .version-name {
+	margin-bottom: 8px;
+}
+
+.art-progress-dialog .version-name a {
+	color: #0093b8;
+	text-decoration: none;
+	padding-bottom: 8px;
+	font-size: 17px;
+}
+
+.versionHeader .release-notes-container {
+	margin-top: 10px;
+}
+
+.versionHeader .release-notes-container a {
+	font-size: 11px;
+}
+
+.versions table.treetable tr.collapsed span.indenter a {
+	background-image: url("../../../images//newskin/action/content-more.png");
+}
+
+.versions table.treetable tr.expanded span.indenter a {
+		background-image: url("../../../images/newskin/action/content-less.png");
+}
+
+.miniprogressbar {
+	div.progressBarGreen, div.progressBarGray {
+		padding-bottom: 0px;
+	}
+}
+
+.versionQuickAction {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 12px;
+	width: 12px;
+	display: none;
+}
+
+.versionQuickAction:hover img {
+	opacity: 0.2;
+}
+
+.versionHeader:hover .versionQuickAction {
+	display: block;
+}
+
+.versionMoreMenu {
+	padding-bottom: 5px;
+}
+
+[data-role=status-icon] {
+	cursor: pointer;
+}
+
+[data-role=status-menu] {
+	position: relative;
+	/* Workaround to force CSS calc function instead of LESS calc function. */
+	top: calc(~"100% + 5px");
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+}
+
+.versionHeaderWithCenteredFragment {
+	display: flex;
+}

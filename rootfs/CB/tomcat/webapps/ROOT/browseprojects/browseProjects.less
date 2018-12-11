@@ -1,0 +1,724 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+a.project-card {
+	cursor: default;
+	padding: 10px;
+	//margin: 5px;
+
+	&.size-small {
+		width: 70px;
+		height: 70px;
+
+		.project-name {
+			max-height: 50px;
+			max-width: 58px;
+		}
+	}
+
+	&.size-small, &.size-medium {
+		.project-icon {
+			margin-left: 4px;
+			margin-top: -7px;
+			display: block;
+
+			img {
+				width: 22px;
+			}
+		}
+
+		.project-name {
+			left: 18px;
+		}
+	}
+
+	&.size-medium {
+		width: 170px;
+		height: 70px;
+
+		.project-name {
+			max-height: 50px;
+			max-width: 155px;
+		}
+	}
+
+	&.size-large {
+		width: 170px;
+		height: 170px;
+
+		.project-name {
+			font-size: 14px;
+			width: 165px;
+			max-height: 50px;
+			top: 125px;
+			text-align: center;
+		}
+
+		.project-icon {
+			position: absolute;
+			left: 55px;
+			top: 50px;
+			img {
+				width: 64px;
+			}
+		}
+
+		.knob {
+			top: 72px;
+		}
+	}
+
+	.knob {
+		width: 3px;
+		height: 15px;
+		float: left;
+		top: 28px;
+		position: relative;
+		left: -5px;
+	}
+
+	span.project-name {
+		font-size: 13px;
+		color: white;
+		padding-bottom: 10px;
+		font-weight: bold;
+		bottom: -2px;
+		position: absolute;
+		left: 10px;
+		cursor: pointer;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.yuimenubaritemlabel {
+		position: absolute;
+		bottom: 10px;
+		right: 5px;
+		z-index: 50;
+
+		.menuArrowDown {
+			background-image: url("../images/newskin/action/projectbrowser/button_dropdown.png");
+			height: 16px;
+			visibility: hidden;
+			width: 19px;
+		}
+	}
+
+	&:hover {
+		.details-arrow {
+			display: inline;
+		}
+		.yuimenubaritemlabel .menuArrowDown {
+			visibility: visible;
+		}
+	}
+
+	&.in-front .yuimenubaritemlabel {
+		display: none;
+	}
+
+	.details-arrow {
+		display: none;
+		width: 16px;
+		height: 16px;
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		background-image: url("../images/newskin/action/projectbrowser/arrow_white.png");
+		cursor: pointer;
+	}
+
+	.project-icon {
+		background-color: transparent;
+	}
+}
+
+.predefined-color {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 2px;
+}
+
+#project-categories .set {
+	margin-bottom: 30px;
+}
+
+.set {
+	margin-bottom: 10px;
+	margin-left: -20px;
+	padding-left: 20px;
+
+	div.set-container {
+		width: 100%;
+
+		&.highlighted {
+			background-color: #ccffe8;
+		}
+	}
+
+	div.set-header {
+		font-size: 28px;
+		margin-bottom: 3px;
+		margin-top: 24px;
+
+		span.add-project-icon, span.remove-set-icon {
+			display: inline-block;
+			width: 12px;
+			height: 12px;
+			margin-top: 6px;
+			cursor: pointer;
+			margin-left: 6px;
+
+			&.add-project-icon {
+				background-image: url("../images/newskin/action/add-new-s.png");
+			}
+
+			&.remove-set-icon {
+				background-image: url("../images/newskin/action/closewindow-round-bgwhite.png");
+			}
+		}
+
+		span.working-set-name {
+			border: 1px solid transparent;
+			padding: 2px;
+
+			&:hover {
+				border: 1px solid #d1d1d1;
+			}
+		}
+
+
+	}
+
+	&.disable-controls {
+		.set-header {
+			.remove-set-icon,
+			.add-project-icon {
+				display: none;
+			}
+		}
+	}
+
+	.helper-messages {
+		display: inline-block;
+		font-size: 12px;
+		vertical-align: middle;
+		margin-left: 1em;
+		color: #5f5f5f;
+		.help-message {
+			display: block;
+		}
+		.validation-error {
+			color: red;
+			display: none;
+		}
+		&.invalid {
+			.validation-error {
+				display: inline-block;
+			}
+		}
+	}
+}
+
+.filtered-out {
+	display: none !important;
+}
+
+.categories {
+	padding: 10px;
+	padding-top: 0px;
+}
+
+.new-set-placeholder {
+	background-color: transparent;
+	border: 1px solid transparent;
+	height: 30px;
+	margin-bottom: 10px;
+
+	.insert-here-hint {
+		display: none;
+		line-height: 30px;
+		vertical-align: middle;
+		margin-left: 0.5em;
+		color: #5b5b5b;
+		background: url("../images/newskin/action/add-new-s.png") no-repeat 0 center;
+		padding-left: 17px;
+	}
+
+	&:hover {
+		background-color: #ccffe8;
+		.insert-here-hint {
+			display: block;
+		}
+	}
+
+	&.first {
+		height: 14px;
+		margin-bottom: -10px;
+		margin-top: 10px;
+		background-image: url("../images/newskin/action/add-new-s.png");
+		background-repeat: no-repeat;
+		cursor: pointer;
+
+		&:hover {
+			background-color: white;
+		}
+	}
+}
+
+.is-dragging .new-set-placeholder:hover {
+	background-color: white;
+	.insert-here-hint {
+		display: none;
+	}
+}
+
+.knob {
+	background-image: url(../images/newskin/action/agile/dragndrop_grip_flat.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+	cursor: move;
+}
+
+.category-list .category-label, .project-status-option {
+	font-size: 13px;
+	margin-right: -15px;
+	border-bottom: 1px solid #d1d1d1;
+	padding: 10px;
+	background-color: white;
+
+	&.last {
+		border-bottom: 0px;
+	}
+}
+
+.project-status-list, category-list {
+	padding-right: 15px;
+	line-height: 22px;
+}
+
+.project-status-list {
+	overflow: hidden;
+}
+
+.category-list {
+	padding-right: 15px;
+	line-height: 22px;
+	height: 95%;
+	overflow: auto;
+
+	.category-label {
+		.knob {
+			background-color: #5f5f5f;
+			height: 35px;
+			width: 9px;
+			float: left;
+			background-position: 3px;
+			margin-left: -9px;
+			margin-top: -5px;
+			margin-bottom: -5px;
+		}
+
+		&.acceptsDrop:hover {
+			background-color: darken(#ccffe8, 10%) !important;
+		}
+
+		&.highlighted:hover {
+			border-left: 0px;
+		}
+
+		&.acceptsDrop {
+			background-color: #ccffe8;
+		}
+
+		label {
+			white-space: nowrap;
+		}
+	}
+
+	.set-count {
+		position: relative;
+	}
+
+	input[type=checkbox] {
+		margin-left: 10px;
+	}
+
+	h4 {
+		padding-right: 5px;
+		padding-top: 3px;
+		font-size: 18px;
+		font-weight: normal
+	}
+
+	&#workingSet-togglers {
+		display: none;
+	}
+
+	label {
+		display: inline-block;
+		max-width: 62%;
+		vertical-align: text-bottom;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-left: 10px;
+	}
+}
+
+.header .filter-text {
+	padding: 2px;
+	margin-top: 1px;
+	font-size: 12px;
+	width: 170px;
+}
+
+.ui-dialog {
+	border: 0px;
+	padding: 0px;
+	background-color: white;
+	margin-left: 10px;
+
+	.ui-dialog-titlebar {
+		background-image: none;
+		background-color: #ffab46;
+		padding: 3px 5px;
+
+		.ui-dialog-titlebar-close, .ui-dialog-titlebar-close.ui-state-hover {
+			margin-top: -29px;
+			margin-right: -19px;
+			background-image: url("../images/newskin/action/projectbrowser/button_close.png") !important;
+			background-color: transparent !important;
+			background-position: 0 0 !important;
+			background-repeat: no-repeat !important;
+			width: 32px;
+			height: 34px;
+			border: 0px !important;
+
+			.ui-icon-closethick {
+				display: none;
+			}
+		}
+	}
+
+	.accumulatedStats .miniprogressbar {
+		div.progressBarGreen, div.progressBarGray {
+			padding-bottom: 0px;
+		}
+	}
+
+	#versionStatsBox tr.data-row:hover td.firstColumn .state-indicator {
+		background: none;
+	}
+}
+
+.ui-dialog-content {
+	#projectSelectorList {
+		font-size: 13px;
+		line-height: 22px;
+		list-style-type: none;
+		margin-left: -5px;
+		max-height: 350px;
+		overflow: auto;
+		margin-top: 5px;
+		margin-bottom: 10px;
+	}
+}
+
+.in-front {
+	z-index: 300;
+	margin-left: -10px;
+}
+
+#rightPane {
+	height: 97% !important;
+	overflow-x: hidden !important;
+
+	.ditch-tab-skin-cb-box {
+		height: 100%;
+	}
+
+	#project-browser-tabs {
+		height: 100%;
+		position: relative;
+		left: 315px;
+		float: left;
+		width: 85%;
+
+		.ditch-tab-wrap {
+			height: 29px;
+			position: fixed;
+			left: 315px;
+			background-color: white;
+			border-bottom: 1px solid #d1d1d1;
+			width: 50%;
+			margin-top: -30px;
+			z-index: 10;
+
+			#new-project-link, #export-link {
+				top: 7px;
+				position: relative;
+				float: left;
+			}
+
+			#new-project-link {
+				margin-left: 22px;
+			}
+
+			#export-link {
+				margin-left: 0px;
+			}
+		}
+
+		.ditch-tab {
+			font-weight: normal;
+			height: 13px;
+			border: 0px;
+			margin-right: 1px;
+
+			&.ditch-focused {
+				background-color: #5f5f5f;
+				color: white;
+			}
+
+			&.ditch-unfocused {
+				background-color: #d1d1d1;
+				margin-right: 1px;
+			}
+		}
+
+		.ditch-tab-pane-wrap {
+			padding-top: 29px;
+			overflow: visible;
+			border-width: 0px;
+		}
+
+		span#opener-west {
+			top: -20px;
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+
+		.tab-placeholder {
+			width: 100%;
+			height: 29px;
+			position: relative;
+			border-bottom: 1px solid #d1d1d1;
+		}
+	}
+
+}
+
+.IE8 #rightPane #project-browser-tabs {
+	position: absolute;
+}
+
+div#panes #centerDiv {
+	height: 103% !important;
+}
+
+.project-list {
+	list-style: none;
+	margin-left: -30px;
+
+	li {
+		float: left;
+		width: 33%;
+		margin-bottom: 10px;
+	}
+}
+
+#rightPane #left-content {
+	float: left;
+	height: 80%;
+	width: 315px;
+	min-width: 315px;
+	position: fixed;
+	border-right: 1px solid #d1d1d1;
+	background-color: white;
+	overflow: hidden;
+
+	input[type=checkbox] {
+		margin-top: 5px;
+		float:  right;
+	}
+
+	.actionBar {
+		padding: 4px 10px 10px 10px;
+		height: 15px;
+
+		.actionLink {
+			float: right;
+		}
+
+		#project-filter {
+			color: #1e1e1e;
+			position: static;
+			margin: 0;
+			height: 11px;
+			&:-moz-placeholder {
+				color: #1e1e1e;
+			}
+			&:-ms-input-placeholder {
+				color: #1e1e1e;
+			}
+			&::-webkit-input-placeholder {
+				color: #1e1e1e;
+			}
+		}
+	}
+
+	.actionBar.header {
+		border-bottom: 1px solid #d1d1d1;
+		padding: 6px 10px 6px 10px;
+
+		a {
+			font-weight: normal;
+			text-transform: uppercase;
+			font-size: 12px;
+		}
+	}
+
+	.storyPointsLabel {
+		margin-top: 5px;
+		float: right;
+	}
+
+	.toggler .storyPointsLabel {
+		float: right;
+	}
+
+	#accordion-container {
+		overflow: auto;
+		height: 89%;
+		width: 100%;
+
+		.accordion-content.opened {
+			border-bottom: 0px;
+		}
+	}
+}
+
+.set-container.acceptsDrop:hover {
+	background-color: darken(#ccffe8, 10%) !important;
+}
+
+.color-filter {
+	margin-top: 10px;
+
+	&.property-color {
+		text-align: center;
+	}
+}
+
+.project-status-list div.switch {
+	text-align: left;
+	white-space: nowrap;
+	margin-top: 10px;
+
+	a {
+		color: #5f5f5f;
+		background-color: #d1d1d1;
+		font-size: 11px;
+		cursor: pointer;
+
+		&.active {
+			font-weight: normal;
+			background-color: white;
+			color: black;
+		}
+	}
+}
+
+.treeFilterBox {
+	position: relative;
+	top: -4px;
+	width: 44%;
+}
+
+.project-limit-exceeded-dialog {
+	box-sizing: border-box;
+	> .ui-dialog-titlebar {
+		height: 50px;
+		background: #454545 url('../images/newskin/cb_logo_small_dark.png') no-repeat center left;
+		border: 0;
+	}
+	> .ui-dialog-content {
+		background: white url('../images/newskin/guy_with_machine.png') no-repeat bottom right !important;
+		background-position: 330px 180px !important;
+		padding: 0;
+		h1, p, section {
+			padding: 0 20px;
+		}
+		p {
+			margin-right: 190px;
+			line-height: 1.5em;
+			font-size: 17px;
+		}
+		button {
+			margin-left: 20px;
+			&.visit-shop-button {
+				outline: none;
+				padding: 0.7em 1.2em;
+				font-weight: bolder;
+				font-size: 14px !important;
+				margin-top: 0.5em;
+			}
+		}
+		.visit-shop-message {
+			font-size: 22px;
+			text-align: center;
+			display: block;
+			width: 250px;
+			margin-left: 80px;
+			margin-top: 40px;
+		}
+		section.head {
+			border-bottom: 1px solid #bbb;
+			padding-bottom: 1em;
+			padding-top: 1.5em;
+			h1 {
+				padding: 0;
+				margin: 0;
+				font-size: 26px;
+			}
+			p {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+span.join-button {
+	background-image: url("../images/newskin/action/projectbrowser/icon_user_join.png");
+	width: 15px;
+	height: 11px;
+	display: inline-block;
+
+	&.leave {
+		background-image: url("../images/newskin/action/projectbrowser/icon_user_leave.png");
+		width: 16px;
+		height: 16px;
+	}
+}
+
+a.make-default-link {
+	float: right;
+ 	margin-top: 7px;
+}
+
+.project-color-menu-item .context-menu-list {
+	min-width: 20px !important;
+}

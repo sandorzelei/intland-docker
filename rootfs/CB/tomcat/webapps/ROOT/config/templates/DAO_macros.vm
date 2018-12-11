@@ -1,0 +1,82 @@
+## Special Velocity macros for the Persistence Layer
+
+#macro(concat $first $second)
+	#if( ${DB_ENGINE} == "mysql" )
+		CONCAT(${first}, ${second})
+    #else
+		(${first} || ${second})
+    #end
+#end
+
+#macro(intToChar $int)
+	#if( ${DB_ENGINE} == "oracle" )
+		TO_CHAR(${int})
+    #elseif( ${DB_ENGINE} == "derby" )
+		RTRIM(CAST(${int} AS CHAR(10)))
+    #else
+		${int}
+    #end
+#end
+
+#macro(group_csv $value $orderBy)
+	#if( ${DB_ENGINE} == "oracle" )
+   		LISTAGG(${value}, ',') WITHIN GROUP (${orderBy})
+     #elseif( ${DB_ENGINE} == "mysql" )
+		GROUP_CONCAT(${value} ${orderBy} SEPARATOR ',')
+    #else
+		GROUP_CONCAT(${value})
+    #end
+#end
+
+#macro(checkBits $mask $bits)
+	#if( ${DB_ENGINE} == "oracle" )
+		BITAND(${mask}, ${bits})
+    #elseif( ${DB_ENGINE} == "mysql" )
+		(${mask} &amp; ${bits})
+    #else
+		check_bits(${mask}, ${bits})
+    #end
+#end
+
+#macro(checkFlags $bits)
+   #checkBits('flags', ${bits})
+#end
+
+#macro(checkTaskFlags $bits)
+   #checkBits('TASK.flags', ${bits})
+#end
+
+#macro(checkChildFlags $bits)
+   #checkBits('CHLD.flags', ${bits})
+#end
+
+#macro(checkProjFlags $bits)
+   #checkBits('PRJ.flags', ${bits})
+#end
+
+#macro(checkRevStatusId $bits)
+   #checkBits('REV.status_id', ${bits})
+#end
+
+#macro(checkTaskRevisionFlags $revision $bits)
+	#checkBits("task_numeric_field_value_at(TASK.id, 85, ${revision}, TASK.flags)", ${bits})
+#end
+
+#macro(checkOldHistFlags $bits)
+   #checkBits('wiki_link_id(CAST(HIS.old_value AS CHAR(10)))', ${bits})
+#end
+
+#macro(checkNewHistFlags $bits)
+   #checkBits('wiki_link_id(CAST(HIS.new_value AS CHAR(10)))', ${bits})
+#end
+
+#macro(clobToString $field)
+    #if( ${DB_ENGINE} == "oracle" )
+        dbms_lob.substr(${field}, 1000, 1)
+    #elseif( ${DB_ENGINE} == "derby" )
+        CAST(SUBSTR(${field}, 1, 1000) AS VARCHAR(1000))
+    #else
+        ${field}
+    #end
+#end
+

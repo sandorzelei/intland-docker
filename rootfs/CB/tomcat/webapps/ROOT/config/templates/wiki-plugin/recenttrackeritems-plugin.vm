@@ -1,0 +1,32 @@
+#wikiBoxOpen(${command})
+    <table>
+    	<thead>
+			<tr><th>#if($isCurrentProject)${project.name} - #end $textFormatter.getMessage('tracker.recent.issues.label')</th></tr>
+    	</thead>
+    	<tbody>
+        	#if (${list.size()} != 0)
+        		#foreach ($item in $list )
+        			#trOpen()
+            			<td width="99%">
+            				<a href="${contextPath}${item.trackerItem.getUrlLink()}">
+            					$textFormatter.escape(${textFormatter.abbreviate(${item.trackerItem.getShortDescription()}, 30)})
+            				</a>
+            				$actions.get($item.eventType) $textFormatter.getMessage('document.lastModifiedBy.short')
+            				#if( ${item.submitter} )
+            					#linkUserShort( ${item.submitter} )
+            				#else
+            					#bold( $!{item.submitterName} )
+            				#end
+            				<br/>
+            				<span class="subtext">$textFormatter.formatDate(${user}, ${item.submittedAt})</span>
+            			</td>
+        			#trClose()
+        		#end
+        	#else
+        		#trOpen()
+        			#tdText("$textFormatter.getMessage('tracker.recent.issues.none')")
+        		#trClose()
+        	#end
+    	</tbody>
+    </table>
+#wikiBoxClose()

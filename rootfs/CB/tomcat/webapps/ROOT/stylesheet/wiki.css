@@ -1,0 +1,655 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+.wikilayout {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.wikilayout td {
+	vertical-align: top;
+}
+
+.wikilayout .main {
+	padding-right: 10px;
+}
+
+.wikilayout .navigation {
+	width:20%;
+	border-left: 1px solid #E5E5E5;
+	padding: 0;
+}
+.wikilayout .navigationHeader {
+	padding: 7px 10px;
+	font-size: 13px;
+	font-weight: bold;
+	border-bottom: 1px solid #E5E5E5;
+	color: #2b2b2b;
+}
+
+#wikiPageContent.withNavigationBar {
+	height: 100%;
+	margin-left: 0 !important;
+}
+
+#wikiPageContent.withNavigationBar .wikilayout {
+	height: 100%;
+	table-layout: fixed;
+}
+
+#wikiPageContent.withNavigationBar .wikilayout .main {
+	padding: 0;
+}
+
+#wikiPageContent.withNavigationBar .wikilayout .mainContainer {
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 0 20px 20px 15px;
+}
+
+.wikiNavigationBar {
+	margin: 10px;
+	white-space: normal;
+}
+
+/* Wiki page decorators */
+
+.wiki-pagetitle {
+	font-size: 16pt;
+	font-weight: bold;
+	padding: 10px;
+}
+
+/* Wiki-specific headings */
+
+#pagecontent h1 {
+  border-bottom: 3px solid #CCC;
+  padding: 7px 2px 7px 0px;
+}
+
+#pagecontent h2 {
+	border-bottom: 3px solid #CCC;
+	padding: 5px 2px 5px 0px;
+}
+
+#pagecontent h3 {
+	border-bottom: 2px solid #CCC;
+	padding: 3px 2px 3px 0px;
+}
+
+#pagecontent h4 {
+	border-bottom: 1px solid #CCC;
+	padding: 2px 2px 2px 0px;
+}
+
+#pagecontent h5 {
+  border-bottom: 1px solid #CCC;
+  padding: 1px 2px 1px 0px;
+}
+
+#pagecontent hr {
+	border: none;
+	color: #AAA;
+	background-color: #AAA;
+	height: 2px;
+}
+
+/* "Edit section" links */
+
+#pagecontent span.editsection, #pagecontent span.editsection a {
+	font-size: 8pt;
+	font-weight: normal;
+}
+
+#pagecontent span.editsection {
+	float: right;
+	background-color: white;
+}
+
+.highlighted:hover span.editsection,
+.highlighted:hover span.editsection * {
+	background-color: #E5ECF9 !important;
+}
+
+.wikiSectionEditor {
+	margin: 10px 10px 15px 10px;
+}
+
+.wikiSectionEditor .ditch-tab-pane-wrap {
+	background-color: #FFFFFF;
+}
+
+/* Interwiki links */
+span.interwikilink { /* wrapper around a link and its image */
+	white-space: nowrap;
+}
+
+.wikiNavigationBar span.interwikilink { /* wrap the links in the navigation box */
+	white-space: normal !important;
+}
+
+span.interwikilink img {
+	vertical-align: text-bottom;
+}
+
+/* Wiki-specific preformatted text */
+
+pre.wiki {
+	margin: 1em 2em 1em 2em;
+	background: #f0f0f0;
+	border: 1px dotted #3c78b5;
+	padding: 2px;
+}
+
+/* Wiki-specific table */
+
+table.wikitable {
+	border: none;
+	background: #E5E5E5;
+	border-spacing: 1px;
+	border-collapse: separate;
+}
+
+table.wikitable tr /* even rows has no css class on wikitable */{
+	background: #FFF;
+}
+
+.displaytag table.wikitable tr.odd,
+table.wikitable tr.odd,
+.displaytag table.wikitable tr.odd:hover,
+table.wikitable tr.odd:hover {
+	background: #FFFFFF;
+}
+
+table.wikitable th, table.wikitable td {
+	border: none;
+	color: #000;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+table.wikitable th {
+	background: #F5F5F5;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+/* TODO: would be cleaner is the too wide selectors in newskin.css is fixed */
+.newskin .wikiContent table.wikitable th {
+	background: #F5F5F5;
+	border: none;
+}
+
+/* Tabbed section, see http://doc.jspwiki.org/2.4/wiki/HowToCreateTabbedSections */
+
+.tabs {
+	margin: 0;
+	padding: 1em;
+	border: 1px solid #778A98;
+	border-top: none;
+}
+
+.tabmenu {
+	margin: 0;
+	padding: 0.25em 0 0.25em 1px;
+	border-bottom: 1px solid #778A98;
+	font-size : 10pt;
+}
+
+.tabmenu span {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+/**
+ * Modify this to change an appearance of all NOT active tabs.
+ * Related class in  CB-Style.css: .ditch-tab-skin-cb-box .ditch-tab-wrap .ditch-unfocused a:link
+ */
+.tabmenu span a {
+	color: #777777;
+	margin: 0 0 0 -1px;
+	padding: 0.25em 20px;
+	text-decoration: none;
+	cursor: pointer;
+	border: 1px solid #C0C0C0;
+	border-bottom:none;
+	background:transparent url(../images/cb_box_tab_bg_unfocus_right.gif) 100% 0 no-repeat;
+}
+
+/**
+ * Modify this to change an appearance of all active tabs.
+ * Related class in CB-Style.css: .ditch-tab-skin-cb-box .ditch-tab a:link
+ */
+.tabmenu .activetab {
+	color: #777777;
+	font-weight: bold;
+	background: white;
+	cursor: default;
+	border: 1px solid #778A98;
+	border-bottom: 1px solid white;
+	background:transparent url(../images/cb_box_tab_bg_focus_right.gif) 100% 0 no-repeat;
+}
+
+.edit .tabmenu a {
+	background: white;
+}
+
+.edit .tabmenu .activetab {
+	background: #D9E8FF;
+	border-bottom: 1px solid #d9e8ff;
+}
+
+.tabmenu .alerttab a, .edit .tabmenu .alerttab a {
+	color: white;
+	background: red;
+}
+
+.tabmenu .alerttab .activetab, .edit .tabmenu .alerttab .activetab {
+	color: red;
+	background: #D9E8FF;
+	border-bottom: 1px solid #d9e8ff;
+}
+
+/* JSPWikiStyles, see http://doc.jspwiki.org/2.4/wiki/JSPWikiStyles */
+
+div.small,
+span.small {
+	font-size: 8pt;
+}
+
+div.sub,
+span.sub {
+	font-size: 7pt;
+	vertical-align: sub;
+}
+
+div.sup,
+span.sup {
+	font-size: 7pt;
+	vertical-align: super;
+}
+
+div.strike,
+span.strike {
+	text-decoration: line-through;
+}
+
+div.center,
+span.center {
+	text-align: center;
+}
+
+div.ltr,
+span.ltr {
+	direction: ltr;
+}
+
+div.rtl,
+span.rtl {
+	direction: rtl;
+}
+
+div.commentbox,
+span.commentbox {
+	float: right;
+	width: 20%;
+	border: 2px solid #E5E5E5;
+	background: #F5F5F5;
+	font-size: 7pt;
+	padding: 4px;
+	margin-left: 4px;
+}
+
+div.commentbox ul, div.commentbox ol,
+span.commentbox ul, span.commentbox ol {
+	padding-left: 1em;
+	margin-left: 4px;
+}
+
+/* Collapsable list, see http://doc.jspwiki.org/2.4/wiki/HowToCreateCollapsableLists */
+
+div.collapse ul, div.collapse ol,
+span.collapse ul, span.collapse ol {
+		margin-left: 1.5em;
+	padding:0;
+}
+
+div.collapse * ul, div.collapse * ol,
+span.collapse * ul, span.collapse * ol {
+	margin-left:0 ;
+	padding-left: 1.5em;
+}
+
+div.collapse li,
+span.collapse li {
+	list-style: none;
+	position: relative;
+}
+
+div.collapseBullet, div.collapseOpen, div.collapseClose,
+span.collapseBullet, span.collapseOpen, span.collapseClose {
+	font-weight: bold;
+	color: #0000FF;
+	font-family: Verdana, sans-serif;
+	margin-left: 5px;
+	display: inline;
+	width: 1em;
+}
+
+div.collapseOpen, div.collapseClose,
+span.collapseOpen, span.collapseClose {
+	cursor: pointer;
+}
+
+div.collapseOpen:hover, div.collapseClose:hover,
+span.collapseOpen:hover, span.collapseClose:hover {
+	background: #FF0000;
+	color: #FFF;
+}
+
+div.collapse .collapseBullet, div.collapse .collapseOpen, div.collapse .collapseClose,
+span.collapse .collapseBullet, span.collapse .collapseOpen, span.collapse .collapseClose {
+	left: -1.5em !important;
+	right: auto !important;
+}
+
+/* Collapsable box, http://doc.jspwiki.org/2.4/wiki/HowToCreateCollapsableBoxes */
+
+div.collapsebox, div.collapseboxClosed,
+span.collapsebox, span.collapseboxClosed {
+	border: 1px solid #CCC;
+	position: relative;
+	margin: 1em 0;
+	width: 100%;
+	position: static;
+}
+
+div.collapsebox h2, div.collapsebox h3, div.collapsebox h4,
+span.collapsebox h2, span.collapsebox h3, span.collapsebox h4,
+div.collapseboxClosed h2, div.collapseboxClosed h3, div.collapseboxClosed h4,
+span.collapseboxClosed h2, span.collapseboxClosed h3, span.collapseboxClosed h4 {
+	margin: 0;
+	padding: 0.25em 0.5em;
+}
+
+div.collapsebody,
+span.collapsebody {
+	margin: 0.5em 1em;
+}
+
+div.toc .collapsebox,
+span.toc .collapsebox,
+div.toc .collapseboxClosed,
+span.toc .collapseboxClosed {
+	border: 0;
+	margin: 0;
+}
+
+div.collapsebox .collapseOpen, div.collapsebox .collapseClose,
+span.collapsebox .collapseOpen, span.collapsebox .collapseClose,
+div.collapseboxClosed .collapseOpen, div.collapseboxClosed .collapseClose,
+span.collapseboxClosed .collapseOpen, span.collapseboxClosed .collapseClose {
+	top: 0;
+	left: auto;
+	right: 0.5em;
+	font-size: 13px;
+}
+
+div.collapsebox .quicklinks,
+span.collapsebox .quicklinks,
+div.collapseboxClosed .quicklinks,
+span.collapseboxClosed .quicklinks {
+	display: none;
+}
+
+/* Sortable tables, see http://doc.jspwiki.org/2.4/wiki/HowToCreateSortableTables */
+
+div.sortable .sort, div.sortable .sortAscending, div.sortable .sortDescending,
+span.sortable .sort, span.sortable .sortAscending, span.sortable .sortDescending {
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: right;
+	background-image: url(../images/displaytag/arrow_off.png);
+	padding-right: 10px; /* keep some space for the arrows */
+}
+
+div.sortable .sortAscending,
+span.sortable .sortAscending {
+	background-image: url(../images/displaytag/arrow_down.png);
+}
+
+div.sortable .sortDescending,
+span.sortable .sortDescending {
+	background-image: url(../images/displaytag/arrow_up.png);
+}
+
+/* Wiki tables and zebra tables, see http://doc.jspwiki.org/2.4/wiki/HowToCreateZebraTables */
+
+table.zebra-table tr td {
+	background: #DDDDCC;
+}
+
+table.zebra-table tr.odd td {
+	background: #F6F6F6;
+}
+
+/* Graph bars, see http://doc.jspwiki.org/2.4/wiki/HowToCreateGraphBars */
+
+.graphBar {
+	background: #FF0000;
+	color: #FF0000;
+}
+
+.gBar {
+	padding: 2px;
+	white-space: nowrap;
+}
+
+.expandWikiTextArea {
+	width: 98%;
+	font-family: monospace;
+	white-space:  normal;
+}
+
+.expandWikiTextAreaWH {
+	width: 98%;
+	height: 99%;
+	font-family: monospace;
+	white-space:  normal;
+}
+
+/* Table of contents */
+.toc {
+	background: none;
+	border: 1px solid #F5F5F5;
+	padding: 20px;
+	width: 75%;
+
+	#pagecontent & h4 {
+		background: none;
+		padding-bottom: 10px;
+		margin-top: 0;
+		margin-bottom: 10px;
+		color: #2b2b2b;
+		border-bottom: 1px solid #D1D1D1 !important;
+		font-size: 16px;
+
+		div.collapseOpen, div.collapseClose {
+			float:right;
+			padding: 0;
+			margin: 4px 0 0 0;
+			color: transparent !important;
+		}
+	}
+
+	.newskin .wikiContent & .collapsebox .collapsebody,
+	.newskin .wikiContent & .collapseboxClosed .collapsebody {
+		padding: 0;
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: 9px;
+
+		> li {
+			margin:0;
+			margin-bottom: 0 !important;
+			padding: 10px 0 0 0 !important;
+			display: block;
+			font-weight: bold;
+
+			a {
+				font-size: 13px;
+			}
+
+			/* different levels in header */
+			&.toclevel-xxl {
+				margin-left: 0;
+				a {
+					font-size: 16px;
+				}
+			}
+			&.toclevel-xl {
+				margin-left: 15px;
+			}
+			&.toclevel-1 {
+				margin-left: 30px;
+				font-weight: normal;
+			}
+			&.toclevel-2 {
+				margin-left: 45px;
+				font-weight: normal;
+			}
+			&.toclevel-3 {
+				margin-left: 60px;
+				font-weight: normal;
+			}
+		}
+	}
+
+}
+
+/* ImageButton plugin */
+
+table.imageButton {
+	border: none;
+	border-collapse: collapse;
+	height: 75px;
+	background-image: url(../images/ImageButton_bgright.png);
+	background-repeat: repeat;
+	background-color: #F1F1E6;
+}
+
+table.imageButton td.left_box {
+	background-image: url(../images/ImageButton_blue_tleft.png);
+	background-repeat: repeat-y;
+	background-position: top left;
+	width: 93px;
+}
+
+table.imageButton td.left_box div.icon {
+	height: 100%;
+	width: 93px;
+	text-align: center;
+	vertical-align: bottom;
+	padding-top: 17px;
+}
+
+table.imageButton td.right_box {
+	background-image: url(../images/ImageButton_mright.png);
+	background-repeat: repeat-y;
+	background-position: top right;
+}
+
+
+table.imageButton td.right_box div.body {
+	vertical-align: top;
+	padding: 8px;
+	background-image: url(../images/ImageButton_tright.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+
+table.imageButton td.right_box a,
+table.imageButton td.right_box a:hover,
+table.imageButton td.right_box a:visited {
+	text-decoration: none;
+}
+
+table.imageButton td.bottom_right {
+	height: 17px;
+	background-image: url(../images/ImageButton_bottom.png);
+	background-repeat: repeat-x;
+	background-position: bottom left;
+}
+
+table.imageButton td.bottom_right div {
+	height: 17px;
+	line-height: 17px;
+	background-image: url(../images/ImageButton_bright.png);
+	background-repeat: no-repeat;
+	background-position: bottom right;
+}
+
+table.imageButton td.bottom_left div {
+	height: 17px;
+	line-height: 17px;
+	background-image: url(../images/ImageButton_blue_bleft.png);
+	background-repeat: no-repeat;
+	background-position: bottom left;
+}
+
+a.footnote {
+	vertical-align: super;
+}
+
+a.footnoteref {
+	font-size: 85%;
+	vertical-align: super;
+}
+
+div.rtfview p {
+	margin: 0;
+}
+
+.emoticon {
+	border: none;
+	position: relative;
+	top: 4px;
+}
+
+.conversionInProgress {
+	color: #d1d1d1;
+	background-image: url("../images/ajax_loading_horizontal_bar.gif");
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+/**
+ * Shown on the preview tab while preview is in progress
+ */
+.previewInProgress {
+	width: 100%;
+	min-width: 100px;
+	min-height: 100px;
+	background-image: url("../images/ajax_loading_horizontal_bar.gif");
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.wikiPageContent .numbering {
+	color: #777;
+    margin: 0 5px;
+}

@@ -1,0 +1,146 @@
+.newskin {
+
+  .ui-multiselect-wrapper-fieldset {
+	margin-top: -7px;
+	margin-left: 0;
+	legend {
+	  color: #858585;
+	}
+	[type=button] {
+	  margin-left: 0 !important;
+	}
+  }
+
+  .ui-multiselect.ui-widget {
+
+	&[type=button] {
+	  width: auto;
+	}
+
+	&.ui-state-active:not(.dashboard-widget-editor-select) {
+	  border: 1px solid white;
+	}
+
+	.setting {
+	  width: 33%;
+	  display: inline-block;
+	}
+	.editLink {
+	  float: right;
+	  color: #1e9ebf !important;
+	}
+
+  }
+
+  .ui-widget-header .ui-helper-reset {
+    display: none;
+  }
+
+  .ui-multiselect-menu.ui-widget-content {
+
+	z-index: 1000;
+	background-color: white;
+
+	.ui-multiselect-checkboxes {
+		top: -5px;
+		padding-bottom: 10px;
+	}
+
+	.ui-widget-header {
+	  display: none;
+	}
+
+	.ui-multiselect-optgroup {
+	  margin-bottom: 5px;
+	  padding-bottom: 0 !important;
+	  a {
+		border-bottom: 1px solid #f8f8f8;
+	  }
+	}
+
+	ul ~ .ui-multiselect-optgroup {
+	  border-top: 1px solid #ddd;
+	  margin-top: 5px;
+	  padding-top: 0 !important;
+	}
+
+	ul.participants a,
+	ul.roles a {
+	  padding-left: 30px;
+	  background: no-repeat 5px 0px;
+	  position: static;
+	  margin-top: 0;
+	  border-bottom: 0;
+	}
+
+	ul.participants a {
+	  background-image: url('../images/newskin/participants.png');
+	}
+
+	ul.roles a {
+
+	  background-image: url('../images/newskin/roles.png');
+	}
+
+	li.field, li.role {
+	  label {
+	  	padding-left: 25px;
+	  	input {
+            position: relative !important;
+            top: 2px;
+	  	}
+	  }
+	}
+
+	.readOnlyColumn,
+	.editColumn {
+	  position: absolute !important;
+	  top: auto;
+	}
+
+	.readOnlyColumn {
+	  left: 250px;
+	}
+
+	.editColumn {
+	  left: 450px;
+	}
+
+	.columnHeader {
+	  margin-top: 3px;
+	  input {
+		position: relative;
+		top: 1px;
+	  }
+	}
+
+	.columnHeader.editColumn {
+	  left: 480px;
+	}
+
+	.accessPermDefault {
+		color: #1e9ebf !important;
+	}
+
+	.accessPermLink {
+		text-decoration: none;
+		margin: 25px;
+	}
+
+	.accessPermListItem {
+		border-top: 1px solid #ddd;
+		padding-top: 10px;
+	}
+  }
+
+  .accessPermissionsDialog .ui-multiselect.ui-widget {
+	&[type=button] {
+	  border: none !important;
+	  background: none !important;
+	  margin-left: 9px;
+	}
+	.ui-icon {
+	  display: none;
+	}
+  }
+}

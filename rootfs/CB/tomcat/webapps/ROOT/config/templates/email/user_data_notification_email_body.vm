@@ -1,0 +1,148 @@
+#tableOpen()
+
+#if( ${user.id} )
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.account.label')}")
+	#tdText("#linkUser(${user})")
+#trClose()
+#end
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.email.label')}")
+	#tdText("#linkUserEmail(${user})")
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.firstName.label')}")
+	#tdText($textFormatter.escape(${user.firstName}))
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.lastName.label')}")
+	#tdText($textFormatter.escape(${user.lastName}))
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.title.label')}")
+	#tdText($textFormatter.escape(${user.title}))
+#trClose()
+
+#if( ${user.industry} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.industry.label')}")
+		#tdText($textFormatter.escape(${user.industry}))
+	#trClose()
+#end
+
+#if( ${geoLocationResolver.geoLocation} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.geoLocation.label')}")
+		#tdText("#linkGeoIP(${geoLocationResolver.geoLocation})")
+	#trClose()
+
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.geoDomain.label')}")
+		#if( !${geoLocationResolver.geoLocation.domain})
+			#tdText("--")
+		#else
+			#tdText("${geoLocationResolver.geoLocation.domain}")
+		#end
+	#trClose()
+
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.geoOrganization.label')}")
+		#if( !${geoLocationResolver.geoLocation.organization})
+			#tdText("--")
+		#else
+			#tdText("${geoLocationResolver.geoLocation.organization}")
+		#end
+	#trClose()
+#end
+
+#if( ${geoLocationResolver.canonicalRemoteAddress} )
+	#trOpen()
+		#tdField("Host")
+		#tdText($textFormatter.escape(${geoLocationResolver.canonicalRemoteAddress}))
+	#trClose()
+#end
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.phone.label')}")
+	#tdText("#linkUserPhone(${user})")
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.company.label')}")
+	#tdText($textFormatter.escape(${user.company}))
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.address.label')}")
+	#tdText($textFormatter.escape(${user.address}))
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.city.label')}")
+	#tdText($textFormatter.escape(${user.city}))
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.zip.label')}")
+	#tdText(${user.zip})
+#trClose()
+
+#if( ${user.state} != "")
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.state.label')}")
+		#tdText($textFormatter.escape(${user.state}))
+	#trClose()
+#end
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.country.label')}")
+	#tdText($textFormatter.getCountryName(${user.country}))
+#trClose()
+
+#if( ${user.language} )
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.language.label')}")
+	#tdText($textFormatter.getLanguageName(${user.language}))
+#trClose()
+#end
+
+#if( ${user.sourceOfInterest} != "")
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.sourceOfInterest.label')}")
+		#tdText($textFormatter.escape(${user.sourceOfInterest}))
+	#trClose()
+#end
+
+#if( ${user.scc} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.scc.label')}")
+		#tdText($textFormatter.escape(${user.scc}))
+	#trClose()
+#end
+
+#if( ${user.divisionSize} && ${user.divisionSize} !="-1"  )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.divisionSize.label')}")
+		#tdText($textFormatter.escape(${user.divisionSize}))
+	#trClose()
+#end
+
+#if( ${user.teamSize} && ${user.teamSize} !="-1"  )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.teamSize.label')}")
+		#tdText($textFormatter.escape(${user.teamSize}))
+	#trClose()
+#end
+
+#if( ${user.referrerUrl} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.referrerUrl.label')}")
+		#tdText($textFormatter.escape(${user.referrerUrl}))
+	#trClose()
+#end
+
+#tableClose()

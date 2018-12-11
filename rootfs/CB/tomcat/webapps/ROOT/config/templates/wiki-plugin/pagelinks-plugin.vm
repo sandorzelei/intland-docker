@@ -1,0 +1,58 @@
+## $Revision: 23955:cdecf078ce1f $ $Date: 2009-11-27 19:54 +0100 $
+
+#set($Q = '"')
+#if($incoming)
+	#bold("$textFormatter.getMessage('wiki.links.incoming.label')")
+
+	#tableOpen()
+
+	#trOpen()
+		#tdText("$textFormatter.getMessage('document.wikiLink.label')")
+		#tdSeparator()
+		#tdText("$textFormatter.getMessage('association.source.label')")
+	#trClose()
+
+	#foreach($link in $incoming)
+		#trOpen()
+
+		#tdText(${link.fromInterwikiReference})
+
+		#tdSeparator()
+
+		#tdText("<a href=$Q${cbBaseUrl}${link.fromUrl}$Q>${link.fromDescription}</a>")
+
+		#trClose()
+	#end
+
+	#tableClose()
+	#br()
+#end
+#if($outgoing)
+	#bold("$textFormatter.getMessage('wiki.links.outgoing.label')")
+
+	#tableOpen()
+
+	#trOpen()
+		#tdText("$textFormatter.getMessage('document.wikiLink.label')")
+		#tdSeparator()
+		#tdText("$textFormatter.getMessage('association.target.label')")
+	#trClose()
+
+	#foreach($link in $outgoing)
+		#trOpen()
+
+		#tdText(${link.toInterwikiReference})
+
+		#tdSeparator()
+
+		#set($text = "<a href=$Q${cbBaseUrl}${link.toUrl}$Q>${link.toDescription}</a>")
+		#if(${link.urlReference})
+			#set($text = "$text<img class=$Qoutlink$Q src=$Q${cbBaseUrl}/images/out.png$Q/>")
+		#end
+		#tdText($text)
+
+		#trClose()
+	#end
+
+	#tableClose()
+#end

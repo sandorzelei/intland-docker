@@ -1,0 +1,646 @@
+.login-grid {
+  margin: 20px auto;
+  width: 1000px;
+  font-size: 100%;
+  line-height: 20px;
+
+  .column {
+	margin: 0 10px !important;
+	display: inline-block;
+	vertical-align: top;
+	&.left,
+	&.right {
+	  width: 240px;
+	}
+	&.middle {
+	  width: 450px;
+	}
+  }
+  h1 {
+	border: none !important; /* wiki container fix */
+  }
+  h4 a {
+	font-size: 20px !important;
+  }
+}
+
+.login-grid.default,
+.login-grid.custom .left.column {
+
+  div, span, img, a, p,
+  h1, h2, h3, h4 {
+	padding: 0;
+	margin: 0;
+  }
+
+  span.error,
+  span.warning,
+  span.information {
+	padding: 10px 10px 10px 45px;
+  }
+
+  a {
+	color: #0093b8;
+	text-decoration: none;
+	background: url("../images/newskin/login_page/bulletpoint.png") no-repeat right center;
+	margin: 0;
+	padding: 0 15px 0 0;
+  }
+
+  a:hover {
+	text-decoration: none !important;
+  }
+
+  p {
+	font-size: 15px;
+  }
+
+  .more {
+	float: right;
+	margin-top: 35px;
+  }
+
+  .more a {
+	font-size: 11px !important;
+  }
+
+  small {
+	font-size: 12px;
+	line-height: 15px;
+  }
+
+  .reg-banner-link {
+	background-image: none;
+	padding: 0;
+  }
+
+  .reg-banner {
+	color: #fff;
+	display: block;
+	height: 140px;
+	width: 220px;
+	text-align: center;
+	background: #00a85d;
+
+	h3 {
+	  font-family: 'Roboto', sans-serif;
+	  font-size: 25px;
+	  line-height: 25px;
+	  color: #fff;
+	  padding: 15px 5px 13px;
+	}
+
+	.sub-label {
+	  font-size: 20px;
+	  color: #eafff6;
+	}
+  }
+
+  .kb,
+  .jf,
+  .login-box {
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+  }
+
+  .box_header_grey {
+	color: #fff;
+	background-color: #5f5f5f;
+	display: block;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 16px;
+  }
+
+  .box_header_grey a {
+	color: #fff;
+	background-image: none;
+	padding: 0;
+	font-size: 16px;
+  }
+
+  .box_header_green {
+	color: #fff;
+	display: block;
+	padding: 10px;
+	font-weight: bold;
+	background-repeat: no-repeat; /* do not optimize this to inline otherwise IE8 will break! */
+	background-position: right 10px center;
+	background-image: url("../images/newskin/login_page/jf_header.png");
+	background-color: #00a85d;
+  }
+
+  .box_header_green a {
+	color: #fff;
+	background-image: none;
+	padding: 0;
+	font-size: 16px;
+  }
+
+  .kb_text a {
+	display: block;
+	background-position: bottom 5px right 5px;
+	font-size: 15px;
+  }
+
+  .jf_text {
+	background: url("../images/newskin/login_page/header_jf.png") no-repeat left top;
+	padding: 18px 10px 20px 10px;
+	font-size: 15px;
+  }
+
+  .join_jf_button {
+	background: url("../images/newskin/login_page/button_jf.png") no-repeat;
+	text-align: center;
+	display: block;
+	height: 40px;
+	width: 174px;
+	padding-top: 10px;
+	margin: 10px 0 0 10px;
+  }
+
+  .join_jf_button a {
+	color: #121212;
+	text-decoration: none;
+	font-weight: bold;
+	display: block;
+	height: 40px;
+	width: 174px;
+	background-image: none;
+	padding: 0;
+	font-size: 15px;
+  }
+
+  .kb_text,
+  .login_text {
+	background: url("../images/newskin/login_page/header.png") no-repeat left top;
+	padding: 18px 10px 20px 10px;
+	font-size: 15px;
+  }
+
+  .jf {
+	margin-top: 20px;
+  }
+
+  .login-box a {
+	background-image: none;
+	padding: 0;
+  }
+
+  .login-box .box_header_grey {
+	color: #fff;
+	display: block;
+	padding: 10px 10px 10px 45px;
+	font-weight: bold;
+	background: #5f5f5f url("../images/newskin/login_page/icon_user.png") no-repeat 10px 10px;
+  }
+
+  .login-box input {
+	margin: 2px;
+	padding: 1px 0;
+	border-color: #aaa;
+  }
+
+  .login-box input[name="user"] {
+	width: 100%;
+  }
+
+  .login-box input[type="password"] {
+	width: 60%;
+  }
+
+  #loginForm .login_button {
+	background: url("../images/newskin/login_page/button_jf.png") no-repeat;
+	text-align: center;
+	display: block;
+	height: 40px;
+	width: 174px;
+	margin: 10px 0 10px 22px;
+	border-style: none;
+	font-weight: bold;
+  }
+
+  .social-login-buttons {
+	text-align: center;
+	margin: 0.5em 0;
+  }
+
+  .tab_grey {
+	background-color: #f5f5f5;
+	font-size: 17px;
+	line-height: 20px;
+	font-weight: bold;
+	padding: 9px 30px 6px 10px;
+	margin-top: 25px;
+	display: inline-block;
+  }
+
+  .tab_grey a {
+	color: #121212;
+	background-image: none;
+	padding: 0;
+	font-size: 17px;
+  }
+
+  .sep_wide {
+	width: 100%;
+	border-top: 5px solid #d1d1d1;
+	margin-bottom: 20px;
+  }
+
+  .sep_grey {
+	width: 100%;
+	border-top: 1px solid #d1d1d1;
+	margin-top: 10px;
+	margin-bottom: 10px;
+  }
+
+  .modules {
+	width: 450px;
+  }
+
+  .modules td.module_icon {
+	width: 54px;
+	height: 67px;
+	display: block;
+	background-position: 0px 8px;
+	background-repeat: no-repeat;
+
+	&.alm {
+	  background-image: url("../images/newskin/login_page/icon_alm.png");
+	}
+	&.demand {
+	  background-image: url("../images/newskin/login_page/icon_demand.png");
+	}
+	&.req {
+	  background-image: url("../images/newskin/login_page/icon_req.png");
+	}
+	&.dev {
+	  background-image: url("../images/newskin/login_page/icon_dev.png");
+	}
+	&.qa {
+	  background-image: url("../images/newskin/login_page/icon_qa.png");
+	}
+	&.devops {
+	  background-image: url("../images/newskin/login_page/icon_devops.png");
+	}
+	&.service_desk {
+	  background-image: url("../images/newskin/login_page/icon_service_desk.png");
+	}
+	&.safe {
+	  background-image: url("../images/newskin/login_page/icon_safe.png");
+	}
+  }
+
+  .modules td.module_label {
+	width: 166px;
+	padding: 5px;
+	letter-spacing: -0.5px;
+  }
+
+  .modules a, .modules_new a {
+	color: #121212;
+	text-decoration: none;
+	background-image: none;
+	padding: 0;
+	font-size: 16px;
+  }
+
+	table.modules_new {
+		width: 100%;
+		a {
+			font-size: 13px;
+			line-height: 1em;
+			padding: 70px 5px 20px 5px;
+			display: block;
+		}
+		td.module_icon {
+    		background-repeat: no-repeat;
+    		background-position: center top;
+    		width: 25%;
+    		text-align: center;
+    		vertical-align: top;
+			&.alm {
+	  			background-image: url("../images/newskin/login_page/icon_alm.png");
+			}
+			&.demand {
+	  			background-image: url("../images/newskin/login_page/icon_demand.png");
+			}
+			&.req {
+				background-image: url("../images/newskin/login_page/icon_req.png");
+			}
+			&.dev {
+				background-image: url("../images/newskin/login_page/icon_dev.png");
+			}
+			&.qa {
+				background-image: url("../images/newskin/login_page/icon_qa.png");
+			}
+			&.devops {
+				background-image: url("../images/newskin/login_page/icon_devops.png");
+			}
+			&.risk {
+				background-image: url("../images/newskin/login_page/icon_risk.png");
+			}
+			&.variants {
+				background-image: url("../images/newskin/login_page/icon_variants.png");
+			}
+			&.auto {
+				background-image: url("../images/newskin/login_page/icon_auto.png");
+			}
+			&.aviation {
+				background-image: url("../images/newskin/login_page/icon_aviation.png");
+			}
+			&.pharma {
+				background-image: url("../images/newskin/login_page/icon_pharma.png");
+			}
+			&.medical {
+				background-image: url("../images/newskin/login_page/icon_medical.png");
+			}
+	  	}
+	 }
+
+
+  .card {
+	display: block;
+	width: 450px;
+	height: 55px;
+	margin-top: 20px;
+	background-position: -10px 0px;
+	background-repeat: no-repeat;
+	font-size: 26px;
+	letter-spacing: -1px;
+	color: #121212;
+	text-decoration: none;
+	font-weight: bold;
+	padding-top: 35px;
+
+	&.overview {
+	  background-image: url("../images/newskin/login_page/banner_overview.png");
+	  padding-left: 80px;
+	}
+	&.success {
+	  background-image: url("../images/newskin/login_page/banner_success.png");
+	  padding-left: 90px;
+	}
+	&.blog {
+	  background-image: url("../images/newskin/login_page/banner_blog.png");
+	  padding-left: 25px;
+	  padding-top: 25px;
+	  color: #ffffff;
+	  height: 180px;
+	  background-position: 0px 0px;
+
+	  ul {
+	  	padding-left: 20px;
+	  }
+
+	  li {
+		font-weight: bold;
+	    font-size: 19px;
+	    position: relative;
+	    text-indent: -6px;
+	    color: #121212;
+	  }
+	}
+  }
+
+  .card a {
+	font-weight: bold;
+  }
+
+  .videos_banner {
+	display: block;
+	width: 220px;
+	height: 148px;
+	text-decoration: none;
+	color: white;
+	background: url("../images/newskin/login_page/banner_videos.png") no-repeat;
+	margin-top: 20px;
+	font-size: 18px;
+	letter-spacing: -0.5px;
+	padding-top: 12px;
+	text-align: center;
+  }
+
+  .vid_01 {
+	background: url("../images/newskin/login_page/vid_01.png") no-repeat top;
+	height: 76px;
+	width: 135px;
+	margin-bottom: 10px;
+  }
+
+  .vid_02 {
+	background: url("../images/newskin/login_page/vid_02.png") no-repeat top;
+	height: 76px;
+	width: 135px;
+	margin: 20px 0 10px 0;
+  }
+
+  .vid_01 a,
+  .vid_02 a {
+	text-decoration: none;
+	background-image: none;
+	padding: 0;
+	height: 76px;
+	width: 135px;
+	display: block;
+  }
+
+  /* info messages fixes */
+
+  .infoMessages .error,
+  .infoMessages .warning,
+  .infoMessages .information {
+	background-position: 3px center;
+	margin: 0;
+  }
+
+  .infoMessages ul {
+	padding-left: 35px;
+  }
+
+  .infoMessages ul li {
+	font-size: 11px;
+	min-height: 25px;
+	line-height: 25px;
+  }
+
+  /* RSS feed */
+
+  .wikichartbox {
+	padding: 0 !important;
+	border: none;
+  }
+
+  div.wikichartbox th {
+	display: none;
+  }
+
+  .column.middle {
+	h1 {
+	  background: url("../images/newskin/login_page/cb_logo.png") no-repeat;
+	  height: 61px;
+	}
+
+	h2 {
+      font-size: 26px;
+      margin-top: 10px;
+      font-weight: bold;
+	}
+
+	h4 {
+	  font-size: 20px;
+	  line-height: 25px;
+	  font-weight: normal;
+	  margin-top: 25px;
+	  margin-bottom: 20px;
+	}
+  }
+
+  a.video_what_is {
+  	text-decoration: none;
+  	display: block;
+  	width: 450px;
+  	height: 240px;
+  	background: url("../images/newskin/login_page/video_what_is.png") no-repeat;
+  }
+
+  a.video_getting_started {
+  	text-decoration: none;
+  	display: block;
+  	width: 450px;
+  	height: 240px;
+  	background: url("../images/newskin/login_page/video_getting_started.png") no-repeat;
+  }
+
+  a.video_why_codebeamer {
+  	text-decoration: none;
+  	display: block;
+  	width: 450px;
+  	height: 240px;
+  	background: url("../images/newskin/login_page/video_why_codebeamer.png") no-repeat;
+  	margin-top: 20px;
+  }
+
+  .sub-header {
+  	border-top: 1px solid #f5f5f5;
+  	padding: 10px;
+  	margin: 10px 0;
+  	font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  table.blog_news_feed {
+  	width: 100%;
+  	margin-top: 20px;
+
+  	.feedPlugin a {
+  		background-image: none !important;
+  	}
+
+  	td.header {
+  		font-weight: bold;
+  		font-size: 14px;
+  		border: 1px solid #d1d1d1;
+  		padding: 10px;
+  	}
+
+  	td.news_feed {
+  		border: 1px solid #d1d1d1;
+  		padding: 5px;
+  	}
+
+  	td.news_feed_more {
+  		border: 1px solid #d1d1d1;
+  		padding: 5px 10px;
+  		a {
+  			font-size: 12px;
+  		}
+  	}
+  }
+
+}
+
+  div.badge {
+	width: 240px;
+	height: 250px;
+	background-repeat: no-repeat;
+	background-color: #00a85d;
+	background-image: none;
+
+	&.dashboard {
+	  background-image: url("../images/newskin/login_page/banner_dashboard.png");
+	  color: #ffffff;
+	  background-position: bottom;
+	}
+
+	 &.intland_blog {
+		 background-image: url("../images/newskin/login_page/intland-blog-box.png");
+		 color: #ffffff;
+		 background-position: bottom;
+		 ul {
+			 padding: 0 10px;
+			 margin: 0;
+			 li {
+				 font-size: 18px;
+				 color: white;
+			 }
+		 }
+	 }
+  }
+
+  div.badge_text {
+  	font-size: 15px;
+  	padding: 0px 10px 10px 20px !important;
+  }
+
+  div.badge_header_text {
+  	font-size: 32px;
+  	font-weight: bold;
+  	padding: 10px 20px 10px 20px !important;
+  	line-height: 32px;
+	&.intland_blog_header {
+		font-size: 24px;
+		text-align: center;
+		padding-bottom: 3px !important;
+	}
+  }
+
+  a.badge {
+  	display: block;
+	padding: 0px 0px 20px 0px !important;
+  }
+
+  div.learn_more{
+  	background-color: #008248;
+  	height: 50px;
+  	line-height: 50px;
+  	font-size: 16px;
+  	color: #ffffff;
+  	text-align: center;
+  	font-weight: bold;
+  	width: 240px;
+  }
+
+.newskin .login-page a {
+	/* .newskin is needed to increase CSS specificity */
+	font-size: 15px;
+}
+
+.IE8.newskin .login-page .box_header_green {
+	background-position: 122px center;
+}
+
+/* Styling for custom content */
+
+.login-grid {
+  &.custom {
+	>.middle.column {
+	  display: none;
+	}
+	.right.column {
+	  width: 680px;
+	}
+  }
+}

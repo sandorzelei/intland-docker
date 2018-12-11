@@ -1,0 +1,8 @@
+
+#wikiBoxOpen(${command}, "traceabilityMatrixPlugin")
+    #if(${command.title})
+    	#wikiBoxTitle("${textFormatter.getMessageWithDefault(${command.title}, ${command.title})}")
+    #end
+    
+    ${matrix}
+#wikiBoxClose()

@@ -1,0 +1,197 @@
+/* CSS for testSteps.tag */
+
+.criticalColumn {
+	width: 1%;
+	text-align: left;
+	white-space:nowrap;
+}
+
+th.criticalColumn, th.criticalColumnHeader {
+	width: 70px;
+	padding-right: 0px !important;
+}
+
+th.operationColumn, th.operationColumnHeader {
+	width: 90px;
+	padding-right: 0px !important;
+}
+
+.criticalColumnHeader, .actionColumnHeader, .expectedResultColumnHeader {
+	text-align: center;
+}
+
+.testStepTable {
+	width: 97% !important;
+	margin-left: 10px !important;
+
+	>thead >tr >th {
+		text-align: left;
+	}
+}
+
+tr.dragRowPlaceholder {
+	width: 100%;
+}
+tr.dragRowPlaceholder div {
+	display: block;
+	width: 100%;
+  	height: 60px;
+  	border: 1px solid orange;
+  	color: orange;
+  	padding: 0.5em;
+}
+
+.testStepTable {
+
+  >tbody {
+	counter-reset: columnCounter;
+
+	td.issueHandle {
+		background-position: 50% center;
+	}
+
+	td.operationColumn .testStepControls .testStepBtn:first-child {
+		position: relative;
+		top: -4px;
+	}
+
+	td.actionCell, td.expectedResultCell {
+		&.edited {
+			> span.wikiContent {
+				display: none;
+			}
+			> textarea.inlineInput {
+				display: block;
+			}
+		}
+		&:not(.edited) {
+			> textarea.inlineInput {
+				display: none !important;
+			}
+		}
+	}
+
+	td.actionCell, td.expectedResultCell {
+		cursor: pointer;
+
+		.editor-wrapper {
+			cursor: auto;
+		}
+
+		> textarea.inlineInput {
+			cursor: pointer;
+		}
+	}
+	.editor-wrapper.markup textarea {
+		border: 1px solid #d1d1d1 !important;
+	}
+
+	& > tr:not(.empty) > td:first-child:before {
+		counter-increment: columnCounter;
+		content: "#" counter(columnCounter);
+		font-weight: normal;
+		padding: 3px;
+		color: #666;
+		font-size:11px;
+		position: relative;
+	}
+
+  }
+
+	&.readOnly > tbody.ui-sortable > tr:not(.empty) > td:first-child:before {
+		float: left;
+		position: relative;
+		left: -15px;
+		border: solid 1px blue !important;
+	}
+}
+
+
+/* css class for TR of the step which is referencing some other */
+tr.referrencingStep {
+}
+
+tr.referrencingStep td, td.referrencingStep {
+	background-color: #ffffee; /* very light yellow */
+}
+
+/**
+ * The step which is referenced elsewhere...
+ */
+tr.referencedStep {
+}
+tr.referencedStep td, td.referencedStep {
+	background-color: #eeffff;	/* very light blue */
+}
+
+div.linkToReferenced, p.reusingMe {
+	border-top: solid 1px #d1d1d1;
+	float:left;
+	width: 100%;
+	margin: 5px 0;
+	white-space: normal;
+}
+div.linkToReferenced img, p.reusingMe img{
+	position: relative;
+	top: 3px;
+}
+
+div.linkToReferenced .warning {
+	white-space: normal;
+}
+
+a.testStepReference {
+	margin: 0 0 0 10px;
+}
+
+.breakReferenceButton {
+	display: none;	/* don't display except in "referencingStep" */
+	float:left;
+	margin: 5px;
+	width: 12em;	/* fixed size to avoid jumping when text changes */
+	min-width: 160px;
+}
+
+tr.referrencingStep .breakReferenceButton {
+	display: block;
+}
+
+/**
+ * The row where a reused-step is being changed
+ */
+tr.changingReusedStep {
+	/*border-color: #ffab46;*/
+}
+tr.changingReusedStep td {
+	/*background-color: #fff7eb !important;*/
+}
+
+td.actionCell, td.expectedResultCell, td.actionColumn, td.expectedResultColumn {
+	width: 50%;
+}
+
+.testStepTable span.wikiContent {
+  white-space: normal;
+}
+
+.expectedResultsWikiContent {
+	display: none;
+}
+
+/**
+ * Only applay this rule on the test runner.
+ */
+#command .testStepTable {
+    table-layout: fixed;
+
+    /* because of the fixed table layout the image resizing works here, so allow that */
+    img {
+        max-width: 100% !important;
+	}
+}
+
+@media (max-width: 749px) {
+	.thumbnailImages480px img {
+		max-width: 100% !important;
+	}
+}

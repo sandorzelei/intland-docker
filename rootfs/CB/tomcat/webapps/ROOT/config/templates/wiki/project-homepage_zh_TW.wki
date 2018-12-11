@@ -1,0 +1,24 @@
+%%ad
+__Free Download__\\
+Want to try [codeBeamer|http://www.intland.com/products/codebeamer/overview/] on your own server? [Download|https://intland.com/products/download.html#download] it for free and install it in minutes.\\
+Questions? [Contact us|http://www.intland.com/company/contact/].
+%%
+
+%%information
+這裡是__''${project.name}'' 專案首頁__, 將與所有專案成員分享.\\
+請點選''編輯''做客製化. 您可以試試以下建議:
+* 將此框框去掉
+* 加上歡迎詞
+* 寫下專案目標,設計,計畫或任何專案相關的資訊
+* 加專案資源,圖或任何相關資料的連結
+* 運用wiki plugins秀出最近新增或修改的事項, 最近更新的文件或更多,如統計圖表
+* 嵌入Excel試算表, Google地圖或RSS訂閱
+
+%%
+
+
+[{Table style='width:100%; border:none; border-spacing:0;' dataStyle='vertical-align:top; padding-right:20px; border:none;'
+
+|(width:60%;) [{ActivityStream}] | #if(${licenseCode.isEnabled("trackers")}) [{IssueCountTrends}] \\ #end #if(${licenseCode.isEnabled("documents")}) [{ArtifactCountTrends}] \\ #end #if(${licenseCode.isEnabled("scm")}) [{LocTrends}] \\ #end [{ProjectActivityTrends}] |(width:30%;) [{ProjectInfo description='true'}] \\ [{Members}] #if(${licenseCode.isEnabled("scm")}) \\ [{CommitTrends display='table' period='last 10 days'}] \\ [{SourceCodeSummary}] #end
+
+}]

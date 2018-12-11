@@ -1,0 +1,35 @@
+#wikiBoxOpen(${command})
+#wikiBoxTitle("$textFormatter.getMessage('my.approvals.label')")
+
+	<table class="embedded">
+		#set ($joinApprovalLink = "${contextPath}/proj/members.spr?proj_id=${command.projectId}&amp;status_id=1&amp;layout=list")
+		<thead>
+			<tr>
+    			#if (${command.projectId})
+	    			<th>$textFormatter.getMessage('project.joinRequests.title'): <a href="${joinApprovalLink}">${requests.size()}</a></th>
+    			#else
+    				<th>$textFormatter.getMessage('project.joinRequests.title'): ${requests.size()}</th>
+    			#end
+    		</tr>
+		</thead>
+		<tbody>
+    		#if (${requests} && !${requests.empty})
+    			#foreach (${joinProjectRequest} in ${requests})
+    				#trOpen()
+    					<td>
+    						#linkUser(${joinProjectRequest.user}) $textFormatter.getMessage('project.member.join.label') <a href="${cbBaseUrl}/proj/members.spr?proj_id=${joinProjectRequest.project.id}&amp;status_id=1&amp;layout=list">${textFormatter.escape($!{joinProjectRequest.project.shortDescription})}</a>.<br/>
+    						<span class="subtext">$textFormatter.formatDate(${user}, ${joinProjectRequest.createdAt})</span>
+    					</td>
+    				#trClose()
+    			#end
+    		#else
+    			#trOpen()
+    				<td>$textFormatter.getMessage('project.joinRequests.none')</td>
+    			#trClose()
+    		#end
+		</tbody>
+	</table>
+
+	## include the artifact approvals plugin's rendered text
+	${includedArtifactApprovalsPlugin}
+</div>

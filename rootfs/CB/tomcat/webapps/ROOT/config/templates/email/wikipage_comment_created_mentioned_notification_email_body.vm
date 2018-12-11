@@ -1,0 +1,18 @@
+#parse("notification_email_header.vm")
+
+<div class="heading">
+[#${artifact.id}] #linkArtifact(${artifact})
+</div>
+
+${textFormatter.getMessage('comment.user.mentioned.label')}
+
+#partHeader("Comment")
+#partStart() $textFormatter.format(${comment.description}, ${comment.descriptionFormat}, ${wikiContext}) #partEnd()
+
+#if (${comment.fileSize} && ${comment.fileSize} > 0)
+	#partHeader("With attachment") ${comment.name}
+#end
+
+#linkArtifactComments(${artifact})
+
+#parse("notification_email_footer.vm")

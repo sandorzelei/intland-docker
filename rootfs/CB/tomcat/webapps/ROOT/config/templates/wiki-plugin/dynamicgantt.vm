@@ -1,0 +1,46 @@
+#set( $searchTitle = $textFormatter.getMessageWithDefault("search.title", "Enter Full Text Search Pattern") )
+#set( $searchSubmit = $textFormatter.getMessageWithDefault("search.submit.label", "GO") )
+#set( $searchSubmitTitle = $textFormatter.getMessageWithDefault("search.submit.tooltip", "Start Search") )
+#set( $searchPlaceholder = $textFormatter.getMessageWithDefault("search.hint", "Search...") )
+
+<div class="dynamicGanttPlugin $command.cssClass" style="$command.cssStyle">
+
+	<link rel="stylesheet" href="$cssLibUrl" type="text/css" media="all" />
+	<style type="text/css">
+		.gantt_grid .gantt_last_cell {
+			display: none;
+		}
+	</style>
+
+	<div id="$ganttId" style="height: ${command.height}"></div>
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			var initialize = function() {
+				console.debug("Initializing Gantt chart");
+				var tasks = $jsonData;
+				var Gantt = gantt;
+				if (typeof Gantt != "undefined") {
+					gantt.config.readonly = true; // task add icons are hidden by CSS, see above
+					gantt.config.xml_date = "%Y-%m-%d"; // like 2014-12-31
+					gantt.init("$ganttId");
+					gantt.parse(tasks);
+				} else {
+					console.error("Could not initialize Gantt chart, library is not loaded properly");
+				}
+			};
+
+			(function loadJsLibOnceAndInitPlugin(initCallback) {
+				var jsLibUrl = "$jsLibUrl";
+				if (typeof gantt == "undefined") {
+					console.debug("Loading Gantt chart lib dynamically");
+					$.getScript(jsLibUrl, initCallback);
+				} else {
+					initCallback();
+				}
+			})(initialize);
+		});
+
+	</script>
+
+</div>

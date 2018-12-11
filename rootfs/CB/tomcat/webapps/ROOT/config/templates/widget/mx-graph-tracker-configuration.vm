@@ -1,0 +1,307 @@
+#if ($exportMode)
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<script type="text/javascript">
+		window.contextPath = "${contextpath}";
+	</script>
+
+	<script type="text/javascript" src="${contextpath}/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="${contextpath}/js/jquery/jquery-storage/jquery.jstore-all.js"></script>
+
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/mxClient.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxLog.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxObjectIdentity.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxDictionary.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxResources.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxPoint.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxRectangle.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxEffects.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxUtils.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxConstants.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxEventObject.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxMouseEvent.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxEventSource.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxEvent.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxXmlRequest.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxClipboard.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxWindow.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxForm.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxImage.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxDivResizer.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxDragSource.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxToolbar.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxUndoableEdit.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxUndoManager.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxUrlConverter.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxPanningManager.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxPopupMenu.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxAutoSaveManager.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxAnimation.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxMorphing.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxImageBundle.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxImageExport.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxAbstractCanvas2D.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxXmlCanvas2D.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxSvgCanvas2D.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxVmlCanvas2D.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/util/mxGuide.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxStencil.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxShape.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxStencilRegistry.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxMarker.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxActor.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxCloud.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxRectangleShape.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxEllipse.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxDoubleEllipse.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxRhombus.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxPolyline.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxArrow.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxArrowConnector.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxText.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxTriangle.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxHexagon.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxLine.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxImageShape.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxLabel.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxCylinder.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxConnector.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/shape/mxSwimlane.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxGraphLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxStackLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxPartitionLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxCompactTreeLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxRadialTreeLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxFastOrganicLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxCircleLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxParallelEdgeLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxCompositeLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/mxEdgeLabelLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/model/mxGraphAbstractHierarchyCell.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/model/mxGraphHierarchyNode.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/model/mxGraphHierarchyEdge.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/model/mxGraphHierarchyModel.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/model/mxSwimlaneModel.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/stage/mxHierarchicalLayoutStage.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/stage/mxMedianHybridCrossingReduction.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/stage/mxMinimumCycleRemover.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/stage/mxCoordinateAssignment.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/stage/mxSwimlaneOrdering.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/mxHierarchicalLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/layout/hierarchical/mxSwimlaneLayout.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/model/mxGraphModel.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/model/mxCell.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/model/mxGeometry.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/model/mxCellPath.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxPerimeter.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxPrintPreview.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxStylesheet.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxCellState.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxGraphSelectionModel.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxCellEditor.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxCellRenderer.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxEdgeStyle.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxStyleRegistry.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxGraphView.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxGraph.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxCellOverlay.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxOutline.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxMultiplicity.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxLayoutManager.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxSwimlaneManager.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxTemporaryCellStates.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxCellStatePreview.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/view/mxConnectionConstraint.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxGraphHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxPanningHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxPopupMenuHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxCellMarker.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxSelectionCellsHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxConnectionHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxConstraintHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxRubberband.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxHandle.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxVertexHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxEdgeHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxElbowEdgeHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxEdgeSegmentHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxKeyHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxTooltipHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxCellTracker.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/handler/mxCellHighlight.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/editor/mxDefaultKeyHandler.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/editor/mxDefaultPopupMenu.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/editor/mxDefaultToolbar.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/editor/mxEditor.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxCodecRegistry.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxObjectCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxCellCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxModelCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxRootChangeCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxChildChangeCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxTerminalChangeCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxGenericChangeCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxGraphCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxGraphViewCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxStylesheetCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxDefaultKeyHandlerCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxDefaultToolbarCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxDefaultPopupMenuCodec.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/src/js/io/mxEditorCodec.js"></script>
+
+	<link rel="stylesheet" href="${contextpath}/wro/newskin.css" type="text/css" media="all" />
+
+</head>
+<body>
+#end
+	<style>
+		.newskin .wikiContent a, .newskin .fr-view a {
+			color: black;
+		}
+
+		.newskin #closer-west {
+		  top: -27px;
+		  left: -7px;
+		 }
+
+		 .filterBoxContainer {
+		  position: relative;
+		  left: 10px;
+		 }
+
+		.actionBar {
+		  height: 19px;
+		 }
+
+		 #treePanePopup {
+		  position: relative;
+		  top: -17px;
+		  width: 100%;
+		 }
+
+		 #treePanePopup .jstree-checkbox {
+		  display: none;
+		 }
+
+		#zoomInButton_${mxGraphId} {
+			z-index:1;
+			overflow:hidden;
+			top:240px;
+			right:10px;
+			width:40px;
+			height:40px;
+			border-style:none;
+			background:transparent;
+			background-image: url('${contextpath}/mxGraph/custom/images/zoom_in32.png');
+			cursor: pointer;
+			opacity: 0.5;
+		}
+
+		#zoomOutButton_${mxGraphId} {
+			z-index:1;
+			overflow:hidden;
+			top:286px;
+			right:10px;
+			width:40px;
+			height:40px;
+			border-style:none;
+			background:transparent;
+			background-image: url('${contextpath}/mxGraph/custom/images/zoom_out32.png');
+			cursor: pointer;
+			opacity: 0.5;
+		}
+
+		#trackerSelector_${mxGraphId} {
+			z-index:1;
+			position: absolute;
+			overflow: hidden;
+			top: 70px;
+			left: 10px;
+		}
+		.grabbable {
+			cursor: move; // fallback
+			cursor: grab;
+			cursor: -moz-grab;
+			cursor: -webkit-grab;
+		}
+
+		.grabbable:active {
+			cursor: grabbing;
+			cursor: -moz-grabbing;
+			cursor: -webkit-grabbing;
+		}
+
+		#graphContainer_${mxGraphId} {
+			min-height: 300px;
+		}
+
+		#if ($exportMode)
+		#else
+			#graphContainer_${mxGraphId} svg {
+				padding: 10px;
+			}
+		#end
+		.showPlugin {
+			position: static !important;
+		}
+
+	</style>
+
+	<script type="text/javascript" src="${contextpath}/js/classDiagram.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var exportMode = ${exportMode};
+			var host = '${host}';
+			#if ($plugin)
+				codebeamer.ClassDiagram.init('_${mxGraphId}', ${projectId}, '$!{xml.replace("'","\'")}', true, exportMode, host);
+			#else
+				codebeamer.ClassDiagram.init('_${mxGraphId}', ${projectId}, '$!{xml.replace("'","\'")}', false, exportMode, host);
+			#end
+		});
+
+	</script>
+
+		#if ($plugin)
+		<div id="container_${mxGraphId}" style="position:relative;width: 100%;">
+			#if ($exportMode)
+				<div id="graphContainer_${mxGraphId}"
+					style="overflow:hidden;width: 100%;height: 600px;" class="grabbable showPlugin">
+			</div>
+			#else
+				<div id="outlineContainer_${mxGraphId}"
+					style="z-index:1;position:absolute;overflow:hidden;top:10px;right:10px;width:200px;height:150px;border-style:solid;border-color:lightgray;background:white;">
+				</div>
+				<div id="zoomInButton_${mxGraphId}" style="position:absolute;top:180px;right:10px;"></div>
+				<div id="zoomOutButton_${mxGraphId}" style="position:absolute;top:226px;right:10px;"></div>
+				<div id="graphContainer_${mxGraphId}"
+					style="overflow:hidden;left:0px;top:60px;right:0px;bottom:0px;width:100%;" class="grabbable showPlugin">
+				</div>
+			#end
+		</div>
+		#else
+		<div>
+			#if ($exportMode)
+				<div id="graphContainer_${mxGraphId}"
+					style="position:absolute;overflow:hidden;width: 100%;height: 600px;" class="grabbable">
+				</div>
+			#else
+				<div id="outlineContainer_${mxGraphId}"
+					style="z-index:1;position:absolute;overflow:hidden;top:70px;right:10px;width:200px;height:150px;border-style:solid;border-color:lightgray;background:white;">
+				</div>
+				<div id="zoomInButton_${mxGraphId}" style="position:absolute;"></div>
+				<div id="zoomOutButton_${mxGraphId}" style="position:absolute;"></div>
+				<div id="graphContainer_${mxGraphId}"
+					style="position:absolute;overflow:hidden;left:0px;top:60px;right:0px;bottom:0px" class="grabbable">
+				</div>
+			#end
+		</div>
+		#end
+#if ($exportMode)
+</body>
+</html>
+#end

@@ -1,0 +1,12 @@
+<script type="text/javascript" src="${livePreviewJsUrl}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		codebeamer.dashboard.livePreview.init($(".chartSpecificFields"), $(".livePreview"));
+	});
+</script>
+
+${commonEditorFields}
+
+<div class="chartSpecificFields">
+	${chartSpecificEditorFields}
+</div>

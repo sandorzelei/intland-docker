@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+#
+# Uncomment and adjust if Mercurial is not installed system-wide
+# (consult "installed modules" path from 'hg debuginstall'):
+#import sys; sys.path.insert(0, "/path/to/python/lib")
+
+import os
+from mercurial import demandimport
+from mercurial.hgweb import hgweb, wsgicgi
+
+repositoryPath = os.environ['SCM_REPOSITORY_PATH']
+
+demandimport.enable()
+
+application = hgweb(repositoryPath)
+wsgicgi.launch(application)

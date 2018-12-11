@@ -1,0 +1,715 @@
+@toolbarHeight: 28px;
+
+.editor-wrapper {
+    position: relative;
+
+	&.fr-modal.fr-active.fr-fake-popup-editor {
+		display: flex;
+		text-align: left;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 10000;
+
+		&.markup textarea {
+			height: ~"calc(100% - 95px)" !important;
+			min-height: 0 !important;
+		}
+
+		.overlay-header {
+			height: 50px;
+			display: flex;
+			align-items: center;
+
+			.editor-overlay-item-id {
+				margin-left: 14px;
+			}
+
+			.breadcrumbs-separator {
+				padding: 0px 5px;
+				font-size: 9px;
+				position: relative;
+				top: -2px;
+				vertical-align: baseline;
+			}
+
+			.editor-overlay-item-name {
+				font-weight: bold;
+				font-size: 15px;
+			}
+		}
+
+        .issueCommentVisibilityControl {
+            display: none;
+        }
+        .fr-toolbar.fr-sticky-on {
+            position: relative !important;
+        }
+	}
+
+	&.fr-fake-popup-editor .fr-box {
+		width: 92%;
+		height: 92%;
+	}
+
+	&.fr-modal.fr-active.fr-fake-popup-editor.wikiSectionEditor {
+		margin: 0;
+	}
+
+    &.markup {
+        .fr-wrapper {
+            display: none;
+        }
+	    textarea {
+			border: 1px solid @gray2;
+			box-sizing: border-box;
+			display: block !important;
+			font-family: monospace;
+			line-height: 16px;
+			padding: 5px;
+			resize: none !important;
+			width: 100%;
+
+			&:focus {
+	            outline: none;
+			}
+	    }
+    }
+
+    &.preview {
+        .fr-view {
+            pointer-events: none;
+            span.wikiContent {
+                color: inherit;
+            }
+        }
+        .upload-overlay {
+            display: none !important;
+        }
+    }
+
+    &.loadingInProgress:before {
+        background-image: url("../images/ajax_loading_horizontal_bar.gif");
+        content: '';
+        display: block;
+        height: 24px;
+        left: 0;
+        margin: 0 auto;
+        position: absolute;
+        right: 0;
+        top: 100px;
+        width: 160px;
+        z-index: 3;
+    }
+
+	&.loadingInProgress .fr-box:after {
+		background-color: white;
+		bottom: @toolbarHeight;
+		content: '';
+		display: block;
+		left: 1px;
+		position: absolute;
+		right: 1px;
+		top: 1px;
+		z-index: 1;
+	}
+
+    button.fr-btn {
+		&.fr-btn-cbIconWithText {
+			 width: auto !important;
+
+			 i.fa {
+			     float: left;
+			 }
+		}
+
+        span.cb-editor-button-name {
+            display: block;
+            float: right;
+            font-weight: normal;
+            height: @toolbarHeight;
+            line-height: @toolbarHeight;
+            margin-right: 8px;
+        }
+    }
+
+    // container element in wysiwyg mode
+	.fr-element.fr-view {
+        margin: 0 !important;
+        padding: 5px 5px 24px 5px !important;
+		white-space: normal;
+
+        table.wikitable {
+            border-collapse: collapse;
+        }
+
+		td {
+			padding: 5px;
+			&:not(.fr-selected-cell) {
+				border: 1px dotted @gray2;
+			}
+		}
+	}
+
+	.fr-toolbar {
+	    background-color: #f0f0f0;
+	    padding: 0;
+
+	    &.fr-disabled button.fr-btn-image {
+            opacity: 0.3;
+	    }
+
+	    button.fr-command.fr-btn {
+	        height: @toolbarHeight;
+	        margin: 0;
+	        width: 34px;
+
+	        &:hover {
+	            background-color: #e3e3e3;
+	        }
+	        &.cb-button-active {
+				&[data-cmd="cbWysiwyg"], &[data-cmd="cbMarkup"], &[data-cmd="cbPreview"] {
+				    pointer-events: none;
+				}
+	        }
+
+	        &.fr-btn-image.fr-disabled {
+                opacity: 0.3;
+	        }
+
+	        img, i.fa {
+	            margin: 0;
+	            padding: 5px 10px;
+	            width: 16px;
+	            height: 16px;
+	        }
+
+	        i.fa-sprite {
+	        	background-repeat: no-repeat;
+	        	background-size: auto;
+	        }
+
+            i.fa-table, i.fa-link, i.fa-unlink {
+                margin-top: 2px;
+            }
+
+			&.fr-dropdown {
+				min-width: 44px;
+
+				&:after {
+					right: 4px;
+					top: 12px;
+				}
+			}
+
+			&.fr-btn-text {
+                width: auto;
+                span {
+                    border: 1px solid #5f5f5f;
+                    font-weight: normal;
+                    margin: 0 6px;
+                    padding: 0 10px;
+                }
+
+                &.fr-disabled span {
+                    border: 1px solid #CFCFCF;
+                }
+			}
+
+			&.fr-active + .fr-dropdown-menu {
+				border: 1px solid #dbdbdb;
+				border-radius: 0;
+				box-shadow: none;
+			}
+
+			&[data-cmd="cbColorText"] .fa-font:after {
+				content: '\f043';
+				font-size: .6em;
+				position: relative;
+				top: -5px;
+			}
+	    }
+
+	    .cb-table-grid {
+			border-collapse: separate;
+			border-spacing: 2px;
+			td {
+				background-color: white;
+				padding: 3px !important;
+			}
+	    }
+
+        .fr-dropdown-menu li a {
+			font-family: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+        }
+
+		button[data-cmd="paragraphFormat"] + .fr-dropdown-menu li {
+			h1 {
+			    font-size: 21px;
+			}
+			h2 {
+			    font-size: 18px;
+			}
+			h3, h4, h5 {
+			    font-size: 15px;
+			}
+			h1, h2, h3, h4, h5 {
+			    font-weight: 700;
+			}
+			blockquote {
+			    border-left: none;
+			    a {
+			        padding-left: 24px !important;
+			    }
+			}
+		}
+		.fr-color-hex-layer {
+			button.fr-command {
+			    color: white !important;
+			}
+			label {
+			    display: none !important;
+			}
+		}
+	}
+
+	.fr-toolbar, .fr-popup.fr-above.cb-custom-popup {
+	    border: none;
+	    .fr-arrow {
+	        display: none;
+	    }
+	}
+
+/************** new toolbar design *********************/
+    @mainToolbarColor: #008FB9;
+    @popupBackgroundColor: #454545;
+
+	button.fr-command, a.fr-command {
+        color: @mainToolbarColor !important;
+
+		&:hover {
+		    color: white;
+		}
+		&.fr-dropdown:after {
+		    border-top-color: @mainToolbarColor !important;
+		}
+		&.fr-dropdown.fr-active:after {
+		    border-top-color: white !important;
+		}
+		&.cb-button-active, &.fr-active {
+			background-color: @popupBackgroundColor !important;
+			color: white !important;
+		}
+		&.fr-disabled {
+		    color: #bdbdbd !important;
+		}
+		&.fr-command.fr-btn.fr-dropdown.fr-active:hover {
+			background-color: @mainToolbarColor !important;
+			color: white !important;
+			&:after {
+			    border-top-color: white !important;
+			}
+		}
+	}
+
+	.fr-buttons button.fr-command, .fr-dropdown-menu a.fr-command {
+		background-color: @popupBackgroundColor;
+		color: white !important;
+		&:not(.fr-disabled):hover {
+			background-color: @mainToolbarColor !important;
+			&.fr-dropdown:after {
+			    border-top: 4px solid white !important;
+			}
+		}
+		&.fr-dropdown:after {
+		    border-top-color: white !important;
+		}
+		&.fr-active, &.cb-button-active {
+			background-color: @mainToolbarColor !important;
+			&:hover {
+				background-color: @mainToolbarColor !important;
+				color: white !important;
+			}
+		}
+		&.fr-disabled {
+			color: #9b9b9b !important;
+			&:hover {
+			    background-color: @popupBackgroundColor;
+			}
+		}
+	}
+/*******************************************************/
+    .fa-sprite {
+     	background-repeat: no-repeat;
+     	background-size: auto;
+        width: 16px;
+        height: 16px;
+    }
+
+	i.fa-exclamation {
+		margin-left: 4px;
+		width: 10px;
+	}
+
+	.fr-command.icon-with-text {
+		align-items: center;
+		padding-top: 5px;
+		padding-bottom: 5px;
+
+		span {
+			margin-left: 5px;
+		}
+
+		img {
+			height: 16px;
+			width: 16px;
+		}
+	}
+
+	.fr-toolbar .fr-popup {
+	    box-shadow: none;
+	    left: 0;
+
+		&:not(.cb-custom-popup):not(.hide-insert-file-popup) {
+		    border: 1px solid @popupBackgroundColor;
+		}
+
+	    &.cb-custom-popup {
+            border: none;
+            margin-right: 1px;
+
+	        button.fr-command.fr-btn.fr-hidden {
+	            display: inline-block;
+	            opacity: 0.4;
+	        }
+	    }
+	    .fr-buttons {
+	        box-shadow: none;
+	        padding: 0;
+	        button {
+                float: left;
+	            margin: 0;
+	        }
+	    }
+		.fr-colors-tabs {
+		    text-align:center;
+
+		    .fr-colors-tab {
+		        cursor: default;
+		        margin: 0 auto;
+		        &:after {
+		            display: none;
+		        }
+		        &:hover {
+		            background-color: white;
+		        }
+		    }
+		}
+	}
+
+	.drag-and-drop-overlay {
+        display: none;
+    }
+
+    &.upload-drop-area-active {
+        background: initial;
+        &:not(.drag-and-drop-not-allowed) {
+            .drag-and-drop-overlay {
+                background-color: #99ffd1;
+                bottom: 0;
+                display: block;
+                left: 0;
+                opacity: 0.5;
+                right: 0;
+                position: absolute;
+                top:0;
+                z-index: 2147483630;
+            }
+        }
+    }
+
+    &.description-container .upload-overlay {
+        top: 55px;
+    }
+
+	&.fr-fake-popup-editor .upload-overlay {
+		top: ~"calc(5% - -50px)";
+		right: 5%;
+	}
+
+    .upload-overlay {
+        background-color: #FFF;
+        border: 1px solid #ddd;
+        display: none;
+        opacity: .5;
+        position: absolute;
+        right: 12px;
+        top: 10px;
+        transition: opacity 1s;
+        z-index: 2147483630;
+
+	    ul.file-list {
+			display: none;
+			list-style: none;
+            margin: 5px;
+            padding: 0;
+
+			.filename {
+			   margin-right: 10px;
+			}
+
+			.filesize {
+			   font-size: 11px;
+			   margin-right: 6px;
+			}
+
+			.fileremove {
+                background-image: url("../images/remove_attachment.png");
+                cursor: pointer;
+                display: inline-block;
+                height: 15px;
+                position: relative;
+                top: 2px;
+                width: 15px;
+			}
+
+			span, & + span {
+			    color: #1e1e1e;
+			}
+	    }
+
+	    span.upload-summary {
+	       display: inline-block;
+	       line-height: 19px;
+	       margin: 5px;
+	    }
+
+		&.has-files {
+            display: block;
+		}
+
+	    &.show-file-list {
+            opacity: 1;
+		    ul.file-list {
+	           display: block;
+	        }
+
+	        span.upload-summary {
+	           display: none;
+	        }
+	    }
+    }
+
+    &.editable.fr-modal.fr-active.fr-fake-popup-editor .fr-box {
+    	border: none;
+    }
+
+    &.editable.wysiwyg .fr-box,
+    &.editable.preview .fr-box {
+        border: 1px solid @gray2;
+    }
+
+    &:not(.editable) {
+		.fr-wrapper {
+			border: 1px solid @gray2 !important;
+		}
+    }
+
+    .fr-wrapper {
+        box-shadow: none !important;
+        .fr-table-resizer {
+        	cursor: col-resize;
+        }
+    }
+
+    &.hide-quick-insert .fr-box .fr-quick-insert {
+		left: -9999px !important;
+		top: -9999px !important;
+    }
+
+    .fr-box {
+		.fr-qi-helper {
+		    padding-left: 8px;
+		}
+		.fr-quick-insert {
+		    left: -29px !important;
+		}
+    }
+
+    img {
+        max-width: 100%;
+
+		/*
+		  keeping the aspect ration of images.
+		  we have to use important because froala uses theheight attribute on images and
+		  we want to overwrite that.
+		 */
+		height: auto !important;
+    }
+
+    a.footnote {
+    	vertical-align: baseline;
+    }
+
+	.fr-popup[data-command="cbUserSelector"] {
+		border: none;
+		.fr-arrow {
+		    display: none;
+		}
+
+		.content {
+			min-width: 300px;
+			overflow: auto;
+
+			&.loading {
+				background: url("../images/ajax_loading_horizontal_bar.gif") center no-repeat;
+				height: 44px;
+			}
+
+			table {
+				width: 100%;
+				&.active {
+					background-color: #eff2f7;
+					cursor: pointer;
+				}
+
+				tr, tr:hover {
+					background-color: inherit !important;
+				}
+
+				td.userIcon {
+					text-align: center;
+					vertical-align: middle;
+					width: 44px;
+				}
+				td {
+					padding: 4px 0 !important;
+				}
+			}
+		}
+	}
+}
+
+/************** Inline editor *********************/
+
+.fieldValue.dataCell.fieldType_wikitext .editor-wrapper {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.fieldValue.dataCell.fieldType_wikitext .editor-wrapper {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+@media (min-width: 1330px) {
+	.fieldValue.dataCell.fieldType_wikitext .editor-wrapper .fr-popup .fr-layer {
+		width: 225px;
+	}
+}
+
+@media (min-width: 1200px) and (max-width: 1329px) {
+	.fieldValue.dataCell.fieldType_wikitext .editor-wrapper .fr-popup .fr-layer {
+		width: 200px;
+	}
+}
+
+@media (min-width: 1145px) and (max-width: 1199px) {
+	.fieldValue.dataCell.fieldType_wikitext .editor-wrapper .fr-popup .fr-layer {
+		width: 175px;
+	}
+}
+
+@media (min-width: 951px) and (max-width: 1144px) {
+	.fieldValue.dataCell.fieldType_wikitext .editor-wrapper .fr-popup .fr-layer {
+		width: 150px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 950px) {
+	.fieldValue.dataCell.fieldType_wikitext .editor-wrapper .fr-popup .fr-layer {
+		width: 125px;
+	}
+}
+
+@media (max-width: 767px) {
+	.fieldValue.dataCell.fieldType_wikitext .editor-wrapper .fr-popup .fr-layer {
+		width: 100px;
+	}
+}
+
+/***************************************************/
+
+
+.fr-modal.fr-active {
+	overflow: hidden;
+	justify-content: center;
+	align-items: center;
+}
+
+.fr-modal iframe {
+	background: #FFFFFF;
+	border: none;
+}
+
+.fr-modal iframe.huge {
+	width: 90%;
+	height: 90%;
+}
+
+.fr-modal iframe.full-screen {
+	width: 100%;
+	height: 100%;
+}
+
+.fr-modal iframe.large {
+	width: 1000px;
+	height: 600px;
+}
+
+.fr-modal iframe.normal {
+	width: 800px;
+	height: 600px;
+}
+
+.fr-modal iframe.small {
+	width: 600px;
+	height: 400px;
+}
+
+.fr-modal iframe.xlarge {
+    width: 80%;
+    height: 80%;
+}
+
+.fr-popup.fr-active {
+    z-index: 10001 !important; // to make popups visible in overlay mode
+
+    &.hide-insert-file-popup {
+		height: 0px !important;
+		width: 0px !important;
+		overflow: hidden !important;
+    }
+
+	button.fr-btn-image.fr-disabled {
+		opacity: 0.3;
+	}
+}
+
+.fr-overlay {
+    z-index: 2147483640 !important;
+}
+
+.optional .editor-wrapper , .mandatory .editor-wrapper  {
+	font-weight: normal;
+}
+
+.newskin #requirements .description > div.fr-modal.fr-active.fr-fake-popup-editor {
+	margin: 0;
+	padding: 0;
+}
+
+div.fr-tooltip {
+    background-color: #cacaca;
+    color: #000;
+}

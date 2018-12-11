@@ -1,0 +1,7 @@
+<div id="${id}">
+	<div class='infoMessages'>
+		<div title='Warning' class='warning'>
+			${message}
+		</div>
+	</div>
+</div>

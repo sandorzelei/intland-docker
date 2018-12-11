@@ -1,0 +1,9023 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+@import "lib.css";
+
+/**
+ * Put css for the new 6.2-facelift style here, preferably use less.css features
+ *
+ * Use CB palette defined here: https://codebeamer.com/cb/displayDocument/codeBeamer+Color+Scheme+2.pdf?task_id=48304&artifact_id=96488
+ */
+
+.priorityIconMixin(@imageUrl) {
+	background-image: url("@{imageUrl}");
+	width: 8px;
+	height:14px;
+}
+
+.wrap-content {
+	white-space: -moz-pre-wrap !important;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	word-break: break-all;
+	white-space: normal;
+}
+
+.tableIconMixin(@backgroundImage) {
+	border: 0;
+	display: inline-block;
+	margin-left: 3px;
+	background-image: url("@{backgroundImage}");
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+@headerBorderColor: @gray2;
+@breadrcrumbLightGray: @gray2;
+.headerBorderMixin {
+	border: solid 1px @headerBorderColor;
+}
+
+.newskin .searchFilterBox, .searchFilterBox {
+	.fontMixin;
+	font-size: 11px;
+	color: black !important; /* !important is needed because the .inputboxWithHint is using it too! */
+	padding: 3px 8px;
+	background-color: #fff;
+
+	&:hover {
+		color: @headerLinkHover !important;
+	}
+}
+
+.newskin .userFilterBox {
+	.fontMixin(@headerLinkHover, 11px);
+	margin-bottom: 4px;
+}
+
+.menuArrowDownMixin {
+	background-image: url("@{imagePrefix}/action/more-lightgrey-xs.png");	// TODO: that was in a sprite previously, would be nice
+	background-position: 0;
+	width: 7px; height: 6px;
+	margin-left: 0px;
+}
+
+
+
+#headerPane {
+	background-image: url("@{imagePrefix}/header/bg-head-xs.png");
+	background-repeat: repeat-x;
+	background-color: @headerPaneBackgroundColor;
+	padding-top: 0px;
+	padding-bottom: 0px;
+
+	.logoLink {
+		padding: 6px 0px;
+		white-space: nowrap;
+		display: block;
+	}
+
+	.logo {
+		margin-left: 15px;
+		max-height: 45px;
+		max-width: 250px
+	}
+
+	.headerCenter {
+		text-align: center;
+		padding: 10px 0;
+		flex-grow: 2;
+	}
+
+	#slogan {
+		.fontMixin;
+	}
+
+	.mainmenu, .languageChooser * {
+		.fontMixin;
+		font-size: 11px;
+	}
+
+	.languageChooser .menuArrowDown {
+		.menuArrowDownMixin;
+		margin-right: 0;
+	}
+
+	.headerTopContainer {
+		display: flex;
+		align-items: center;
+	}
+
+	#toprightmenuContainer {
+		text-align: right;
+		display: block;
+	}
+
+	.toprightmenu {
+		margin-top: 5px;
+		margin-right: 15px;
+
+		a, a:hover {
+			text-decoration: none;
+
+			&:hover {
+				color: @darkGrayFont;
+			}
+		}
+	}
+
+    .login-highlight-icon {
+        height: 12px;
+        position: relative;
+        top: 2px;
+        width: 12px;
+
+        &.blue {
+            background-image: url("@{imagePrefix}/header/login/icon_login_blue.png");
+        }
+        &.white {
+            background-image: url("@{imagePrefix}/header/login/icon_login_white.png");
+        }
+    }
+
+	/* TODO: this should be generic, put on the .inputboxWithHint css class! */
+	#searchFilter {
+		.headerBorderMixin;
+		font-size: 11px;
+		background-color: #fff;
+		outline: 0;
+		width: 100px;
+
+		&.inputboxWithHint {
+			font-style: italic;
+			color: @gray3 !important;
+		}
+	}
+
+	#globalSearchBox {
+		margin-top: 7px;
+		a.advancedSearchButton {
+			text-decoration: none;
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+
+		/*& *:hover {
+			color: @headerLinkHover !important;
+		}*/
+	}
+
+    #highlightLogin {
+        background-color: @blueLinkColor;
+        color: white;
+        padding: 9px;
+        position: relative;
+        text-align: center;
+
+        .close-icon {
+            background-image: url("@{imagePrefix}/header/login/icon_close_white.png");
+            cursor: pointer;
+            height: 12px;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 12px;
+        }
+
+        p {
+            margin: 0;
+
+            a {
+                text-decoration: none;
+            }
+        }
+    }
+
+	.fontMixin;
+}
+
+/* The currently logged in user's link inside the toprightmenu */
+#userInfo {
+	color: @darkGrayFont;
+	font-weight: bold;
+}
+
+/* Toolbar (Main Tabs) Look & Feel */
+.toolbar {
+	width: 100%;
+	background-image: url("@{imagePrefix}/header/bg-menu-xs.png");
+	background-repeat: repeat-x;
+	background-color: @headerPaneBackgroundColor;
+
+	.tab {
+		border-top: solid 1px @headerBorderColor;
+		border-bottom: solid 1px @headerBorderColor;
+
+		td {
+			text-align: center;
+			margin: 0;
+			padding: 0 15px;
+			height: 34px;
+			border-left: solid 1px transparent;
+			border-right: solid 1px @headerBorderColor;
+		}
+
+		.toolbarTab {
+			white-space: nowrap;
+
+			padding-right: 0px;
+			padding-left: 0px;
+		}
+
+		td.currentTabPre {
+			border-right: none;
+		}
+		td.currentTabPost {
+			border-left: none;
+		}
+
+		.toolbarTab .menuArrowDown, .currentTabCenter .menuArrowDown {
+			.menuArrowDownMixin;
+			background-image: url("@{imagePrefix}/action/more-darkgrey-xs.png");
+			width: 7px;
+			height: 11px;
+			padding-top: 5px;
+			padding-bottom: 15px;
+			padding-right: 10px;
+			background-position: center center;
+			margin-top: 0px;
+			margin-right: 2px;
+			margin-bottom: -11px;
+			display: inline-block;
+			position: relative;
+			left: -5px;
+
+			&:hover {
+				background-image: url("@{imagePrefix}/action/more-green-xs.png");
+			}
+		}
+
+		.toolbarTab .arrowSeparator {
+			background: none;
+			width: 1px;
+			display: inline-block;
+			height: 20px;
+			position: relative;
+			top: 6px;
+		}
+
+		.toolbarTab .inlinemenuTrigger {
+			display: inline-block;
+		}
+
+		/* Non project required tab indicator bg color */
+		.toolbarTab .topIndicator {
+			display: block;
+			height: 2px;
+			width: 100%;
+			background-color: #FFAB46;
+		}
+
+		/* Project required tab indicator bg color */
+		.toolbarTab.projectDependentTab .topIndicator {
+			background-color: #00A85D;
+		}
+
+		/* Non project required tab indicator bg color on hover */
+		.toolbarTab:hover {
+			.topIndicator {
+				background-color: #FFC682;
+			}
+		}
+
+		/* Project required tab indicator bg color on hover */
+		.projectDependentTab:hover {
+			.topIndicator {
+				background-color: #58DBA0;
+			}
+		}
+
+		.currentTabCenter {
+			background-color: @toolbarBackgroundColor !important;
+			background-image: none;
+			border: solid 1px @headerBorderColor;
+			border-bottom-color: @toolbarBackgroundColor;
+
+			.inlinemenuTrigger a, .inlinemenuTrigger a:hover {
+				color: #fff;
+			}
+
+			.menuArrowDown {
+				background-image: url("@{imagePrefix}/action/more-lightgrey-xs.png");	/* TODO: that was in a sprite previously, would be nice */
+				border-left: 0px;
+
+				&:hover {
+					background-image: url("@{imagePrefix}/action/more-white-xs.png");
+				}
+			}
+
+			/* Non project required active tab indicator bg color */
+			.topIndicator {
+				background-color: #FFAB46;
+			}
+
+		}
+
+		.currentTabCenter.first {
+			border-left-color: @toolbarBackgroundColor;
+		}
+
+		/* Non project required active tab indicator bg color on hover */
+		.currentTabCenter:hover {
+			.topIndicator {
+				background-color: #FFC682;
+			}
+		}
+
+		/* Project required active tab indicator bg color */
+		.currentTabCenter.projectDependentTab {
+			.topIndicator {
+				background-color: #00A85D;
+			}
+		}
+
+		/* Project required active tab indicator bg color on hover */
+		.currentTabCenter.projectDependentTab:hover {
+			.topIndicator {
+				background-color: #58DBA0;
+			}
+		}
+
+		a, a:hover {
+			text-decoration: none;
+			.fontMixin;
+		}
+
+		.menuLabel {
+			display: inline-block;
+			height: 25px;
+			padding-top: 9px;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+
+		.hasSubmenu .menuLabel {
+			position: relative;
+			top: -20%;
+			padding-right: 6px;
+		}
+
+		.currentTabCenter .menuLabel {
+			&:hover {
+				background-color: transparent;
+			}
+		}
+
+		a:hover {
+			color: @darkGrayFont;
+		}
+
+		.menuIsOpen {
+			background: white !important;
+			color: @lightGrayFont !important;
+			border-top: solid 1px @headerBorderColor !important;
+			border-bottom: solid 1px white !important;
+			border-left-color: @headerBorderColor !important;
+			border-right-color: @headerBorderColor !important;
+
+			.inlinemenuTrigger a, .inlinemenuTrigger a:hover {
+				color: @lightGrayFont !important;
+			}
+
+			.menuArrowDown {
+				border-left-color: transparent;
+				background-image: url("@{imagePrefix}/action/more-darkgrey-xs.png");
+				&:hover {
+					background-image: url("@{imagePrefix}/action/more-darkgrey-xs.png");
+				}
+			}
+
+			/* Non-project required open tab indicator bg color */
+			.topIndicator {
+				background-color:  #FFAB46;
+			}
+		}
+
+		/* Project required open tab indicator bg color */
+		.menuIsOpen.projectDependentTab {
+			.topIndicator {
+				background-color: #00A85D;
+			}
+		}
+	}
+
+}
+
+/* popup menu at the top */
+#toolbarMenus {
+	.yuimenu {
+		.bd {
+			padding: 0;
+			margin: 0;
+			border-top: 0;
+			background-color: white !important;
+		}
+
+		/* header */
+		h6 {
+			margin: 0 0 0 0;
+			padding: 4px 10px 0 10px;
+
+			&.first-menu-item {
+				border-width: 0px;
+			}
+		}
+
+		.yuimenuitemlabel,
+		.first-of-type > .yuimenuitemlabel /* override top margin of the yui menus inside the page */
+		{
+			padding: 3px 27px;
+			margin: 0 0 3px 0;
+
+			.item-label {
+				vertical-align: top;
+			}
+		}
+
+		.yuimenuitemlabel-with-icon,
+		.first-of-type > .yuimenuitemlabel-with-icon {
+			padding-left: 2px;
+		}
+
+		.tableIcon {
+			margin: 0 8px 0 5px;
+		}
+
+		.yuimenuitemlabel-selected {
+			.newskin .yuimenu .yuimenuitemlabel-selected;	/* use the same as on the newskin below; TODO: should be merged ! */
+		}
+
+				.ui-state-focus, .ui-state-active {
+						border: none !important;
+				}
+
+	}
+
+	.work-items,
+	.config-items {
+		display: inline-block;
+	}
+}
+
+.withicon .tableIcon {
+	margin-right: 5px;
+}
+
+.actionBar .withicon .tableIcon {
+	position: relative;
+	top: 3px;
+}
+
+.yuimenuitem .withicon .tableIcon {
+	position: relative;
+	top: 0 !important;
+}
+
+.yuimenuitem .withicon.transition .tableIcon {
+	top: 3px !important;
+}
+
+/**
+ * adjusting border/shadown on the jquery-ui's tooltip
+ */
+body .ui-tooltip, body .yui-tt {
+	.shadowForMenusAndTooltipsMixin;
+}
+
+/**
+ * look of yui tooltip
+ */
+body.yui-skin-cb .yui-tt {
+	background-color: white;
+	.shadowForMenusAndTooltipsMixin;
+}
+
+.yuimenu {
+	.bd {
+		.shadowForMenusAndTooltipsMixin;
+	}
+
+	a {
+		color: black !important;
+	}
+
+	ul {
+		padding-left: 0px;
+	}
+}
+
+.wikichartbox {
+	.yuimenu ul {
+		padding-left: 0px !important;
+	}
+}
+
+.highchartbox {
+	border: 1px solid @gray1;
+}
+
+/**
+ * right side icons and header-toggler in the toolbar
+ */
+.toolbarIcon {
+	width: 12px;
+	height: 12px;
+	border: 0;
+	margin-left: 4px;
+	cursor: pointer;
+}
+
+.toolbar .tab .toolbarIconContainer {
+	text-align: right;
+	width: 100%;
+	padding-right:15px;
+	border-right: none;
+	overflow: hidden;
+
+	.date-filters {
+		display: none;
+		margin-right: 6px;
+
+		a {
+			margin-right: 4px;
+		}
+	}
+}
+
+/**
+ * CSS-es for toggling the header
+ */
+body.headerCollapsed #headerPane {
+	display: none;
+}
+
+body.headerCollapsed .toolbar .tab .toolbarIconContainer .date-filters {
+	display: inline-block;
+}
+
+.date-filters {
+	&.show-inline {
+		display: inline-block;
+	}
+	a {
+		background-image: url("@{imagePrefix}/header/date_filters.png");
+		color: white !important;
+		width: 16px;
+		height: 15px;
+		display: inline-block;
+		text-align: center;
+		padding-top: 3px;
+		background-repeat: no-repeat;
+		font-size: 11px !important;
+		background-color: @blueLinkColor;
+
+		&:hover {
+			color: white !important;
+			text-decoration: none !important;
+		}
+
+		&.highlighted-date {
+			background-color: #5eceeb;
+		}
+	}
+}
+
+.searchMenuForm {
+	padding: 1px !important;
+}
+
+.userLink {
+	font-size: 12px;
+	color: #777;
+}
+
+#userLinkContainer {
+	padding: 0 8px
+}
+
+
+body.headerCollapsed #toolmenuContainer .toolbarIconContainer {
+	white-space: nowrap;
+}
+
+/************************** User dropdown and search box on header **************************/
+
+.toprightmenu .userLinkContainer {
+	display: inline-block;
+}
+
+body.headerCollapsed .toprightmenu .userLinkContainer {
+	display: none;;
+}
+
+.toolbarIconContainer .userLinkContainer {
+	display: none;
+}
+
+body.headerCollapsed .toolbarIconContainer .userLinkContainer {
+	display: inline-block;
+	vertical-align: middle;
+	border-radius: 3px;
+	margin-right: 7px;
+	padding: 1px 5px;
+}
+
+.userLinkContainer span[id^='userQuickMenu'] .tableIcon {
+	vertical-align: middle;
+	height: 28px;
+	width: 28px;
+	border-radius: 50%;
+}
+
+
+.userLinkContainer span[id^='userQuickMenu'] .toolbarTopMenu {
+	padding: 1px;
+}
+
+.userLinkContainer span[id^='userQuickMenu'] .menuArrowDown {
+	background-image: url("../images/newskin/action/control-m-without-border.png");
+	display: inline-block;
+	margin-right: -6px;
+	position: relative;
+	top: 4px;
+}
+
+.userLinkContainer div[id^='userQuickMenuPopup'] {
+	min-width: 250px;
+}
+
+.userLinkContainer div[id^='userQuickMenuPopup'] .tableIcon {
+	vertical-align: middle;
+	position: relative;
+	top: -2px;
+}
+
+.userLinkContainer div[id^='userQuickMenuPopup'] .ui-menu-item .yuimenuitemlabel-with-icon {
+	padding-left: 0px;
+}
+
+.userLinkContainer div[id^='userQuickMenuPopup'] .ui-menu-item .yuimenuitemlabel,
+.userLinkContainer div[id^='userQuickMenuPopup'] .ui-menu-item .yuimenuitemlabel-with-icon {
+	padding-top: 0.33em;
+	padding-bottom: 0.33em;
+}
+
+/*********************************************************************************************/
+
+#headerToggler {
+	padding: 0 6px;
+	background: url("../images/newskin/action/control-m-2_up.png");
+	width: 12px;
+	height: 12px;
+	margin-right: 2px;
+}
+
+body.headerCollapsed #headerToggler {
+	background: url("../images/newskin/action/control-m-2.png");
+}
+
+#headerTogglerContainer {
+	float: right;
+	padding-top: 5px;
+	width: 18px;
+}
+
+body.headerCollapsed #headerTogglerContainer {
+	float: none;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* hack for IE7: if the .toolbarIconContainer has 100% width that will collapse all other cells  */
+body.IE6or7 {
+	.toolbar {
+		border-top: solid 1px @headerBorderColor;
+
+		.tab {
+			border-top: none;
+
+			.toolbarIconContainer {
+				width: auto;
+			}
+		}
+	}
+}
+
+/**
+ * buttons
+ */
+.button, input.button, .actionButton, .smallButton, .disabledButton, .darkButton, .smallDarkButton, .ui-dialog .ui-dialog-buttonset button,
+.ui-dialog .ui-dialog-buttonset button.ui-state-hover {
+	.headerBorderMixin;
+	font-size: 13px !important;
+	font-weight: bold;
+	color: @gray7 !important;
+
+	background-image: url("@{imagePrefix}/action/bg-button-xs.png") !important;
+	background-repeat: repeat-x !important;
+	background-color: @lightGray !important;
+
+		padding: 4px 20px;
+	min-height: 25px;
+		min-width: 80px;
+
+	cursor: pointer;
+
+	&:hover {
+		border-color: @gray3;
+	}
+
+	&[disabled], &[disabled]:hover {
+		.disabledButtonMixin;
+	}
+
+	/** even for IE8 the min-width/height is just making the button tooo big, so removing it */
+	.IE & {
+		min-height: auto;
+		min-width: auto;
+	}
+
+}
+
+.ui-dialog .ui-dialog-buttonset button,
+.ui-dialog .ui-dialog-buttonset button.ui-state-hover {
+	font-weight: bold !important;
+}
+
+.ui-dialog .ui-dialog-buttonset button.cancelButton,
+.ui-dialog .ui-dialog-buttonset button.ui-state-hover.cancelButton {
+	background: none !important;
+	border: none !important;
+	color: #0093b8 !important;
+	font-weight: normal !important;
+}
+
+.ui-dialog {
+	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+	padding: 0;
+
+	.ui-dialog-titlebar {
+		padding: 0.5em 1em;
+	}
+}
+
+.ui-dialog.ui-widget-content {
+	border: none !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+	border: none;
+	right: 0.9em;
+	top: 45%;
+	background: url("../images/newskin/action/closewindow-round-bgwhite.png") no-repeat center;
+
+	.ui-icon-closethick {
+		display: none;
+	}
+
+	&:active {
+		border: none;
+		outline: none;
+	}
+}
+
+button span.ui-button-text {
+	padding: 0px !important;
+}
+
+.darkButtonMixin {
+	background-image: url("@{imagePrefix}/action/bg-button-dark.png");
+	color: @gray2;
+	background-color: @gray5;
+	border-color: @gray6;
+
+	&:hover {
+		color: white;
+	}
+
+	&[disabled] {
+		color: @gray3;
+
+		&:hover {
+			color: @gray3;
+		}
+	}
+}
+/**
+ * This darker button should be used on dark backgrounds, instead of the default "lightgray" button !
+ */
+.darkButton {
+	.darkButtonMixin;
+}
+
+/**
+ * all buttons inside the actionMenuBar should be dark...
+ */
+.actionMenuBar {
+	.button, input.button, .actionButton, .smallButton, .disabledButton {
+		.darkButtonMixin;
+	}
+	.smallButton {
+		.smallDarkButton;
+	}
+
+	.searchFilterBox {
+		border: 1px solid @gray6;
+	}
+}
+
+.actionMenuBar .viewsMenuContainer {
+	display: inline-block;
+	float: right;
+	.viewsMenu {
+		margin-left: 10px;
+		display: inline-block;
+		background-color: @toolbarBackgroundColor;
+		padding: 0 7px;
+		border-radius: 2px;
+		.viewControl {
+			text-decoration: none;
+			display: inline-block;
+			float: none !important;
+			vertical-align: middle;
+			&.viewButton {
+				width: 27px;
+				height: 22px;
+				line-height: 22px;
+				vertical-align: middle;
+
+				&.active {
+					background-color: @gray7;
+				}
+
+				img {
+					position: relative;
+					top: 5px;
+					float: left;
+					left: 7px;
+				}
+			}
+			&.simpleDropdownMenu {
+				height: 22px;
+				width: 17px;
+				margin-left: 0;
+				&:hover {
+					background-color: @gray7;
+				}
+				.menuArrowDown {
+					background-image: url("@{imagePrefix}/action/more-lightgrey-xs.png");
+					background-position: 1px 3px;
+					position: relative;
+					top: 0;
+				}
+			}
+		}
+	}
+	&.large {
+		margin-right: 12px;
+		 > .label {
+			display: none;
+		}
+		.viewsMenu {
+			background-color: @toolbarBackgroundColor;
+			.viewControl {
+				&.viewButton {
+					height: 36px;
+					width: 45px;
+						background-position: 50% 5px;
+						background-repeat: no-repeat;
+					&.active {
+						 background-color: transparent;
+					 }
+					img {
+						display: none;
+					}
+					&.plannerActionIcon {
+						 background-image: url("@{imagePrefix}/action/agile/icon_planner_grey.png");
+						&.active {
+							 background-image: url("@{imagePrefix}/action/agile/icon_planner_white.png");
+						}
+					}
+					&.coverageActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_testcoverage_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_testcoverage_white.png");
+						}
+					}
+					&.traceabilityBrowserActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_tb_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_tb_white.png");
+						}
+					}
+					&.cardboardActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_cb_grey_new.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_cb_white.png");
+						}
+					}
+					&.releaseStatsActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_stat_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_stat_white.png");
+						}
+					}
+					&.bubbleChartActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_bubble_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_bubble_white.png");
+						}
+					}
+					&.detailsActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_settings_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_settings_white.png");
+						}
+					}
+					&.tableViewActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_table_grey_new.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_table_white_new.png");
+						}
+					}
+					&.documentViewActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_doc_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_doc_white.png");
+						}
+					}
+					&.documentViewEditActionIcon {
+						margin-top: 4px;
+						background-image: url("@{imagePrefix}/action/agile/icon-docview-edit-grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon-docview-edit-white.png");
+						}
+					}
+					&.reviewViewActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_review.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_review_on.png");
+						}
+					}
+					&.dashboardViewActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_dashboard_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_dashboard_white.png");
+						}
+					}
+					&.dependencyGraphViewActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_dependency_graph_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_dependency_graph_white.png");
+						}
+					}
+					&.traceabilityBrowserActionIcon {
+						background-image: url("@{imagePrefix}/action/icon_tb_grey.png");
+						&.active {
+							background-image: url("@{imagePrefix}/action/icon_tb_white.png");
+						}
+					}
+					&.vcardViewActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_vcard_grey.png");
+						background-position-y: 6px;
+						&.active {
+							background-image: url("@{imagePrefix}/action/agile/icon_vcard_white.png");
+						}
+					}
+					&.settingsViewActionIcon {
+						background-image: url("@{imagePrefix}/action/agile/icon_settings_grey.png");
+						background-position-y: 6px;
+						&.active {
+					 		background-image: url("@{imagePrefix}/action/agile/icon_settings_white.png");
+						}
+					}
+				}
+			}
+				.viewControl.simpleDropdownMenu {
+					&:hover {
+						background-color: transparent;
+						.menuArrowDown {
+							background-image: url("@{imagePrefix}/action/agile/icon_more_white.png");
+					}
+				}
+					.menuArrowDown {
+					background-image: url("@{imagePrefix}/action/agile/icon_more_grey.png");
+						width: 26px;
+						height: 26px;
+						margin-top: -3px;
+						margin-left: 5px;
+					}
+			}
+		}
+	}
+}
+
+
+
+.tracker-branch .actionMenuBar .viewsMenuContainer.large .viewsMenu .viewControl.viewButton {
+	&.tableViewActionIcon {
+		position: relative;
+		top: 1px;
+		background-image: url("@{imagePrefix}/action/agile/icon_table_green_new.png");
+		&.active {
+			background-image: url("@{imagePrefix}/action/agile/icon_table_white_new.png");
+		}
+	}
+	&.documentViewActionIcon {
+		background-image: url("@{imagePrefix}/action/agile/icon_doc_green.png");
+		&.active {
+			background-image: url("@{imagePrefix}/action/agile/icon_doc_white.png");
+		}
+	}
+
+	&.documentViewEditActionIcon {
+		background-image: url("@{imagePrefix}/action/agile/icon-docview-edit-green.png");
+		&.active {
+			background-image: url("@{imagePrefix}/action/agile/icon-docview-edit-white.png");
+		}
+	}
+	&.cardboardActionIcon {
+		 background-image: url("@{imagePrefix}/action/agile/icon_cb_green_new.png");
+         &.active {
+	  		 background-image: url("@{imagePrefix}/action/agile/icon_cb_white.png");
+         }
+	}
+	&.coverageActionIcon {
+		background-image: url("@{imagePrefix}/action/agile/icon_testcoverage_green.png");
+		&.active {
+			background-image: url("@{imagePrefix}/action/agile/icon_testcoverage_white.png");
+		}
+	}
+	&.traceabilityBrowserActionIcon {
+		 background-image: url("@{imagePrefix}/action/icon_tb_green.png");
+ 	}
+}
+
+.tracker-baseline .actionMenuBar .viewsMenuContainer.large .viewsMenu .viewControl.viewButton {
+	&.tableViewActionIcon {
+	 	background-image: url("@{imagePrefix}/action/agile/icon_table_blue_new.png");
+		&.active {
+	 		background-image: url("@{imagePrefix}/action/agile/icon_table_white_new.png");
+ 		}
+	}
+	&.documentViewActionIcon {
+	 	background-image: url("@{imagePrefix}/action/agile/icon_doc_blue.png");
+		&.active {
+	 		background-image: url("@{imagePrefix}/action/agile/icon_doc_white.png");
+ 		}
+	}
+	&.cardboardActionIcon {
+	 	background-image: url("@{imagePrefix}/action/agile/icon_cb_grey_new.png");
+		&.active {
+	 		background-image: url("@{imagePrefix}/action/agile/icon_cb_white.png");
+ 		}
+	}
+	&.coverageActionIcon {
+	 	background-image: url("@{imagePrefix}/action/agile/icon_testcoverage_blue.png");
+		&.active {
+	 		background-image: url("@{imagePrefix}/action/agile/icon_testcoverage_white.png");
+ 		}
+	}
+	&.plannerActionIcon {
+		 background-image: url("@{imagePrefix}/action/agile/icon_planner_grey.png");
+		&.active {
+			 background-image: url("@{imagePrefix}/action/agile/icon_planner_white.png");
+		}
+	}
+	&.traceabilityBrowserActionIcon {
+	 	background-image: url("@{imagePrefix}/action/icon_tb_blue.png");
+ 	}
+}
+
+.disabledButton, .disabledButtonMixin {
+	cursor: default;
+	color: @gray2 !important;
+	&:hover {
+		color: @gray2 !important;
+		.headerBorderMixin;
+	}
+}
+
+.smallButton, .smallDarkButton {
+	background-image: url("@{imagePrefix}/action/bg-smallbutton.png");
+
+	font-size:11px;
+	min-height: 12px;
+	padding: 3px 8px;
+}
+
+.smallDarkButton {
+	.darkButtonMixin;
+	background-image: url("@{imagePrefix}/action/bg-smallbutton-dark.png");
+}
+
+/**
+ * app footer
+ */
+div#footer {
+	background: @headerPaneBackgroundColor;
+	border-top: solid 1px @borderColor;
+
+	padding: 9px;
+	text-align: center;
+	clear: both;
+
+	font-size: 10px;
+	color: @lightGrayFont;
+
+	a {
+		color: @darkGrayFont;
+		text-decoration: none;
+	}
+}
+div#footer.stickToBottom {
+	position: fixed;
+	bottom:0;
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+/**
+ * Message box styles
+ */
+#globalMessages {
+}
+
+@marginForAlertBoxes: 15px;
+.infoMessages {
+
+	.information, .warning, .error {
+		>ul {
+			margin: 0;
+			padding-left: 15px;
+		}
+		margin: @marginForAlertBoxes;
+	}
+
+	/*  don't show the ul's dots when there is only one message shown */
+	.onlyOneMessage > ul {
+		list-style: none;
+		padding-left: 0;
+		padding-top: 4px;
+	}
+}
+
+.wikiContent {
+	.information, .warning, .error, .videobox {
+		padding-top: 15px;
+		padding-bottom: 5px;
+		margin: @marginForAlertBoxes;
+	}
+}
+
+/* wiki boxes, plus they are used as globalMessages */
+div.information, div.warning, div.error, div.confirmation, div.notification, div.videobox,
+span.information, span.warning, span.error, span.confirmation, span.notification, span.videobox {
+	display: block;
+	padding: 10px 20px 10px 44px;	/* 52px is needed to allow space for 32x32 icon */
+	min-height: 24px;
+
+	margin: 5px;
+
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+
+	&.overlayMessageBox {
+		 box-shadow: 0 0 10px #ababab;
+	}
+
+	.fontMixin;
+	color: @darkGrayFont;
+	font-size: 12px;
+
+	label {
+		display: block;
+		.fontMixin;
+		font-weight: bold;
+		font-size: 14px;
+		color: @darkGrayFont;
+	}
+
+	h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+		margin-top: 0 !important;
+	}
+}
+
+div.information, span.information, div.confirmation, span.confirmation {
+	background-image: url("@{imagePrefix}/message/information-l.png");
+	background-color: #ccf4ff;
+}
+
+div.warning, span.warning {
+	background-image: url("@{imagePrefix}/message/warning-l.png");
+	background-color: #fff7eb;
+}
+
+div.error, span.error {
+	background-image: url("@{imagePrefix}/message/error-l.png");
+	background-color: #ffe8e9;
+}
+
+div.confirmation, span.confirmation {
+	background-image: url("@{imagePrefix}/message/confirmation-l.png");
+}
+
+div.notification, span.notification {
+	background-image: url("@{imagePrefix}/message/notification-l.png");
+	background-color: #ccffe8;
+}
+
+div.videobox, span.videobox {
+	background-image: url("@{imagePrefix}/message/video-l.png");
+	background-color: #ccffe8;
+}
+
+/**
+ * Notification box always at the top of the screen
+ */
+.overlayMessageBoxContainer {
+	position: fixed;
+	top: 0;
+	z-index: 10000;
+	display: none;
+
+	.closer {
+	    position: absolute;
+	    right: 2px;
+	    height: 12px;
+	    width: 12px;
+	    display: inline-block;
+	    top: 8px;
+	    background: url("../stylesheet/../images/newskin/action/closewindow-round-bgwhite.png") no-repeat;
+	    cursor: pointer;
+	}
+}
+.overlayMessageBoxContainer .overlayMessageBox {
+	white-space: nowrap !important;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 15px;
+	padding-bottom: 5px;
+}
+
+/*
+ * Customized style for modal dialog
+ */
+div#cbModalDialog_c,
+div.cbModalDialog,
+#AjaxBusyIndicator_c {
+	z-index: 10005 !important;
+}
+div.mask {
+	z-index:9049 !important;
+}
+
+/* alert boxes inside the warning dialog (see .cbModalDialog selector) */
+.cbModalDialog {
+	.yui-panel {
+		border: none;
+
+		.hd {
+			margin: 0 !important;
+		}
+
+		.bd {
+			padding: 0 !important;
+			margin: 0 !important;
+
+			div.information, div.warning, div.error, div.confirmation, div.notification,
+			span.information, span.warning, span.error, span.confirmation, span.notification {
+				margin: 15px 15px 10px 15px;
+			}
+		}
+		.ft {
+			padding-top: 5px;
+			padding-bottom: 15px;
+			padding-right: 15px;
+
+			/** make the modalDialog's buttons same as other buttons (see .button above) */
+			.button-group button {
+				.button;
+
+				/* differences from .button above */
+				padding-bottom: 2px;
+				padding-top: 2px;
+				outline: none;
+
+				margin-left: 15px;
+			}
+		}
+	}
+
+
+	/* hide the form, so it won't occupy space on IE6/7  */
+	form {
+		display: none;
+	}
+}
+
+.actionMenuRightTable {
+	width: 100%;
+}
+
+.actionMenuBar .branchBaselineBadge {
+	padding: 3px 5px;
+	border-radius: 3px;
+	.branchBaselineNamePart {
+		font-size: 12px;
+		font-weight: bold;
+		color: white;
+		margin-right: 2px;
+	}
+	.branchBaselineMenuPart {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		position: relative;
+		top: 3px;
+		cursor: pointer;
+		margin: 0 2px;
+		&.switcher {
+			 background: url("../images/newskin/action/icon_baseline-branch.png") no-repeat center center;
+		}
+		&.exit {
+			 background: url("../images/newskin/action/icon-exit-bb.png") no-repeat center center;
+			 opacity: 0.5;
+			 top: 4px;
+		}
+	}
+}
+
+.newskin.tracker-branch .actionMenuBar {
+	background-color: @toolbarBranchGradientColor;
+	background: -moz-linear-gradient(left, @toolbarBackgroundColor 0%, @toolbarBackgroundColor 50%, @toolbarBranchGradientColor 66%, @toolbarBranchGradientColor 100%);
+	background: -webkit-linear-gradient(left, @toolbarBackgroundColor 0%,@toolbarBackgroundColor 50%,@toolbarBranchGradientColor 66%,@toolbarBranchGradientColor 100%);
+	background: linear-gradient(to right, @toolbarBackgroundColor 0%,@toolbarBackgroundColor 50%,@toolbarBranchGradientColor 66%,@toolbarBranchGradientColor 100%);
+	.viewsMenuContainer.large .viewsMenu {
+		background-color: transparent;
+	}
+	.branchBaselineBadge {
+		background-color: #005C50;
+	}
+	.breadcrumbs-item-version {
+		background-color: @toolbarBranchGradientColor;
+	}
+}
+
+.newskin.tracker-baseline .actionMenuBar {
+	background-color: @toolbarBranchGradientColor;
+	background: -moz-linear-gradient(left, @toolbarBackgroundColor 0%, @toolbarBackgroundColor 50%, @toolbarBaselineGradientColor 66%, @toolbarBaselineGradientColor 100%);
+	background: -webkit-linear-gradient(left, @toolbarBackgroundColor 0%,@toolbarBackgroundColor 50%,@toolbarBaselineGradientColor 66%,@toolbarBaselineGradientColor 100%);
+	background: linear-gradient(to right, @toolbarBackgroundColor 0%,@toolbarBackgroundColor 50%,@toolbarBaselineGradientColor 66%,@toolbarBaselineGradientColor 100%);
+	.viewsMenuContainer.large .viewsMenu {
+		background-color: transparent;
+	}
+	.branchBaselineBadge {
+		background-color: #007491;
+		&.branchBadge {
+			 background-color: #005C50 !important;
+		}
+	}
+	.breadcrumbs-item-version {
+		background-color: @toolbarBaselineGradientColor;
+	}
+
+}
+
+.newskin.tracker-baseline .actionBar .browseTrackerMoreMenu {
+	padding-bottom: 6px;
+}
+
+
+/**
+action menu bar on top of page with the titles
+with thin border around , which should be darker a bit
+ */
+.actionMenuBar, .newskin .actionMenuBar {
+
+	display:table;
+	width: 100%;
+	.border-box-sizing;
+
+	background-color: @toolbarBackgroundColor;
+	color: white;
+	padding: 5px 15px;
+	margin-bottom: 5px;
+	margin: 0 -10px 5px -10px;	/* TODO: for pages with NOT using the "newskin" ! */
+
+	.actionMenuBarContent {
+		margin: 5px 0;
+		max-height: 40px;
+		height: 40px;
+
+		td {
+			color: white;
+		}
+	}
+
+	.simpleDropdownMenu {
+		margin-left: 10px;
+	}
+
+	/*
+		Icon in ActionMenuBar. We can not use background-image directly on ActionMenuBar, because that's used for coloring the whole to gray.
+		so let's put this as a simple div in each actionMenuBar...
+	 */
+	.actionMenuBarIcon {
+		float:left;
+		width: 34px;
+		height: 32px;	/* size of the image of icon is 32x32, but making a bit wider */
+
+		padding: 0;
+		margin-right: 12px;
+
+		background-image: url("@{imagePrefix}/header/projects-l.png");
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	.actionMenuBarContent a, .yui-menu-button button {
+		text-decoration: none;
+		color: white;
+	}
+
+	label, .newskin & table label {
+		color: white !important;
+	}
+
+	a.smallink {
+		margin-left: 10px;
+		margin-right: 15px;
+		.fontMixin(@headerPaneBackgroundColor, 11px);
+		font-weight: normal;
+	}
+
+	table.rightAlign td.rightAlignCell * {
+		white-space: nowrap !important; /* forcing Chrome: it must not wrap in the action-menu-bar at the white-spaces */
+	}
+
+	>table.rightAlign.actionMenuBarContent > tbody > tr {
+
+		>td.rightAlignCell {
+
+			>span.breadcrumbs-summary > a.generated-link {
+				white-space: normal !important;
+			}
+
+			>span.breadcrumbs-summary.tail > span.breadcrumbs-item-version {
+				white-space: nowrap !important;
+			}
+		}
+
+		>td.rightAlignCell:first-child {
+			width: 1%;
+		}
+
+		>td.rightAlignCell.rightAligned {
+			width: 23%;
+		}
+	}
+}
+
+.actionMenuBar, .newskin .actionMenuBar,
+/*.actionBar, TODO: check if actionBar will use the same style ? */ .newskin .actionBar {
+	/*
+		* More and less important information in action menubar
+		*/
+	 .main, .main a {
+		font-size: 11px;
+		color: @headerPaneBackgroundColor;
+	 }
+	 .high {
+		 a {
+			 font-size: 13px;
+			 font-weight: bold !important;
+			 color: #0093b8 !important;
+		 }
+		 a.action {
+			margin-left: 1em;
+			font-weight: bold;
+		}
+	 }
+	 .low, .low a {
+		 color: @gray3;
+		 font-size: 11px !important;
+	 }
+	 /* Pipe as sepeator char in the action menu use as <span class="pipe">|</span> */
+	 .pipe {
+		 padding: 0 10px;
+		 color: @gray3;
+	 }
+	 .main a, .high a, .low a {
+		 font-weight: normal;
+	 }
+
+	form {
+		margin-top: -2px;
+	}
+}
+
+.newskin .actionBar {
+	color: @darkGrayFont;
+}
+
+/* vertically middle align everything in the actionMenuBar */
+.actionMenuBar {
+	table > tbody > tr > td {
+		vertical-align: middle;
+	}
+}
+
+/* TODO: when all pages are using the "newskin" then move this to the .actionMenuBar just above */
+.newskin .actionMenuBar {
+	margin-bottom: 0;
+}
+
+.accountHeadLine .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/members-l.png");
+}
+
+.trackersModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/trackers-l.png");
+}
+
+.traceabilityBrowser.trackersModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/traceability-l.png");
+}
+
+.CMDBModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/cmdb-l.png");
+}
+
+.releaseModule.CMDBModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/train-l.png");
+}
+
+.planner.CMDBModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/planner-l.png");
+}
+
+.documentsModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/documents-l.png");
+}
+.baselinesModule {
+	.baselineList {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		li {
+			padding: 8px 15px;
+			&:hover {
+				background-color: #e5e5e5;
+			}
+			.baselineHeader {
+				display: block;
+				.baselineName {
+					font-size: 16px;
+					font-weight: bold;
+				}
+				.baselineMeta {
+					margin-left: 20px;
+					color: #666;
+					font-size: 10px;
+					display: inline-block;
+					line-height: 16px;
+					vertical-align: baseline;
+					float: right;
+					margin-top: -3px;
+				}
+			}
+			.baselineDescription {
+				margin-top: 0.5em;
+				color: @lightGrayFont;
+				display: block;
+			}
+		}
+	}
+	.noBaselineFound {
+		padding: 5px 15px;
+	}
+	.actionMenuBar .actionMenuBarIcon {
+		background-image: url("@{imagePrefix}/header/baselines-l.png");
+	}
+	.filterBox {
+		margin-left: 15px;
+	}
+}
+
+.wikiModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/wiki-l.png");
+}
+
+.reportModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/reports-l.png");
+}
+
+.projectModule .actionMenuBar .actionMenuBarIcon,
+.workingsetModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/projects-l.png");
+}
+
+.adminModule .actionMenuBar .actionMenuBarIcon,
+.sysadminModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/admin-l.png");
+}
+/* // workspace module will use the same as the project
+.workspaceModule .actionMenuBar .actionMenuBarIcon {
+}
+*/
+/* these modules are not used any more...
+.forumsModule .actionMenuBarIcon {
+}
+.buildsModule .actionMenuBarIcon {
+}
+.chatModule .actionMenuBarIcon {
+}
+*/
+
+.labelsModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/tags-l.png");
+}
+.membersModule .actionMenuBar .actionMenuBarIcon,
+.loginModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/members-l.png");
+}
+
+.sourceCodeModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/scm-l.png");
+}
+.searchModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/search-l.png");
+}
+
+.queriesModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/header/icon-reports-white.png");
+}
+
+.reviewModule .actionMenuBar .actionMenuBarIcon {
+	background-image: url("@{imagePrefix}/item/review/icon_req_review.png");
+}
+
+
+.descriptionText {
+	.fontMixin(@darkGrayFont, 13px);
+}
+
+.rightAlignedDescription {
+	.fontMixin(@darkGrayFont, 13px);
+	float: right;
+	color: @gray7 !important;
+}
+
+.newskin {
+	font-family: arial;
+	color: @darkGrayFont;
+
+	.contentArea {
+		margin: 0 0 0 0;
+	}
+
+	.actionMenuBar {
+		margin: 0;
+	}
+
+	/* the middle panel on the document browser */
+	#rightPane {
+		padding-left: 0;
+
+		.descriptionBox {
+			background-color: @lightGray;
+			padding: 17px;
+			margin-bottom: 0px;
+		}
+	}
+
+	#opener-container-east {
+		position: relative !important;
+		top: 10px;
+	}
+
+	.actionBar {
+		background-image: none;
+		background-color: @lightGray;
+		margin-bottom: 0px;
+		border-bottom: 1px solid @borderColor;
+
+		> span {
+			color: black;
+			&.light {
+				color: #888;
+			}
+		}
+
+		a {
+			.fontMixin(@blueLinkColor, 12px);
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		.menuArrowDown {
+			background-image: url("@{imagePrefix}/actionIcons/icon-rolldown.png");
+			background-position: 0;
+			width: 14px;
+			height: 12px;
+			cursor: pointer;
+		}
+
+		.dashboardLink .menuArrowDown {
+			top: -2px !important;
+		}
+
+		td, label {
+			color: @lightGrayFont;
+		}
+
+		.button, input.button {
+			min-height: 20px;
+			padding: 2px 20px;
+			margin-right: 10px;
+			margin-left: 5px;
+		}
+
+		.filterMenu {
+			display: inline-block;
+		}
+
+		.addAttachmentActionIcon {
+			background: url("@{imagePrefix}/action/comment_on_s.png") no-repeat left center;
+			padding-left: 16px;
+		}
+
+		.editOfficeActionIcon {
+			background: url("@{imagePrefix}/actionIcons/icon_export-to-office-blue.png") no-repeat left center;
+			padding-left: 20px;
+			margin-left: 3px;
+		}
+
+		.ui-state-focus.editOfficeActionIcon, .ui-state-active.editOfficeActionIcon {
+			background: url("@{imagePrefix}/actionIcons/icon_export-to-office-blue.png") no-repeat left center #EEEEEE !important;
+			margin-left: 3px !important;
+		}
+
+		.itemTraceabilityShowAssociations {
+			color: black !important;
+			font-weight: normal !important;
+			margin-right: 2em;
+		}
+	}
+
+	/* fileupload box */
+	.actionBar .fileUpload-flatbox .qq-upload-icon {
+		color: @blueText;
+		text-decoration: none;
+	}
+
+	.fileUpload-flatbox .qq-upload-icon {
+		color: transparent;
+	}
+
+	.qq-mouse-hovering .qq-upload-icon {
+		text-decoration: underline !important;
+	}
+
+	.actionBar .fileUpload-flatbox .qq-upload-button {
+		background-color: white;
+		height: 16px;
+	}
+
+	.actionBar .qq-uploader .qq-upload-text {
+		color: @blueText;
+	}
+
+	.actionBar .qq-uploader {
+		width: 98%;
+		margin-right: 15px;
+	}
+
+	.fileUpload_dropZone {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	.fileUpload_dropZone.elastic {
+
+		margin-left: 0 !important;
+
+		.qq-uploader {
+			width: auto;
+
+			.qq-upload-drop-area {
+			display: block;
+				border: 3px dashed #ddd;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				line-height: 14px;
+				text-align: center;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 11px;
+				background-color: #fff;
+				opacity: 1;
+			}
+
+			.qq-upload-drop-area-active {
+				border-color: #aaa !important;
+			}
+
+			.qq-upload-drop-area-force-visible {
+				display: block !important;
+			}
+
+			.qq-upload-drop-area span.qq-drop-here-label,
+			.qq-upload-drop-area span.qq-drop-here-label a {
+				font-size: 11px;
+			}
+
+			.qq-upload-drop-area span.qq-drop-here-label {
+				margin-top: -2em;
+			}
+
+			.qq-upload-drop-area span.qq-drop-here-label a {
+				padding-left: 8px;
+				background: url("../images/newskin/fileupload/icon_attach.png") no-repeat left center;
+			}
+
+			.qq-upload-list {
+				list-style-type: none;
+			}
+		}
+	}
+
+	.open-in-overlay-link {
+		cursor: pointer;
+		float: right;
+	}
+
+	.minified-overlay {
+        background-color: @toolbarBackgroundColor;
+		bottom: 0;
+		color: white;
+		cursor: pointer;
+		padding: 9px;
+		position: fixed;
+		right: 30px;
+		z-index: 100;
+
+        .container-close {
+            display: inline-block;
+            margin-left: 3px;
+            position: static;
+            right: auto;
+            top: auto;
+        }
+
+        .overlay-label {
+            display: inline-block;
+            margin-right: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 180px;
+        }
+
+		.overlay-maximize {
+			background: url("@{imagePrefix}/action/icon_maximize.png") no-repeat;
+			display: inline-block;
+			height: 15px;
+			width: 15px;
+		}
+	}
+
+	/* the description box on the document browser */
+	.collapsingBorder.descriptionBox {
+		.descriptionText;
+		border: 0;
+		border-top: 1px solid @headerBorderColor;
+	}
+
+	/* displaytag styling */
+	.displaytag {
+		width: 100%;
+	}
+
+	.displaytag, .propertyTable {
+		border: 0px;
+		margin-left: 15px;
+		margin-right: 15px;
+
+		>thead th:not(.mx-graph), >tbody th:not(.mx-graph) {
+			background-color: white;
+			padding-top: 18px;
+			padding-bottom: 12px;
+			padding-right: 22px;
+			border: 0px;
+			border-bottom: 1px solid @headerBorderColor;
+			.fontMixin;
+
+			&.centered {
+				text-align: center;
+			}
+
+			&.referenceSelectHeader {
+				padding-left: 27px;
+			}
+		}
+
+		th a, th a:visited {
+			color: @lightGrayFont;
+		}
+
+		th a:hover {
+			color: @headerLinkHover;
+			text-decoration: none;
+		}
+
+		th.sorted, th.sorted {
+			a {
+				color: @darkGrayFont;
+			}
+			font-weight: normal;
+		}
+
+		th.indenter {
+			padding-left: 19px !important;
+		}
+
+		th.order1 a, th.order2 a {
+			background-image: none;
+		}
+
+		 th.sortable a:hover:after, th.order1 a:hover:after {
+			 width: 12px;
+			 height: 12px;
+			background-image: url("@{imagePrefix}/action/order-down.png");
+			display: inline-block;
+			content: " ";
+			position: relative;
+			top: 2px;
+		}
+
+		th.order1 a:after, th.order2 a:after, th.sortable a:after {
+			margin-left: 5px;
+			width: 12px;
+			content: " ";
+			display: inline-block;
+		}
+
+		th.order2 a:hover:after {
+			width: 12x;
+			height: 12px;
+			background-image: url("@{imagePrefix}/action/order-up.png");
+			content: " ";
+			display: inline-block;
+			position: relative;
+			top: 2px;
+		}
+
+		td:not(.mx-graph):not(.diff):not(.diff-deleted):not(.diff-added) {
+			padding-top: 12px;
+			padding-bottom: 11px;
+		}
+
+		td.columnSeparator {
+			border-right: 0px;
+		}
+
+		td.criticalColumn {
+			text-align: left;
+		}
+
+		td.oldValue {
+			color: @gray4 !important;
+		}
+
+		td.dateData, td.numberData {
+			font-size: 11px !important;
+			color: @lightGrayFont !important;
+			position: relative;
+			top: 2px;
+		}
+
+		.numberData {
+			text-align: right;
+			padding-left: 10px;
+			padding-right: 10px !important;
+
+			&.sortable {
+				padding-left: 25px;
+				padding-right: 0px !important;
+			}
+		}
+
+		.dateData {
+			text-align: left !important;
+		}
+
+		td.textDataWrap {
+			.descriptionText;
+		}
+
+		td.cutLongData {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			max-width: 100px;
+			overflow: hidden;
+			&.allowMultiLine {
+				white-space: normal;
+			}
+			.IE8&,
+			.IE9& {
+				.comma-separator {
+					display: none;
+				}
+				a {
+					display: inline-block;
+					width: 100px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			}
+		}
+
+		td.nameLink a {
+			.fontMixin(@blueLinkColor);
+		}
+
+		td.summaryLink a {
+			color: @darkGrayFont;
+		}
+
+		td.nameLink a:hover {
+			color: @blueLinkColor;
+		}
+
+		td.idColumn {
+			.fontMixin(@darkGrayFont);
+		}
+
+		td > a {
+			.fontMixin(@blueLinkColor, 13px);
+		}
+
+		.colorField {
+			position: relative;
+			top: 2px;
+		}
+
+		.subscriptionandlock {
+			padding-left: 8px;
+			.fontMixin(@lightGrayFont, 11px);
+		}
+
+		.actionIcon img.tableIcon {
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+
+		tr.even, tr.odd {
+			background-color: transparent;
+			border-top: 1px solid @lightGray;
+		}
+
+		tr.even:hover, tr.odd:hover, tr.even:hover, tr.odd:hover {
+			background-color: @lightGray;
+		}
+
+		tr.even:hover img.menuArrowDown, tr.odd:hover img.menuArrowDown, tr.even:hover img.menuArrowDown, tr.odd:hover img.menuArrowDown {
+			background-color: transparent;
+		}
+
+		&.trackerItems tr.trackerItem.merge-request {
+			background-color: #fff7eb;
+		}
+
+		tr.clean {
+			border: none;
+		}
+
+		.issueStatus {
+			min-width: 83px;
+			display: inline-block;
+			height: auto;
+			white-space: nowrap;
+			text-align: center;
+			padding: 2px 5px;
+			font-size: 11px;
+			font-weight: bold;
+			text-transform: uppercase;
+			color: white;
+			border-radius: 2px;
+			-moz-border-radius: 2px;
+			-webkit-border-radius: 2px;
+		}
+
+		.issueStatusVerified {
+			color: black;
+		}
+
+		.SizeClass, .SizeHeaderClass {
+			text-align: left !important;
+		}
+
+		tr.empty td, thead th:first-child:not(.groupping-level), & > tbody > tr > td:first-child:not(.groupping-level) {
+			padding-left: 0px;
+		}
+
+		.itemChangesTable td {
+			padding-top: 0px;
+		}
+
+		.fieldChanges {
+			margin: 0;
+			padding: 0;
+		}
+
+		.fieldChanges .itemChangesTable td {
+			padding-top: 0;
+			padding-bottom: 0;
+			padding-right: 4px;
+			color: @gray4;
+		}
+
+        th.jobInterval {
+            text-align: right;
+        }
+        span.jobInterval {
+            display: block;
+
+            &[title]:hover {
+                cursor: pointer;
+                outline: 1px solid @gray3;
+            }
+        }
+	}
+
+	.propertyTable {
+		& > tbody > tr {
+			vertical-align: middle;
+			background-color: white;
+		}
+	}
+
+	.displaytag.trackerItems {
+		td, th {
+			padding-left: 10px;
+			padding-right: 5px;
+		}
+
+		.associationIcon {
+			margin-right: 4px;
+		}
+
+		.referenceIconSmall {
+			margin-right: 10px;
+		}
+
+		.trackerItemLink {
+			position: relative;
+			top: -4px;
+		}
+
+		td.children {
+			white-space: initial;
+			min-width: 150px;
+		}
+
+		td.children .comma-separator::after {
+			content: "\A";
+			white-space: pre;
+		}
+
+        &#trackerItems .wikiContent {
+            display: inline-block;
+            overflow: hidden;
+            resize: both;
+            width: 250px;
+
+            img {
+                max-width: 250px;
+            }
+        }
+
+		.fieldColumn.tableField .tooltip-marker {
+			float: left;
+			margin-right: 2px;
+		}
+
+		.indenterPlaceholder {
+			width: 19px;
+			float: left;
+			display: table-column;
+			height: 1px;
+		}
+
+		&.inlineEditEnabled:not(.editingInProgress) {
+			.fieldColumn:not(.fieldId_0):not(.fieldId_4):not(.fieldId_6):not(.fieldId_7):not(.fieldId_11):not(.fieldId_74):not(.fieldId_75):not(.fieldId_76):not(.fieldId_79):not(.fieldId_81):hover {
+				outline: 1px solid #e2e2e2;
+				outline-offset: -4px;
+				cursor: pointer;
+			}
+		}
+
+		&.inlineEditEnabled {
+
+		 	.fieldColumn .editor-wrapper {
+				.fr-element.fr-view {
+					min-height: 0 !important;
+					padding: 0 5px !important;
+				}
+			}
+
+			.inlineEditor {
+				width: 100%;
+				display: inline-block;
+				border: 1px solid #d1d1d1;
+				padding: 2px;
+			}
+
+			.textSummaryData {
+				.wikiLink {
+					width: 100%;
+					.inlineEditor {
+						width: 100%;
+					}
+				}
+			}
+
+			&.editingInProgress .textSummaryData {
+				.summaryGroup {
+					width: calc(~"100% - 20px");
+				}
+				.wikiLinkContainer {
+					width: calc(~"100% - 30px");
+					display: inline-block;
+				}
+			}
+
+			.trackerImage {
+				cursor: pointer;
+			}
+
+			.chooseReferences {
+				border: 1px solid #d1d1d1;
+				margin: 0;
+				td {
+					border: 0 !important;
+					padding: 0 !important;
+				}
+			}
+
+			.colorPicker {
+				position: relative;
+				top: 3px;
+			}
+
+			.urlFieldEditor {
+				border: 1px solid #d1d1d1;
+				background-color: white;
+				min-width: 180px;
+				input {
+					width: calc(~"100% - 30px");
+					border: 0;
+				}
+				.urlFieldPencilIcon {
+					float: right;
+					width: 12px;
+					height: 12px;
+					display: inline-block;
+					background: url("../images/newskin/action/edit-s.png") no-repeat center center;
+					padding: 3px;
+					cursor: pointer;
+				}
+			}
+
+		}
+
+		&.resizeableColumns {
+			.resizeHandler {
+				display: inline-block;
+				width: 1px;
+				height: 15px;
+				float: left;
+				background-color: #d1d1d1;
+				position: relative;
+				top: 2px;
+				left: -10px;
+				cursor: col-resize;
+				border-left: 5px solid white;
+				border-right: 5px solid white;
+			}
+			.headerContent {
+				position: relative;
+				left: -10px;
+			}
+		}
+
+	}
+
+    .displaytag.followed-items {
+        width: auto;
+        & + .pagebanner {
+            margin-right: 15px;
+            & + .pagelinks {
+                margin: 0 15px;
+            }
+        }
+    }
+
+	#item.displaytag {
+		width: auto;
+	}
+
+	/* displaytag navigation */
+	div.pagelinks, .exportlinks {
+		span.nextprev {
+			color: @headerBorderColor;
+			border: 0px;
+		}
+
+		strong {
+			color: white;
+			background-color: @blueLinkColor;
+		}
+	}
+
+	.pagebanner, div.pagelinks, .exportlinks {
+		a {
+			color: @blueLinkColor;
+			border: 0px;
+		}
+
+		a:hover {
+			background-color: transparent;
+		}
+	}
+
+	.pagebanner {
+		padding: 16px 0;
+	}
+
+	.pagelinks {
+		border-top: 1px solid @headerBorderColor;
+	}
+
+	.pagebanner {
+		color: @lightGrayFont;
+		margin-left: 15px;
+	}
+
+	.scalerButton {
+		background-image: url("../stylesheet/../images/newskin/action/scale-h-m.png");
+		width: 17px;
+		height: 5px;
+		position: absolute;
+		top: 12px;
+		z-index: 9999;
+		right: -8px;
+	}
+
+	#closer-west {
+		float: left;
+		background-image: url("@{imagePrefix}/actionIcons/icon-close-up-left2.png");
+		width: 12px;
+		height: 12px;
+		position: relative;
+		top: 5px;
+	}
+
+	#opener-east {
+		float: right;
+		background-image: url("@{imagePrefix}/actionIcons/icon-close-up-left2.png");
+		width: 12px;
+		height: 12px;
+		position: relative;
+		top: 5px;
+		cursor: pointer;
+	}
+
+	#closer-east {
+		float: right;
+		background-image: url("@{imagePrefix}/actionIcons/icon-close-up-right2.png");
+		width: 12px;
+		height: 12px;
+		position: relative;
+		top: 5px;
+	}
+
+	#opener-west {
+		float: left;
+		background-image: url("@{imagePrefix}/actionIcons/icon-close-up-right2.png");
+		width: 12px;
+		height: 12px;
+		position: relative;
+		top: 5px;
+		display: none;
+		cursor: pointer;
+		margin-right: 5px;
+		margin-top: -3px;
+	}
+
+	#west #headerDiv {
+		padding: 3px 1px 3px 15px;
+		border: 0px;
+		border-bottom: 1px solid @borderColor;
+		overflow: visible;
+		height: 23px;
+
+		.action {
+			margin-right: 2px !important;
+		}
+	}
+
+	#west {
+		overflow: visible !important;
+	}
+
+	#wikiStructureBrowserTree #west {
+		overflow: auto !important;
+	}
+
+	#rightPane .actionBar {
+		border-bottom: 1px solid @borderColor;
+		height: 26px;
+		padding: 3px 10px 0px 15px;
+	}
+
+	.layoutfullPage #rightPane {
+		height: ~"calc(100% - 36px)";
+	}
+
+	.ui-layout-resizer-west, .ui-layout-resizer-east {
+		width: 1px !important;
+	}
+
+	.ui-layout-resizer-west:hover, .ui-layout-resizer-east:hover {
+		width: 7px !important;
+	}
+
+	.ui-layout-resizer-dragging {
+		width: 7px !important;
+	}
+
+	.jstree a {
+		color: @darkGrayFont !important;
+	}
+
+	.jstree .summary-not-readable > a {
+	    color: @gray3 !important;
+	}
+
+	.jstree .jstree-hovered {
+		color: @blueLinkColor !important;
+		border: 0px;
+		background-color: transparent;
+		text-decoration: none;
+		font-size: 13px;
+	}
+
+	.jstree .jstree-clicked {
+		background-color: @blueLinkColor;
+		color: white !important;
+		border: 1px solid transparent;
+	}
+
+	.jstree .jstree-node {
+		&.filter .jstree-hovered {
+		    cursor: pointer;
+		}
+
+        &.filter:not(.jstree-open) > a, &.block > a {
+            padding-bottom: 5px;
+
+			span.removeButton {
+			    margin-left: 4px;
+			}
+			span.editButton {
+				background-image: url("@{imagePrefix}/action/edit-s.png");
+				width: 12px;
+				height: 12px;
+				display: inline-block;
+				opacity: 0.4;
+			}
+
+			span.editButton:hover {
+			    opacity: 0.7;
+			}
+		}
+	}
+
+	/* when tree node is disabled and also selected/clicked */
+	.jstree .treeNodeDisabled > a.jstree-clicked {
+ 	   color: lightblue !important;
+	}
+
+	/**
+	 * grid style
+	 */
+	.jstree-grid-separator {
+		height: 21px;
+	}
+
+	.jstree li {
+		line-height: 20px;
+		min-height: 20px;
+	}
+
+	div.jstree-grid-header-regular {
+		line-height: 21px;
+	}
+
+	div.jstree-grid-header-regular {
+		padding: 0px 2px !important;
+		text-align: center;
+	}
+
+	.jstree-grid-header {
+		background-color: #a8acb6;
+		border: none;
+		color: white;
+		padding: 1px 2px;
+		width: 100%;
+	}
+
+	.jstree-grid-cell-last {
+		padding-right: 5px;
+	}
+
+	/* style of the input box in the header */
+	.jstree-grid-header input {
+		width: 100px;
+		height: 1em;
+		float: right;
+	}
+
+	/* context menu */
+	.menuArrowDown {
+		background-image: url("@{imagePrefix}/action/control-m-2.png");
+		border: 0px;
+		width: 14px;
+		height: 12px;
+		background-position: 0% 0%;
+		background-color: transparent !important;
+				cursor: pointer !important;
+	}
+
+	.yuimenu {
+		.bd {
+			background-color: white;
+			border: 1px solid @borderColor;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+
+		li.first-of-type {
+			background-position: 0 16px;
+			& > .yuimenuitemlabel {
+				margin-top: 7px !important;
+			}
+		}
+
+		h6 {
+			padding: 0;
+		}
+
+		ul ~ h6 {
+			margin-top: 7px;
+		}
+
+		h6 ~ ul li.first-of-type > a.yuimenuitemlabel {
+			margin-top: 3px;
+		}
+
+		.yuimenuitemlabel {
+			.fontMixin(@darkGrayFont);
+			margin-top: 10px;
+			padding-left: 25px;
+			&.withicon {
+				padding-left: 3px;
+			}
+		}
+
+		.yuimenuitemlabel-selected {
+			background-color: #EEE;	/* not from the palette !*/
+			text-decoration: none !important;
+		}
+
+		.menuitem-group {
+			vertical-align: top;
+			&.has-right-border {
+				border-right: 1px solid @headerBorderColor;
+			}
+			&.has-left-border {
+				border-left: 1px solid @headerBorderColor;
+			}
+		}
+
+		.yuimenuitem {
+			overflow: hidden;
+			text-overflow: ellipsis;
+
+			.arrow-icon-after {
+				padding-left: 1em;
+				color: #aaa;
+			}
+		}
+
+		.yuimenuitem a {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.menuitem-group .yuimenuitemlabel:hover {
+			background-color: #EEE;	/* not from the palette !*/
+		}
+
+		.yui-menu-shadow-visible {
+			right: -2px;
+		}
+
+		.tableIcon {
+			margin: 0 5px 0 5px;
+		}
+	}
+
+	&.IE8 .yuimenu li.first-of-type {
+		background-position: 0 15px;
+	}
+
+	.yui-menu-button {
+		background-image: url("@{imagePrefix}/action/more-darkgrey-xs.png");
+		padding-right: 5px;
+	}
+
+	.reference-box {
+		min-height: 24px;
+	}
+
+	/* priority icons */
+	.sprite-priority-1-gif {
+		.priorityIconMixin("@{imagePrefix}/item/issue-priority-highest.png");
+	}
+
+	.sprite-priority-2-gif {
+		.priorityIconMixin("@{imagePrefix}/item/issue-priority-high.png");
+	}
+
+	.sprite-priority-3-gif {
+		.priorityIconMixin("@{imagePrefix}/item/issue-priority-normal.png");
+	}
+
+	.sprite-priority-4-gif {
+		.priorityIconMixin("@{imagePrefix}/item/issue-priority-low.png");
+	}
+
+	.sprite-priority-5-gif {
+		.priorityIconMixin("@{imagePrefix}/item/issue-priority-lowest.png");
+	}
+
+	.custom-priority {
+		cursor: default;
+	}
+
+	.relationTypeIcon, .history-icon {
+		display: inline-block;
+		color: #ababab;
+		font-size: 10px;
+		padding-right: 5px;
+	}
+	
+	table.sprintHistoryVisible {
+		td.fieldId_31 {
+			white-space: normal;
+			
+			.sprint-history {
+				margin-top: 5px;
+				.tableIcon {
+					top: 0 !important;
+				}
+				a {
+					white-space: nowrap;
+				}
+			}			
+		}
+	}
+	/* browse tracker icon */
+	.associationIcon {
+		.tableIconMixin("@{imagePrefix}/item/link.png");
+		width: 16px;
+		height: 8px;
+		margin-left: 0px;
+	}
+
+	.referenceIconBig {
+		.tableIconMixin("@{imagePrefix}/item/reference-big.png");
+		width: 16px;
+		height: 16px;
+		margin-left: 0px;
+		vertical-align: text-bottom;
+	}
+
+	.referenceIconSmall {
+		.tableIconMixin("@{imagePrefix}/item/reference-small.png");
+		width: 10px;
+		height: 10px;
+		margin-left: 0px;
+		vertical-align: text-bottom;
+		background-size: contain;
+	}
+
+	.summaryGroup {
+		position: relative;
+		display: table;
+	}
+
+	.childissueIcon {
+		.tableIconMixin("@{imagePrefix}/item/childissue.png");
+		width: 16px;
+		height: 8px;
+		margin-left: -5px;
+		margin-top: 4px;
+	}
+
+	.scmCommitIcon {
+		.tableIconMixin("@{imagePrefix}/item/scm-commit.png");
+		width: 16px;
+		height: 16px;
+		position: relative;
+		top: 2px;
+	}
+
+	.attachmentIcon {
+		.tableIconMixin("@{imagePrefix}/action/attach-m.png");
+		width: 16px;
+		height: 16px;
+	}
+
+	/* issue details page */
+	.optional, .mandatory {
+		.fontMixin(@darkGrayFont);
+		font-weight: bold;
+		text-align: right;
+		white-space: nowrap;
+		background-color: transparent;
+		padding-right: 13px;
+
+		.wikiContent {
+			font-weight: normal;
+			white-space: normal;
+		}
+	}
+
+	.tableItem {
+		.fontMixin(@toolbarBackgroundColor);
+		text-align: left;
+		background-color: transparent;
+		padding-left: 10px !important;
+
+		.tableIcon {
+			margin-right: 10px;
+		}
+	}
+
+	.tableItem a, .wikiContent a, .contentArea a {
+		.fontMixin(@blueLinkColor, 13px);
+	}
+
+	.subtext a {
+		.fontMixin(@blueLinkColor) !important;
+	}
+
+/*
+	.titlenormal {
+		font-size: 13px;
+		font-family: arial;
+	}
+*/
+
+	.ditch-tab {
+		.fontMixin(@gray5);
+		background: white;
+		border: 1px solid @headerBorderColor;
+		border-left: 0px;
+		padding: 8px 15px;
+		font-weight: bold;
+		padding-bottom: 9px;
+		outline: none;
+	}
+
+	.wysiwyg-tabs .ditch-tab {
+		margin-bottom: 0px;
+	}
+
+	.ditch-unfocused {
+		height: 15px;
+
+		.ditch-tab-bg-left {
+			border-left: 0px;
+		}
+
+		&:hover {
+			color: @toolbarBackgroundColor;
+		}
+	}
+
+	.ditch-focused {
+		.fontMixin(@gray7);
+		background: @lightGray;
+		border-bottom: 0px;
+	}
+
+	.ditch-tab-first {
+		border-left: 1px solid @headerBorderColor;
+	}
+
+	.ditch-tab-pane-wrap {
+		padding: 0;
+		border: 1px solid @headerBorderColor;
+		border-top:  1px solid @headerBorderColor !important;
+
+		.actionBar {
+			border-bottom: 0px;
+			padding: 12px 15px;
+		}
+
+		.displaytag th {
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+
+		.loggedinuser, .loggedoffuser {
+			font-size: 13px;
+		}
+	}
+
+	.ditch-tab-wrap {
+		td {
+			padding-top: 0px;
+		}
+	}
+
+	.ditch-tabs-right-aligned {
+		margin: 10px 0px 0px 0px;
+		padding: 0px;
+	}
+
+	.displaytag .ditch-tabs-right-aligned tr {
+		background-color: transparent;
+	}
+
+	.smallPhoto {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+
+	.commentListFileItem {
+		background-color: transparent;
+	}
+
+	.subtext {
+		color: @lightGrayFont;
+		font-size: 11px;
+	}
+
+	.fieldLayoutTable {
+		margin: 27px 0px;
+
+		tr {
+			border-top: 1px solid @lightGray;
+		}
+
+		.tableCellCounter_firstRow {
+			border-top: 0px;
+		}
+	}
+
+	fieldset.collapsingBorder legend.collapsingBorder_legend a.collapseToggle {
+		background-image: url("@{imagePrefix}/action/content-less.png");
+	}
+
+	fieldset.collapsingBorder_collapsed legend.collapsingBorder_legend a.collapseToggle {
+		background-image: url("@{imagePrefix}/action/content-more.png");
+	}
+
+	.dataCell .chooseReferences {
+		border: 1px solid @headerBorderColor;
+	}
+
+	/* edit issue */
+	.fieldsTable {
+		border-bottom: 0px;
+		margin-top: 26px;
+
+		.dataCell, .tableCellCounter_finishRow, tr {
+			border: 0px;
+			padding-bottom: 6px;
+		}
+
+		.dataCell {
+			vertical-align: middle;
+
+			select, input {
+				border: 1px solid @headerBorderColor;
+				padding: 4px;
+			}
+		}
+
+		.labelCell {
+			padding-top: 0px;
+			padding-right: 10px;
+
+			a {
+				text-decoration: none;
+			}
+		}
+
+		tr {
+			padding-bottom: 6px;
+		}
+
+		.calendarAnchorLink {
+			margin-left: -25px;
+		}
+
+		.dataCell > input[type=text] {
+			width: 100%;
+			box-sizing: border-box;
+			-webkit-box-sizing:border-box;
+			-moz-box-sizing: border-box;
+		}
+	}
+
+	table.propertyEditor td.mandatory,
+	.mandatory {
+		border-right: 0 !important;
+		background-color: transparent !important;
+	}
+
+	table.propertyEditor td.mandatory,
+	table.fieldEditorForm td.mandatory,
+	.mandatory,
+	.fieldsTable .fieldLabel.mandatory span.labelText {
+		&:after {
+			content: '*';
+			color: @darkRedColor;
+			margin-left: 1px;
+		}
+	}
+
+	.fieldsTable .fieldInputControl {
+        .labelText {
+            display: inline-block;
+        }
+        &.commentCell {
+            vertical-align: top;
+
+            .labelText {
+                display: block;
+                margin: 5px 0 15px 0;
+            }
+
+            > a {
+                font-weight: normal;
+            }
+        }
+	}
+
+	.blockSeparator {
+		height: 4px;
+
+		div {
+			height: 2px;
+		}
+
+		.blockSeparatorTop {
+			border-bottom: 1px solid @lightGray;
+			height: 2px;
+		}
+	}
+
+	.chooseReferences .popupButton {
+		background-image: url("@{imagePrefix}/action/edit-s.png");
+		margin-right: 5px;
+		margin-top: 4px;
+		text-decoration: none;
+	}
+
+	.yui-multibox {
+		padding: 0 2px;
+
+		.box {
+			border: 0px;
+			background-color: transparent;
+			.fontMixin(@blueLinkColor, 11px);
+			margin: 2px 0;
+			padding: 3px 14px 2px 4px;
+			text-decoration: none;
+
+			a.deleteButton {
+				visibility: visible;
+				top:5px;
+				right: 3px;
+
+				background-image: url("@{imagePrefix}/action/delete-blue-xs.png");
+				width: 8px;
+				height: 8px;
+				background-position: 0 0;
+
+				&:hover {
+					background-image: url("@{imagePrefix}/action/delete-red-xs.png") !important;
+				}
+			}
+
+			&.focus {
+				color: white;
+				background-color: @blueLinkColor !important;
+
+				a.deleteButton {
+					background-image: url("@{imagePrefix}/action/delete-white-xs.png");
+				}
+			}
+		}
+
+		.focus, .focus:hover {
+			border: none !important;	/* TODO: delete when newskin is applied everywhere! */
+		}
+
+		.yui-ac-input {
+			margin: 1px 0 1px 2px !important;
+			padding: 4px;
+			border: 0px !important;
+			font-size: 11px;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+
+	&.Chrome textarea#comment {
+		border: 1px solid @headerBorderColor;
+	}
+
+	#summary {
+		border: 1px solid @headerBorderColor;
+		width: 99%;
+	}
+
+	#summaryCell {
+		padding-bottom: 16px;
+		top: 6px;
+		position: relative;
+	}
+
+	#descriptionCell {
+		padding-bottom: 6px;
+	}
+
+	.task-item-edit-comment .issueCommentVisibilityControl {
+	    position: absolute; // if not setting position temporary to absolute the multi select list will be too wide on item edit page
+	}
+
+	.issueCommentVisibilityControl {
+		float: right;
+		margin: 4px;
+
+		.visible-for-label {
+			color: #666;
+			display: inline-block;
+			margin-right: .5em;
+			margin-top: -3px;
+			img {
+				position: relative;
+				top: 2px;
+			}
+		}
+
+		td {
+		    vertical-align: baseline;
+		}
+	}
+
+	.expandWikiTextAreaWH {
+		width: 99.5%;
+		border: 1px solid @headerBorderColor !important;
+		border-top: 0px !important;
+	}
+
+	.expandWikiTextArea,
+	.expandWikiTextAreaWH {
+		white-space: pre-wrap; /* wiki markup newline and tab character fix */
+	}
+
+	.wysiwygTextArea {
+		/* FF needs to set a border otherwise textarea looks ugly*/
+		border-top: none;
+		border-bottom: 1px solid @headerBorderColor;
+		border-left: 1px solid @headerBorderColor;
+		border-right: 1px solid @headerBorderColor;
+
+		box-sizing: border-box;
+		padding: 0.5em;
+		resize: both !important;
+
+		min-height: 3em;	/* on IE11 the empty text area becomes too small  */
+	}
+
+	.editCommentSection .wysiwygTextArea {
+		width: 99%;
+	}
+
+	#wiki {
+		.actionBar {
+			border-left: 1px solid @headerBorderColor;
+			border-right: 1px solid @headerBorderColor;
+		}
+	}
+
+	.formatSelectorContainer {
+		white-space: normal;
+
+		.formatSelector {
+			float: none;
+			color: @darkGrayFont;
+
+			select {
+				margin-top: 5px;
+			}
+		}
+		&.align-to-top {
+		    vertical-align: top;
+		}
+	}
+
+	.smallLink img {
+		margin-top: 2px;
+	}
+
+	.contentWithMargins {
+		margin-top: 15px;
+	}
+
+	.ditch-tab-pane, .contentWithMargins {
+		margin-left: 15px;
+		margin-right: 15px;
+		margin-bottom: 15px;
+
+		.actionBar {
+			margin: 0px -15px;
+            &.empty {
+                height: 23px;
+            }
+		}
+
+		table.displaytag, .exportlinks, .pagebanner {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
+
+		.displaytag tr {
+			.action-column-minwidth {
+				vertical-align: top;
+			}
+
+			td.assocSubmitterCol {
+				padding: 5px 0px;
+				table {
+					margin-left: -10px;
+				}
+			}
+		}
+
+		.itemChangesTable {
+			border: 0px;
+			tr {
+				border: 0px;
+			}
+		}
+
+		.exportlinks {
+			font-size: 13px;
+			margin-top: 13px;
+
+			a {
+				font-size: 13px;
+				font-weight: bold;
+			}
+
+			.separator {
+				font-size: 10px;
+				margin-right: 7px;
+				color: @blueLinkColor;
+				position: relative;
+				top: -1px;
+				background-image: url("@{imagePrefix}/action/right-arrow-blue.png");
+				width: 6px;
+				height: 6px;
+				display: inline-block;
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
+
+			&:hover .separator {
+				text-decoration: none;
+			}
+		}
+
+		.scrollable {
+			margin-top: 10px;
+		}
+	}
+
+	/**
+	 * css class to make the ui:collapsingBorder look like a simple separator:
+	 *  * no border around
+	 *  * black legend
+	 */
+	.separatorLikeCollapsingBorder {
+		margin-top: 5px;
+		margin-bottom: 10px;
+		padding-left: 0;
+		padding-bottom: 0;
+		border: none !important;
+
+		.collapsingBorder_content {
+			padding: 5px;
+		}
+
+		legend.collapsingBorder_legend {
+			border-bottom: 1px solid @headerBorderColor;
+			box-sizing: border-box;
+			width: 100%;
+			padding-bottom: 5px;
+
+			a {
+				color: @gray7;
+				font-weight: bold;
+			}
+
+			/* avoid jumping when the collapsing border opens closes */
+			padding-left: 0;
+			margin-left: 0;
+		}
+
+	}
+
+	/* popup comment box */
+	&.popupBody {
+		padding: 0px;
+
+		.actionBar {
+			padding-left: 15px;
+		}
+
+		.formTableWithSpacing {
+			margin: 15px;
+		}
+		.ditch-tab-skin-cb-box {
+			padding: 15px;
+		}
+
+		.titleTagTable, .titlenormal {
+			margin-right: 15px;
+			margin-left: 15px;
+			width: auto;
+		}
+
+		.toolheadsubline {
+			background: white;
+		}
+
+		.collapsingBorder {
+			margin-top: 15px;
+		}
+	}
+
+	h1.summary {
+		margin-bottom: 30px;
+		margin-top: 0;
+		font-size: 21px;
+	}
+
+	h2 {
+		font-size: 16px;
+	}
+
+	.color-preview {
+		display: inline-block;
+		width: 12px;
+		height: 12px;
+		border: 1px solid #aaa;
+		margin-right: 2px;
+	}
+
+	.color-preview-circle {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		.IE8& {
+			background-image: url("../images/newskin/action/agile/color_circle_mask.png");
+		}
+	}
+
+	.attachment {
+		.smallPhoto {
+			margin-left: 0;
+			margin-right: 15px;
+		}
+
+		.attachmentText {
+			padding-top: 25px;
+			padding-bottom: 20px;
+		}
+
+		td.wideCell {
+			width: 100%;
+			border-bottom: 1px solid @headerBorderColor;
+		}
+
+		td.iconContainer {
+			vertical-align: top;
+			border-bottom: 1px solid @headerBorderColor;
+			margin-bottom: 20px;
+		}
+
+		td.lastElement {
+			border-bottom: 0;
+			padding-bottom: 15px;
+			margin-bottom: 0;
+		}
+	}
+
+	.wysiwyg-tabs .ditch-tab-pane-wrap {
+		border: 0;
+	}
+
+	input, select {
+		border: 1px solid @headerBorderColor;
+	}
+
+	input {
+		padding: 4px;
+	}
+
+	input[type='checkbox'], input[type='radio']{
+		border: none;
+	}
+
+	.okcancel {
+		margin-top: 15px;
+		input {
+			margin-right: 13px;
+		}
+		a {
+			color: @blueLinkColor !important;
+			margin-left: 15px;
+		}
+	}
+
+	/*
+		Use when the overlay's close button appears above a white area, to get a simpler icon
+	 */
+	.overlayButtonsOnWhite .container-close {
+		background-image: url("@{imagePrefix}/action/closewindow.png");
+		background-position: 0%;
+		top: 8px;
+	}
+
+	.mask {
+		-moz-opacity: 0.5;
+		opacity: .5;
+		filter: alpha(opacity=50);
+		background-color: black;
+	}
+
+	.paragraphId {
+		margin-left: 10px;
+		color: @lightGrayFont;
+		font-size: 21px;
+	}
+
+	.ui-accordion-content {
+		background-color: white;
+		padding: 10px 10px 0px 10px !important;
+		border: 0px;
+		border-top: 1px solid @headerBorderColor;
+		border-bottom: 0px;
+
+		.treeFilterBox {
+			width: 100%;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+	}
+
+	#planner, #browseTrackerForm {
+		table.references {
+			width: 100%;
+			margin-bottom: 10px;
+			.relation-item .badge-wrapper span.arrow {
+				vertical-align: middle;
+			}
+		}
+
+		table.references td.reficon {
+		 	width: 16px;
+		}
+
+		table.references .trackerCategoryLabel {
+			padding-top: 0.5em;
+			padding-bottom: 0.5em;
+		}
+	}
+
+	#browseTrackerForm {
+		.displaytag.trackerItems + .pagebanner {
+			padding-bottom: 0;
+			padding-top: 12px;
+		}
+	}
+
+	.ui-accordion-header {
+		border: 0px;
+		border-bottom: 1px solid;
+		border-color: @headerBorderColor;
+		font-weight: normal;
+		padding: 9px 10px;
+		padding-left: 25px;
+
+		&.ui-state-default {
+			background-color: @lightGray;
+			background-image: none;
+			.fontMixin(@lightGrayFont);
+
+			&:hover {
+				color: @headerLinkHover;
+			}
+		}
+
+		&.ui-state-active {
+			background-color: white;
+			.fontMixin(@darkGrayFont);
+		}
+
+		.ui-icon {
+			margin-left: 3px;
+			background-position: 0%;
+
+			&.ui-icon-triangle-1-s {
+				background-image: url("@{imagePrefix}/action/accordion-active.png");
+			}
+
+			&.ui-icon-triangle-1-e {
+				background-image: url("@{imagePrefix}/action/accordion-inactive.png");
+			}
+		}
+	}
+
+	div.ui-accordion-content-active + h3 {
+		border-top: 1px solid @headerBorderColor;
+	}
+
+	.treeFilterBox {
+		.fontMixin(#1e1e1e, 11px);
+		margin-bottom: 10px;
+	}
+
+	.ui-layout-pane {
+		border: 0px;
+	}
+
+	img.action + img.action {
+		margin-left: 5px;
+	}
+
+	#requirements {
+		margin-left: 0px;
+		margin-right: 0px;
+
+		.requirementTd {
+			padding: 10px 10px 0px 10px;
+		}
+
+		.expandable .testStepTopContainer {
+			margin-bottom: 15px;
+			padding-left: 10px;
+		}
+
+		.expandable .testStepBottomContainer {
+			margin-top: 15px;
+			padding-left: 10px;
+		}
+
+		.description {
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+
+		.description > div {
+			padding: 3px;
+			margin-top: 0px;
+			padding-left: 10px;
+			padding-bottom: 10px;
+		}
+
+		.name {
+
+			.releaseid {
+				margin-right: 0px;
+			}
+
+			.okcancel {
+				white-space: nowrap;
+
+				button {
+					vertical-align: text-bottom;
+					position:relative;
+					top: 1px;
+				}
+				a {
+					position: relative;
+					top: -4px;
+				}
+			}
+		}
+
+		h2.name {
+			font-size: 21px;
+		}
+
+		h3.name {
+			font-size: 18px;
+		}
+
+		h4.name, h5.name, h6.name {
+			font-size: 15px;
+		}
+
+		.edited {
+			background-color: transparent;
+		}
+
+		.highlighted {
+			margin-left: 5px;
+			padding-left: 5px;
+		}
+	}
+
+	.contextMenuTable td {
+		padding-top: 0px;
+	}
+
+	.inplaceEditableIcon {
+		.inplaceEditableIconMixin;
+		width: 12px;
+		height: 12px;
+		padding: 3px;
+		padding-right: 4px;
+		top: 5px;
+		right: 5px;
+	}
+
+	#wikiPageContent .sectionEditable {
+		.inplaceEditableIcon {
+			background-image: url("@{imagePrefix}/item/wiki_inline_edit_button.png");
+			height: 24px;
+			left: 0;
+			padding: 0;
+			right: auto;
+			top: 0;
+			width: 24px;
+            z-index: 9999;
+		}
+	}
+
+	.inplaceOfficeEditableIcon {
+		display: block;
+		position: absolute;
+		z-index: 9999;
+		background-image:
+			url("../stylesheet/../images/newskin/action/icon_wedit.png");
+		background-repeat: no-repeat;
+		background-color: transparent;
+		cursor: pointer !important;
+		background-position: top right;
+		width: 18px;
+		height: 18px;
+		padding-right: 4px;
+		top: 5px;
+		right: 25px;
+	}
+
+.name .inplaceEditableIcon {
+		position: static;
+		display: inline;
+		margin-right: 5px;
+	}
+
+	.propertyEditor {
+		.optional, .mandatory {
+			font-weight: normal;
+		}
+	}
+
+	#issuePropertiesPane .yuimenu {
+		left: 30% !important;
+	}
+
+	#issuePropertiesPane {
+		font-size: 12px;
+
+		fieldset {
+			border: 0px;
+			margin-top: 15px;
+			padding-top: 15px;
+
+			legend {
+				margin-left: 2px !important;
+			}
+
+			legend > a {
+				.fontMixin(@darkGrayFont, 12px);
+				font-weight: bold;
+			}
+
+			&.collapsingBorder_collapsed legend {
+				margin-left: -11px !important;
+			}
+
+		}
+
+		.attributes {
+			border-bottom: 0;
+			margin: 0 !important;
+		}
+
+		.editPropertiesButtons {
+			margin-top: 15px;
+		}
+
+		.dataCell.choice {
+			padding-left: 3px;
+		}
+
+		.fieldsTable {
+			min-width: 200px;
+		}
+	}
+
+	.favouriteWidget {
+		margin-left: 10px;
+	}
+
+	.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+		font-family: arial;
+		font-size: 12px;
+	}
+
+	.ui-widget {
+		font-family: arial;
+	}
+
+	.attributes #addUpdateTaskForm td, .attributes #addUpdateTaskForm th {
+		font-size: 12px;
+	}
+
+	.attributes #addUpdateTaskForm .labelCell {
+		font-weight: normal;
+	}
+
+	.reficon {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	/* the tree context menu */
+	.vakata-context, .vakata-context ul {
+		background-color: white;
+		 padding: 5px 0px;
+		.fontMixin(@darkGrayFont);
+		.shadowForMenusAndTooltipsMixin;
+
+		ul {
+			padding-bottom: 6px;
+			padding-top: 6px;
+		}
+
+		li a {
+			padding: 1px 6px;
+			padding-left: 15px;
+			line-height: 1.5em;
+		    padding-top: 2px;
+		    padding-bottom: 2px;
+		}
+
+		li a:hover, li.vakata-hover > a {
+			background: #eeeeee;
+			color: @darkGrayFont;
+			box-shadow: none;
+		}
+
+		li.vakata-context-separator a {
+			padding: 0px;
+			margin: 5px 0px;
+		}
+		
+		li.vakata-contextmenu-disabled a {
+			cursor: default;
+			&:hover {
+				color: #A6A6A6;
+			}
+		}
+	}
+
+
+	/* jquery contextmenu */
+	.context-menu-list {
+		border: 1px solid @gray3;
+		padding-bottom: 5px;
+		padding-top: 5px;
+		box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+		background-color: white;
+	}
+
+	.context-menu-item {
+	padding-right: 15px;
+		background-color: white;
+				line-height: 1.5;
+				white-space: nowrap;
+
+		&.context-menu-hover {
+			background-color: #eeeeee;
+			color: inherit;
+		}
+
+		.tableIcon {
+			margin-left: -18px;
+			margin-right: 5px;
+		}
+
+	}
+
+		.context-menu-submenu {
+				background: url('../images/newskin/action/right-arrow.png') no-repeat right 5px;
+				border-right: 5px solid transparent;
+		}
+
+		.context-menu-submenu:after {
+				content: none;
+		}
+
+	.vcard {
+		margin-left: 6px;
+	}
+
+	.leftAlignedCell {
+		padding-left: 0px;
+	}
+
+	.formTableWithSpacing {
+		td {
+			padding-top: 5px;
+			padding-bottom: 5px;
+			padding-left: 5px;
+			vertical-align: middle;
+		}
+
+		input {
+			padding-top: 4px;
+			padding-bottom: 4px;
+			padding-left: 4px;
+
+			&.fileUpload {
+				border: 0px;
+			}
+		}
+		textarea {
+			border: 1px solid @headerBorderColor;
+		}
+		.formcheckbox {
+			border: 0px;
+		}
+	}
+
+	.propertyTable {
+		margin: 0px !important;
+		border-bottom: 0px !important;
+
+		.tableItem {
+			padding-left: 5px !important;
+			padding-right: 25px !important;
+		}
+
+		td {
+			padding-top: 5px !important;
+			padding-bottom: 5px !important;
+		}
+
+		tr {
+			border-top: 1px solid @lightGray;
+		}
+
+		tr.tableCellCounter_firstRow {
+			border-top: 0px;
+		}
+	}
+
+	/** apply the .linkButton style on a button/submit control to make it look like a link */
+	.cancelButton, .linkButton, .advancedLink {
+		background-color: transparent !important;
+		background-image: none !important;
+		color: @blueLinkColor !important;
+		border: 0px;
+
+		&:hover {
+			text-decoration: underline;
+			color: @blueLinkColor;
+		}
+	}
+
+	/* the cancel and link buttons differ, because the cancel should not be bold ! */
+	.cancelButton {
+		font-weight: normal !important;
+	}
+	.linkButton {
+		font-weight: bold;
+	}
+
+
+	table label, td, ul, ol, li {
+		.fontMixin(@darkGrayFont);
+	}
+
+	#createProjectForm label {
+		font-weight: normal;
+	}
+
+	/* scm repository details */
+	.repoName {
+		font-size: 16px;
+	}
+
+	.repoInfo {
+		color: @darkGrayFont;
+	}
+
+	a.pullRequests {
+		color: @orange !important;
+	}
+
+	.repositoryCard {
+		margin-top: 15px;
+		border-color: @headerBorderColor;
+
+		.repoDescription {
+			color: @headerLinkHover;
+			margin: 15px;
+		}
+
+		.header {
+			background-color: @headerPaneBackgroundColor;
+			border-bottom: none;
+			padding: 7px 10px;
+		}
+
+		.body {
+			padding: 0px;
+		}
+
+		.repoInfo {
+			margin-left: 20px;
+			a {
+				font-size: 11px !important;
+			}
+		}
+
+		.repoName {
+			font-size: 16px;
+		}
+
+		.repoDetails {
+			margin: 15px;
+			margin-top: 0px;
+		}
+	}
+
+	#repository {
+		.ditch-tab-pane-wrap {
+			padding-bottom: 8px;
+		}
+	}
+
+	.actionBar .filterForm {
+		label {
+			font-weight: normal;
+			color: @headerLinkHover;
+			padding-right: 4px;
+		}
+
+		input {
+			font-size: 11px;
+		}
+	}
+
+	pre.commitmessage {
+		font-family: 'courier new', 'courier', monospace;
+		font-size: 13px;
+		color: @darkGrayFont;
+	}
+
+	.linesAdded, .changeset .added {
+		color: @diffAddedColor;
+	}
+
+	.linesRemoved, .changeset .removed {
+		color: @diffRemovedColor;
+	}
+
+	.changeset .modified {
+		color: #d9923b;
+	}
+
+	.changeFileBox  {
+		display: inline-block;
+		text-align: right;
+		min-width: 60px;
+
+		&.left {
+			text-align: left;
+		}
+	}
+
+	.changeset {
+		.toggleLink {
+			display: none;
+			background-image: url("@{imagePrefix}/action/diff-expand.png");
+		}
+
+		.toggleLinkOpen {
+			background-image: url("@{imagePrefix}/action/diff-collapse.png");
+		}
+	}
+
+	.narrowButton {
+		padding-left: 0px;
+		padding-right: 0px;
+		min-width: 50px;
+	}
+
+	table#permission {
+		.explanation {
+			margin-left: 0px;
+		}
+
+		th label {
+			color: @lightGrayFont;
+		}
+
+		th input[type="checkbox"] {
+			margin-top: 10px;
+		}
+	}
+
+	.hint, .hint > a {
+		font-size: 11px;
+	}
+
+	.switch a {
+		.fontMixin(@borderColor);
+		font-weight: normal;
+		min-width: 80px;
+		display: inline-block;
+		text-align: center;
+		color: @gray7;
+
+		&.active {
+			font-weight: bold;
+		}
+
+		&:hover {
+			background-color: #eee;
+			text-decoration: none;
+		}
+	}
+
+	div.pr {
+		.fontMixin(white, 10px);
+		font-weight: bold;
+		text-align: left;
+	}
+
+	div.prStatusFlag {
+		display: inline-block;
+		border-top-right-radius: 2px;
+		border-bottom-right-radius: 2px;
+		width: 87px;
+		height:25px;
+		padding: 4px 3px;
+
+		.pr {
+			font-weight:bold;
+			font-size: 11px;
+		}
+
+		.subtext {
+			text-align: left;
+		}
+	}
+
+	div.prStatusIcon {
+		display: inline-block;
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+		width: 14px;
+		height:25px;
+		padding: 4px 3px;
+		background-repeat: no-repeat;
+		background-position: center center;
+		float: left;
+	}
+
+	tr.mergecheck {
+
+		div.prStatusIconPENDING {
+			display: none;
+			background-color: @gray2;
+			background-image: none !important;
+		}
+
+		div.prStatusFlag {
+			width: 101px;
+			background-color: @gray2;
+			border-top-right-radius: 2px;
+			border-bottom-right-radius: 2px;
+
+			div.prTextPENDING {
+				background-color: @gray2;
+				text-align: center;
+			}
+
+			div.mergeable {
+				text-align: center;
+			}
+		}
+	}
+
+	tr.mergeable {
+
+		div .prStatusIconPENDING {
+			background-image: url("../images/newskin/item/scm-pr-checkmark.png");
+			background-color: #00a85d;
+		}
+
+		div.prStatusFlag {
+			background-color: #ffab46;
+			overflow: hidden;
+
+			div.prTextPENDING {
+				color: @gray8;
+				background-color: #ffab46;
+			}
+
+			div.mergeable div.mergeable {
+				background-color: #ffab46;
+			}
+		}
+	}
+
+	tr.conflicting {
+
+		div .prStatusIconPENDING {
+			background-image: url("../images/newskin/item/scm-pr-conflict.png");
+			background-color: #8c0f14;
+		}
+
+		div.prStatusFlag {
+			background-color: #ffab46;
+			overflow: hidden;
+
+			div.prTextPENDING {
+				color: @gray8;
+				background-color: #ffab46;
+			}
+
+			div.mergeable div.conflicting {
+				color: #8c0f14;
+				background-color: #ffab46;
+			}
+		}
+	}
+
+	div .prStatusIconREVOKED {
+		background-image: url("../images/newskin/item/scm-pr-rejected.png");
+		background-color: @gray4;
+	}
+
+	div .prStatusIconREJECTED {
+		background-image: url("../images/newskin/item/scm-pr-rejected.png");
+		background-color: @gray4;
+	}
+
+	div .prStatusIconCOMPLETED {
+		background-image: url("../images/newskin/item/scm-pr-checkmark.png");
+		background-color: #00a85d;
+	}
+
+	div.mergeable {
+		font-size: 11px;
+
+		img {
+			position: relative;
+			top: 2px;
+		}
+
+		div.mergeable {
+			color: @darkGreen;
+			background-color: #ffead1;
+			padding: 1px;
+			min-width: 83px;
+			text-align: left;
+		}
+
+		div.conflicting {
+			color: @diffRemovedColor;
+			background-color: #ffb5b8;
+			padding: 1px;
+			min-width: 83px;
+			text-align: left;
+		}
+	}
+
+	.prPENDING {
+		background: @verifiedColor;
+	}
+
+	.prREVOKED {
+		background: @headerLinkHover;
+	}
+
+	.prREJECTED {
+		background: @headerLinkHover;
+	}
+
+	.prCOMPLETED {
+		background: #008248;
+	}
+
+	.prStatus {
+		margin-top: 8px;
+
+		div.subtext {
+			color: white;
+			padding: 1px;
+			text-align: left;
+
+			a {
+				color: white !important;
+				font-size: 11px !important;
+			}
+		}
+	}
+
+	.referenceSelectName {
+		color: @gray7;
+		font-size: 12px;
+		font-weight: normal;
+	}
+
+	.realName {
+		color: @gray7;
+		font-size: 12px;
+	}
+
+	.referenceSelectLessImportant {
+		color: @gray4 !important;
+		font-size: 11px !important;
+	}
+
+	.wysiwyg-with-upload .actionBar {
+		min-height: 20px;
+	}
+
+	.propertyTable {
+		margin: 0px !important;
+		border-bottom: 0px !important;
+
+		.tableItem {
+			padding-left: 5px !important;
+			padding-right: 25px !important;
+		}
+
+		td {
+			padding-top: 5px !important;
+			padding-bottom: 5px !important;
+		}
+
+		tr {
+			border-top: 1px solid @lightGray;
+		}
+
+		tr.tableCellCounter_firstRow {
+			border-top: 0px;
+		}
+	}
+
+	.mini-toggler {
+		padding: 0px !important;
+		margin: 2px;
+	}
+
+	td.issueHandle, table#userStories div.userStoryHandle {
+		background-repeat: no-repeat;
+		width: 10px;
+	}
+
+	table#userStories div.userStoryHandle.notEditable {
+		background-image: url("@{imagePrefix}/item/cardboard-readonly.png");
+	}
+
+	.acceptsDrop {
+		background-color: #ccffe8;
+
+		&.highlighted {
+			background-color: darken(#ccffe8, 10%) !important;
+		}
+	}
+
+	.deniesDrop {
+		background-color: #ffe8e9 !important;
+		&.highlighted {
+			background-color: darken(#ffe8e9, 10%) !important;
+		}
+	}
+
+	.original {
+		background-color: @gray1 !important;
+		&.highlighted {
+			background-color: darken(@gray1, 10%) !important;
+		}
+	}
+
+	div.floatingPlaceholder {
+		z-index: 9999;
+		position: absolute !important;
+		opacity: 0.92;
+		border: 1px dashed @darkGrayFont;
+		margin-left: 4px;
+		top: 0px;
+	}
+
+	.ui-sortable-helper {
+		z-index: 10001 !important;
+	}
+
+	td.issueHandle, table#userStories div.dragHandle.editable, table#userStories td.dragHandle.editable {
+		cursor: move;
+	}
+
+	.groupHeader {
+		.swimlaneToggler {
+			background-image: url("../images/collapse.png");
+			width: 14px !important;
+			height: 16px !important;
+			padding-left: 0px !important;
+			display: inline-block;
+			top: 7px;
+			position: relative;
+			cursor: pointer;
+		}
+		&.collapsed {
+			.swimlaneToggler {
+				background-image: url("../images/expand.png");
+			}
+			border-bottom: 3px solid white;
+		}
+	}
+
+	td.issueHandle {
+		padding: 0px !important;
+		padding-left: 10px;
+		background-image: url("@{imagePrefix}/action/dragbar-dark.png");
+		background-position: 3px center;
+		background-color: @gray2;
+	}
+
+	td.emptyIssueHandle {
+		padding: 0px !important;
+		padding-left: 6px !important;
+		width: 10px;
+	}
+
+	.issuePlaceHolder {
+		border: 1px dashed @headerBorderColor;
+		color: @headerBorderColor;
+		font-size: 15px;
+		text-align: center;
+
+		div {
+			position: relative;
+			top: 35px;
+		}
+	}
+
+	.issuePlaceHolder {
+		height: 30px;
+		width: 100%;
+		div {
+			width: 100%;
+		}
+	}
+
+	.switchToViewMode {
+		width: 16px;
+		height: 9px;
+		margin-left: 10px;
+		background-repeat: no-repeat;
+		background-image: url("@{imagePrefix}/action/view-mode-b-m.png");
+		&.view {
+			background-image: url("@{imagePrefix}/action/view-mode-a-m.png");
+			cursor: default;
+		}
+	}
+
+	.switchToPlanningMode {
+		top: 2px;
+		position: relative;
+		width: 16px;
+		height: 12px;
+		margin-left: 10px;
+		background-repeat: no-repeat;
+		background-image: url("@{imagePrefix}/action/plan-mode-b-m.png");
+		&.edit {
+			background-image: url("@{imagePrefix}/action/plan-mode-a-m.png");
+			cursor: default;
+		}
+	}
+
+	table#userStories, .userStories.stuck {
+		min-width: 100%;
+		height: 100%;
+		margin-top: 10px;
+
+		tr {
+			vertical-align: top;
+		}
+
+		tr.header td {
+			background-color: transparent;
+			font-size: 14px;
+			font-weight: bold;
+			color: @darkGrayFont;
+			padding: 20px 7px 10px 7px;
+			text-align: left;
+			padding-top: 5px;
+		}
+
+		tr.groupHeader {
+			td {
+				background-color: @lightGray;
+			}
+			td.notLast {
+				border-right: 1px solid @headerBorderColor;
+			}
+			div {
+				background-color: @lightGray;
+				height: 30px;
+				width: 99.5%;
+				padding-left: 10px;
+			}
+			div.swimlaneHeader {
+				background-color: @lightGray;
+				height: 30px;
+				padding-left: 10px;
+				width: auto;
+			}
+
+			.nameLabel {
+				font-size: 12px;
+				font-weight: bold;
+				color: @headerLinkHover;
+				position: relative;
+				top: 4px;
+				display: inline;
+				margin-right: 3px;
+			}
+
+		}
+
+		div.userStory, div.hiddenUserStory {
+			padding-left: 10px;
+			height: 120px;
+			border: 1px solid @headerBorderColor;
+			margin-left: 5px;
+			margin-bottom: 5px;
+			margin-right: 5px;
+			display: inline-block;
+			background-image: url("@{imagePrefix}/action/bg-card.png");
+			background-repeat: repeat-x;
+			background-color: @headerPaneBackgroundColor;
+			overflow: hidden;
+			float: left;
+
+			&.ui-sortable-helper {
+				border-top: 1px solid @headerBorderColor !important;
+			}
+		}
+
+		div.userStory.selected {
+			background-image: url("@{imagePrefix}/action/bg-card-selected.png") !important;
+			background-color: #ffead1;
+		}
+
+		.ui-sortable-placeholder {
+			display: none !important;
+		}
+
+		.multiColumn div.userStory {
+			margin-right: 0px;
+		}
+
+		div.hiddenUserStory {
+			visibility: hidden;
+			display: none;
+		}
+
+		div.userStory {
+			position: relative;
+
+			.ribbon {
+				display: block;
+			}
+
+			.ribbon {
+				width: 20px;
+				height: 20px;
+				margin-right: -5px;
+				background-image: url("@{imagePrefix}/item/ribbon.gif");
+			}
+
+			.details-arrow {
+				width: 14px;
+				height: 14px;
+				margin-top: 5px;
+				margin-bottom: 0px;
+				margin-right: 1px;
+				margin-left: 1px;
+				background: url("@{imagePrefix}/action/edit-frame-s.png") no-repeat left top;
+			}
+
+			a, span {
+				font-size: 11px;
+			}
+
+			.storyPoints {
+				font-size: 11px;
+				font-weight: bold;
+				& > span {
+					overflow: hidden;
+					direction: rtl;
+					display: block;
+					width: 17px;
+					text-align: center;
+				}
+			}
+
+			.keyAndId {
+				white-space: nowrap;
+				display: inline-block;
+				width: 45%;
+				margin-left: 5px;
+				overflow: hidden;
+				direction: rtl;
+				text-align: left;
+				color: @lightGrayFont;
+			}
+		}
+
+		.recursive .assigneeLink {
+			margin-top: -12px;
+		}
+
+		.recursive .keyAndId {
+			margin-top: 11px;
+		}
+
+		.storyPlaceholder {
+			box-sizing: border-box;
+			height: 120px;
+			color: @darkGrayFont;
+			border: 0px;
+			border-bottom: 1px dashed @darkGrayFont;
+			&:last-of-type {
+				border-bottom: none;
+			}
+			padding-top: 10px;
+			text-align: center;
+			font-size: 14px;
+
+			.transitionName {
+				font-size: 16px;
+				border: 2px solid @darkGrayFont;
+				padding: 2px 5px;
+			}
+
+			.statusName {
+				margin-top: 5px;
+				height: 13px;
+				background-image: url("@{imagePrefix}/item/cardboard-droparea-arrow.png");
+				background-repeat: no-repeat;
+				background-position: center top;
+			}
+
+			.explanation {
+				margin-top: 5px;
+				font-size: 11px;
+			}
+		}
+
+		div.userStoryHandle {
+			float: left;
+			min-height: 101%;
+			display: inline-block;
+			margin-left: -10px;
+			background-image: url("@{imagePrefix}/action/dragbar-dark.png");
+			background-position: 3px center;
+			background-color: @gray2;
+			margin-top: -1px;
+		}
+
+		.userStoryTable {
+			height: 120px;
+			width: 90%;
+
+			tr {
+				vertical-align: middle;
+			}
+
+			td.narrowCell {
+				width: 25px;
+			}
+
+			td.rightAligned {
+				text-align: right;
+			}
+
+			td {
+				color: @lightGrayFont;
+			}
+
+			.hours.over {
+				color: #CC3F44;
+			}
+
+			.hours {
+				color: @darkGrayFont;
+			}
+
+			.paddedRow {
+				vertical-align: top;
+				td {
+					padding-top: 10px;
+				}
+			}
+		}
+
+		.notLast {
+			border-right: 1px solid @headerBorderColor;
+		}
+
+		span.numberLabel {
+			background-color: @gray4 !important;
+			color: white;
+		}
+
+		input.storyPoints {
+			font-weight: bold;
+			width: 20px;
+			border: 0;
+			padding: 3px;
+			background-color: transparent;
+			font-size: 12px;
+			border: 1px solid transparent;
+			padding-right: 1px;
+			text-align: right;
+
+			&:hover {
+				background-color: #ffffcc;
+				border: 1px solid  @headerBorderColor;
+				cursor: text;
+			}
+		}
+
+		input.minimum, input.maximum {
+			font-weight: bold;
+			width: 15px;
+			padding: 3px;
+			font-size: 12px;
+			border: 0px;
+			background-color: transparent;
+			border: 1px solid transparent;
+			&:hover {
+				background-color: #ffffcc;
+				border: 1px solid  @headerBorderColor;
+				cursor: text;
+			}
+		}
+
+		.minLabel, .maxLabel {
+			border-bottom-left-radius: 5px;
+			border-top-left-radius: 5px;
+			-moz-border-bottom-left-radius: 5px;
+			-moz-border-top-left-radius: 5px;
+			-webkit-border-bottom-left-radius: 5px;
+			-webkit-border-top-left-radius: 5px;
+			color: white;
+			padding: 7px;
+			font-weight: bold;
+			font-size: 11px;
+			text-transform: uppercase;
+		}
+		.minLabel {
+			background-color:  #d9923b !important;
+		}
+
+		.maxLabel {
+			background-color: #af170f !important;
+			margin-left: 5px;
+		}
+
+		.minMaxInput {
+			height: 18px;
+			margin-left: -5px;
+			width: 20px;
+			padding-left: 10px;
+			font-size: 12px;
+		}
+
+		.aboveMax .minMaxInfo {
+			display: block;
+			background-color:  #af170f !important;
+		}
+
+		.belowMin .minMaxInfo {
+			display: block;
+			background-color: #d9923b !important;
+		}
+
+		.minMaxInfo {
+			color: white;
+			font-size: 11px;
+			text-transform: uppercase;
+			font-weight: bold;
+			padding: 4px 1px 1px 1px;
+			text-align: center;
+			border-radius: 4px;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			height: 14px;
+			margin-bottom: 10px;
+			margin-right: 5px;
+			margin-left: 5px;
+		}
+
+		.wip {
+			border-bottom: 1px solid @gray2;
+			padding-bottom: 15px;
+			margin-bottom: 2px;
+			padding-top: 8px;
+		}
+
+		.done .wip {
+			height: 72px;
+		}
+
+		.mappings * {
+			font-size: 12px !important;
+			line-height: 17px;
+		}
+
+		.lane {
+			min-width: 120px;
+			padding-left: 0px;
+			padding-right: 0px;
+
+			&.grouped {
+				padding-top: 5px;
+			}
+		}
+
+		.columnCollapser {
+			width: 16px;
+			height: 7px;
+			margin-left: 5px;
+			cursor: pointer;
+			background-image: url("@{imagePrefix}/action/arrow_right.png");
+			background-repeat: no-repeat;
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.rotated.columnCollapser {
+			margin-left: -10px;
+			float: none;
+			margin-bottom: -25px;
+			margin-top: 0px;
+			position: relative;
+			top: -5px;
+			right: -8px;
+			left: -32px;
+		}
+
+		.numberLabel, .header .storyPointsLabel {
+			float: right;
+		}
+
+		.header .storyPointsLabel {
+			margin-left: 5px;
+		}
+
+		.rotate .numberLabel, .rotate .storyPointsLabel {
+			float: none;
+			display: inline-block !important;
+			margin-right: 3px;
+		}
+
+		.numberLabel,
+		.storyPointsLabel {
+			min-width: 12px;
+			text-align: center;
+			display: inline-block;
+		}
+
+		.swimlaneHeader {
+			.numberLabel,
+			.storyPointsLabel {
+				top: 3px;
+				position: relative;
+			}
+
+			.numberLabel {
+				float: none;
+			}
+
+			.storyPointsLabel {
+				margin-left: 0;
+				background-color: @gray4 !important;
+			}
+		}
+	}
+
+	&.IE8 .rotated.columnCollapser {
+		top: -25px !important;
+		left: 20px !important;
+		float: left !important;
+	}
+
+	&.IE.IE9 .rotated.columnCollapser,
+	&.IE.IE10 .rotated.columnCollapser,
+	&.IE.IE11 .rotated.columnCollapser {
+		left: -21px !important;
+		float: left !important;
+	}
+
+	&.IE .rotate {
+		padding-right: 10px;
+		.storyPointsLabel {
+			margin-right: 3px !important;
+		}
+		.numberLabel {
+			margin-right: -3px !important;
+			margin-top: 3px !important;
+		}
+	}
+
+	.cardboardIcon {
+		float: right;
+	}
+
+	.storyPointsLabel {
+		background-color: #a1a1a1;
+		font-size: 10px;
+		color: @darkGrayFont;
+		padding: 4px 3px 3px;
+		text-align: center;
+		min-width: 15px;
+		display: inline-block;
+		position: relative;
+		margin-left: 4px;
+		border-radius: 2px;
+		-moz-border-radius: 2px;
+		-webkit-border-radius: 2px;
+	}
+
+	table#userStories span.numberLabel, .storyPointsLabel,
+	.userStories.stuck span.numberLabel, .storyPointsLabel {
+		font-weight: bold;
+		font-family: arial,serif;
+		padding: 2px 4px;
+		font-size: 9px;
+		line-height: 9px;
+		border-radius: 2px;
+		-moz-border-radius: 2px;
+		-webkit-border-radius: 2px;
+	}
+
+	.storyPointsIcon {
+		display: inline-block;
+		background-image: url("@{imagePrefix}/action/icon_sp.png");
+		height: 5px;
+		width: 7px;
+		vertical-align: top;
+		margin-top: 2px;
+		margin-left: 2px;
+	}
+
+	&.IE8 .storyPointsIcon {
+		margin-top: 3px;
+	}
+
+	.storyPointsLabel {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 9px;
+		line-height: 9px;
+		font-weight: bold;
+		padding: 2px 5px;
+		border-radius: 2px;
+		color: white !important;
+		background-color: @gray2 !important;
+
+		.storyPointsIcon {
+			margin-top: 1px;
+		}
+
+		&.open,
+		&.yellow {
+			background-color: @gray5 !important;
+		}
+
+		&.closed,
+		&.green {
+			background-color: @gray5 !important;
+		}
+	}
+
+	.storyPointsContainer {
+		text-align: left;
+		width: 50%;
+		padding-left: 5%;
+	}
+
+	.storyPointsContainer,
+	.storyPointsLabel.cardboard {
+		.storyPointsIcon {
+			background-image: url("@{imagePrefix}/action/icon_sp_fff.png");
+		}
+	}
+
+	.issueCountContainer,
+	.storyPointsContainer {
+		display: inline-block;
+	}
+
+	.suspectedLinkBadge {
+		cursor: pointer;
+	}
+
+	.suspectedLinkBadge, .trackerBranchBadge, .generalBadge {
+		background: #b31317;
+		border-radius: 2px;
+		margin-left: 0.5em;
+		padding: 2px 3px 1px 3px;
+		color: white;
+		font-size: 11px;
+		font-weight: bold;
+		text-transform: uppercase;
+		white-space: nowrap;
+		display: inline-block;
+	}
+
+	.generalBadge.clickable {
+		cursor: pointer;
+	}
+
+	.trackerBranchBadge {
+		background: #005c50;
+	}
+
+	.reviewMergedBadge {
+		background: #393;
+
+		a {
+			color: white;
+    		font-size: 11px;
+
+    		&:hover {
+    			text-decoration: none;
+    		}
+		}
+	}
+
+	#relations-box .suspectedLinkBadge {
+		display: inline-block;
+	}
+
+	.suspected-small {
+		background-color: #b31317;
+		background-image: url("@{imagePrefix}/item/suspected-small.png");
+		border-radius: 2px;
+		padding: 1px;
+		width: 14px;
+		height: 14px;
+		display: block;
+		position: relative;
+		top: 5px;
+	}
+
+	.suspectedLinkBadge {
+		margin-right: 2px;
+		.clearIcon {
+			cursor: pointer;
+		}
+		img {
+			margin-left: 0.25em;
+			vertical-align: baseline !important;
+		}
+		& ~ span.arrow {
+ 			.bidirectionalSuspectArrowsMixin;
+ 		}
+	}
+
+	.inactiveSuspectedLinkBadge {
+		background: #C6D8F2 !important;
+		cursor: default !important;
+	}
+
+	.applyCheckbox {
+		cursor: pointer;
+		display: inline-block;
+		width: 81px;
+		height: 20px;
+		background: url("@{imagePrefix}/apply_button.png") 0 20px;
+		&.checked {
+			background-position: 0 0;
+		}
+
+		 &:hover {
+			  text-decoration: none;
+		  }
+
+		.applyIcon {
+			width: 50%;
+			height: 20px;
+			display: inline-block;
+			cursor: pointer;
+
+			&.applyToRight {
+				 float: left;
+			 }
+
+			&.applyToLeft {
+				 float: right;
+			 }
+		}
+
+		label {
+			font-weight: normal;
+			font-size: 12px;
+			position: relative;
+			left: 0px;
+			top: -17px;
+			color: #d1d1d1;
+		}
+
+		 &.biDirectional {
+			  background: url("@{imagePrefix}/bidirect_apply_button.png") 0 20px;
+			  background-position: 0px 0px;
+			  background-size: 81px 100px;
+		  		cursor: default !important;
+
+				&.left-readonly {
+					 background-position: 0px 40px;
+					.applyToLeft {
+						visibility: hidden;
+					}
+				 }
+
+				&.right-readonly {
+					 background-position: 0px 20px;
+
+					.applyToRight {
+						visibility: hidden;
+					}
+				 }
+				&.checked {
+					 label, .applyIcon {
+						 display: none;
+					 }
+
+					&.left {
+						 background-position: 0px 60px;
+					 }
+
+					&.right {
+						 background-position: 0px 80px;
+					 }
+				 }
+		  }
+	}
+
+	#requirements td.baseline, div.smallWarning, #requirements div.smallWarning, .textHint {
+		background-image: url("@{imagePrefix}/message/warning-stripes.png");
+		background-color: #fff7eb;
+		background-position: 5px 40%;
+		background-repeat: no-repeat;
+		padding-left: 26px !important;
+	}
+
+	div.smallWarning {
+		border: #ffd9ab;;
+	}
+
+	#requirements.baseline {
+		background-color: #fff7eb;
+	}
+
+	/* pull request details */
+	.pullRequestPENDING_AUTOMERGE, .pullRequestPENDING_REJECTED, .pullRequestPENDING_REVOKED {
+		background: #CCF4FF;
+		color: @darkGrayFont;
+		font-size: 11px;
+	}
+
+	.pullRequestCOMPLETED {
+		background-color: #ccffe8;
+		color: @darkGrayFont;
+		font-size: 11px;
+	}
+
+	.pullRequestPENDING_CONFLICTS {
+		background-color: #ffe8e9;
+		color: @darkGrayFont;
+		font-size: 11px;
+	}
+
+	.pullRequestPENDING_WAITING {
+		background-color: #fff7eb;
+		color: @darkGrayFont;
+		font-size: 11px;
+	}
+
+	/* trash */
+	#trashTable {
+		.documentdeleted-odd td, .documentdeleted-odd td a, .documentdeleted-even td,.documentdeleted-even td a {
+			background-color: transparent;
+		}
+
+		.nonEditableItem {
+			cursor: default;
+		}
+
+		.displaytag > tbody > tr {
+			border-top: 1px solid @headerBorderColor;
+			&:hover {
+				background-color: transparent;
+			}
+		}
+
+		.pagebanner{
+		  	padding: 5px 0;
+		}
+	}
+
+	#docbaselineinfo {
+		font-size: 12px;
+		border-bottom: 1px solid #ffd9ab;
+		background: #fff7eb url("@{imagePrefix}/message/info-stripes.png") no-repeat 10px center;
+		padding-left: 32px;
+		.changeLink {
+			display: inline-block;
+			margin-left: 20px;
+			color: #0093b8;
+			text-decoration: none;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+		.changeToHeadRevision {
+			display: inline-block;
+			float: right;
+			font-size: 11px;
+			text-transform: uppercase;
+			vertical-align: middle;
+			padding: 5px;
+			margin-top: -6px;
+			cursor: pointer;
+		}
+	}
+
+	#requirements td.baseline {
+		padding-left: 25px !important;
+	}
+
+	#requirements.baseline {
+		background-color: @lightGray;
+	}
+
+	#fileAttributes.baseline {
+		& > tbody > tr {
+			border-top: 1px solid @headerBorderColor;
+			background-color: @lightGray !important;
+		}
+	}
+
+	#fileAttributes a {
+		text-decoration: none;
+	}
+
+	#fileAttributes a:hover  {
+		text-decoration: underline;
+	}
+
+	#fileAttributes a {
+		text-decoration: none;
+	}
+
+	#fileAttributes a:hover  {
+		text-decoration: underline;
+	}
+
+	.addMember {
+		div.memberSelector {
+			float: left;
+			width: 60%;
+			min-height: 280px;
+			padding: 10px;
+			border: 1px solid @gray2;
+			margin-bottom: 15px;
+			overflow-y: auto;
+		}
+
+		.memberFilter {
+			margin: 0px 20px 15px 10px;
+			padding-left: 10px;
+			font-size: 12px;
+		}
+
+		#comment {
+			height: 25px;
+			padding: 10px;
+			font-size: 12px;
+		}
+
+		.roles {
+			float: left;
+			position: relative;
+			margin-left: 10px;
+			top: -40px;
+			font-size: 12px;
+		}
+
+		.memberTable label {
+			font-size: 12px;
+		}
+
+		.infotable {
+			width: 100%;
+			margin-bottom: 1em;
+
+			h3 {
+				padding-top: 0;
+				margin-top: 0;
+			}
+
+			td {
+				vertical-align: top;
+			}
+
+			td.step1 {
+				width: 60%;
+				padding-right: 10px;
+			}
+
+			td.step2 {
+				padding-left: 32px;
+				padding-right: 10px;
+			}
+		}
+
+		select[name=groupId] {
+			max-width: 180px;
+		}
+	}
+
+		.yuimenu {
+				left: auto;
+				top: auto;
+				display: none;
+
+				a.yuimenuitemlabel {
+						margin-top: 0;
+				}
+
+				.ui-widget-content {
+						background: none;
+						border: none;
+				}
+
+				.ui-state-focus, .ui-state-active {
+						background: #EEEEEE;
+						text-decoration: none !important;
+				}
+
+				.ui-menu-item {
+						width: auto;
+						white-space: nowrap;
+						a {
+						    text-decoration: none;
+						    display: block;
+						    padding: 2px .4em;
+						    line-height: 1.5;
+						    min-height: 0;
+						    font-weight: normal;
+						    padding-left: 23px;
+    						padding-right: 10px;
+	    					&.withicon {
+							    padding-left: 0;
+							}
+						}
+
+				}
+
+				a {
+						border: none;
+						font-weight: normal;
+						color: @gray7;
+						padding-left: 23px;
+						padding-right: 10px;
+				}
+
+				a.ui-state-focus, a.ui-state-active {
+						margin: 0;
+				}
+
+		}
+}
+
+.loggedInIndicator {
+	color: green;
+	font-size: 12px;
+}
+
+/* wiki content */
+.newskin .wikiContent, .newskin .fr-view {
+	.toc {
+		li.toclevel-xxl {
+			line-height: 15px !important;
+		}
+
+		li {
+			line-height: 10px !important;
+		}
+
+		.collapsebox .collapsebody {
+			border-top: 0px !important;
+		}
+	}
+
+	blockquote {
+		border-left: 5px solid @lightGrayFont;
+		color: @darkGrayFont;
+		font-style: italic;
+		padding-left: 10px;
+		margin-left: 0px;
+		margin-bottom: 15px;
+		border-collapse: collapse;
+
+		blockquote {
+			border-color: @headerBorderColor;
+			color: @lightGrayFont;
+		}
+	}
+
+	h1 {
+		font-size: 21px;
+		border-bottom: 1px solid @headerBorderColor;
+	}
+
+	h2, h3, h4, h5, h6 {
+		border: 0px !important;
+	}
+
+	h2, h3, h4, h5, h6 {
+		padding-left: 0px !important;
+	}
+
+	h2 {
+		font-size: 18px;
+	}
+
+	h3, h4, h5, h6 {
+		font-size: 15px;
+	}
+
+	dd {
+		margin-left: 0px;
+	}
+
+	table.wikitable {
+		td, th {
+			color: @darkGrayFont;
+			padding: 5px;
+		}
+	}
+
+	.cbcomment {
+		padding: 0 2px;
+		font-family: monospace;
+		color: #777;
+	}
+
+	.collapsebox, .collapseboxClosed {
+		box-sizing: border-box;
+		h3 {
+			padding: 10px !important;
+			margin: 0px;
+
+			.collapseOpen, .collapseClose {
+				float: right;
+			}
+		}
+
+		h2 + .collapsebody, h3 + .collapsebody, h4 + .collapsebody {
+			border-top: 1px solid @headerBorderColor !important;
+		}
+
+		.editsection {
+			display: none;
+		}
+
+		.collapsebody {
+			padding: 10px;
+			margin: 0px;
+		}
+	}
+
+	.collapseOpen, .collapseClose {
+		background-repeat: no-repeat;
+		padding-left: 2px;
+		color: transparent;
+		height: 13px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: transparent;
+		}
+	}
+
+	.collapseClose {
+		background-image: url("@{imagePrefix}/action/diff-expand.png");
+	}
+
+	.collapseOpen {
+		background-image: url("@{imagePrefix}/action/diff-collapse.png");
+	}
+
+	.collapseBullet {
+		color: @darkGrayFont;
+	}
+
+    p {
+		margin-bottom: 6px;
+		margin-top: 6px;
+	}
+
+	pre, tt {
+		font-family: 'courier new', 'courier', monospace;
+		font-size: 12px;
+		color: @darkGrayFont;
+		background-color: #fafafa;
+		border: 1px dotted @headerBorderColor;
+		margin: 15px 0 20px 0;
+		padding: 10px;
+		overflow: visible;
+	}
+	tt {
+		padding: 0px 3px;
+	}
+	/* Wiki specific inline-preformatted text, i.e. this is a {{{...}}} block which does NOT start at the beginning of the line, so becomes "inline" */
+	pre.wiki-inline-pre {
+		padding: 0;
+		margin: 0;
+		font-family: monospace;
+		font-size: 13px;
+		border: none;
+		display: inline;
+		overflow: inherit;
+		background: none;
+	}
+
+	div.blue {
+		color: @blueLinkColor !important;
+	}
+
+	div.cyan {
+		color: @cyan !important;
+	}
+
+	div.red {
+		color: @red !important;
+	}
+
+	div.green {
+		color: @darkGreen !important;
+	}
+
+	div.yellow {
+		color: yellow !important;
+	}
+
+	div.gray {
+		color: @lightGrayFont !important;
+	}
+
+	span.blue {
+		color: @blueLinkColor !important;
+	}
+
+	span.cyan {
+		color: @cyan !important;
+	}
+
+	span.red {
+		color: @red !important;
+	}
+
+	span.green {
+		color: @darkGreen !important;
+	}
+
+	span.yellow {
+		color: yellow !important;
+	}
+
+	span.gray {
+		color: @lightGrayFont !important;
+	}
+
+	span.magenta {
+		color: magenta;
+	}
+
+	span.orange {
+		color: orange;
+	}
+
+	span.pink {
+		color: pink;
+	}
+
+	.tabmenu {
+		border: 0px;
+		padding-bottom: 7px;
+
+		span a, .activetab {
+			background: none;
+			border: 1px solid @gray2;
+			padding: 8px 15px;
+		}
+
+		span a {
+			color: @borderColor;
+			background-color: @headerPaneBackgroundColor;
+			padding-bottom: 7px;
+		}
+
+		.activetab {
+			border-bottom: 0px;
+			background-color: white;
+			color: @headerLinkHover;
+		}
+	}
+
+	.tabbedSection {
+		&.tabs {
+			padding: 15px;
+			border: 1px solid @headerBorderColor;
+		}
+	}
+
+	li {
+		line-height: 22px;
+	}
+
+	ul ul, ol ul {
+		list-style-type: disc;
+	}
+
+	li ul , li ol{
+		padding-left: 16px;
+		line-height: 18px;
+	}
+
+	a {
+		color: @blueLinkColor;
+	}
+
+	/* Download ad banner in default wiki content */
+	.ad {
+		margin: 10px 15px 15px 15px;
+		padding: 15px;
+		background: #00a85d;
+		color: #fff;
+
+		a {
+			color: #fff !important;
+			font-weight: bold;
+			text-decoration: underline;
+		}
+
+		img {
+			display: none;
+		}
+	}
+
+	sub b, sup b {
+		line-height: 12px;
+	}
+}
+
+.newskin .wikiContent.traceabilityTabWikiContent {
+	margin: 0 !important;
+
+	.traceabilityNoItems {
+		padding-left: 30px;
+		position: relative;
+		top: 5px;
+		display: block;
+		height: 25px;
+	}
+}
+
+#wikiPageContent.withNavigationBar .wikilayout .mainContainer,
+#wikiPageContent .wikilayout .mainContainer,
+.wikiContentSpacingWrapper {
+	padding: 0 15px 15px 15px;
+	&.full {
+		padding: 15px;
+	}
+}
+
+.subscriptionInfo {
+	margin-right: 8px;
+	vertical-align: top;
+	.fontMixin(@lightGrayFont, 11px);
+}
+
+.actionBar .subscriptionInfo {
+	color: @darkGrayFont;
+}
+
+.subscriptionandlock {
+	padding-left: 8px;
+	.fontMixin(@lightGrayFont, 11px);
+}
+
+.reportSelectorActionBarTable {
+	width: 100%;
+	td.actionBarColumn {
+		width: 1%;
+		white-space: nowrap;
+	}
+	td.reportSelectorColumn {
+		width: 99%;
+	}
+}
+
+.reportSelectorActionBar {
+	z-index: 10;
+	padding: 3px 3px 3px 10px;
+}
+
+.extraActionsContainer.hide {
+	display: none;
+}
+
+.actionLink.add-new-item {
+	background: url("../images/newskin/action/add-new-lightgrey-s.png");
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-right: 10px;
+}
+
+.actionLink.show-baselines {
+	background: url("../images/newskin/item/baseline-s.png");
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-right: 10px;
+}
+
+/**
+ * uniform spacing for tables contain form elements...
+ * Use this instead of using cellspacing="1", and don't add cellspacing and border to such tables, but add cellpadding="0"
+ */
+table.formTableWithSpacing {
+	border-collapse: separate;
+	border-spacing: 1px;
+}
+
+/* Mixin for standard links TODO: should be used above too */
+.linkMixin {
+	.fontMixin(@blueLinkColor, 13px);
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+/* new skin for common plugins "wikichartbox" style */
+.newskin {
+	div.wikichartbox {
+		padding: 20px;
+
+		table {
+			/* dont't show odd/even backgrounds */
+			tr.even, tr.odd  {
+				background-color: transparent !important;
+			}
+			th, td {
+				color: @gray7;
+			}
+
+			td.separator {
+				border-bottom: solid 1px @gray1;
+			}
+		}
+
+		a {
+			.linkMixin;
+		}
+	}
+
+}
+
+.expanderMixin {
+	/* content-more.png*/
+	background-image: url('../images/sprite-collapse-expand.png');
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	width: 9px; height:9px;
+}
+.expanderExpandedMixin {
+	/* content-less.png*/
+	background-position: -14px 0;
+	background-repeat: no-repeat;
+	width: 9px; height:9px;
+}
+
+/* expand-collapse control */
+img.expander {
+	.expanderMixin;
+	margin: 3px 0;
+}
+
+img.expanded {
+	.expanderExpandedMixin;
+}
+
+.newskin.IE8 .tracker-item-state-history-plugin .transition-cont .transition-arrow {
+	margin-bottom: -28px; /* IE8 hack fixing broken history flow design... */
+}
+
+.newskin .tracker-item-state-history-plugin {
+	.transition-cont {
+		display: block;
+		float: left;
+		margin-right: 5px;
+		margin-bottom: 10px;
+
+		.transition-arrow {
+			height: 56px;
+			width: 17px;
+			display: inline-block;
+			background: url("@{imagePrefix}/timeline/transition-arrow.png") no-repeat;
+		}
+
+		.transition {
+			height: 54px;
+			border-left: 1px solid #d1d1d1;
+			border-top: 1px solid #d1d1d1;
+			border-bottom: 1px solid #d1d1d1;
+			background-color: white;
+			display: inline-block;
+
+			&.end {
+				border-right: 1px solid #d1d1d1;
+			}
+
+			table {
+				td {
+					height: 18px;
+				}
+				td.edit {
+					height: 54px;
+					vertical-align: middle;
+					padding: 1px 10px;
+				}
+				td.status {
+					padding: 8px 10px 1px 10px;
+				}
+				td.trans {
+					padding: 1px 10px 8px 10px;
+				}
+				td.smallLabel {
+					text-align: right;
+				}
+				td.deleted {
+					text-decoration: line-through;
+				}
+
+			}
+		}
+
+	}
+}
+
+.newskin .trackerListPlugin {
+	> table.displaytag {
+		margin: 0;
+		margin-bottom: 2em;
+		border-bottom: none;
+
+		&:last-child {
+			margin: 0;
+		}
+
+		> thead > tr {
+			th.number, th.date {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+		}
+
+		> tbody > tr {
+			> td {
+				vertical-align: top;
+				padding-top: 10px !important;
+				border-bottom: solid 1px @gray1;
+
+				&.status-icon-minwidth {
+					padding-left: 0 !important;
+					padding-right: 0 !important;
+
+					& img {
+						margin-right: 5px;
+					}
+				}
+
+				.trackerDescription {
+					margin-top: 10px;
+				}
+
+			}
+
+			td.number, td.date, th.number, th.date {
+				text-align: center;
+			}
+		}
+
+		tr {
+			&:hover {
+				background-color: @gray1 !important;
+			}
+
+			> td.number, > td.date, > th.number, > th.date {
+				text-align: center;
+			}
+
+			.lastColumn {
+				padding-right: 0 !important;
+				margin-right: 0 !important;
+			}
+		}
+
+		tr.lastRow td {
+			border-bottom: solid 1px @gray2;
+		}
+
+		> tfoot > tr > th {
+			border-bottom: none;
+			padding-bottom: 0;
+
+			a:hover {
+				text-decoration: underline;
+				color: #0093b8;
+			}
+		}
+
+	}
+
+	.noDataAvailable {
+		color: #ccc;
+		font-size: 0.8em;
+		padding-top: 0.2em;
+		display: inline-block;
+	}
+
+	.summary-row .noDataAvailable {
+		padding-top: 0;
+	}
+}
+
+.newskin .compactTrackerListPlugin .compact-tracker-lists-wrapper {
+
+		.container {
+				width: 50%;
+				vertical-align: top;
+		}
+
+		.tracker-group-name {
+				display: block;
+				color: @gray7;
+				font-family: Arial, Helvetica, sans-serif;
+				font-weight: bold;
+				font-size: 15px;
+				margin-bottom: 7px;
+		height: 30px;
+		line-height: 30px;
+				&.work-items, &.configuration-items {
+			background-repeat: no-repeat;
+			background-position: 0 3px;
+			.name {
+				display: inline-block;
+				height: 30px;
+				background: no-repeat left center;
+				padding-top: 1px;
+			}
+				}
+				&.work-items {
+			background-color: @gray5;
+			background-image: url("@{imagePrefix}/tracker_list_plugin/bg_arrow_invert.png");
+			background-position: right center;
+			color: white;
+			padding-left: 10px;
+			.name {
+				padding-left: 23px;
+				background-image: url("@{imagePrefix}/tracker_list_plugin/work-trackers-header-icon.png");
+			}
+				}
+				&.configuration-items {
+			margin-left: -13px;
+			background-color: @gray2;
+			background-image: url("@{imagePrefix}/tracker_list_plugin/bg_arrow.png");
+			background-position: left center;
+			padding-left: 15px;
+			.name {
+				padding-left: 20px;
+				background-image: url("@{imagePrefix}/tracker_list_plugin/config-trackers-header-icon.png");
+			}
+		}
+		}
+
+		td {
+				padding-bottom: 8px !important;
+				padding-top: 8px !important;
+
+				&.container {
+						padding-left: 15px;
+				}
+
+				&.container:first-of-type {
+						padding-left: 0;
+						padding-right: 15px;
+				}
+
+				.tracker-name {
+						padding-left: 3px;
+				}
+
+				.tracker-key {
+						padding-left: 30px;
+						white-space: nowrap;
+				}
+
+				.tracker-open-count {
+						padding-left: 30px;
+				}
+
+				.tracker-modified-at {
+						padding-left: 30px;
+				}
+		}
+
+		table.displaytag {
+				margin: 0;
+				thead th {
+						font-weight: bold;
+						font-size: 13px;
+				}
+				.tracker-context-menu {
+						padding-right: 5px !important;
+						&.yuimenubar {
+								margin-top: 6px;
+						}
+				}
+		}
+
+		.favouriteWidget {
+				margin-left: 0;
+		}
+
+		tfoot {
+				font-size: 13px;
+				tr.summary-row {
+						border-top: 1px solid @gray2;
+				}
+				th {
+						font-weight: bold;
+						padding: 8px 0;
+						border-bottom: none;
+						&.number {
+								padding-right: 5px;
+						}
+				}
+		}
+}
+
+.newskin .wikiContent .riskTraceabilityMatrixPlugin {
+	padding: 0 15px;
+	table {
+		th, td {
+			padding: 4px;
+			border: 1px solid #ccc;
+			vertical-align: middle;
+		}
+		th {
+		background-color: transparent;
+		}
+	}
+}
+
+.newskin .wikiContent .searchBoxPlugin {
+	h3 {
+		margin-bottom: 0;
+		font-size: 18px;
+	}
+	.shadowWrapper {
+		border: 5px solid #f2f2f2;
+		border-radius: 5px;
+		display: inline-block;
+		> .borderWrapper {
+			border: 1px solid #ccc;
+			display: inline-block;
+			input[type=text] {
+				height: 32px;
+				width: 400px;
+				padding: 0 5px;
+				margin-right: 0;
+				border: none;
+				outline: none;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				.IE8& {
+					height: 26px;
+					margin-top: 6px;
+				}
+			}
+			a.submitButton {
+				display: inline-block;
+				background: url("../images/wiki_plugins/searchbox/search_button.png") repeat-x;
+				width: 60px;
+				height: 33px;
+				line-height: 33px;
+				text-align: center;
+				vertical-align: middle;
+				font-weight: bolder;
+				color: black;
+				margin-left: 0;
+				&:hover {
+					text-decoration: none;
+					cursor: pointer;
+				}
+				.IE8& {
+					float: right;
+				}
+			}
+		}
+	}
+}
+
+.newskin .wikiContent .projectInfoPlugin {
+	h4 {
+		margin-bottom: 0 !important;
+
+		label.projectId {
+			margin-left: 10px;
+			font-size: 13px;
+			color: @gray4;
+		}
+	}
+
+	.photoBox {
+		margin-left: 0;
+		width: 16px;
+		height: 16px;
+		vertical-align: text-bottom;
+	}
+
+	> table > tbody > tr {
+		&.lastRow > td {
+			padding-bottom: 0 !important;
+		}
+		> td {
+			 padding: 10px 0;
+		}
+	}
+
+}
+
+.newskin .wikiContent .membersPlugin {
+	> h4 {
+		padding-bottom: 10px !important;
+	}
+
+	> label {
+		font-size: 13px;
+		font-weight: bold;
+		margin-bottom: 5px;
+		display:block;
+	}
+
+	> table > tbody > tr {
+		> td {
+			padding: 5px 0;
+		}
+	}
+
+	.memberBlock {
+		float: left;
+		padding: 10px 0;
+
+		img {
+			width: 16px;
+			height: 16px;
+			margin-right: 5px;
+			vertical-align: text-bottom;
+		}
+	}
+	.memberSeparator {
+		clear: both;
+		padding: 0;
+		width: 100%;
+		border-bottom: solid 1px @gray1;
+	}
+
+	.membersLink {
+		margin: 10px 0 0 0;
+		padding:0;
+	}
+
+}
+
+.yui-skin-cb .container-close {
+	position: absolute;
+	top: 5px;
+	right: 20px;
+	width: 15px;
+	height: 15px;
+	background: url("@{imagePrefix}/action/closewindow-round-bgwhite.png") no-repeat;
+	cursor: pointer;
+}
+
+.newskin .minify-dialog-link {
+    background: url("@{imagePrefix}/action/icon_minimize.png") no-repeat;
+    cursor: pointer;
+    height: 15px;
+    position: absolute;
+    right: 38px;
+    top: 5px;
+    width: 15px;
+}
+
+/*
+	wrap the newskin's page content with a div like this to add appropriate margin
+	TODO: should this be done by the sitemesh-decoration ?
+*/
+.newskin .newskinPageContent {
+	margin: 15px;
+
+	.displaytag, .propertyTable {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+/*
+	"copy" of cancel button should work on not facelifted places too
+	cancel button for yui dialogs
+ */
+.cbModalDialog .yui-panel .ft .button-group .cancelButton button {
+	.newskin .cancelButton;
+}
+
+.ui-layout-north {
+	border: 0 !important;
+	overflow: visible !important;
+}
+
+#northPane {
+	min-height: 91px;
+}
+
+#northPane.service-desk-mode {
+	min-height: auto;
+}
+
+.headerCollapsed #northPane {
+	min-height: 20px;
+}
+
+/*
+ * Fixes that in Firefox the "showOverflowOnHover" of the jquery layout does not work properly
+ * and if the north part contains a select/popup that will collapse immediately as the mouse leaves
+ */
+.popupBody .ui-layout-north {
+	border: 0 !important;
+	overflow: hidden !important;
+}
+
+input#searchFilterOnPopup {
+	margin-right: 5px;
+}
+
+.inlinedPopupDialog .yui-panel {
+	background: transparent !important;
+}
+
+/* Label (tag) list */
+
+body.newskin.Chrome .labellist {
+		.tags-head, .tags-none {
+				line-height: 15px;
+		}
+}
+
+.newskin .labellist {
+		background-color: transparent;
+		border: none;
+		padding: 0;
+		margin: 5px 0 10px;
+		font-size: 10px;
+		color: @gray3;
+
+		a {
+				font-size: 10px;
+				color: @gray3;
+		}
+
+		.tag {
+				margin: 3px 0;
+				display: inline-block;
+				height: 16px;
+				line-height: 16px;
+				vertical-align: middle;
+		}
+
+		.tags-head {
+				background: url("../images/newskin/tag/tag_icon.png") no-repeat left center;
+				padding-left: 19px;
+				font-weight: bold;
+				margin-right: 10px;
+		}
+
+		.tag-label {
+				background: url("../images/newskin/tag/tag_bg.png") @gray3 no-repeat right center;
+				padding-right: 12px;
+				padding-left: 6px;
+				margin-right: 5px;
+				color: white;
+				&:hover {
+						text-decoration: none;
+				}
+		}
+
+		.tag-label:hover {
+				background-color: @gray4;
+		}
+}
+
+.newskin form[name=entityLabelForm] {
+		.formTableWithSpacing {
+				margin: 10px;
+		}
+
+		.actionBar {
+				padding-left: 0;
+		}
+
+		.contentWithMargins {
+				margin-top: 0;
+		}
+
+		.tag-list {
+				margin: 1em 0;
+		}
+
+		.toggleMoreLink,
+		.toggleLessLink {
+				margin-left: 5px;
+		}
+}
+
+.newskin .relations-box {
+		.relation-origin {
+				padding-left: 17px;
+		}
+		.relation-origin-not-related {
+			.relation-item {
+				margin: 0px;
+				height: auto;
+			}
+		}
+		.incoming-relations,
+		.outgoing-relations {
+				padding-left: 100px;
+				background-repeat: no-repeat;
+				background-position: left center;
+		}
+		.incoming-relations {
+		position: relative;
+		background-position: left top;
+		.arrow {
+			.head {
+				width: 50px;
+				height: 9px;
+				background-image: url("../images/newskin/relations/link-arrow-incoming-head.png");
+			}
+			.body {
+				width: 50px;
+				background-image: url("../images/newskin/relations/link-arrow-incoming-body.png");
+				background-repeat: repeat-y;
+			}
+			.tail {
+				width: 50px;
+				background-image: url("../images/newskin/relations/link-arrow-incoming-tail.png");
+				height: 8px;
+			}
+			position: absolute;
+			left: 20px;
+			top: 0;
+		}
+		}
+		.outgoing-relations {
+		background: url("../images/newskin/relations/link-arrow-outgoing.png") no-repeat 26px center;
+	}
+		.relation-item {
+				margin: 8px 10px;
+
+				img {
+						display: inline-block;
+						vertical-align: middle;
+				}
+
+				.summary, .description, .remark {
+						display: inline-block;
+						line-height: 20px;
+						vertical-align: middle;
+				}
+				.remark {
+						color: @gray3;
+			margin-left: 2em;
+			font-size: 10px;
+				}
+
+				.summary.without-icon {
+						padding-left: 21px;
+				}
+		}
+
+}
+
+.newskin #addAssociationForm {
+	#advancedFilter {
+		margin: 10px 0;
+	}
+
+	#searchResults {
+		margin: 0;
+	}
+
+	.collapsingBorder {
+		margin-bottom: 15px;
+	}
+
+	#revision {
+		width: 95%;
+	}
+
+	.checkboxesCell,
+	.assocTypeCell {
+		vertical-align: top;
+	}
+
+	.assocTypeCell {
+		width: 400px;
+
+		.selectboxit-container {
+			margin-bottom: 40px;
+
+			.selectboxit {
+				width: 425px;
+				min-width: 425px;
+			}
+
+			.selectboxit-options {
+				min-width: 425px !important;
+			}
+
+			.selectboxit-option-icon-container {
+				display: none !important;
+			}
+
+			.selectboxit-text .separator {
+				border: none !important;
+			}
+
+			.selectboxit-arrow-container {
+				background-color: @gray2;
+			}
+
+			.assoc-option {
+				height: 17px;
+				line-height: 17px;
+
+				.arrow,
+				.label {
+					display: inline-block;
+					vertical-align: top;
+					.bold {
+						display: inline-block;
+						font-weight: bold;
+					}
+				}
+
+				.arrow {
+					font-size: 17px;
+					color: @gray5;
+				}
+
+				&.separator {
+					border-top: 1px solid @gray2;
+				}
+			}
+		}
+	}
+
+	.checkboxesCell .help {
+		font-size: 85%;
+		a {
+			font-size: 100%;
+		}
+	}
+
+	textarea[name=comment] {
+		width: 640px;
+	}
+}
+
+/* two-line breadcrumb */
+.breadcrumbs-summary {
+	padding-top: 2px;
+	font-size: 0px;
+	color: @breadrcrumbLightGray !important;
+	vertical-align: middle;
+
+	a.generated-link, .actionMenuBar &.strong span.page-title {
+		font-size: 15px !important;
+		color: @breadcrumbLinkColor !important;
+		font-weight: bold !important;
+	}
+
+	* {
+		color: @breadcrumbLinkColor !important;
+		font-weight: normal !important;
+	}
+
+	select {
+		color: black;
+	}
+}
+
+	.comment-bubble {
+		background-color: @darkGrayFont;
+		padding: 2px 4px;
+		margin-left: 5px;
+		font-size: 12px;
+	}
+
+	.comment-bubble-arrow {
+		background-image: url("@{imagePrefix}/header/comment-bubble-corner.png");
+		width: 8px;
+		height: 13px;
+		display: inline-block;
+		background-repeat: no-repeat;
+	}
+
+/*.newskin .actionMenuBar span.page-title {
+	color: @gray3;
+	font-size: 11px !important;
+	font-weight: normal;
+}*/
+
+#breadcrumbs.two-line a, #breadcrumbs.two-line span, #breadcrumbs.two-line select {
+	font-size: 13px;
+	color: @breadcrumbLinkColor;
+	font-weight: normal;
+}
+
+#breadcrumbs.two-line select {
+	color: black;
+}
+
+#breadcrumbs.strong, #breadcrumbs.strong * {
+	font-size: 13px;
+	color: @breadcrumbLinkColor;
+	font-weight: normal;
+}
+
+.breadcrumbs-summary .breadcrumbs-separator {
+	position: relative;
+	top: -2px;
+	vertical-align: baseline;
+}
+
+.breadcrumbs-summary.strong {
+	line-height: 23px;
+
+	&.tail {
+		margin-right: -2px;
+	}
+}
+
+.breadcrumbs-summary.strong, .breadcrumbs-summary.strong *, .small.breadcrumbs-summary.strong * {
+	font-size: 17px ;
+	color: @breadcrumbLinkColor !important;
+	font-weight: bold;
+}
+
+#breadcrumbs-item-id {
+	margin-left: 14px;
+	font-size: 13px;
+	color: @breadcrumbLinkColor;
+	font-weight: normal;
+}
+
+.trackerBreadCrumbsId {
+	position: relative;
+	top: 2px;
+}
+
+span.id-version-separator {
+	margin-left: 4px;
+}
+
+#breadcrumbs .breadcrumbs-separator, .breadcrumbs .breadcrumbs-separator, .breadcrumbs-separator {
+	padding: 0px 5px !important;
+	font-size: 9px !important;
+	color: @breadcrumbLinkColor;
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+#breadcrumbs.two-line .breadcrumbs-separator {
+	position: relative;
+	top: -2px;
+}
+
+#breadcrumbs {
+	margin-bottom: 3px;
+}
+
+.actionMenuBar td.rightAlignCell {
+	.page-title, .breadcrumbs-separator {
+		/*vertical-align: middle;*/
+	}
+
+	.page-title {
+		font-size: 13px;
+	}
+}
+
+.doc-metadata {
+	padding-left: 20px;
+}
+
+.baseline-info {
+	color: @gray6 !important;
+	background-color: @breadrcrumbLightGray;
+	padding: 2px 4px;
+	margin-left: 4px;
+	font-size: 11px;
+}
+
+.depends-on-icon {
+	background-image: url('@{imagePrefix}/action/depends-on-association.png') !important;
+}
+
+.copy-icon {
+	background-image: url('@{imagePrefix}/action/copy.png') !important;
+}
+
+.uncovered-icon {
+	background-image: url('@{imagePrefix}/action/no_test_case.png') !important;
+}
+
+.suspected-icon {
+	background-image: url('@{imagePrefix}/action/suspected.png') !important;
+}
+
+ins.pin-icon {
+	background-image: url('@{imagePrefix}/action/icon_level_up_red.png') !important;
+    height: 15px !important;
+    width: 15px !important;
+	background-size: contain
+}
+
+.copy-icon, .suspected-icon, .uncovered-icon, .depends-on-icon, .pin-icon {
+	margin-right: 3px !important;
+	margin-bottom: -3px !important;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+}
+
+.assoc-type-icon {
+	margin-left: 10px;
+	display: inline-block;
+}
+
+.suspectedLinkBadgeContainer .assoc-type-icon {
+	margin-top: -4px;
+}
+
+.suspected-column {
+	white-space: nowrap;
+	width: 110px;
+	text-align: right;
+}
+
+.importResultLinks {
+	display: none;
+
+	> a {
+		float: left;
+		width: 19%;
+		overflow: hidden;
+		margin: 5px 10px 0 0;
+	}
+}
+
+.actionMenuBar {
+	.ratingwidget, .votingwidget {
+		float: right;
+		margin: 2px 10px;
+
+		/* don't show rating/voting widget inside overlays */
+		.insideInlinedPopup & {
+			display:none;
+		}
+	}
+}
+
+/* Use this class to display the rating on overlays still */
+.ratingOnInlinedPopup {
+	.actionMenuBar & {
+		display: block !important;
+	}
+
+	.ratingwidget, .votingwidget {
+		display: block !important;
+	}
+}
+
+
+#comments {
+	.commentGroup {
+		padding: 5px;
+		padding-bottom: 10px;
+	}
+
+	.commentGroup .attachments {
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+
+	.commentGroup .attachments a {
+		white-space: nowrap;
+	}
+
+	input.addComment {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		margin-left: 5px;
+	}
+}
+
+.editWikiInOverlayContainer {
+	position:relative;
+	z-index:10;
+	cursor: pointer;
+
+	/* avoid excessive large maximum height relative to viewport*/
+	max-height: 20vh;
+    /*max-width: 50vw;*/
+
+	overflow:auto;
+	min-height: 3em;
+	border: solid 1px #cccccc;
+
+	background: white;
+
+	/* fix for resizable handles causing unwanted scrollbars
+		see: http://stackoverflow.com/questions/22460607/how-can-i-get-overflow-scroll-bars-to-be-hidden-unless-needed-when-using-jquery
+	*/
+	 .ui-resizable-e {
+			 right: 0px;
+	}
+	.ui-resizable-s {
+		bottom: 0px;
+	}
+
+	.editWikiInOverlayEditableIcon {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+
+		width: 12px;
+		height: 12px;
+		background-image: url('../images/newskin/action/edit-s.png');
+		background-position: right top;
+		background-repeat: no-repeat;
+	}
+
+	.editWikiInOverlayHTML {
+		padding: 5px;
+
+		min-height: 2em;
+		font-weight: normal;
+		white-space: normal; /* Wrap text if there is no space instead of overflow */
+	}
+	.editWikiInOverlayBody {
+		display: none;
+	}
+}
+
+
+/**
+ * code-review related css starts here...
+ */
+table.diff {
+	position: relative;
+
+.codeReview {
+	// position: relative;	// this does not work on td/tr's therefore the table.diff get's the "relative" position
+	cursor: pointer;
+
+	.codeReviewButton {
+		cursor: pointer;
+
+		position: absolute;
+		left: -16px;
+		width: 20px;
+		height: 16px;
+		background-image: url('../images/chat-gray-small.png');
+		background-position: left top;
+		background-repeat: no-repeat;
+	}
+}
+
+.codeReviewEditor {
+	td {
+		padding: 10px;
+		border: solid 1px #cccccc;
+	}
+	textarea {
+		float:left;
+		clear: both;
+		width: 100%;
+		min-width: 30em;
+		min-height: 8em;
+	}
+	input.saveCodeReview, a.cancelCodeReview {
+		display: block;
+		float: left;
+		margin: 5px 20px 0 0;
+		vertical-align: middle;
+	}
+	a.cancelCodeReview {
+		margin-top: 10px;
+	}
+}
+
+.codeReviewContent {
+	> td {
+		font-family: 'arial', 'helvetica', 'verdana', sans-serif;		// don't use monospace here
+		padding: 10px 10px 0px 30px;
+		border-bottom: solid 1px #cccccc;
+		background-color: @gray1;
+		background-image: url('../images/chat-gray.png');
+		background-position: 2px 8px;
+		background-repeat: no-repeat;
+	}
+	.reviewHeader {
+		font-size: 11px !important;
+		color: gray;
+	}
+	.userInfo {
+		margin-right: 10px;
+		a {
+			margin-right: 5px;
+		}
+	}
+	.reviewComment {
+		margin: 10px 5px;
+	}
+}
+}
+
+.project-icon {
+	display: inline-block;
+	background-color: @gray2;
+	margin-right: 2px !important;
+	margin-bottom: 5px !important;
+	padding: 3px;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 0px;
+
+	&.ui-state-active {
+		border: 1px solid orange;
+	}
+
+	span.ui-button-text {
+		padding: 0;
+	}
+
+	img {
+		width: 32px;
+	}
+}
+
+.addCommentWithOfficeEdit {
+	background: url(../stylesheet/../images/newskin/action/comment_w_on_s.png)
+		no-repeat left center;
+	cursor: pointer;
+	display: inline-block;
+	padding-left: 16px;
+	margin-left: 30px;
+	margin-right: 10px;
+	font-family: 'arial';
+	line-height: 16px;
+	color: #0093b8;
+	text-decoration: none;
+	font-weight: bold;
+	position: relative;
+	top: -6px;
+}
+
+.addCommentWithOfficeEdit:hover {
+	text-decoration: underline;
+}
+
+.addAttachmentIcon {
+	background: url("@{imagePrefix}/action/comment_on_s.png") no-repeat left
+		center;
+	padding-left: 16px;
+}
+
+.officeedit-info{
+	text-align: center;
+	padding: 5px;
+}
+
+.officeedit-info a{
+	color: #0093b8 !important;
+	text-decoration: none;
+	margin-bottom: 15px;
+	line-height: 16px;
+	height: 16px;
+	font-weight: bold;
+	padding-right: 16px;
+	background: url("@{imagePrefix}/action/link_arrow.png") no-repeat right center;
+}
+
+.officeedit-info a:HOVER{
+	text-decoration: underline;
+}
+
+.officeedit-label{
+	display: block;
+	margin-top: 15px;
+}
+
+.officeedit-checkbox{
+	vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+}
+
+.notifier-dialog {
+	border: 0px;
+	padding: 0px;
+	background-color: #ccf4ff;
+	margin-left: 10px;
+}
+
+.notifier-dialog .ui-dialog-titlebar {
+	background-image: none;
+	background-color: #0093b8;
+	color: white;
+	border-padding: 3px 5px;
+}
+
+.notifier-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close,
+	.notifier-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close.ui-state-hover
+	{
+	margin-top: -29px;
+	margin-right: -19px;
+	background-image: url("@{imagePrefix}/action/projectbrowser/button_close.png") !important;
+	background-color: transparent !important;
+	background-position: 0 0 !important;
+	background-repeat: no-repeat !important;
+	width: 32px;
+	height: 34px;
+	border: 0px !important;
+}
+
+.notifier-dialog .ui-icon-closethick {
+	display: none;
+}
+
+.notifier-dialog .ui-widget-header {
+	border: 1px solid #007e9e;
+	font-weight: bold;
+}
+
+.project-status {
+	color: white;
+
+	&.alert {
+		background-color: #b31317;
+	}
+
+	&.warning {
+		background-color: #ffab46;
+	}
+
+	&.ok {
+		background-color: #00a85d;
+	}
+}
+
+.project-icon-list {
+	max-height: 185px;
+	overflow: auto;
+}
+
+.countrends-plugin-center span img{
+	display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.quick-contact-link {
+	background-color: #93f5c9;
+}
+.yui-ac-content .yui-ac-prehighlight {
+	background-color: #f5f5f5;
+}
+
+#loginForm .warning {
+	word-wrap: break-word;
+}
+
+.disableTextSelection {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.letterIcon {
+	width: 32px;
+	height: 32px;
+	background: url(../stylesheet/../images/newskin/circle_32x32.png)
+		no-repeat left center;
+	text-align: center;
+	font-size: 24px;
+	line-height: 32px;
+	vertical-align: middle;
+	float: right;
+	color:#ffffff;
+}
+
+#service_desk_ToolBarItem {
+	background-color: #dcf5f2;
+	font-weight: bold;
+}
+
+.dynamic-menu .menuArrowDown {
+	width: 0px;
+	height: 0px;
+}
+.ui-datepicker {
+	background-color: white;
+	font-size: 12px;
+	padding: 0;
+	border-color: #ABABAB;
+	width: 21em;
+	z-index: 20000 !important;
+
+	.ui-datepicker-header {
+	   	background: none;
+		border: none;
+		color: black;
+		border-bottom: 1px solid #D1D1D1;
+		padding: 0.4em 0;
+    }
+
+	.ui-widget-header {
+		.ui-datepicker-prev-hover,
+		.ui-datepicker-next-hover, .ui-state-hover {
+			background: none !important;
+			border: none !important;
+		}
+
+		.ui-icon {
+			background-image: url("../js/jquery/jquery-ui/images/ui-icons_222222_256x240.png");
+			&.ui-icon-circle-triangle-w {
+				background-position: -96px -16px;
+			}
+			&.ui-icon-circle-triangle-e {
+				background-position: -32px -16px;
+			}
+		}
+	}
+
+	th {
+		color: black;
+		background-color: #F6F6F6;
+		padding: 0.3em;
+	}
+
+	.ui-state-default {
+		background: none;
+		font-weight: normal;
+		color: black;
+	}
+
+	.ui-state-highlight {
+		border-color: #0093B8;
+		background-image: none;
+		background-color: #CCF4FF;
+		font-weight: bold;
+	}
+
+	.ui-state-active, .ui-state-hover {
+		border-color: #0093B8;
+		background-image: none;
+		background-color: white;
+		font-weight: bold;
+		color: #0093B8;
+	}
+
+}
+
+.ui-multiselect {
+	border: 1px solid #d1d1d1;
+	background-image: none;
+	background-color: white;
+	padding-left: 5px;
+
+	&.ui-state-hover {
+		background-image: none;
+		background-color: white;
+	}
+
+	.ui-icon {
+		background-image: url("../js/jquery/jquery-ui/images/ui-icons_222222_256x240.png");
+	}
+}
+
+.ui-multiselect-menu, .rawImportData.ui-multiselect-menu, .ui-multiselect-menu-newskin {
+
+	background-image: none;
+	background-color: white;
+	font-size: 12px;
+	padding: 0.3em 0;
+	border-color: #ABABAB;
+
+	.ui-widget-header {
+		.ui-icon {
+			background-image: url("../js/jquery/jquery-ui/images/ui-icons_222222_256x240.png");
+			&.ui-icon-circle-close {
+				 background-position: -96px -128px;
+			}
+		}
+
+		a {
+			color: #333333
+		}
+	}
+
+	.ui-multiselect-header {
+		background: none;
+		border: none;
+		color: black;
+		border-bottom: 1px solid #D1D1D1;
+		padding: 0 3px 3px 0;
+		font-weight: normal;
+		margin-bottom: 4px;
+		.ui-multiselect-filter {
+			font-size: 12px;
+            padding-left: 5px;
+		}
+	}
+
+	.ui-multiselect-checkboxes {
+
+		label {
+			border: none;
+			background: none;
+			color: black;
+			font-size: 12px;
+
+			input {
+				left: auto;
+				border: none !important;
+				outline: none;
+				padding: 0 !important;
+
+                position:relative !important;
+
+                // fixes alignment of checkbox/radio to the label
+                top: -2px !important;
+                vertical-align: middle;
+            }
+
+			span {
+				margin-left: 5px;
+                // fixes alignment of checkbox/radio to the label
+                vertical-align: middle;
+			}
+		}
+
+		label.ui-state-hover {
+			font-weight: normal !important;
+			background: none !important;
+			color: black !important;
+			border: none !important;
+			input {
+				border: none !important;
+				outline: none !important;
+			}
+		}
+
+		label.ui-state-active {
+			span {
+				font-weight: bold !important;
+			}
+		}
+	}
+}
+
+.ui-multiselect-checkboxes .ui-multiselect-optgroup {
+	padding: 0 3px;
+}
+
+.inlinePopupDialog {
+    z-index: 2147483631;
+}
+
+.inlinePopupDialog, .showBusySignDialog, .cbModalDialog {
+	border: none;
+	padding: 0;
+	background-color: white;
+	position: fixed;
+
+	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+
+	iframe {
+		border: none;
+		outline: hidden;
+	}
+
+	.ui-dialog-content {
+		padding: 0;
+	}
+
+	.ui-dialog-titlebar {
+		display: none;
+	}
+
+}
+
+.showBusySignDialog {
+	font-size: 13px;
+	min-width: 180px;
+}
+
+.colorPickerDialog {
+	border: 1px solid #d1d1d1;
+	padding: 0;
+	background-color: white;
+
+	.ui-dialog-titlebar {
+		background: none;
+		border: none;
+		color: black;
+		border-bottom: 1px solid #D1D1D1;
+		padding: 0.2em;
+		font-size: 12px;
+		font-weight: normal;
+
+
+		button {
+			border: none !important;
+			background-color: transparent !important;
+
+			&:focus {
+				outline: none;
+				background-color: transparent;
+			 }
+
+			&.ui-state-hover {
+				background-color: transparent !important;
+				border: none !important;
+			}
+
+			.ui-icon {
+				background-image: url("../js/jquery/jquery-ui/images/ui-icons_222222_256x240.png");
+			}
+		}
+	}
+
+	.ui-dialog-content {
+		padding: 0.2em;
+	}
+
+}
+
+.cbModalDialog {
+
+	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+
+	.ui-dialog-content {
+		padding: 0.5em;
+	}
+
+	.ui-dialog-buttonpane {
+		background-color: white;
+		margin-top: 0;
+		border: none;
+
+		.cancelButton {
+			&:hover {
+				text-decoration: none !important;
+			}
+		}
+	}
+
+}
+
+.floatingOverlay {
+
+	cursor: move;
+
+	.ui-dialog-content {
+		padding: 0.5em;
+	}
+
+	.ui-dialog-titlebar {
+		display: none;
+	}
+}
+
+/* Fix of Firefox browser render error
+Note: In Firefox on Tracker config default values editor overlay, token text color will be white after autocomplete,
+by increasing the line-height property a bit, the original color will be displayed... */
+.defaultValuesPerStatus {
+	.token-input-list-facebook {
+		li.token-input-token-facebook {
+			line-height: 1.43em;
+		}
+	}
+}
+
+.reverseSuspectImg {
+	display: inline-block;
+	width: 12px;
+	height: 10px;
+	background: url("../images/newskin/action/reverse_suspect.png") no-repeat center;
+	position: relative;
+	top: 1px;
+	margin-left: 0.3em;
+	margin-right: 0.3em;
+}
+
+.referenceSettingBadgeClearSuspect {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background: url("../images/tablet-remove.png") no-repeat center;
+	position: relative;
+	top: 2px;
+	margin-left: 0.1em;
+	margin-right: 0.1em;
+	cursor: pointer;
+}
+
+body.Chrome .referenceSettingBadgeClearSuspect {
+	top: 1px;			
+}
+
+.referenceSettingAccordion {
+	span {
+		margin-right: 1em;
+	}
+	input[type="checkbox"] {
+		position:relative;
+		top: 2px;
+	}
+}
+
+.referenceSettingDialog {
+	display: none;
+	background-color: white;
+	border: 1px solid #d1d1d1;
+	position: absolute;
+	z-index: 8000;
+	width: 400px;
+	cursor: auto;
+	box-shadow: 3px 3px 10px #ababab;
+
+	div {
+		padding: 0.4em 0.7em 0.4em 0.7em;
+	}
+
+	.referenceSettingSelectorContainer {
+		padding: 0.2em 0;
+	}
+
+	.versionAjaxLoading {
+		display: block;
+		width: 400px;
+		height: 30px;
+		background: url("../images/ajax_loading_horizontal_bar.gif") no-repeat center center;
+	}
+
+	.referenceSettingTitle {
+		color: #454545;
+		font-weight: bold;
+		padding: 0.5em 0.5em 0.5em 24px;
+		margin: 0 0 0.4em 0;
+		margin-bottom: 0.4em;
+		background: url("../images/newskin/action/settings-s.png") no-repeat 6px 8px;
+		background-color: #f5f5f5;
+	}
+
+	.referenceDialogButtonContainer {
+		border-top: 1px solid #f5f5f5;
+		margin-top: 0.4em;
+		padding: 0.7em;
+	}
+
+	input {
+		width: auto !important;
+	}
+
+	.referenceSettingVersionContainer {
+		span {
+			display: inline-block;
+		}
+
+		.referenceSettingVersionLabel {
+			padding-bottom: 0.3em;
+		}
+	}
+
+	.referenceDialogVersionSelector, .referenceDialogBaselineSelector {
+		width: 200px !important;
+		padding: 0.1em !important;
+	}
+
+	.referenceSettingSelectorLabel {
+		width: 100px;
+	}
+	
+	input[type="checkbox"], input[type="radio"] {
+		position: relative;
+		top: 2px;
+	}
+	.inactive label {
+		color: #D1D1D1;
+	}
+}
+
+body.isMac .referenceSettingDialog {
+	input[type="checkbox"], input[type="radio"] {				
+		top: -1px;
+	}
+}
+		
+.badge-wrapper {
+	display: inline-block;
+	white-space: nowrap;
+	span.arrow {
+		position: relative;
+		top: -1px;
+	}
+}
+.referenceContainer {
+	margin-top: 3px;
+}
+.referenceContainer, table.trackerItems td.fieldColumn {
+	span.arrow {
+		top: -2px;
+	}
+
+	.referenceSettingBadge.active ~ span.arrow {
+		top: 0;
+	}
+	.badge-wrapper, .udBadge {
+		margin-bottom: 1px;
+	}
+}
+.referenceSettingBadge {
+	color: white !important;
+	padding: 2px 3px;
+	font-weight: bold !important;
+	border-radius: 2px;
+	font-size: 11px;
+	margin: 0 0.2em;
+	white-space: nowrap;
+	cursor: default;
+
+	&.active {
+		cursor: pointer !important;
+ 	}
+
+	&.versionSettingBadge {
+		background-color: #7388AB;
+ 	}
+
+	&.branchBadge {
+		 background-color: #005c50;
+		 text-transform: uppercase;
+		 padding: 1px 3px 2px 3px;
+		 &.masterBranchBadge {
+			 background-color: #7388AB;
+		 }
+		 a {
+			 font-size: 11px !important;
+			 color: white !important;
+		 }
+		 a:hover {
+			 text-decoration: none !important;
+		 }
+	}
+
+	&.psSettingBadge {
+	 	background-color: #C6D8F2;
+		text-transform: uppercase;
+		&.active {
+	 		background-color: #b31317;
+ 		}
+ 		& ~ span.arrow {
+ 			.bidirectionalSuspectArrowsMixin;
+ 		}
+	}
+
+	&.updatedBadge, &.updatedReferenceBadge {
+	 	background-color: #d9923b;
+		text-transform: uppercase;
+		position: relative;
+
+		&.masterDivergedBadge {
+			background-color: #2ab0d1;
+		}
+	}
+
+	&.conflictBadge, &.deletedBadge {
+	 	background-color: #e57579;
+		text-transform: uppercase;
+		position: relative;
+	}
+
+	&.updatedBadge, &.conflictBadge {
+		cursor: pointer;
+	}
+}
+
+.name .referenceSettingBadge {
+	top: -5px;
+}
+
+.relationItems .referenceSettingBadge.updatedBadge {
+	font-size: 9px;
+	.reverseSuspectImg {
+		top: 2px;
+		margin-left: 0.5em;
+	}
+	.referenceSettingBadgeClearSuspect {
+		top: 2px;
+		margin-right: 0;
+	}
+}
+
+.tableItem .referenceSettingBadge, .tableItem .udBadge {
+	position: relative;
+	top: -1px;
+}
+
+.token-input-list-facebook {
+
+	li.token-input-token-facebook {
+		color: #0093b8;
+		font-size: 11px;
+		line-height: 1.4em;
+
+		&.token-input-selected-token-facebook {
+			background-color: white !important;
+			border: 1px solid #ccd5e4;
+		}
+
+		.name {
+			font-weight: bold;
+			&.disabled {
+				text-decoration: line-through;
+			}
+		}
+
+		.tokenSetting {
+			display: inline-block;
+			cursor: pointer;
+			width: 12px;
+			height: 12px;
+			margin-left: 5px;
+			opacity: 0.6;
+			background: url("../js/jquery/jquery-ui/images/ui-icons_222222_256x240.png") -64px -16px;
+		 }
+		 .udBadge {
+		 	margin-left: 2px;
+		 }
+
+	}
+
+	.token-input-delete-token-facebook {
+		color: #0093b8 !important;
+		display: inline-block;
+		width: 10px;
+		&:hover {
+			color: #B31317 !important;
+		}
+	}
+}
+
+.token-input-dropdown-facebook {
+	z-index: 9050 !important;
+	font-size: 11px !important;
+	border: 1px solid #ABABAB !important;
+	width: auto !important;
+	min-width: 300px;
+
+	.autocomplete-match-highlight {
+		background-color: #FFEAD1 !important;
+		color: black !important;
+	}
+
+	.token-input-dropdown-item-facebook,
+	.token-input-dropdown-item2-facebook {
+		border-bottom: 1px solid #F5F5F5;
+		td.icon, td.userIcon {
+			padding: 0.3em;
+			vertical-align: top;
+		}
+		.disabledUser {
+			text-decoration: line-through;
+		}
+	}
+
+	.token-input-selected-dropdown-item-facebook {
+		background-color: #F5F5F5 !important;
+		color: black !important;
+	}
+
+}
+
+.ui-autocomplete {
+	background-color: white;
+	
+	.ui-menu-item {
+		.ui-state-focus, .ui-state-hover, .ui-state-active {
+			background-color: #F5F5F5 !important;
+			background-image: none;
+			color: black !important;
+			border: 1px solid white !important;
+			font-weight: normal;
+		}
+	}
+
+}
+
+.ui-widget-overlay {
+	-moz-opacity: 0.5;
+	opacity: .5;
+	filter: alpha(opacity=50);
+	background-color: black;
+	background-image: none !important;
+}
+
+.actionMenuBar {
+	.release-train-icon {
+		width: 32px;
+		height: 32px;
+		background-repeat: no-repeat;
+		margin: 0px 10px;
+		display: inline-block;
+		background-image: url("../../../images/newskin/action/agile/icon_train_breadcrumb.png");
+		background-color: #454545;
+		position: relative;
+		left: 31px;
+		top: -7px;
+	}
+
+	.release-train {
+		display: inline-block;
+		padding: 4px;
+		border: 1px solid #d1d1d1;
+		-webkit-border-radius: 7px;
+		-moz-border-radius: 7px;
+		border-radius: 7px;
+
+		.viewsMenuContainer {
+	  		margin-right: 0px;
+	  		background-color: transparent;
+
+	  		.viewsMenu {
+	  			background-color: transparent;
+	  			margin-left: 15px;
+	  			padding-left: 0px;
+	  		}
+		}
+	}
+
+	.release-train-extra-icons {
+		display: inline-block;
+		padding-bottom: 5px;
+		margin-left: -12px;
+	}
+}
+
+#attachment .wikiContent img,
+#comments .wikiContent img {
+	max-width: 100%;
+}
+
+.helpLink.large {
+ 	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url("@{imagePrefix}/action/help.png") center no-repeat;
+	cursor: pointer;
+	position: relative;
+	top: 2px;
+}
+
+.tooltip {
+	background: white;
+
+	p {
+		padding: 0;
+		margin: 0;
+		font-size: 12px;
+	}
+
+	p.real-name {
+		font-size: 14px;
+		font-weight: bold;
+	}
+
+	p.email {
+		padding-top: 0.5em;
+	}
+
+	p.address {
+		padding-top: 0.5em;
+	}
+}
+
+.pullRequest.descriptionBox.inplaceEditableIconContainer.highlighted {
+	/* Note: can not use "outline" for Firefox, because it is not rendered correctly:
+			http://stackoverflow.com/questions/7833587/css-outline-not-rendering-correctly-in-firefox */
+	.box-shadowMixin(0 0 0 1px @blueLinkColor);
+	border-left: 1px;
+
+	/* for IE use the outline property because it does not support box-shadow */
+	body.IE & {
+		outline: solid 1px @blueLinkColor;
+		.box-shadowMixin(0);
+	}
+}
+
+.IE8 .fileUpload-flatbox .qq-upload-icon {
+	color: white;
+	z-index: -3;
+	padding-left: 10px;
+}
+
+.newskin tr.highlighted-row {
+	background-color: #ffe8e9 !important;
+}
+
+a.color-box {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+
+	&.state-checked {
+		background-image: url("@{imagePrefix}/filter_list/icon_checkmark_white.png");
+		background-repeat: no-repeat;
+		background-position: 1px;
+	}
+
+	&.big {
+		width: 18px;
+		height: 18px;
+		background-position: 3px;
+	}
+}
+
+.treeFilterBox::-ms-clear {
+  width : 0;
+  height: 0;
+}
+
+/* Baseline and generalized description tooltip classes.*/
+
+.ui-tooltip {
+	max-width: 800px;
+}
+
+.item-ui-tooltip {
+	background-color: white;
+	background-image: none;
+	max-width: 600px;
+	max-height: 450px;
+	overflow: auto;
+}
+
+.baseline-ui-tooltip {
+	background-color: white;
+	background-image: none;
+	max-width: 600px;
+	max-height: 450px;
+	overflow: auto;
+}
+
+/* Image targets in wiki text need more specific selectors.*/
+.thumbnailImagesInitialized img[data-hover-tooltip-target].default-cursor {
+	cursor: pointer !important;
+}
+
+/* Image targets in wiki text need more specific selectors.*/
+.thumbnailImagesInitialized img[data-hover-tooltip-target].progress-cursor {
+	cursor: progress !important;
+}
+
+/*************** Dynamic tooltip styles. *******************/
+
+[data-hover-tooltip-target].progress-cursor,
+.versionSettingBadge.progress-cursor {
+	cursor: progress !important;
+}
+
+[data-hover-tooltip-target].default-cursor, [data-hover-tooltip-target], .versionSettingBadge.default-cursor {
+	cursor: default;
+}
+
+[data-hover-tooltip].tooltip-middle-align {
+	display: inline-block;
+	vertical-align: middle
+}
+
+[data-hover-tooltip].tooltip-marker {
+	display: inline-block;
+}
+
+.chooseReferencesDisabled [data-hover-tooltip].tooltip-marker {
+	vertical-align: middle;
+	position: relative;
+	top: -1px;
+	margin-right: 2px;
+}
+
+table.trackerItems {
+	.tooltip-marker {
+		margin-bottom: 2px;
+	}
+	.relationItems {
+		margin-top: 5px;
+	}
+}
+
+.chooseReferencesDisabled a {
+	position: relative;
+	top: 1px;
+	text-decoration: none !important;
+}
+
+.chooseReferencesDisabled a:hover {
+	text-decoration: underline !important;
+}
+
+/* Special treatment for table view. */
+
+[data-hover-tooltip].table-view-tooltip {
+	vertical-align: middle;
+}
+
+.trackerItemLinkNearInlineIcon {
+	vertical-align: middle;
+	margin-left: 3px;
+}
+
+/* Special treatment for test case result page. */
+
+.tableItem > [data-hover-tooltip] {
+	vertical-align: middle;
+}
+
+/***********************************************************/
+
+.baseline-compare-head {
+	width: 16px;
+	height: 14px;
+	background-image: url("@{imagePrefix}/action/icon_compare_head.png");
+	display: inline-block;
+	position: relative;
+	top: 1px;
+}
+
+.baseline-description {
+	display: none;
+}
+
+.strongText {
+	font-weight: bold;
+}
+
+.blackText {
+	color: black;
+}
+
+a.resultBox {
+    display: inline-block;
+    width: 13px;
+    height: 16px;
+    min-width: 16px;
+    padding: 0px;
+    border-radius: 0px;
+   	-moz-border-radius: 0px;
+   	-webkit-border-radius: 0px;
+}
+
+a.resultBox:hover {
+	background-image: url("@{imagePrefix}/action/projectbrowser/arrow_white.png");
+	background-size: 8px 8px;
+    background-repeat: no-repeat;
+    background-position: 8px 0px;
+}
+
+.imagePasteReminderText {
+	margin-top: 5px;
+	font-size: 11px;
+	background: url("@{imagePrefix}/action/permission-alert.png") no-repeat left center;
+	padding-left: 16px
+}
+
+.breadcrumbs-item-version {
+	color: white !important;
+	font-weight: bold !important;
+	font-size: 12px;
+	padding: 1px 10px;
+	border-radius: 3px;
+	margin-left: 5px;
+}
+
+.lineThrough {
+	text-decoration: line-through !important;
+}
+
+#hotkeysHint {
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+	z-index: 100;
+	cursor: pointer;
+
+	& * {
+		font-size: 11px;
+		white-space: nowrap;
+	}
+
+	b {
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+
+	table {
+		display: none;
+	}
+
+	/* hide when the report-bug overlay is shown */
+	body.masked & {
+		display:none;
+	}
+
+	td.hotkey-description {
+		font-weight: bold;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+
+.loginModule #hotkeysHint {
+	display: none;
+}
+
+#hotkey-toggle {
+	cursor: pointer;
+
+	img {
+		position: relative;
+		top: 6px;
+		margin-top: -6px;
+	}
+}
+
+div.form-element {
+	padding: 5px;
+}
+
+.trackerItemLinkNearInlineIcon + .relationItems {
+	margin-top: 5px;
+}
+
+.relationItems a {
+	font-size: 10px !important;
+}
+
+.relationItems.ident {
+    margin-left:19px;
+}
+
+.ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#embeddedTableRowEditor .fieldEditorForm {
+	td {
+		padding: 0 !important;
+	}
+
+	td.labelCell {
+		padding: 0.3em !important;
+	}
+
+	td.dataCell {
+		width: 100% !important;
+		.editor-wrapper {
+			margin-bottom: 15px;
+		}
+	}
+}
+
+#task-details-associations .reverseSuspectImg {
+	height: 10px;
+	top: 0;
+}
+
+#task-details-associations .assoc-type-icon {
+	position: relative;
+	top: 1px;
+}
+
+
+#task-details-associations .associationRow {
+	vertical-align: middle;
+}
+
+#task-details-associations .associationText {
+	vertical-align: middle;
+	display: inline-block;
+}
+
+
+.menu-separator {
+	display: inline-block;
+    height: 30px;
+    border-left: 1px solid #d1d1d1;
+    margin-top: -15px;
+    margin-bottom: -9px;
+    margin-right: 5px;
+}
+
+.dashboard-actionbar.actionBar {
+	height: 22px;
+}
+
+.groupping-level-1 {background-color: #AFF0FF;}
+.groupping-level-2 {background-color: #C9F4FF;}
+.groupping-level-3 {background-color: #E1F9FF;}
+
+.groupping-level-grey-1:not(.aggregate-cell) {background-color: #E5E5E5;}
+.groupping-level-grey-2:not(.aggregate-cell) {background-color: #F0F0F0;}
+.groupping-level-grey-3:not(.aggregate-cell) {background-color: #F5F5F5;}
+
+.groupping-level-footer-1 {
+	background-color: #C3C1C3;
+	font-weight: bold;
+}
+
+.aggregate-cell {text-align: right; white-space: nowrap}
+
+.groupping-level-top {
+	font-weight: bold;
+}
+
+.groupping-level {
+	line-height: 10px;
+	padding: 3px !important;
+}
+
+.groupping-ident-1 {padding-top: 5px !important; padding-left: 5px !important;}
+.groupping-ident-2 {padding-top: 5px !important; padding-left: 15px !important;}
+.groupping-ident-3 {padding-top: 5px !important; padding-left: 25px !important;}
+
+.userSelectorEmailContainer {
+	display: block;
+	width: 100%;
+	padding: 0.2em;
+	background-color: #f5f5f5;
+	.userSelectorEmailLabel {
+		display: inline-block;
+		font-size: 11px;
+		color: #ababab;
+		margin-right: 0.3em;
+		font-weight: bold;
+	}
+	.userSelectorEmail {
+		display: inline-block;
+		color: #00a85d;
+		&.invalid {
+			color: #b31317;
+		}
+	}
+	.userSelectorEmailInvalid {
+		display: inline-block;
+		margin-left: 0.3em;
+		font-size: 11px;
+		color: #ababab;
+	}
+}.thumbnailImagesImageCommon {
+	height: auto !important;
+}
+
+.issueCopyMoveTrackerSelector,
+.issueCopyMoveProjectSelector {
+	width: 43%;
+}
+
+/* auto-shrinking images like: http://webdesignerwall.com/tutorials/5-useful-css-tricks-for-responsive-design/comment-page-1
+ * hm, this does not work in FF when thumbnailImages is inside a table ? https://bugzilla.mozilla.org/show_bug.cgi?id=975632
+ *
+ * auto resize to the max width of the boundary
+ */
+.thumbnailImages img {
+	.thumbnailImagesImageCommon;
+	max-width: 100% !important;
+}
+
+/**
+ * Add this css class too to get an 200px wide thumbnail image
+ *
+ * IMPORTANT: if you add any new CSS classes for this then add it to thumbnailImages.selector of codebeamer-main.js too !
+ */
+
+.thumbnailImages300px .thumbnailImages200px img,
+.thumbnailImages400px .thumbnailImages200px img,
+.thumbnailImages480px .thumbnailImages200px img,
+.thumbnailImages600px .thumbnailImages200px img,
+.thumbnailImages800px .thumbnailImages200px img,
+.thumbnailImages1000px .thumbnailImages200px img,
+.thumbnailImages1200px .thumbnailImages200px img,
+.thumbnailImages200px img {
+	.thumbnailImagesImageCommon;
+	max-width: 200px !important;	/* force 200px width */
+}
+
+.thumbnailImages200px .thumbnailImages300px img,
+.thumbnailImages400px .thumbnailImages300px img,
+.thumbnailImages480px .thumbnailImages300px img,
+.thumbnailImages600px .thumbnailImages300px img,
+.thumbnailImages800px .thumbnailImages300px img,
+.thumbnailImages1000px .thumbnailImages300px img,
+.thumbnailImages1200px .thumbnailImages300px img,
+.thumbnailImages300px img {
+	.thumbnailImagesImageCommon;
+	max-width: 300px !important;
+}
+
+.thumbnailImages200px .thumbnailImages400px img,
+.thumbnailImages300px .thumbnailImages400px img,
+.thumbnailImages480px .thumbnailImages400px img,
+.thumbnailImages600px .thumbnailImages400px img,
+.thumbnailImages800px .thumbnailImages400px img,
+.thumbnailImages1000px .thumbnailImages400px img,
+.thumbnailImages1200px .thumbnailImages400px img,
+.thumbnailImages400px img {
+	.thumbnailImagesImageCommon;
+	max-width: 400px !important;	/* force 400px width */
+}
+
+.thumbnailImages200px .thumbnailImages480px img,
+.thumbnailImages300px .thumbnailImages480px img,
+.thumbnailImages400px .thumbnailImages480px img,
+.thumbnailImages600px .thumbnailImages480px img,
+.thumbnailImages800px .thumbnailImages480px img,
+.thumbnailImages1000px .thumbnailImages480px img,
+.thumbnailImages1200px .thumbnailImages480px img,
+.thumbnailImages480px img {
+	.thumbnailImagesImageCommon;
+	max-width: 480px !important;
+}
+
+.thumbnailImages200px .thumbnailImages600px img,
+.thumbnailImages300px .thumbnailImages600px img,
+.thumbnailImages400px .thumbnailImages600px img,
+.thumbnailImages480px .thumbnailImages600px img,
+.thumbnailImages800px .thumbnailImages600px img,
+.thumbnailImages1000px .thumbnailImages600px img,
+.thumbnailImages1200px .thumbnailImages600px img,
+.thumbnailImages600px img {
+	.thumbnailImagesImageCommon;
+	max-width: 600px !important;	/* force 600px width */
+}
+
+.thumbnailImages200px .thumbnailImages800px img,
+.thumbnailImages300px .thumbnailImages800px img,
+.thumbnailImages400px .thumbnailImages800px img,
+.thumbnailImages480px .thumbnailImages800px img,
+.thumbnailImages600px .thumbnailImages800px img,
+.thumbnailImages1000px .thumbnailImages800px img,
+.thumbnailImages1200px .thumbnailImages800px img,
+.thumbnailImages800px img {
+	.thumbnailImagesImageCommon;
+	max-width: 800px !important;
+}
+
+.thumbnailImages200px .thumbnailImages1000px img,
+.thumbnailImages300px .thumbnailImages1000px img,
+.thumbnailImages400px .thumbnailImages1000px img,
+.thumbnailImages480px .thumbnailImages1000px img,
+.thumbnailImages600px .thumbnailImages1000px img,
+.thumbnailImages800px .thumbnailImages1000px img,
+.thumbnailImages1200px .thumbnailImages1000px img,
+.thumbnailImages1000px img {
+	.thumbnailImagesImageCommon;
+	max-width: 1000px !important;
+}
+
+.thumbnailImages200px .thumbnailImages1200px img,
+.thumbnailImages300px .thumbnailImages1200px img,
+.thumbnailImages400px .thumbnailImages1200px img,
+.thumbnailImages480px .thumbnailImages1200px img,
+.thumbnailImages600px .thumbnailImages1200px img,
+.thumbnailImages800px .thumbnailImages1200px img,
+.thumbnailImages1000px .thumbnailImages1200px img,
+.thumbnailImages1200px img {
+	.thumbnailImagesImageCommon;
+	max-width: 1200px !important;
+}
+
+/**
+ * Images should fill the available space when the free space is below the predefined maximum.
+ *
+ */
+@media (max-width: 849px) {
+	.thumbnailImages200px .thumbnailImages600px img,
+    .thumbnailImages300px .thumbnailImages600px img,
+    .thumbnailImages400px .thumbnailImages600px img,
+    .thumbnailImages480px .thumbnailImages600px img,
+    .thumbnailImages800px .thumbnailImages600px img,
+    .thumbnailImages1000px .thumbnailImages600px img,
+    .thumbnailImages1200px .thumbnailImages600px img,
+	.thumbnailImages600px img {
+		.thumbnailImagesImageCommon;
+		max-width: 100% !important;
+	}
+}
+
+@media (max-width: 1049px) {
+	.thumbnailImages200px .thumbnailImages800px img,
+    .thumbnailImages300px .thumbnailImages800px img,
+    .thumbnailImages400px .thumbnailImages800px img,
+    .thumbnailImages480px .thumbnailImages800px img,
+    .thumbnailImages600px .thumbnailImages800px img,
+    .thumbnailImages1000px .thumbnailImages800px img,
+    .thumbnailImages1200px .thumbnailImages800px img,
+	.thumbnailImages800px img {
+		.thumbnailImagesImageCommon;
+		max-width: 100% !important;
+	}
+}
+
+@media (max-width: 1249px) {
+	.thumbnailImages200px .thumbnailImages1000px img,
+    .thumbnailImages300px .thumbnailImages1000px img,
+    .thumbnailImages400px .thumbnailImages1000px img,
+    .thumbnailImages480px .thumbnailImages1000px img,
+    .thumbnailImages600px .thumbnailImages1000px img,
+    .thumbnailImages800px .thumbnailImages1000px img,
+    .thumbnailImages1200px .thumbnailImages1000px img,
+	.thumbnailImages1000px img {
+		.thumbnailImagesImageCommon;
+		max-width: 100% !important;
+	}
+}
+
+@media (max-width: 1449px) {
+	.thumbnailImages200px .thumbnailImages1200px img,
+     .thumbnailImages300px .thumbnailImages1200px img,
+    .thumbnailImages400px .thumbnailImages1200px img,
+    .thumbnailImages480px .thumbnailImages1200px img,
+    .thumbnailImages600px .thumbnailImages1200px img,
+    .thumbnailImages800px .thumbnailImages1200px img,
+    .thumbnailImages1000px .thumbnailImages1200px img,
+	.thumbnailImages1200px img {
+		.thumbnailImagesImageCommon;
+		max-width: 100% !important;
+	}
+}
+
+/**
+ * Add this css class too to get 20%, 25%, 33%, 50%, 75%, 150% percent images of the container
+ */
+.thumbnailImages20pct img {
+	.thumbnailImagesImageCommon;
+	max-width: 20% !important;
+}
+.thumbnailImages33pct img {
+	.thumbnailImagesImageCommon;
+	max-width: 33.3% !important;
+}
+.thumbnailImages25pct img {
+	.thumbnailImagesImageCommon;
+	max-width: 25% !important;
+}
+.thumbnailImages50pct img {
+	.thumbnailImagesImageCommon;
+	max-width: 50% !important;
+}
+.thumbnailImages75pct img {
+	.thumbnailImagesImageCommon;
+	max-width: 75% !important;
+}
+.thumbnailImages150pct img {
+	.thumbnailImagesImageCommon;
+	max-width: 150% !important;
+}
+
+.thumbnailImagesInitialized {
+	/* marker css class added when a thumbnailImages is initialized */
+	img {
+		cursor:pointer !important;
+	}
+}
+
+.freshWikiActionBarContents {
+	display: none;
+}
+
+.dashboardLink {
+	margin-left: 7px;
+}
+
+.trackerListPlugin img {
+	max-width: none !important;
+}
+
+#preview-tab #preview-container .plugin-title {
+	display: none;
+}
+
+#preview-tab #preview-container h4 {
+	border-bottom-width: 0px;
+}
+
+.imagePasteAwareEditor {
+	word-wrap: break-word;
+	overflow-wrap: normal;
+	white-space: normal;
+}
+
+/* Removes the extra "clear field" button from input fields. */
+::-ms-clear {
+	display: none;
+}
+
+.edit-link {
+	margin-left: 8px;
+	cursor: pointer;
+
+	.menuArrowDown {
+		position: relative;
+	    top: 2px;
+	    left: 3px;
+	}
+}
+
+.settings-icon {
+	background: url("../images/newskin/action/settings-s.png") no-repeat;
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-left: 5px;
+    position: relative;
+    top: 2px;
+    cursor: pointer;
+}
+
+.highlightedTable.highlighted {
+	background-color: #ccffe8 !important;
+	td {
+		background-color: #ccffe8 !important;
+	}
+}
+
+span.removeButton {
+	width: 16px;
+	height: 16px;
+	background-image: url("../images/newskin/action/delete-grey-16x16.png");
+	display: inline-block;
+	margin: 0 3px 0 0;
+	top: 3px;
+	position: relative;
+	cursor: pointer;
+}
+
+span.removeButton:hover {
+	background-image: url("../images/newskin/action/delete-grey-16x16_on.png");
+}
+
+.subtext.commentSubscriptionContainer a {
+	font-size: 11px !important;
+}
+
+.newskin .wikiContent .wikichartbox .chartControls.projectsListMatrix a {
+	font-size: 13px;
+}
+
+/**** Test plugin styles *****/
+.wikichartbox .chartControls.left {
+	float: none;
+}
+
+.testCasesByLastTestRun .chartControls,
+.testRunsByConfiguration .chartControls,
+.testRunsByTestSet .chartControls,
+.testRunsByAssignee .chartControls {
+	font-size: 13px;
+}
+
+.testRunsByConfiguration .dateRangePicker.ui-multiselect.ui-widget.ui-state-default.ui-corner-all.ui-date-range,
+.testRunsByAssignee .dateRangePicker.ui-multiselect.ui-widget.ui-state-default.ui-corner-all.ui-date-range  {
+	width: 220px;
+	height: 23px;
+	vertical-align: middle;
+}
+
+.testRunsByConfiguration .inputField {
+	width: 100px;
+}
+
+@media (max-width: 1480px) {
+	.wikichartbox.testRunsByConfiguration .chartControls {
+		float: none;
+		padding-top: 5px;
+	}
+}
+
+.wikichartbox .responsiveChartControlBreak {
+	display: none;
+}
+
+/** Dashboard-specific adjustemts **/
+
+.dashboard-container.three_column .widget-container .wikichartbox .responsiveChartControlBreak,
+.dashboard-container.two_column .widget-container .wikichartbox .responsiveChartControlBreak {
+	display: block;
+}
+
+.dashboard-container.three_column .widget-container .wikichartbox .chartControls,
+.dashboard-container.two_column .widget-container .wikichartbox .chartControls {
+	float: none;
+	padding-top: 5px;
+}
+
+/************************************/
+
+@media (max-width: 1250px) {
+	.wikichartbox.testRunsByConfiguration .responsiveChartControlBreak.second {
+		display: block;
+	}
+}
+
+@media (max-width: 880px) {
+	.wikichartbox.testRunsByConfiguration .responsiveChartControlBreak.first {
+		display: block;
+	}
+}
+
+@media (max-width: 1035px) {
+	.wikichartbox.testCasesByLastTestRun .responsiveChartControlBreak.second {
+		display: block;
+	}
+}
+
+@media (max-width: 800px) {
+	.wikichartbox.testCasesByLastTestRun .responsiveChartControlBreak.first {
+		display: block;
+	}
+}
+
+@media (max-width: 800px) {
+	.wikichartbox.testRunsByTestSet .responsiveChartControlBreak.first {
+		display: block;
+	}
+}
+
+table.embedded th.sortable div .sortIndicator {
+	width: 12px;
+	height: 12px;
+	background-image: url("@{imagePrefix}/action/order-down.png");
+	display: inline-block;
+	visibility: hidden;
+	margin-left: 5px;
+}
+
+table.embedded th.sortable div:hover .sortIndicator,
+table.embedded  th.sortable div.ASC:hover .sortIndicator {
+	background-image: url("@{imagePrefix}/action/order-down.png");
+	visibility: visible;
+	position: relative;
+	top: 2px;
+}
+
+table.embedded  th.sortable div.DESC:hover .sortIndicator {
+	background-image: url("@{imagePrefix}/action/order-up.png");
+	visibility: visible;
+	position: relative;
+	top: 2px;
+}
+
+
+/*****************************/
+
+.loadingBgImg {
+	background-image: url("../images/folders/loading.gif") !important;
+}
+
+.testStepResults tbody tr:nth-of-type(even) {
+	background-color: #f5f5f5;
+}
+
+#toolbarMenus .inlinemenu .empty-placeholder {
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+
+/************ Wiki Link tag *****************/
+
+.wikiLinkContainer {
+	display: inline-block;
+	vertical-align: middle;
+	width: inherit;
+	max-width: 60em;
+}
+
+.trackerItems .wikiLinkContainer {
+	display: inherit;
+}
+
+.wikiLinkContainer .itemIcon {
+	display: inline-block;
+	margin-bottom: 2px;
+	padding: 0;
+}
+
+.wikiLinkContainer .itemIcon > div {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.wikiLinkContainer .wikiLink {
+	display: inline-block;
+	.udBadge {
+		margin-left: 0;
+	}
+}
+
+.wikiLinkContainer .itemBadge {
+	display: inline-block;
+	font-size: 0;
+	vertical-align: middle;
+}
+
+.wikiLinkContainer .itemBadge .suspectedLinkBadgeContainer {
+	display: inline-block;
+}
+
+.wikiLinkContainer .jumpToDocumentViewBadge {
+	display: inline-block;
+	vertical-align: sub;
+}
+
+.wikiLinkContainer .jumpToDocumentViewBadge a {
+	text-decoration: none;
+	cursor: pointer;
+	img {
+		cursor: pointer;
+	}
+}
+
+.wikiLink a {
+	-ms-word-break: break-word;
+	word-break: break-word;
+	position: relative;
+	top: 1px;
+}
+
+.FF .wikiLinkContainer span[data-hover-tooltip-target] {
+	display: inline-block;
+}
+
+.FF .wikiLinkContainer .itemBadge,
+.IE11 .wikiLinkContainer .itemBadge {
+	position: relative;
+	top: -1px;
+}
+
+/********************************************/
+
+
+/************ Color picker ******************/
+
+.colorField {
+	width: 1em;
+	height: 1em;
+	margin-right: 5px;
+	display: inline-block;
+}
+
+.fieldType_color .colorField {
+	position: relative;
+	top: 1px;
+}
+
+.fieldType_color .colorPicker {
+	position: relative;
+	top: 3px;
+}
+
+/********************************************/
+
+.popup .ui-dialog-buttonpane.actionBar {
+	background-color: #f5f5f5 !important;
+	margin-top: 0px;
+
+	.ui-dialog-buttonset {
+		background-color: transparent !important;
+		padding-top: 0px;
+   		padding-bottom: 0px;
+   		padding-left: 15px;
+
+   		button {
+			margin: 0px;
+		}
+	}
+}
+
+.popup .ui-dialog-titlebar.actionMenuBar {
+	padding: 20px;
+	font-weight: normal;
+}
+
+.offscreen {
+    position: relative;
+    left: -9999em;
+}
+
+.selected-element-tagging {
+	margin: 15px;
+}
+
+.editorPopup.artifactCreationForm {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.editorPopup.artifactCreationForm .hint {
+	margin-bottom: 10px;
+}
+
+#createArtifactPopup .propertyTable, .fixedWidthForm.propertyTable {
+	input[type=text], input[type=password], textarea {
+		width: 500px;
+	}
+
+	textarea {
+		padding-right: 8px;
+	}
+
+	select {
+		width: 510px;
+	}
+}
+
+.artifactForm.propertyTable {
+	margin-bottom: 80px;
+}
+
+#createArtifactPopup .artifactForm.propertyTable {
+	margin-bottom: 30px !important;
+}
+
+.trackerItemDetailsTabContainer {
+	display: block;
+	min-height: 75px;
+}
+
+table.trackerItemDetailsComment tr.even,
+table.trackerItemDetailsComment tr.odd {
+	border-top: 1px solid #D1D1D1 !important;
+}
+
+table.trackerItemDetailsComment tr.even:hover,
+table.trackerItemDetailsComment tr.odd:hover {
+	background-color: #FFF !important;
+}
+
+table.trackerItemDetailsComment tr.trackerItemDetailsCommentDirectLink,
+table.trackerItemDetailsComment tr.trackerItemDetailsCommentDirectLink:hover {
+	background-color: #ebebf5 !important;
+}
+
+.baseline-header {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.reference-version-tooltip {
+	list-style-type: none;
+	margin: 0.5em 0 0 0;
+	padding: 0;
+
+	a.baseline-link {
+		text-decoration: none;
+		color: #0093b8;
+	}
+
+	a.baseline-link:hover {
+		text-decoration: underline;
+	}
+}
+
+.reportSelectorSelectedViewLabel {
+	display: inline-block;
+	position: relative;
+	top: 2px;
+	font-weight: bold;
+}
+
+.FF .reportSelectorSelectedViewLabel {
+	top: 4px;
+}
+
+.releaseModule .menuArrowDown.actionBarIcon {
+	position: relative;
+	top: -2px;
+}
+
+.actionBarColumn {
+	.actionBarIcon {
+		display: table-cell;
+		width: 16px;
+		height: 16px;
+		vertical-align: middle;
+		top: 0 !important;
+		.tableIcon {
+			margin-right: 15px !important;
+		}
+	}
+	.yuimenubaritemlabel .menuArrowDown {
+		background-position: 0 -5px;
+	}
+	.inlinemenuTrigger.actionBarIcon {
+		position: relative;
+		top: 1px;
+		.menuArrowDown {
+			display: inline-block !important;
+			top: -4px !important;
+		}
+	}
+	.newTestRunIcon {
+		position: relative;
+		top: -1px !important;
+	}
+}
+
+.actionBarIcon {
+	position: relative;
+	top: 2px;
+}
+
+.actionBarIconWithLabel {
+	top: 0 !important;
+}
+
+.actionIconWithLabel {
+	color: #0093b8 !important;
+	padding-left: 3px;
+}
+
+.inlinemenuTrigger .actionBarIcon {
+	margin-right: 15px;
+	&.menuArrowDown {
+		top: 0;
+	}
+}
+
+#documentPropertiesForm .inlinemenuTrigger .actionBarIcon.menuArrowDown {
+	top: -2px !important;
+}
+
+.FF #documentPropertiesForm .inlinemenuTrigger .actionBarIcon.menuArrowDown {
+	top: -4px !important;
+}
+
+.actionBarIconTooltip {
+	padding: 5px;
+	font-size: 12px;
+}
+
+.branchSwitchWarningList {
+	padding: 0;
+	margin: 1em 0;
+	list-style-type: none;
+	display: block;
+	max-height: 200px;
+	overflow-y: auto;
+	li {
+		a {
+			color: #0093b8;
+			text-decoration: none;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.not-found-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.not-found-big-text {
+	font-size: 30em;
+	color: @blueText;
+}
+
+.not-found-header {
+	font-size: 3em;
+	font-weight: bold;
+	color: @lightGrayFont;
+}
+
+.not-found-explanation {
+	margin-top: 1em;
+	font-size: 1.5em;
+	color: @lightGrayFont;
+}
+
+.not-found-buttons {
+	margin-top: 3em;
+}
+
+.actionMenuBar .viewsMenuContainer.large .viewsMenu .active {
+    margin-top: 3px;
+}
+
+.inline-comment-wrapper {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.treeSearchBoxContainer {
+	display: inline-block;
+	width: 160px;
+	margin-left: 5px;
+	margin-top: 1px;
+
+	.treeSearchContainer {
+		display: inline-block;
+		border-radius: 10px;
+		overflow: hidden;
+		vertical-align: middle;
+		background-color: white;
+		border: 1px solid #d1d1d1;
+		white-space: normal;
+
+		.treeFilterBox.withButton {
+			width: 126px;
+			padding: 2px 1px 0 1px;
+			border: none;
+			margin-top: 2px;
+			margin-left: 4px;
+			margin-bottom: 0;
+			font-size: 11px;
+			&:focus {
+				outline: none;
+			}
+		}
+
+		.treeSearchToggleButton {
+			border: 0;
+			display: inline-block;
+			width: 24px;
+			height: 20px;
+			background: url("../images/newskin/header/icon-search-menu.png") no-repeat center 4px;
+			float: right;
+			cursor: pointer;
+		}
+
+	}
+}
+
+.referenceSuggestionBranchItem {
+	color: #005c50;
+}
+
+.referenceSuggestionBranchBadge {
+	display: inline-block;
+	margin: 0 5px;
+	color: white;
+	background-color: #005c50;
+	font-weight: bold;
+	border-radius: 3px;
+	font-size: 11px;
+	padding: 1px 5px;
+	text-transform: uppercase;
+	&.masterBranchBadge {
+		background-color: #7388AB;
+ 	}
+}
+
+.inlinemenu .branchTracker,
+.context-menu-list .branchTracker {
+	color: #005c50 !important;
+}
+
+input[type=text]:-webkit-autofill,
+input[type=text]:-webkit-autofill:hover,
+input[type=text]:-webkit-autofill:focus,
+input[type=text]:-webkit-autofill:active {
+	-webkit-box-shadow:0 0 0 50px white inset;
+}
+input.noPrefill:-webkit-autofill,
+input.noPrefill:-webkit-autofill:hover,
+input.noPrefill:-webkit-autofill:focus,
+input.noPrefill:-webkit-autofill:active {
+	-webkit-box-shadow:0 0 0 50px white inset;
+}
+
+div.wikichartbox td.indicator.left {
+	width: 50%;
+	text-align: right;
+	padding-right: 5%;
+}
+
+div.wikichartbox td.indicator.right {
+	width: 50%;
+	text-align: left;
+	padding-left: 5%;
+}
+
+div.wikichartbox td.indicator .textContainer {
+	display: inline-block;
+	text-align: center;
+}
+
+div.wikichartbox td.indicator .resolved {
+	font-weight: bold;
+	color: #00a85d;
+}
+
+div.wikichartbox td.indicator .new {
+	font-weight: bold;
+	color: #b31317;
+}
+
+div.wikichartbox td.indicator .statistics {
+	margin-top: 5px;
+}
+
+#trackerItems [data-hover-tooltip-target]>img.tableIcon,
+[id^="trackerItems"] [data-hover-tooltip-target]>img.tableIcon,
+#referringIssues [data-hover-tooltip-target]>img.tableIcon,
+.newskin .propertyTable [data-hover-tooltip-target] img.tableIcon {
+	margin-right: 4px;
+	vertical-align: middle;
+	position: relative;
+	top: -2px;
+	width: 16px;
+}
+
+.newskin .subtext .hint-link {
+	font-size: 11px !important;
+}
+
+.xdsoft_datetimepicker {
+	.xdsoft_calendar td {
+		background: white;
+		&:hover {
+			background: #AAA !important;
+		}
+		&.xdsoft_current {
+			background: #CCF4FF !important;
+			color: black !important;
+			box-shadow: none !important;
+			/*border-color: #0093B8 !important;*/
+		}
+	}
+	.xdsoft_timepicker .xdsoft_time_box >div >div {
+		background: white;
+		&:hover {
+			 background: #AAA !important;
+		}
+		&.xdsoft_current {
+			background: #CCF4FF !important;
+			color: black !important;
+			box-shadow: none !important;
+		}
+	}
+	.xdsoft_label {
+		font-size: 12px;
+	}
+	.xdsoft_label:hover>span {
+		text-decoration: none !important;
+	}
+	.xdsoft_month {
+		text-align: left;
+		width: auto;
+	}
+	.xdsoft_monthselect {
+		right: -40px !important;
+	}
+	.xdsoft_select > div > .xdsoft_option.xdsoft_current {
+		background: #CCF4FF !important;
+		color: black !important;
+		box-shadow: none !important;
+	}
+	.xdsoft_select > div > .xdsoft_option:hover {
+		background: #AAA !important;
+	}
+}
+
+table.fieldConfiguration, table.actionParamEditor {
+	input[type="checkbox"] {
+		position: relative;
+		top: 2px;
+	}
+}
+
+body.Mac {
+	table.fieldConfiguration, table.actionParamEditor {
+		input[type="checkbox"] {
+			top: -1px;
+		}
+	}
+}
+
+.reference-summary-warning-image {
+	vertical-align: middle;
+	position: relative;
+	top: -1px;
+	margin-left: 3px;
+}
+
+#delimiterSearchWarning {
+	margin: 3px;
+}
+
+.always-display-context-menu {
+	opacity: .5;
+	visibility: visible !important;
+	&:hover {
+		opacity: 1;
+	}
+}
+
+div.propagation-settings {
+	display: table !important;
+	padding-bottom: 0;
+	
+	.propagateSuspectsContainer {
+		padding-right: 20px;
+	}	
+	
+	.propagateSuspectsContainer, .propagation-options {
+		display: table-cell;
+	}
+	.bidirectionalSuspectContainer {
+		display: inline-block;
+		margin-top: 6px;
+	}
+}
+
+.udBadge {
+	background-color: #C6D8F2;
+	border-radius: 2px;
+	color: white !important;
+	font-size: 11px !important;
+	font-weight: bold;
+	margin-left: 2px;
+	padding: 2px 3px;
+	text-transform: uppercase;
+	white-space: nowrap;
+	
+	&.active {
+		background-color: #B31317;
+		cursor: pointer;
+	}
+	
+	i {
+		margin-right: 1px;
+		width: 4px;
+	}
+}

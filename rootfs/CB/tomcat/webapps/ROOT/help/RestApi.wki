@@ -1,0 +1,3951 @@
+!1 The CodeBeamer REST API
+
+Starting with CodeBeamer 7.1, you can also access CodeBeamer resources via a [REST|http://en.wikipedia.org/wiki/REST] API.
+
+The REST API is the replacement for the old [Hessian|http://en.wikipedia.org/wiki/Hessian_(web_service_protocol)]based [Remote API|WIKIPAGE:8691] and offers the following advantages:
+
+*Completely platform independent
+*Completely stateless. No need to worry about closing sessions or expiring session timeouts.
+*Completely self-describing.
+*Locale aware: Data is returned and can be submitted in the client/user's preferred language (as long as language is supported by the server).
+*Based on open Web standards:
+**[HTTP|http://en.wikipedia.org/wiki/HTTP] for the communication protocol.
+**[JSON|http://en.wikipedia.org/wiki/JSON] for the data interchange.
+**[JSON Schema|http://json-schema.org] for the data description.
+*Clients do not need any CodeBeamer client libraries nor any specific 3rd party libraries.
+**In fact, you can use any Web Browser to execute/test queries (GET), by simply entering the URL of the query into the browser's address bar.
+
+\\
+\\
+The [URL|http://en.wikipedia.org/wiki/Uniform_Resource_Locator] of the REST API typically is:  {{__https://''{hostname}''/cb/rest__}} \\
+\\
+In the following sections, we will use the placeholder ''{RestURL}'' to refer to the URL of the REST API.\\
+ \\
+
+[{TableOfContents}]
+\\
+
+%%information For a better readability, we will ommit the ''{RestURL}'' part when describing REST API methods and only show the relative URIs. %%
+\\
+\\
+
+!2 Accessing resources
+
+In the REST API, each CodeBeamer resource is identified, accessed and referenced via an [URI|http://en.wikipedia.org/wiki/URI], that is relative to the REST API [URL|http://en.wikipedia.org/wiki/Uniform_Resource_Locator].\\
+\\
+For example: The URI of the default system administrator "bond" is: {{__/user/1__}} or {{__/user/bond__}}\\
+\\
+Using relative resource URIs simply allows to append the relative ''{ResourceURI}'' to the ''{RestURL}'' in order to create a request to that resource.\\
+\\
+E.g. to get the account information for the user "bond" via the REST API, you would do a: {{GET ''{RestURL}{UserURI}''}}:
+{{{GET https://hostname/cb/rest/user/bond}}}
+\\
+\\
+
+The following HTTP methods are supported by the REST API:
+
+||Method||Used for||Return status||Response
+|POST|Create a new resource and return it's URI|201 (Created)|A reference to the newly created resource in the response body \\The new resource's URI is also returned in the 'Location' response header
+|PUT|Update existing resources|200 (OK)|No response body
+|DELETE|Delete resources|200 (OK)|No response body
+|GET|Retrieve resources|200 (OK)|The requested resource data
+
+ \\
+Any other response status than 200 (OK) and 201 (Created) means failure. \\
+In that case the response body contains additional failure information: \\
+
+{{{
+ { "exception" : "Type of failure", "message" : "Explanation of failure" }
+}}}
+
+ \\
+ \\
+Requests to the REST API must use UTF-8 encoding for the request URL and any optional query parameters (GET only). \\
+ \\
+
+The following headers must be present in all requests to the REST API:
+
+||Header||Required||Value
+|Authorization|Yes|[Basic authentication|http://en.wikipedia.org/wiki/Basic_access_authentication] credentials of an active CodeBeamer user for request authentication and authorization
+|Accept|Yes|Client must accept response with content type "{{application/json}}"
+|Accept-Language|Yes|Comma-separated list of the preferred client languages/locales. \\If none of these languages is supported, the response will be in English ("{{en_US}}")
+\\
+\\
+The optional request body (POST/PUT only), can be either\\
+
+*singlepart, with "{{Content-type: application/json; charset=utf-8}}"
+*multipart, with "{{Content-type: multipart/mixed}}" or "{{Content-type: multipart/form-data}}"
+**where the first/root part must contain the resource specification and be marked as
+*** {{Content-Disposition: form-data; name="body"}}
+*** {{Content-type: application/json; charset=utf-8}}
+**all other parts represent attachments (file uploads) to the resource and may contain content of arbitrary type.
+
+\\
+Responses from the REST API will always have "{{Content-type: application/json; charset=utf-8}}".\\
+\\
+\\
+!2 Data description
+
+In the REST API, resources are represented as JSON objects and described by a [JSON Schema|http://json-schema.org].\\
+
+E.g. English __{{/user/schema}}__
+{{{
+{
+  "title" : "User",
+  "plural" : "Accounts",
+  "type" : "object",
+  "properties" : {
+    "uri" : {
+      "title" : "URI",
+      "type" : "string",
+      "format" : "uri"
+    },
+    "name" : {
+      "title" : "User Name",
+      "type" : "string",
+      "maxLength" : 40
+    },
+    "title" : {
+      "title" : "Title",
+      "type" : "string",
+      "maxLength" : 10
+    },
+    "firstName" : {
+      "title" : "First Name",
+      "type" : "string",
+      "maxLength" : 100
+    },
+    "lastName" : {
+      "title" : "Last Name",
+      "type" : "string",
+      "maxLength" : 150
+    },
+    "company" : {
+      "title" : "Company",
+      "type" : "string",
+      "maxLength" : 255
+    },
+    "address" : {
+      "title" : "Address",
+      "type" : "string",
+      "maxLength" : 255
+    },
+    "zip" : {
+      "title" : "Zip/Postal Code",
+      "type" : "string",
+      "maxLength" : 15
+    },
+    "city" : {
+      "title" : "City",
+      "type" : "string",
+      "maxLength" : 255
+    },
+    "state" : {
+      "title" : "State/Province",
+      "type" : "string",
+      "maxLength" : 50
+    },
+    "country" : {
+      "title" : "Country",
+      "type" : "string",
+      "format" : "ISO 3166",
+      "maxLength" : 2
+    },
+    "dateFormat" : {
+      "title" : "Date Format",
+      "type" : "string",
+      "maxLength" : 255
+    },
+    "timeZone" : {
+      "title" : "Time zone",
+      "type" : "string",
+      "maxLength" : 255
+    },
+    "language" : {
+      "title" : "Language",
+      "type" : "string",
+      "format" : "ISO 639",
+      "maxLength" : 2
+    },
+    "email" : {
+      "title" : "Email",
+      "type" : "string",
+      "format" : "email",
+      "maxLength" : 255
+    },
+    "phone" : {
+      "title" : "Phone",
+      "type" : "string",
+      "maxLength" : 255
+    },
+    "mobile" : {
+      "title" : "Mobile/IP Voice",
+      "type" : "string",
+      "maxLength" : 255
+    },
+    "skills" : {
+      "title" : "Skills",
+      "type" : "string",
+      "maxLength" : 4000
+    },
+    "registryDate" : {
+      "title" : "Registered",
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "status" : {
+      "title" : "Status",
+      "enum" : [ "In activation", "Activated", "Disabled" ]
+    }
+  },
+  "required" : [ "name", "firstName", "lastName", "email" ]
+}}
+}}}
+
+\\
+It is important to understand, that schemas and data are not the raw Codebeamer schema/data objects, but user and language specific views on the underlying Codebeamer schema/data objects.
+You can therefore apply a schema only on data that you retrieved for the same user and language.\\
+\\
+The CodeBeamer data model is also customizable and extensible, therefore you must not rely on (example) schemas shown here or elsewhere, but always get the schema applicable to your client from the REST API of your target server !\\
+\\
+For the same reason, the caching of schemas in the client is not recommendable, except you can be sure, that the underlying model won't change, or you will be notified about such changes in some way outside the scope of this document.\\
+\\
+The CodeBeamer REST API uses some non-standard extensions to [JSON Schema|http://json-schema.org]:
+\\
+* __Date__ and __Timestamp__ properties are declared as {{ { "type" : "string", "format" : "date-time" } }}, where the string value is an ISO 8601 encoded timestamp.
+* __Language__ properties are declared as {{ { "type" : "string", "format" : "ISO 639", "maxLength" : 2 } }}, where the value is an ISO 639 2-letter language code.
+* __Country__ properties are declared as {{ { "type" : "string", "format" : "ISO 3166", "maxLength" : 2 } }}, where the value is an ISO 3166 2-letter country code.
+* __Wiki Text__ properties are declared as {{ { "type" : "string", "format" : "Wiki" } }}, where the value is a String, that may contain CodeBeamer Wiki markup.
+\\
+In addition to the standard "title" and "description", a schema can also have an optional __"plural"__ property, that defines the plural form of the "title".\\
+\\
+The schemas of Tracker/configuration item reference or member fields, that represent choices from a dynamic set of options, that themselves are other resources, cannot declare the field to be an "enum", because the possible choice option set is dynamic and typically huge.\\
+\\
+Therefore, reference fields are declared to contain a resource reference (see next section "Data interchange" for an explanation) or an array of resource references (if multiple selection is allowed), and contain an extra __"optionsURI"__ property, which allows a client to retrieve the possible property values when needed. \\
+\\
+E.g. The "possibleReleases" of a Test Set:
+{{{
+{
+      "type" : "array",
+      "items" : {
+        "title" : "Item",
+        "plural" : "Items",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "Name",
+            "type" : "string"
+          }
+        }
+      },
+      "uniqueItems" : true,
+      "optionsURI" : "/tracker/1028/field/1000/options"
+}
+}}}
+\\
+A client can then get the possible property values (optionally only options containing a filter string) via: {{GET ''{RestURL}{optionsURI}''~[?filter=string~]}}\\
+\\
+Again, caching the result of an options query is not recommendable!
+\\
+\\
+
+!2 Data interchange
+
+Data is passed to and returned from the REST API in form of [JSON|http://en.wikipedia.org/wiki/JSON] objects or arrays of objects.\\
+\\
+Please note, that an object is a sparse set of properties (name/value pairs), meaning that properties that don't have an actual value need not exist in the object, in order to keep the size of objects minimal.\\
+\\
+When creating new objects, you must pass values for required properties (according to schema) and should otherwise only pass properties whose value is not __null__.\\
+\\
+E.g. Create a new user:
+{{{
+{
+  "name"     : "TestUser",
+  "password" : "TestPassword",
+  "firstName": "Test",
+  "lastName" : "User",
+  "company"  : "Intland",
+  "address"  : "Gropiusplatz 10",
+  "zip"      : "70563",
+  "city"     : "Stuttgart",
+  "country"  : "DE",
+  "language" : "de",
+  "email"    : "TestUser@intland.com",
+  "status"   : "Activated"
+}
+}}}
+
+\\
+When updating objects, you should only pass the object's URI and those properties you intend to update.\\
+In order to clear properties upon update, you must pass the properties with value __null__.\\
+\\
+E.g. To deactivate a user (change it's status), you only need to pass:
+{{{
+{
+  "uri"    : "/user/TestUser",
+  "status" : "Disabled"
+}
+}}}
+
+\\
+You can use any valid form of a resource URI to refer to an resource in data you send to the REST API, but in data returned from the REST API, resources will always be identified with the primary resource URI, which is based on the immutable unique resource ID, e.g. "/user/1".\\
+\\
+Because these numeric URIs are not very self-descriptive, the URI is packed into a resource reference object, together with the human readable (and localized) resource name:
+{{{
+{
+  "uri"  : "/user/2",
+  "name" : "TestUser"
+}
+}}}
+\\
+\\
+Wherever you have to pass resource references, that are formally declared to be objects with an "uri" and "name", you can always simply pass the URI value instead.\\
+\\
+E.g. property "assignedTo", declared to be an array of User or Role references, can be passed as
+{{{
+{
+  "assignedTo" : [{"uri" : "/user/1", name="bond"}, {"uri" : "/role/1", name="Project Admin"}]
+}
+}}}
+or simply
+{{{
+{
+  "assignedTo" : ["/user/1", "/role/1"]
+}
+}}}
+you can also use any valid form of resource URI:
+{{{
+{
+  "assignedTo" : ["/user/bond", "/role/Project Admin"]
+}
+}}}
+\\
+\\
+When passing a single value for a property, that is formally declared to be an array, e.g.
+{{{
+{
+  "assignedTo" : ["/user/bond"]
+}
+}}}
+you can also simply pass the single value without enclosing it into an array:
+{{{
+{
+  "assignedTo" : "/user/bond"
+}
+}}}
+
+\\
+\\
+
+!2 Users and User Groups
+
+Users have URIs of the form: "__/user/''{id}''__" or "__/user/''{name}''__", where ''{id}'' is the internal unique user id/number and ''{name}'' is the unique user name.\\
+\\
+There is also the special URI "__/user/self__", that allows to refer to the user passed in the {{"Authorization"}} request header. \\
+\\
+User Groups have URIs of the form: "__/user/group/''{id}''__" or "__/user/group/''{name}''__", where ''{id}'' is the internal unique group id/number and ''{name}'' is the unique group name.\\
+\\
+Please note: The user or group name can be changed, so URIs based on the name are not guaranteed to always identify the same/identical resource, whereas URIs based on the immutable id do.\\
+\\
+\\
+
+!3 Get user schema
+
+{{{GET /user/schema}}}
+\\
+
+!3 Create a new user
+
+{{{POST /user}}}
+\\
+The request body must contain a valid user object with all required properties.
+\\
+
+!3 Update an existing user
+
+{{{PUT /user}}}
+\\
+The request body must contain a user object with the "uri" and the properties to update.\\
+\\
+
+!3 Get information about an existing user
+
+{{{GET {userURI} }}}
+\\
+
+!3 Get list of users
+
+{{{GET /users/page/{page}[?query]}}}
+\\
+Returns the specified page of all users (matching the specified filter).\\
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|filter|String|No|If present: Only return users whose data contains this String
+\\
+Example:
+{{{GET https://hostname/cb/rest/users/page/1?pagesize=50&filter=Intland }}}
+\\
+
+!3 Get the user license schema
+
+{{{GET /user/license/schema}}}
+\\
+
+!3 Get the available user licenses
+
+{{{GET /user/licenses}}}
+\\
+These are the licenses installed on the system. You cannot install a CodeBeamer license via the REST API, only associated users with licenses.\\
+\\
+
+!3 Get the licenses assigned to a specific user
+
+{{{GET {userURI}/licenses}}}
+\\
+
+!3 Set the licenses assigned to a specific user
+
+{{{PUT {userURI}/licenses}}}
+\\
+E.g.:
+{{{
+{
+  "ALM" : "USER_WITH_FLOATING_LICENSE",
+  "RM"  : "USER_WITH_NAMED_LICENSE
+}
+}}}
+\\
+
+!3 Get the user permission schema
+
+{{{GET /user/permission/schema}}}
+\\
+
+!3 Get all available user permissions
+
+{{{GET /user/permissions}}}
+\\
+You cannot create, update or delete user permissions, only assign permissions to user groups.\\
+\\
+
+!3 Get the permissions of a specific user
+
+{{{GET {userURI}/permissions}}}
+\\
+You cannot directly assign permissions to users. You can only assign permissions to user groups and then make users group members.\\
+\\
+
+!3 Get the user group schema
+
+{{{GET /user/group/schema}}}
+\\
+
+!3 Get the defined user groups
+
+{{{GET /user/groups}}}
+\\
+
+!3 Create a new user group
+
+{{{POST /user/group}}}
+\\
+The request body must contain a valid user group object with all required properties, e.g.:
+{{{
+{
+  "name"        : "REST API Users",
+  "description" : "All users that are allowed to use the REST API",
+  "permissions" : ["Own Account - Admin", "Account - View Address"]
+}
+}}}
+\\
+You can pass permissions as full permission objects, per permission name (see above) or even simpler per permission id, e.g {{"permissions" : ~[2, 8~] }}
+\\
+\\
+
+!3 Update an existing user group
+
+{{{PUT /user/group}}}
+\\
+The request body must contain a user group object with the "uri" and the properties to update, e.g.:
+{{{
+{
+  "uri" : "/user/group/REST API Users",
+  "permissions" : [1, 2, 4, 8, 16]
+}
+}}}
+\\
+
+!3 Delete a user group
+
+{{{DELETE {groupURI} }}}
+\\
+
+!3 Get information about a user group
+
+{{{GET {groupURI} }}}
+\\
+
+!3 Get the group change history
+
+{{{GET {groupURI}/history }}}
+\\
+
+!3 Get all current members of a user group
+
+{{{GET {groupURI}/members }}}
+\\
+
+!3 Set the members of a user group
+
+{{{PUT {groupURI}/members }}}
+\\
+The request body must contain an array of user objects who should be the exclusive members of this group (User URIs are sufficient). E.g.:\\
+{{{ [ "/user/bond", "/user/TestUser" ] }}}
+\\
+
+!3 Get the group members history schema
+
+{{{GET /user/group/members/history/schema }}}
+\\
+
+!3 Get the members history of a user group
+
+{{{GET {groupURI}/members/history }}}
+\\
+
+!3 Get the groups where a specific user currently is a member
+
+{{{GET {userURI}/groups}}}
+\\
+
+!3 Get the group membership history of a specific user
+
+{{{GET {userURI}/groups/history}}}
+\\
+
+!3 Set the groups where a specific user is a member
+
+{{{PUT {userURI}/groups}}}
+\\
+The request body must contain an array of user groups (group URI only is sufficient). E.g.:\\
+{{{ [ "/user/group/1001", "/user/group/External" ] }}}
+\\
+
+!3 Make a user a member of a group
+
+{{{PUT {userURI}{groupURI} }}}
+{{{PUT {groupURI}{userURI} }}}
+\\
+The request body is optional and can contain a single comment string. E.g.:\\
+{{{ "Why it was necessary to add this user to this group" }}}
+\\
+
+!3 Remove a user from a group
+
+{{{DELETE {userURI}{groupURI} }}}
+{{{DELETE {groupURI}{userURI} }}}
+\\
+The request body is optional and can contain a single comment string. E.g.:\\
+{{{ "It was necessary to remove this user from this group, because ..." }}}
+\\
+
+!3 Get the membership history of a specific user for a specific group
+
+{{{GET {userURI}{groupURI}/history}}}
+{{{GET {groupURI}{userURI}/history}}}
+\\
+
+!3 Get the photo of a specific user
+
+{{{GET {userURI}/photo}}}
+\\
+Caution!\\
+This request will not return a JSON body, but the JPEG user image data "{{Content-type: image/jpeg}}".\\
+\\
+
+!3 Set the photo of a specific user
+
+{{{PUT {userURI}/photo}}}
+\\
+Caution!\\
+The request body must not contain JSON, but image data "{{Content-type: image/*}}".\\
+\\
+\\
+
+!2 Roles
+
+Roles are stereotypes for project roles. You must first define the role stereotype, before you can instantiate a role in project.\\
+Roles have URIs of the form: "__/role/''{id}''__" or "__/role/''{name}''__", where ''{id}'' is the internal unique role id/number and ''{name}'' is the unique role name.\\
+\\
+\\
+!3 Get the role schema
+
+{{{GET /role/schema}}}
+\\
+
+!3 Get all defined role stereotypes
+
+{{{GET /roles}}}
+\\
+
+!3 Define a new role stereotype
+
+{{{POST /role}}}
+\\
+The request body must contain a valid role object with a unique name and an optional description, e.g.:
+{{{
+{
+  "name"        : "Tester",
+  "description" : "Testers of the REST API"
+}
+}}}
+\\
+
+!3 Update the description of a role stereotype
+
+{{{PUT /role}}}
+\\
+The request body must contain the role URI and the new role description, e.g.:
+{{{
+{
+  "uri"         : "/role/Tester",
+  "description" : "Testers of the REST API"
+}
+}}}
+\\
+Please note: The name of role stereotypes cannot be changed.\\
+\\
+
+!3 Delete an unused role stereotype
+
+{{{DELETE {roleURI} }}}
+\\
+Please note: You can only delete role stereotypes, as long as no project roles with this stereotyp exist.\\
+\\
+
+!3 Get a role stereotype definition
+
+{{{GET {roleURI} }}}
+\\
+\\
+
+
+!2 Projects
+
+Projects have URIs of the form: "__/project/''{id}''__" or "__/project/''{name}''__", where ''{id}'' is the internal unique project id/number and ''{name}'' is the unique project name.\\
+\\
+Please note: The project name can be changed, so URIs based on the name are not guaranteed to always identify the same/identical project, whereas URIs based on the immutable id do.\\
+\\
+Project roles are instantiations of role stereotypes. The URI of project roles is the combination of the project URI and the role (stereotype) URI: __''{projectURI}{roleURI}''__ \\
+\\
+\\
+
+!3 Get the project schema
+
+{{{GET /project/schema}}}
+\\
+
+!3 Create a new project
+
+{{{POST /project}}}
+\\
+The request body must contain a valid project object with all required properties, e.g.:
+{{{
+{
+  "name"        : "REST API Test",
+  "description" : "A sample project to test and demonstrate the __REST API__",
+  "descFormat"  : "Wiki",
+  "category"    : "Education"
+}
+}}}
+\\
+
+!3 Create a new project as a clone of another project
+
+{{{POST {projectURI}/clone}}}
+\\
+The request body must contain a valid project, same as above, but the new project will use the specified project as template and inherit the roles, members, trackers and CMDB categories.
+\\
+
+!3 Update a project definition
+
+{{{PUT /project}}}
+\\
+The request body must contain the project URI and the properties to update, e.g.:
+{{{
+{
+  "uri"                 : "/project/1",
+  "propagation"         : "Public with join approval",
+  "defaultMemberRoleId" : 2
+}
+}}}
+\\
+The "defaultMemberRoleId" must be the role stereotype id of a defined project role, therefore you cannot set this property initially upon project creation !\\
+\\
+
+!3 Close/Re-Open a project
+
+{{{PUT /project}}}
+\\
+The request body must contain the project URI and the properties to update, e.g.:
+{{{
+{
+  "uri"    : "/project/1",
+  "closed" : true
+}
+}}}
+\\
+To re-open a previously closed project, set "closed" to false.\\
+\\
+
+!3 Remove/Restore a project
+
+{{{PUT /project}}}
+\\
+The request body must contain the project URI and the properties to update, e.g.:
+{{{
+{
+  "uri"     : "/project/1",
+  "deleted" : true
+}
+}}}
+\\
+To restore a previously removed project, set "deleted" to false.\\
+\\
+
+!3 Delete a project
+
+{{{DELETE {projectURI} }}}
+\\
+Please note: Deleting a project is irreversible.\\
+\\
+
+!3 Get a project definition
+
+{{{GET {projectURI} }}}
+\\
+
+!3 Get the project definition change history
+
+{{{GET {projectURI}/history }}}
+\\
+
+!3 Get list of projects
+
+{{{GET /projects/page/{page}[?query]}}}
+\\
+Returns the specified page of all projects (visible to the current user and matching the specified filter).\\
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of projects, valid range is ~[1 .. 500~]. Default is 100.
+|category|String|No|If present: Only return projects with this category
+|filter|String|No|If present: Only return projects whose data contains this String
+\\
+Example:
+{{{GET https://hostname/cb/rest/projects/page/1?pagesize=50&category=Education }}}
+\\
+
+
+!3 Get all available project permissions
+
+{{{GET /project/permissions}}}
+\\
+You cannot create, update or delete project permissions, only assign permissions to project roles.\\
+\\
+
+!3 Get a project permission definition
+
+{{{GET /project/permission/{permissionIdOrName} }}}
+\\
+
+!3 Get the project role schema
+
+{{{GET /project/role/schema}}}
+\\
+
+!3 Define a new project role (instantiate a role stereotype on a project)
+
+{{{POST {projectURI}{roleURI} }}}
+\\
+The request body must contain a non empty array of project permissions to grant to the new project role (passing the permission id or name is sufficient), e.g.:
+{{{
+  [ "Wiki Space - View", "Document - View", "Tracker - View", "CMDB - View" ]
+}}}
+\\
+Caution: The new role will not have any permissions on existing project artifacts (documents, trackers, etc.), therefore you should use the clone method (below) !\\
+\\
+
+!3 Create a new project role based on an existing (template) role
+
+{{{POST {projectURI}{roleURI}/clone/{roleIdOrName} }}}
+\\
+The request body must contain a non empty array of project permissions to grant to the new project role (passing the permission id or name is sufficient), e.g.:
+{{{
+  [ "Wiki Space - View", "Document - View", "Tracker - View", "CMDB - View" ]
+}}}
+\\
+The new role will have the same permissions on existing project artifacts (documents, trackers, etc.) as the template role.\\
+\\
+E.g. Create the project role "Tester" based on the predefined "Developer" role:
+{{{POST https://hostname/cb/rest/project/1/role/Developer/clone/Tester}}}
+\\
+
+!3 Change the permissions granted to a roject role
+
+{{{PUT {projectURI}{roleURI} }}}
+\\
+The request body must contain a non empty array of the project permissions assigned to the role, e.g.:
+{{{
+  [ "Wiki Space - View", "Document - View", "Tracker - View", "CMDB - View", "SCM - View", "Members - View" ]
+}}}
+\\
+
+!3 Delete a project role
+
+{{{DELETE {projectURI}{roleURI} }}}
+\\
+
+!3 Get a project role definition
+
+{{{GET {projectURI}{roleURI} }}}
+\\
+
+!3 Get the change history of a project role
+
+{{{GET {projectURI}{roleURI}/history }}}
+\\
+
+!3 Get a list of all roles defined in a project
+
+{{{GET {projectURI}/roles }}}
+\\
+
+!3 Get a list of all roles defined in a project plus all current role members
+
+{{{GET {projectURI}/roles/members}}}
+\\
+
+!3 Get a list of all roles defined in a project plus all current/former role members
+
+{{{GET {projectURI}/roles/members/history}}}
+\\
+
+!3 Get a list of all members currently assigned to a specific project role
+
+{{{GET {projectURI}{roleURI}/members }}}
+\\
+
+!3 Get the members history of a project role
+
+{{{GET {projectURI}{roleURI}/members/history }}}
+\\
+
+!3 Set all (current) members of a project role
+
+{{{PUT {projectURI}{roleURI}/members }}}
+\\
+The request body must contain an array of role members. Members can be users and/or user groups, e.g.:
+{{{
+  [ "/user/TestUser", "/user/group/REST API Users" ]
+}}}
+\\
+
+!3 Get a page of all users assigned to a project role
+
+{{{GET {projectURI}{roleURI}/users/page/{page} }}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of projects, valid range is ~[1 .. 500~]. Default is 100.
+\\
+Returns the requested page of all users, that are either directly or indirectly members of the specified project role.\\
+Indirectly means, the user is member of a user group and that user group is member of the project role.\\
+\\
+
+
+!3 Grant a project role to a user
+
+{{{PUT {projectURI}{roleURI}{userURI} }}}
+{{{PUT {projectURI}{userURI}{roleURI} }}}
+{{{PUT {userURI}{projectURI}{roleURI} }}}
+\\
+The request body is optional and can contain a single comment string. E.g.:\\
+{{{ "Why it was necessary to grant this role to this user" }}}
+\\
+
+!3 Revoke a project role from a user
+
+{{{DELETE {projectURI}{roleURI}{userURI} }}}
+{{{DELETE {projectURI}{userURI}{roleURI} }}}
+{{{DELETE {userURI}{projectURI}{roleURI} }}}
+\\
+The request body is optional and can contain a single comment string. E.g.:\\
+{{{ "Why it was necessary to revoke this role from this user" }}}
+\\
+
+!3 Get the membership history of a specific user in a specific project role
+
+{{{GET {projectURI}{roleURI}{userURI}/history }}}
+{{{GET {projectURI}{userURI}{roleURI}/history }}}
+{{{GET {userURI}{projectURI}{roleURI}/history }}}
+\\
+The result schema is {{/project/role/history/schema}}.\\
+\\
+
+!3 Get all roles of a specific project where a user is currently a (direct) member
+
+{{{GET {projectURI}{userURI}/roles[?direct=true] }}}
+{{{GET {userURI}{projectURI}/roles[?direct=true] }}}
+\\
+
+!3 Get the history of all direct project roles a user has or had in a specific project
+
+{{{GET {projectURI}{userURI}/roles/history }}}
+{{{GET {userURI}{projectURI}/roles/history }}}
+\\
+
+!3 Get all projects and roles where a user is currently a (direct) member
+
+{{{GET {userURI}/projects/roles[?direct=true] }}}
+\\
+
+!3 Get the history of all projects and roles where a user is or was a direct member
+
+{{{GET {userURI}/projects/roles/history }}}
+\\
+
+!3 Get all projects visible to a user and the effective project permissions per project
+
+{{{GET {userURI}/projects/permissions }}}
+\\
+
+!3 Get the effecitve project permissions of a user for a specific project
+
+{{{GET {userURI}{projectURI}/permissions }}}
+{{{GET {projectURI}{userURI}/permissions }}}
+\\
+
+!3 Get a page of all projects accessible to a user
+
+{{{GET {userURI}/projects/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of projects, valid range is ~[1 .. 500~]. Default is 100.
+|deleted|boolean|No|If true, also show removed projects. Default is false.
+\\
+Returns the requested page of projects accessible to a user.\\
+\\
+
+!3 Get a page of all projects where a user has a specific permission
+
+{{{GET {userURI}/projects/permission/{permissionIdOrName}/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|permissionIdOrName|String|Yes|Id or name of a project permission
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of projects, valid range is ~[1 .. 500~]. Default is 100.
+|deleted|boolean|No|If true, also show removed projects. Default is false.
+\\
+Returns the requested page of projects, where the user has the requested permission.\\
+E.g. Find first page of projects, where the {{/user/bond}} is project administrator:
+{{{GET https://hostname/cb/rest/user/bond/projects/permission/Project - Admin/page/1 }}}
+\\
+
+!3 Grant a project role to a user group
+
+{{{PUT {projectURI}{roleURI}/group/{groupIdOrName} }}}
+{{{PUT {projectURI}/group/{groupIdOrName}/{roleURI} }}}
+{{{PUT {groupURI}{projectURI}{roleURI} }}}
+\\
+The request body is optional and can contain a single comment string. E.g.:\\
+{{{ "Why it was necessary to grant this role to this user group" }}}
+\\
+
+!3 Revoke a project role from a user group
+
+{{{DELETE {projectURI}{roleURI}/group/{groupIdOrName} }}}
+{{{DELETE {projectURI}/group/{groupIdOrName}/{roleURI} }}}
+{{{DELETE {groupURI}{projectURI}{roleURI} }}}
+\\
+The request body is optional and can contain a single comment string. E.g.:\\
+{{{ "Why it was necessary to revoke this role from this user group" }}}
+\\
+
+!3 Get the membership history of a specific user group in a specific project role
+
+{{{GET {projectURI}{roleURI}/group/{groupIdOrName}/history }}}
+{{{GET {projectURI}/group/{groupIdOrName}{roleURI}/history }}}
+{{{GET {groupURI}{projectURI}{roleURI}/history }}}
+\\
+The result schema is {{/project/role/history/schema}}.\\
+\\
+
+!3 Get all roles of a specific project where a user group is currently a member
+
+{{{GET {projectURI}/group/{groupIdOrName}/roles }}}
+{{{GET {groupURI}{projectURI}/roles }}}
+\\
+
+!3 Get the history of all project roles a user group has or had in a specific project
+
+{{{GET {projectURI}/group/{groupIdOrName}/roles/history }}}
+{{{GET {groupURI}{projectURI}/roles/history }}}
+\\
+
+!3 Get all projects and roles where a user group currently is a member
+
+{{{GET {groupURI}/projects/roles }}}
+\\
+
+!3 Get the history of all projects and roles where a user group is or was a direct member
+
+{{{GET {groupURI}/projects/roles/history }}}
+\\
+
+!3 Get all projects visible to a user group and the effective project permissions per project
+
+{{{GET {groupURI}/projects/permissions }}}
+\\
+
+!3 Get the effecitve project permissions of a user group for a specific project
+
+{{{GET {groupURI}{projectURI}/permissions }}}
+{{{GET {projectURI}/group/{groupIdOrName}/permissions }}}
+\\
+\\
+
+!2 CMDB
+
+CMDB Categories have URIs of the form: "__/category/''{id}''__" or "__{projectURI}/category/''{name}''__", where ''{id}'' is the internal unique category id/number and ''{name}'' is the category name, which is only unique within a project.\\
+\\
+
+!3 Get the category type schema
+
+{{{GET /category/type/schema}}}
+\\
+
+!3 Get the available category types
+
+{{{GET /category/types}}}
+\\
+All category types are predefined. You cannot create, update or delete category types.\\
+\\
+
+!3 Get a category type definition
+
+{{{GET /category/type/{categoryTypeIdOrName} }}}
+\\
+Get the immutable definition of a category type.\\
+\\
+
+!3 Get the available category permissions
+
+{{{GET /category/permissions}}}
+\\
+All category permissions are predefined. You cannot create, update or delete category permissions.\\
+\\
+
+!3 Get a category permission
+
+{{{GET /category/permission/{permissionIdOrName} }}}
+\\
+Get the immutable definition of a category permission.\\
+\\
+
+!3 Get the category schema
+
+{{{GET /category/schema}}}
+\\
+
+!3 Create a new category
+
+{{{POST /category}}}
+\\
+The request body must contain a valid category object with all required properties, e.g.:
+{{{
+{
+  "project"     : "/project/1",
+  "type"        : "/category/type/Test case",
+  "name"        : "Test Cases",
+  "keyName"     : "TESTCASE",
+  "description" : "Test cases to validate and verify the product",
+  "descFormat"  : "Plain",
+  "workflow"    : true
+}
+}}}
+\\
+
+!3 Create a new category as a clone of another category
+
+{{{POST {categoryURI}/clone}}}
+\\
+The request body must contain a valid category object, same as above, but the new category will use the specified category as template and inherit the category schema and permissions.
+\\
+
+!3 Update category settings
+
+{{{PUT /category}}}
+\\
+The request body must contain the category URI and the properties to update, e.g. to disable the finite state machine of a category:
+{{{
+{
+  "uri"      : "/project/1/category/Test Cases",
+  "workflow" : false
+}
+}}}
+\\
+
+!3 Delete a category
+
+{{{DELETE {categoryURI} }}}
+\\
+
+!3 Get a category definition
+
+{{{GET {categoryURI} }}}
+\\
+
+!3 Get the basic item schema of a category
+
+{{{GET {categoryURI}/schema}}}
+\\
+Note: You cannot configure the item schema of a category via the REST API.\\
+\\
+
+!3 Get the schema of a category item property
+
+{{{GET {categoryURI}/field/{fieldIdOrName} }}}
+\\
+Note: You cannot configure the schema of a category item field via the REST API.\\
+\\
+
+!3 Get all granted category permissions per role
+
+{{{GET {categoryURI}/roles/permissions }}}
+\\
+
+!3 Get the category permissions granted to a specific role
+
+{{{GET {categoryURI}{roleURI}/permissions }}}
+{{{GET {roleURI}{categoryURI}/permissions }}}
+\\
+
+!3 Set the category permissions for a specific role
+
+{{{PUT {categoryURI}{roleURI}/permissions }}}
+{{{PUT {roleURI}{categoryURI}/permissions }}}
+\\
+The request body must contain an array of category permissions to grant to the role (passing the permission id or name is sufficient), e.g.:
+{{{
+  [ "Issue - View Any", "Issue - View Comments/Attachments" ]
+}}}
+\\
+
+!3 Remove all category permissions for a specific role
+
+{{{DELETE {categoryURI}{roleURI}/permissions }}}
+{{{DELETE {roleURI}{categoryURI}/permissions }}}
+\\
+
+!3 Get the effective permissions of a user on a category
+
+{{{GET {categoryURI}{userURI}/permissions }}}
+{{{GET {userURI}{categoryURI}/permissions }}}
+\\
+
+!3 Get a list of all categories in a project
+
+{{{GET {projectURI}/categories[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|type|String|No|Comma-separated list of category types (ids or names) to only show categories of these types
+|hidden|boolean|No|True to also show hidden categories. Default is false.
+|deleted|boolean|No|If true, also show removed categories. Default is false.
+\\
+E.g. Show all Test Case and Test Set categories in the test project:
+{{{GET https://hostname/cb/rest/project/1/categories?type=Test Case,Test Set&hidden=true }}}
+\\
+
+!3 Get a list of all categories visible to a user (grouped by project)
+
+{{{GET {userURI}/categories[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|type|String|No|Comma-separated list of category types (ids or names) to only show categories of these types
+|hidden|boolean|No|True to also show hidden categories. Default is false.
+|deleted|boolean|No|If true, also show removed categories. Default is false.
+\\
+
+!3 Get a list of all categories in a project visible to a user
+
+{{{GET {userURI}{projectURI}/categories[?query] }}}
+{{{GET {projectURI}{userURI}/categories[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|type|String|No|Comma-separated list of category types (ids or names) to only show categories of these types
+|hidden|boolean|No|True to also show hidden categories. Default is false.
+|deleted|boolean|No|If true, also show removed categories. Default is false.
+\\
+
+!3 Get a list of all categories where a user has a specific permission (grouped by project)
+
+{{{GET {userURI}/categories/permission/{permissionIdOrName}[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|permissionIdOrName|String|Yes|Id or Name of a category permission
+|type|String|No|Comma-separated list of category types (ids or names) to only show categories of these types
+|hidden|boolean|No|True to also show hidden categories. Default is false.
+|deleted|boolean|No|If true, also show removed categories. Default is false.
+\\
+E.g. Find all Test Case categories, where the current user has permission to add items:
+{{{GET https://hostname/cb/rest/user/self/categories/permission/Issue - Add?type=Test Case }}}
+\\
+
+!3 Get a list of all categories in a project where a user has a specific permission
+
+{{{GET {userURI}{projectURI}/categories/permission/{permissionIdOrName}[?query] }}}
+{{{GET {projectURI}{userURI}/categories/permission/{permissionIdOrName}[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|permissionIdOrName|String|Yes|Id or Name of a category permission
+|type|String|No|Comma-separated list of category types (ids or names) to only show categories of these types
+|hidden|boolean|No|True to also show hidden categories. Default is false.
+|deleted|boolean|No|If true, also show removed categories. Default is false.
+\\
+
+!3 Get a summary of all items in a category
+
+{{{GET {categoryURI}/item/summary}}}
+\\
+For example:
+{{{GET https://hostname/cb/rest/project/1/category/Contacts/item/summary}}}
+
+{{{
+{
+  "total" : 2,
+  "open" : 2
+}
+}}}
+\\
+
+!3 Get a page of category items
+
+{{{GET {categoryURI}/items/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show category items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+
+!3 Get a page of category items matching all of the specified criteria
+
+{{{GET {categoryURI}/items/and/{criteria}/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|criteria|String|Yes|Semicolon-separated list of {{''property''=''value''~[, ...~]}} criteria, where each criteria must be matched
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+For example: Get functional test cases created by {{~[USER:bond~]}}:
+{{{GET https://hostname/cb/rest/project/1/category/Test Cases/items/and/submitter=[USER:bond];type=Functional/page/1}}}
+\\
+
+!3 Get a page of category items matching at least one of the specified criteria
+
+{{{GET {categoryURI}/items/or/{criteria}/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|criteria|String|Yes|Semicolon-separated list of {{''property''=''value''~[, ...~]}} criteria, where at least one criteria must be matched
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+For example: Get first page of contacts where {{"country"}} is Germany or the {{"language"}} is german:
+{{{GET https://hostname/cb/rest/project/1/category/Contacts/items/or/country=DE;language=de/page/1}}}
+\\
+
+!3 Get a page of category items matching all of the mandatory criteria and at least one of the optional criteria
+
+{{{GET {categoryURI}/items/and/{mandatoryCriteria}/or/{optionalCriteria}/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|mandatoryCriteria|String|Yes|Semicolon-separated list of {{''property''=''value''~[, ...~]}} criteria, where each criteria must be matched
+|optionalCriteria|String|Yes|Semicolon-separated list of {{''property''=''value''~[, ...~]}} criteria, where at least one criteria must be matched
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+For example: Get the new business contacts from this week, where {{"country"}} is Germany or the {{"language"}} is german:
+{{{GET https://hostname/cb/rest/project/1/category/Contacts/items/and/type=Company/or/country=DE;language=de/page/1?newerThen=This week}}}
+\\
+\\
+
+!2 Category Views
+
+Category views have URIs of the form: "__{categoryURI}/view/''{id}''__" or "__{categoryURI}/view/''{name}''__", where ''{id}'' is the internal view id/number and ''{name}'' is the view name. Both id and name are only unique within a category and must therefore always be qualified by the {categoryURI}.\\
+\\
+You cannot define or configure category views via the REST API, you can only use them.\\
+\\
+
+!3 Get the category view schema
+
+{{{GET /category/view/schema}}}
+\\
+
+!3 Get the available views of a category
+
+{{{GET {categoryURI}/views}}}
+\\
+
+!3 Get the definition of a specific category view
+
+{{{GET {categoryViewURI} }}}
+\\
+
+!3 Get the item schema of a category view
+
+{{{GET {categoryViewURI}/schema }}}
+\\
+
+!3 Get a page of category view items
+
+{{{GET {categoryViewURI}/items/page/{page} }}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+\\
+\\
+
+!2 Trackers
+
+Trackers have URIs of the form: "__/tracker/''{id}''__" or "__{projectURI}/tracker/''{name}''__", where ''{id}'' is the internal unique tracker id/number and ''{name}'' is the tracker name, which is only unique within a project.\\
+\\
+
+!3 Get the tracker type schema
+
+{{{GET /tracker/type/schema}}}
+\\
+
+!3 Get the available tracker types
+
+{{{GET /tracker/types}}}
+\\
+All tracker types are predefined. You cannot create, update or delete tracker types.\\
+\\
+
+!3 Get a tracker type definition
+
+{{{GET /tracker/type/{trackerTypeIdOrName} }}}
+\\
+Get the immutable definition of a tracker type.\\
+\\
+
+!3 Get the available tracker permissions
+
+{{{GET /tracker/permissions}}}
+\\
+All tracker permissions are predefined. You cannot create, update or delete tracker permissions.\\
+\\
+
+!3 Get a tracker permission
+
+{{{GET /tracker/permission/{permissionIdOrName} }}}
+\\
+Get the immutable definition of a tracker permission.\\
+\\
+
+!3 Get the tracker schema
+
+{{{GET /tracker/schema}}}
+\\
+
+!3 Create a new tracker
+
+{{{POST /tracker}}}
+\\
+The request body must contain a valid tracker object with all required properties, e.g.:
+{{{
+{
+  "project"     : "/project/1",
+  "type"        : "/tracker/type/Test",
+  "name"        : "Tests",
+  "keyName"     : "TEST",
+  "description" : "A Test tracker for Rest-Api tests",
+  "descFormat"  : "Wiki",
+  "workflow"    : true
+}
+}}}
+\\
+
+!3 Create a new tracker as a clone of another tracker
+
+{{{POST {trackerURI}/clone}}}
+\\
+The request body must contain a valid tracker object, same as above, but the new tracker will use the specified tracker as template and inherit the tracker schema and permissions.
+\\
+
+!3 Update tracker settings
+
+{{{PUT /tracker}}}
+\\
+The request body must contain the tracker URI and the properties to update, e.g. to hide a tracker in the GUI:
+{{{
+{
+  "uri"     : "/project/1/tracker/Tests",
+  "visible" : false
+}
+}}}
+\\
+To show a hidden tracker, simply set "visible" to true.
+\\
+
+!3 Delete a tracker
+
+{{{DELETE {trackerURI} }}}
+\\
+
+!3 Get a tracker definition
+
+{{{GET {trackerURI} }}}
+\\
+
+!3 Get the basic item schema of a tracker
+
+{{{GET {trackerURI}/schema}}}
+\\
+Note: You cannot configure the item schema of a tracker via the REST API.\\
+\\
+
+!3 Get the schema of a tracker item property
+
+{{{GET {trackerURI}/field/{fieldIdOrName} }}}
+\\
+Note: You cannot configure the schema of a tracker item field via the REST API.\\
+\\
+
+!3 Get all granted tracker permissions per role
+
+{{{GET {trackerURI}/roles/permissions }}}
+\\
+
+!3 Get the tracker permissions granted to a specific role
+
+{{{GET {trackerURI}{roleURI}/permissions }}}
+{{{GET {roleURI}{trackerURI}/permissions }}}
+\\
+
+!3 Set the tracker permissions for a specific role
+
+{{{PUT {trackerURI}{roleURI}/permissions }}}
+{{{PUT {roleURI}{trackerURI}/permissions }}}
+\\
+The request body must contain an array of tracker permissions to grant to the role (passing the permission id or name is sufficient), e.g.:
+{{{
+  [ "Issue - View Any", "Issue - View Comments/Attachments" ]
+}}}
+\\
+
+!3 Remove all tracker permissions for a specific role
+
+{{{DELETE {trackerURI}{roleURI}/permissions }}}
+{{{DELETE {roleURI}{trackerURI}/permissions }}}
+\\
+
+!3 Get the effective permissions of a user on a tracker
+
+{{{GET {trackerURI}{userURI}/permissions }}}
+{{{GET {userURI}{trackerURI}/permissions }}}
+\\
+
+!3 Get a list of all trackers in a project
+
+{{{GET {projectURI}/trackers[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|type|String|No|Comma-separated list of tracker types (ids or names) to only show trackers of these types
+|hidden|boolean|No|True to also show hidden trackers. Default is false.
+|deleted|boolean|No|If true, also show removed trackers. Default is false.
+\\
+E.g. Show all Bug and Task trackers in the test project:
+{{{GET https://hostname/cb/rest/project/1/trackers?type=Bug,Task&hidden=true }}}
+\\
+
+!3 Get a list of all trackers visible to a user (grouped by project)
+
+{{{GET {userURI}/trackers[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|type|String|No|Comma-separated list of tracker types (ids or names) to only show trackers of these types
+|hidden|boolean|No|True to also show hidden trackers. Default is false.
+|deleted|boolean|No|If true, also show removed trackers. Default is false.
+\\
+
+!3 Get a list of all trackers in a project visible to a user
+
+{{{GET {userURI}{projectURI}/trackers[?query] }}}
+{{{GET {projectURI}{userURI}/trackers[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|type|String|No|Comma-separated list of tracker types (ids or names) to only show trackers of these types
+|hidden|boolean|No|True to also show hidden trackers. Default is false.
+|deleted|boolean|No|If true, also show removed trackers. Default is false.
+\\
+
+!3 Get a list of all trackers where a user has a specific permission (grouped by project)
+
+{{{GET {userURI}/trackers/permission/{permissionIdOrName}[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|permissionIdOrName|String|Yes|Id or Name of a tracker permission
+|type|String|No|Comma-separated list of tracker types (ids or names) to only show trackers of these types
+|hidden|boolean|No|True to also show hidden trackers. Default is false.
+|deleted|boolean|No|If true, also show removed trackers. Default is false.
+\\
+E.g. Find all Bug trackers where the current user has permission to add items:
+{{{GET https://hostname/cb/rest/user/self/trackers/permission/Issue - Add?type=Bug }}}
+\\
+
+!3 Get a list of all trackers in a project where a user has a specific permission
+
+{{{GET {userURI}{projectURI}/trackers/permission/{permissionIdOrName}[?query] }}}
+{{{GET {projectURI}{userURI}/trackers/permission/{permissionIdOrName}[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|permissionIdOrName|String|Yes|Id or Name of a tracker permission
+|type|String|No|Comma-separated list of tracker types (ids or names) to only show trackers of these types
+|hidden|boolean|No|True to also show hidden trackers. Default is false.
+|deleted|boolean|No|If true, also show removed trackers. Default is false.
+\\
+
+!3 Get a summary of all items in a tracker
+
+{{{GET {trackerURI}/item/summary}}}
+\\
+For example:
+{{{GET https://hostname/cb/rest/project/1/tracker/Bugs/item/summary}}}
+
+{{{
+{
+  "total" : 1754,
+  "open"  : 78
+}
+}}}
+\\
+
+!3 Get a page of tracker items
+
+{{{GET {trackerURI}/items/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show tracker items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+
+!3 Get a page of tracker items matching all of the specified criteria
+
+{{{GET {trackerURI}/items/and/{criteria}/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|criteria|String|Yes|Semicolon-separated list of {{''property''=''value''~[, ...~]}} criteria, where each criteria must be matched
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+For example: Get bugs submitted by {{~[USER:bond~]}}, where {{"priority"}} is 2 and {{"name"}} starts with "Test" and {{"category"}} is 1, 2 or 3:
+{{{GET https://hostname/cb/rest/project/1/tracker/Bugs/items/and/submitter=[USER:bond];priority=2;name=like,Test*;category=1,2,3/page/1}}}
+\\
+
+!3 Get a page of tracker items matching at least one of the specified criteria
+
+{{{GET {trackerURI}/items/or/{criteria}/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|criteria|String|Yes|Semicolon-separated list of {{''property''=''value''~[, ...~]}} criteria, where at least one criteria must be matched
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+For example: Get bugs where {{"priority"}} is 2 or {{"category"}} is 1, 2 or 3:
+{{{GET https://hostname/cb/rest/project/1/tracker/Bugs/items/or/priority=2;category=1,2,3/page/1}}}
+\\
+
+!3 Get a page of tracker items matching all of the mandatory criteria and at least one of the optional criteria
+
+{{{GET {trackerURI}/items/and/{mandatoryCriteria}/or/{optionalCriteria}/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|mandatoryCriteria|String|Yes|Semicolon-separated list of {{''property''=''value''~[, ...~]}} criteria, where each criteria must be matched
+|optionalCriteria|String|Yes|Semicolon-separated list of {{''property''=''value''~[, ...~]}} criteria, where at least one criteria must be matched
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+For example: Get bugs submitted by {{~[USER:bond~]}} today, where {{"priority"}} is 2 or {{"category"}} is 1, 2 or 3:
+{{{GET https://hostname/cb/rest/project/1/tracker/Bugs/items/and/submitter=[USER:bond]/or/priority=2;category=1,2,3/page/1?newerThen=today}}}
+\\
+\\
+
+!2 Tracker Views
+
+Tracker views have URIs of the form: "__{trackerURI}/view/''{id}''__" or "__{trackerURI}/view/''{name}''__", where ''{id}'' is the internal view id/number and ''{name}'' is the view name. Both id and name are only unique within a tracker and must therefore always be qualified by the {trackerURI}.\\
+\\
+You cannot define or configure tracker views via the REST API, you can only use them.\\
+\\
+
+!3 Get the tracker view schema
+
+{{{GET /tracker/view/schema}}}
+\\
+
+!3 Get the available views of a tracker
+
+{{{GET {trackerURI}/views}}}
+\\
+
+!3 Get the definition of a specific tracker view
+
+{{{GET {trackerViewURI} }}}
+\\
+
+!3 Get the item schema of a tracker view
+
+{{{GET {trackerViewURI}/schema }}}
+\\
+
+!3 Get a page of tracker view items
+
+{{{GET {trackerViewURI}/items/page/{page} }}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+\\
+\\
+
+!2 Tracker/configuration Items
+
+Tracker/configuration items have URIs of form "__/item/''{id}''__", where ''{id}'' is the internal item id/number.\\
+\\
+Dealing with Tracker/configuration items can be complex, because each tracker/category has user and state specific item schemas and optionally a Finite State Machine, that only allows dedicated state transitions.\\
+\\
+
+!3 Submit a new top-level configuration item
+
+First you have to get the schema and a pre-initialized object for a new top-level configuration item:
+
+{{{GET {categoryURI}/newItem }}}
+\\
+For example:
+{{{GET https://hostname/cb/rest/project/Test/category/Test Cases/newItem}}}
+
+The response contains 4 properties:
+* __"transition"__ (optional, schema: "{{/transition/schema}}") is the initial state transition, e.g.
+{{{
+  "transition" : {
+    "uri" : "/transition/27",
+    "tracker" : {
+      "uri" : "/category/1027",
+      "name" : "Test Cases"
+    },
+    "name" : "Create",
+    "descFormat" : "Plain",
+    "toStatus" : {
+      "id" : 1,
+      "name" : "New"
+    }
+  }
+}}}
+* __"item"__ is a CMDB category item object, where properties are already initialized to default values according to transition and initial status, e.g.
+{{{
+  "item" : {
+    "version" : 1,
+    "tracker" : {
+      "project" : {
+        "uri" : "/project/1",
+        "name" : "Test"
+      },
+      "uri" : "/category/1027",
+      "name" : "Test Cases"
+    },
+    "status" : {
+      "id" : 1,
+      "name" : "New"
+    },
+    "submitter" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "descFormat" : "Plain"
+  }
+}}}
+* __"type"__ is the JSON schema to edit properties of the new CMDB category "item", e.g.
+{{{
+  "type" : {
+    "title" : "Test case",
+    "plural" : "Test cases",
+    "description" : "Test cases to validate and verify the product",
+    "properties" : {
+      "uri" : {
+        "title" : "URI",
+        "type" : "string",
+        "format" : "uri"
+      },
+      "version" : {
+        "title" : "Version",
+        "type" : "integer",
+        "minimum" : 1
+      },
+      "parent" : {
+        "title" : "Parent",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "Name",
+            "type" : "string"
+          }
+        }
+      },
+      "tracker" : {
+        "title" : "Category",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "Name",
+            "type" : "string",
+            "maxLength" : 255
+          }
+        },
+        "required" : [ "name" ]
+      },
+      "template" : {
+        "title" : "Template",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "Name",
+            "type" : "string"
+          }
+        },
+        "optionsURI" : "/category/1027/newItem/field/82/options"
+      },
+      "priority" : {
+        "title" : "Priority",
+        "enum" : [ {
+          "id" : 5,
+          "name" : "Lowest"
+        }, {
+          "id" : 4,
+          "name" : "Low"
+        }, {
+          "id" : 3,
+          "name" : "Normal"
+        }, {
+          "id" : 2,
+          "name" : "High"
+        }, {
+          "id" : 1,
+          "name" : "Highest"
+        } ]
+      },
+      "name" : {
+        "title" : "Name",
+        "type" : "string",
+        "maxLength" : 255
+      },
+      "status" : {
+        "title" : "Status",
+        "enum" : [ {
+          "id" : 1,
+          "name" : "New"
+        }, {
+          "id" : 2,
+          "name" : "In Design"
+        }, {
+          "id" : 3,
+          "name" : "Awaiting approval"
+        }, {
+          "id" : 4,
+          "name" : "Accepted"
+        }, {
+          "id" : 5,
+          "name" : "Rejected"
+        }, {
+          "id" : 6,
+          "name" : "Outdated"
+        } ]
+      },
+      "type" : {
+        "title" : "Type",
+        "enum" : [ {
+          "id" : 1,
+          "name" : "Folder"
+        }, {
+          "id" : 2,
+          "name" : "Compatibility"
+        }, {
+          "id" : 3,
+          "name" : "Functional"
+        }, {
+          "id" : 4,
+          "name" : "Integration"
+        }, {
+          "id" : 5,
+          "name" : "Installation"
+        }, {
+          "id" : 6,
+          "name" : "Performance"
+        }, {
+          "id" : 7,
+          "name" : "Security"
+        }, {
+          "id" : 8,
+          "name" : "Smoke"
+        } ]
+      },
+      "submittedAt" : {
+        "title" : "Created at",
+        "type" : "string",
+        "format" : "date-time"
+      },
+      "submitter" : {
+        "title" : "Created by",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "User Name",
+            "type" : "string",
+            "maxLength" : 40
+          }
+        },
+        "required" : [ "name" ]
+      },
+      "modifiedAt" : {
+        "title" : "Modified at",
+        "type" : "string",
+        "format" : "date-time"
+      },
+      "modifier" : {
+        "title" : "Modified by",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "User Name",
+            "type" : "string",
+            "maxLength" : 40
+          }
+        },
+        "required" : [ "name" ]
+      },
+      "verifies" : {
+        "title" : "Verifies",
+        "type" : "array",
+        "items" : {
+          "title" : "Item",
+          "plural" : "Items",
+          "type" : "object",
+          "properties" : {
+            "uri" : {
+              "title" : "URI",
+              "type" : "string",
+              "format" : "uri"
+            },
+            "name" : {
+              "title" : "Name",
+              "type" : "string"
+            }
+          }
+        },
+        "uniqueItems" : true,
+        "optionsURI" : "/category/1027/newItem/field/17/options"
+      },
+      "preAction" : {
+        "title" : "Pre-Action",
+        "type" : "string",
+        "format" : "Wiki"
+      },
+      "testSteps" : {
+        "title" : "Test Steps",
+        "type" : "array",
+        "items" : {
+          "type" : "array",
+          "items" : [ {
+            "title" : "Action",
+            "type" : "string",
+            "format" : "Wiki"
+          }, {
+            "title" : "Expected result",
+            "type" : "string",
+            "format" : "Wiki"
+          }, {
+            "title" : "Critical?",
+            "type" : "boolean"
+          } ]
+        }
+      },
+      "postAction" : {
+        "title" : "Post-Action",
+        "type" : "string",
+        "format" : "Wiki"
+      },
+      "description" : {
+        "title" : "Description",
+        "type" : "string"
+      },
+      "descFormat" : {
+        "title" : "Description Format",
+        "enum" : [ "Plain", "Html", "Wiki" ]
+      },
+      "comments" : {
+        "title" : "Comments/Attachments",
+        "type" : "array",
+        "items" : {
+          "title" : "Comment/Attachment",
+          "plural" : "Comments/Attachments",
+          "type" : "object",
+          "properties" : {
+            "uri" : {
+              "title" : "URI",
+              "type" : "string",
+              "format" : "uri"
+            },
+            "version" : {
+              "title" : "Version",
+              "type" : "integer"
+            },
+            "replyTo" : {
+              "title" : "Reply To",
+              "description" : "The parent comment where this comment is a reply to",
+              "type" : "object",
+              "properties" : {
+                "uri" : {
+                  "title" : "URI",
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "depth" : {
+              "title" : "Depth",
+              "type" : "integer"
+            },
+            "createdAt" : {
+              "title" : "Created",
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "createdBy" : {
+              "title" : "Created by",
+              "type" : "object",
+              "properties" : {
+                "uri" : {
+                  "title" : "URI",
+                  "type" : "string",
+                  "format" : "uri"
+                },
+                "name" : {
+                  "title" : "User Name",
+                  "type" : "string",
+                  "maxLength" : 40
+                }
+              },
+              "required" : [ "name" ]
+            },
+            "modifiedAt" : {
+              "title" : "Modified at",
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "modifier" : {
+              "title" : "Modified by",
+              "type" : "object",
+              "properties" : {
+                "uri" : {
+                  "title" : "URI",
+                  "type" : "string",
+                  "format" : "uri"
+                },
+                "name" : {
+                  "title" : "User Name",
+                  "type" : "string",
+                  "maxLength" : 40
+                }
+              },
+              "required" : [ "name" ]
+            },
+            "comment" : {
+              "title" : "Comment",
+              "type" : "string"
+            },
+            "commentFormat" : {
+              "title" : "Description Format",
+              "enum" : [ "Plain", "Html", "Wiki" ]
+            },
+            "attachments" : {
+              "title" : "Attachments",
+              "type" : "array",
+              "items" : {
+                "title" : "Attachment",
+                "plural" : "Attachments",
+                "type" : "object",
+                "properties" : {
+                  "uri" : {
+                    "title" : "URI",
+                    "type" : "string",
+                    "format" : "uri"
+                  },
+                  "version" : {
+                    "title" : "Version",
+                    "type" : "integer"
+                  },
+                  "name" : {
+                    "title" : "File",
+                    "type" : "string"
+                  },
+                  "size" : {
+                    "title" : "Size",
+                    "type" : "integer"
+                  },
+                  "modifiedAt" : {
+                    "title" : "Modified at",
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "modifier" : {
+                    "title" : "Modified by",
+                    "type" : "object",
+                    "properties" : {
+                      "uri" : {
+                        "title" : "URI",
+                        "type" : "string",
+                        "format" : "uri"
+                      },
+                      "name" : {
+                        "title" : "User Name",
+                        "type" : "string",
+                        "maxLength" : 40
+                      }
+                    },
+                    "required" : [ "name" ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "uniqueItems" : true
+      },
+      "children" : {
+        "title" : "Children",
+        "type" : "array",
+        "items" : {
+          "title" : "Item",
+          "plural" : "Items",
+          "type" : "object",
+          "properties" : {
+            "uri" : {
+              "title" : "URI",
+              "type" : "string",
+              "format" : "uri"
+            },
+            "name" : {
+              "title" : "Name",
+              "type" : "string"
+            }
+          }
+        },
+        "uniqueItems" : true
+      }
+    },
+    "required" : [ "name" ]
+  }
+}}}
+* __"permissions"__ defines per schema property, whether the current user can change/set/edit the (pre-set) property value of the item (3) or not (1), e.g.
+{{{
+  "permissions" : {
+    "id" : 1,
+    "parent" : 3,
+    "tracker" : 1,
+    "template" : 3,
+    "priority" : 3,
+    "name" : 3,
+    "status" : 1,
+    "type" : 3,
+    "submittedAt" : 1,
+    "submitter" : 1,
+    "modifiedAt" : 1,
+    "modifier" : 1,
+    "verifies" : 3,
+    "preAction" : 3,
+    "testSteps" : 3,
+    "postAction" : 3,
+    "description" : 3,
+    "descFormat" : 3,
+    "comments" : 3,
+    "children" : 3
+  }
+}}}
+\\
+After having set all additional "item" properties, you create the CMDB category item via:
+
+{{{POST /item}}}
+\\
+If you do not have any item attachments to upload, then the body simply contains the item object, otherwise the item to create must be in the part named "body" of a multipart request and each attachment must be an extra part (see the example for creating a new tracker item below).\\
+\\
+For example: Create the item only with a plain comment but no attachments
+{{{
+{
+  "name"        : "Test dimmer switch",
+  "tracker"     : "/project/Test/category/Test Cases",
+  "status"      : "New",
+  "priority"    : "High",
+  "type"        : "Functional",
+  "description" : "Test dimmer switch",
+  "descFormat"  : "Plain",
+  "preAction"   : "Prepare the test environment",
+  "testSteps"   : [ ["Switch on",   "Light is on",                    true ],
+ 		    ["Turn dimmer", "Its getting brighter or darker", false],
+		    ["Switch off",  "Light is off", 		      true ]
+                  ],
+  "postAction"  : "Cleanup the test environment",
+  "comments"    : { "comment" : "I have to test this" }
+}
+}}}
+\\
+
+!3 Submit a new top-level tracker item
+
+First you have to get the schema and a pre-initialized object for a new top-level tracker item:
+
+{{{GET {trackerURI}/newItem }}}
+\\
+For example:
+{{{GET https://hostname/cb/rest/project/Test/tracker/Tasks/newItem}}}
+
+The response contains 4 properties:
+* __"transition"__ (optional, schema: "{{/transition/schema}}") is the initial state transition, e.g.
+{{{
+  "transition" : {
+    "uri" : "/transition/79",
+    "tracker" : {
+      "uri" : "/tracker/1033",
+      "name" : "Tasks"
+    },
+    "name" : "Submit",
+    "descFormat" : "Plain",
+    "toStatus" : {
+      "id" : 1,
+      "name" : "New"
+    }
+  }
+}}}
+* __"item"__ is a tracker item object, where properties are already initialized to default values according to transition and initial status, e.g.
+{{{
+  "item" : {
+    "version" : 1,
+    "tracker" : {
+      "project" : {
+        "uri" : "/project/1",
+        "name" : "Test"
+      },
+      "uri" : "/tracker/1033",
+      "name" : "Tasks"
+    },
+    "status" : {
+      "id" : 1,
+      "name" : "New"
+    },
+    "submitter" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "descFormat" : "Plain"
+  }
+}}}
+* __"type"__ is the JSON schema to edit properties of the new tracker "item", e.g.
+{{{
+  "type" : {
+    "title" : "Task",
+    "plural" : "Tasks",
+    "description" : "Activities that need to be accomplished within a defined period of time",
+    "properties" : {
+      "uri" : {
+        "title" : "URI",
+        "type" : "string",
+        "format" : "uri"
+      },
+      "version" : {
+        "title" : "Version",
+        "type" : "integer",
+        "minimum" : 1
+      },
+      "parent" : {
+        "title" : "Parent",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "Name",
+            "type" : "string"
+          }
+        }
+      },
+      "tracker" : {
+        "title" : "Tracker",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "Name",
+            "type" : "string",
+            "maxLength" : 255
+          }
+        },
+        "required" : [ "name" ]
+      },
+      "priority" : {
+        "title" : "Priority",
+        "enum" : [ {
+          "id" : 5,
+          "name" : "Lowest"
+        }, {
+          "id" : 4,
+          "name" : "Low"
+        }, {
+          "id" : 3,
+          "name" : "Normal"
+        }, {
+          "id" : 2,
+          "name" : "High"
+        }, {
+          "id" : 1,
+          "name" : "Highest"
+        } ]
+      },
+      "name" : {
+        "title" : "Summary",
+        "type" : "string",
+        "maxLength" : 255
+      },
+      "status" : {
+        "title" : "Status",
+        "enum" : [ {
+          "id" : 1,
+          "name" : "New"
+        }, {
+          "id" : 2,
+          "name" : "Suspended"
+        }, {
+          "id" : 3,
+          "name" : "In progress"
+        }, {
+          "id" : 4,
+          "name" : "Partly completed"
+        }, {
+          "id" : 5,
+          "name" : "Completed"
+        } ]
+      },
+      "severity" : {
+        "title" : "Severity",
+        "enum" : [ {
+          "id" : 1,
+          "name" : "Blocker"
+        }, {
+          "id" : 2,
+          "name" : "Critical"
+        }, {
+          "id" : 3,
+          "name" : "Minor"
+        }, {
+          "id" : 4,
+          "name" : "Trivial"
+        } ]
+      },
+      "resolution" : {
+        "title" : "Resolution",
+        "enum" : [ {
+          "id" : 1,
+          "name" : "Successful"
+        }, {
+          "id" : 2,
+          "name" : "Invalid"
+        }, {
+          "id" : 3,
+          "name" : "Duplicate"
+        } ]
+      },
+      "release" : {
+        "title" : "Release",
+        "type" : "array",
+        "items" : {
+          "title" : "Item",
+          "plural" : "Items",
+          "type" : "object",
+          "properties" : {
+            "uri" : {
+              "title" : "URI",
+              "type" : "string",
+              "format" : "uri"
+            },
+            "name" : {
+              "title" : "Name",
+              "type" : "string"
+            }
+          }
+        },
+        "uniqueItems" : true,
+        "optionsURI" : "/tracker/1033/newItem/field/31/options"
+      },
+      "assignedTo" : {
+        "title" : "Assigned to",
+        "type" : "array",
+        "items" : {
+          "anyOf" : [ {
+            "title" : "User",
+            "plural" : "Accounts",
+            "type" : "object",
+            "properties" : {
+              "uri" : {
+                "title" : "URI",
+                "type" : "string",
+                "format" : "uri"
+              },
+              "name" : {
+                "title" : "User Name",
+                "type" : "string",
+                "maxLength" : 40
+              }
+            },
+            "required" : [ "name" ]
+          }, {
+            "title" : "Role",
+            "plural" : "Roles",
+            "type" : "object",
+            "properties" : {
+              "uri" : {
+                "title" : "URI",
+                "type" : "string",
+                "format" : "uri"
+              },
+              "name" : {
+                "title" : "Name",
+                "type" : "string"
+              }
+            },
+            "required" : [ "name" ]
+          } ]
+        },
+        "uniqueItems" : true,
+        "optionsURI" : "/tracker/1033/newItem/field/5/options"
+      },
+      "submittedAt" : {
+        "title" : "Submitted at",
+        "type" : "string",
+        "format" : "date-time"
+      },
+      "submitter" : {
+        "title" : "Submitted by",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "User Name",
+            "type" : "string",
+            "maxLength" : 40
+          }
+        },
+        "required" : [ "name" ]
+      },
+      "modifiedAt" : {
+        "title" : "Modified at",
+        "type" : "string",
+        "format" : "date-time"
+      },
+      "modifier" : {
+        "title" : "Modified by",
+        "type" : "object",
+        "properties" : {
+          "uri" : {
+            "title" : "URI",
+            "type" : "string",
+            "format" : "uri"
+          },
+          "name" : {
+            "title" : "User Name",
+            "type" : "string",
+            "maxLength" : 40
+          }
+        },
+        "required" : [ "name" ]
+      },
+      "startDate" : {
+        "title" : "Start Date",
+        "type" : "string",
+        "format" : "date-time"
+      },
+      "endDate" : {
+        "title" : "End Date",
+        "type" : "string",
+        "format" : "date-time"
+      },
+      "plannedEffort" : {
+        "title" : "Planned Effort",
+        "type" : "integer",
+        "minimum" : 0
+      },
+      "accruedMillis" : {
+        "title" : "Accrued Effort",
+        "type" : "integer",
+        "minimum" : 0
+      },
+      "spentEffort" : {
+        "title" : "Spent Effort",
+        "type" : "integer",
+        "minimum" : 0
+      },
+      "spentEstimatedHours" : {
+        "title" : "% Spent / Plan",
+        "type" : "number"
+      },
+      "description" : {
+        "title" : "Description",
+        "type" : "string"
+      },
+      "descFormat" : {
+        "title" : "Description Format",
+        "enum" : [ "Plain", "Html", "Wiki" ]
+      },
+      "comments" : {
+        "title" : "Comments/Attachments",
+        "type" : "array",
+        "items" : {
+          "title" : "Comment/Attachment",
+          "plural" : "Comments/Attachments",
+          "type" : "object",
+          "properties" : {
+            "uri" : {
+              "title" : "URI",
+              "type" : "string",
+              "format" : "uri"
+            },
+            "version" : {
+              "title" : "Version",
+              "type" : "integer"
+            },
+            "replyTo" : {
+              "title" : "Reply To",
+              "description" : "The parent comment where this comment is a reply to",
+              "type" : "object",
+              "properties" : {
+                "uri" : {
+                  "title" : "URI",
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "depth" : {
+              "title" : "Depth",
+              "type" : "integer"
+            },
+            "createdAt" : {
+              "title" : "Created",
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "createdBy" : {
+              "title" : "Created by",
+              "type" : "object",
+              "properties" : {
+                "uri" : {
+                  "title" : "URI",
+                  "type" : "string",
+                  "format" : "uri"
+                },
+                "name" : {
+                  "title" : "User Name",
+                  "type" : "string",
+                  "maxLength" : 40
+                }
+              },
+              "required" : [ "name" ]
+            },
+            "modifiedAt" : {
+              "title" : "Modified at",
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "modifier" : {
+              "title" : "Modified by",
+              "type" : "object",
+              "properties" : {
+                "uri" : {
+                  "title" : "URI",
+                  "type" : "string",
+                  "format" : "uri"
+                },
+                "name" : {
+                  "title" : "User Name",
+                  "type" : "string",
+                  "maxLength" : 40
+                }
+              },
+              "required" : [ "name" ]
+            },
+            "comment" : {
+              "title" : "Comment",
+              "type" : "string"
+            },
+            "commentFormat" : {
+              "title" : "Description Format",
+              "enum" : [ "Plain", "Html", "Wiki" ]
+            },
+            "attachments" : {
+              "title" : "Attachments",
+              "type" : "array",
+              "items" : {
+                "title" : "Attachment",
+                "plural" : "Attachments",
+                "type" : "object",
+                "properties" : {
+                  "uri" : {
+                    "title" : "URI",
+                    "type" : "string",
+                    "format" : "uri"
+                  },
+                  "version" : {
+                    "title" : "Version",
+                    "type" : "integer"
+                  },
+                  "name" : {
+                    "title" : "File",
+                    "type" : "string"
+                  },
+                  "size" : {
+                    "title" : "Size",
+                    "type" : "integer"
+                  },
+                  "modifiedAt" : {
+                    "title" : "Modified at",
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "modifier" : {
+                    "title" : "Modified by",
+                    "type" : "object",
+                    "properties" : {
+                      "uri" : {
+                        "title" : "URI",
+                        "type" : "string",
+                        "format" : "uri"
+                      },
+                      "name" : {
+                        "title" : "User Name",
+                        "type" : "string",
+                        "maxLength" : 40
+                      }
+                    },
+                    "required" : [ "name" ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "uniqueItems" : true
+      },
+      "children" : {
+        "title" : "Children",
+        "type" : "array",
+        "items" : {
+          "title" : "Item",
+          "plural" : "Items",
+          "type" : "object",
+          "properties" : {
+            "uri" : {
+              "title" : "URI",
+              "type" : "string",
+              "format" : "uri"
+            },
+            "name" : {
+              "title" : "Name",
+              "type" : "string"
+            }
+          }
+        },
+        "uniqueItems" : true
+      }
+    },
+    "required" : [ "name", "description" ]
+  }
+}}}
+* __"permissions"__ defines per schema property, whether the current user can change/set/edit the (pre-set) property value of the item (3) or not (1), e.g.
+{{{
+  "permissions" : {
+    "tracker" : 1,
+    "priority" : 3,
+    "name" : 3,
+    "status" : 1,
+    "severity" : 3,
+    "resolution" : 3,
+    "release" : 3,
+    "assignedTo" : 3,
+    "submittedAt" : 1,
+    "submitter" : 1,
+    "modifiedAt" : 1,
+    "modifier" : 1,
+    "startDate" : 3,
+    "endDate" : 3,
+    "plannedEffort" : 3,
+    "spentEffort" : 3,
+    "spentEstimatedHours" : 1,
+    "description" : 3,
+    "descFormat" : 3,
+    "comments" : 3
+  }
+}}}
+\\
+After having set all additional "item" properties, you create the tracker item via:
+
+{{{POST /item}}}
+\\
+If you do not have any item attachments to upload, then the body simply contains the item object, otherwise the item to create must be in the part named "body" of a multipart request and each attachment must be an extra part.\\
+\\
+For example: Create the item with an initial comment and two attachments:
+{{{
+POST https://hostname/cb/rest/item
+Authorization: (Data not shown)
+Accept: application/json
+Accept-Language: en
+Content-Type: multipart/form-data; boundary=--MULTIPART-BOUNDARY--
+Content-Length: 29278
+
+----MULTIPART-BOUNDARY--
+Content-Disposition: form-data; name="body"
+Content-type: application/json; charset=utf-8
+
+{
+  "name"        : "Add dimmer function to light switch",
+  "tracker"     : "/project/Test/tracker/Tasks",
+  "status"      : "New",
+  "priority"    : "High",
+  "assignedTo"  : "/role/Developer",
+  "description" : "When turning the on/off switch in the on position to the left or right, the light must get darker/brighter.",
+  "descFormat"  : "Plain"
+  "comments"    : [ {
+		    "comment"       : "This is an __example__ comment with two attachments",
+		    "commentFormat" : "Wiki",
+		    "attachments"   : [ { "name" : "file1.png" }, { "name" : "file2.jpg" } ]
+		  } ]
+}
+----MULTIPART-BOUNDARY--
+Content-Disposition: form-data; name="file1.png"; filename="file1.png"
+Content-Type: image/png
+
+(Binary data not shown)
+----MULTIPART-BOUNDARY--
+Content-Disposition: form-data; name="file2.jpg"; filename="file2.jpg"
+Content-Type: image/jpg
+
+(Binary data not shown)
+----MULTIPART-BOUNDARY----
+}}}
+\\
+
+!3 Submit a new sub/child item of an already existing tracker/category item
+
+First you have to get the schema and a pre-initialized object for a new child of the specified item:
+
+{{{GET {itemURI}/newChild}}}
+
+The rest is equivalent to creating a new top-level tracker/category item above.\\
+\\
+
+!3 Edit an existing item
+
+For tracker/category items with a Finite State Machine, editing means updating properties within the context of the current status. To change the status, you must execute a state transition (see below).\\
+\\
+First you have to get the schema and object for editing the item:
+
+{{{GET {itemURI}/edit}}}
+\\
+The response contains 3 properties:
+* __"item"__ is the item object to edit, with it's current property values.
+* __"type"__ is the JSON schema to edit properties of the "item".
+* __"permissions"__ defines per schema property, whether the current user can change/edit the property value (3) or not (1).
+\\
+After having modified "item" properties, you update the item via:
+
+{{{PUT /item}}}
+\\
+If you do not have any additional attachments to upload, then the body simply contains the item URI and the properties to update, otherwise the item URI and updated properties must be in the part named "body" of a multipart request and each new attachment must be an extra part.\\
+\\
+
+!3 Get the possible state transitions of an item
+
+{{{GET {itemURI}/transitions}}}
+\\
+Returns an array of the possible state transitions (schema: {{"/transition/schema"}}) in the current item status, e.g.
+{{{GET https://hostname/cb/rest/item/1000/transitions}}}
+
+{{{
+[ {
+  "uri" : "/transition/81",
+  "name" : "Start",
+  "descFormat" : "Plain"
+}, {
+  "uri" : "/transition/83",
+  "name" : "Complete",
+  "descFormat" : "Plain"
+} ]
+}}}
+\\
+
+!3 Execute a state transition
+
+To execute a state transition for an item, you first have to get the schema and a pre-initialized object for the item and transition target status:
+
+{{{GET {itemURI}/transition/{transitionId} }}}
+\\
+For example:
+{{{GET https://hostname/cb/rest/item/1000/transition/81}}}
+
+The response contains 4 properties:
+* __"transition"__ (schema: {{"/transition/schema"}}) is the requested state transition, e.g.
+{{{
+  "transition" : {
+    "uri" : "/transition/81",
+    "tracker" : {
+      "uri" : "/tracker/1033",
+      "name" : "Tasks"
+    },
+    "name" : "Start",
+    "descFormat" : "Plain",
+    "fromStatus" : {
+      "id" : 1,
+      "name" : "New"
+    },
+    "toStatus" : {
+      "id" : 3,
+      "name" : "In progress"
+    }
+  }
+}}}
+* __"item"__ is the item object, where "status" already reflects the transition target status, and any transition specific default values have been applied, e.g.
+{{{
+  "item" : {
+    "uri" : "/item/1000",
+    "version" : 1,
+    "tracker" : {
+      "project" : {
+        "uri" : "/project/1",
+        "name" : "Test"
+      },
+      "uri" : "/tracker/1033",
+      "name" : "Tasks"
+    },
+    "subject" : {
+      "uri" : "/item/1002",
+      "name" : "The light must be dimmable"
+    },
+    "priority" : {
+      "id" : 2,
+      "name" : "High"
+    },
+    "name" : "Add dimmer function to light switch",
+    "status" : {
+      "id" : 3,
+      "name" : "In progress"
+    },
+    "submittedAt" : "2013-03-12T14:38:06+01:00",
+    "submitter" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "modifiedAt" : "2013-03-12T14:38:59+01:00",
+    "modifier" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "description" : "When turning the on/off switch in the on position to the left or right, the light must get darker/brighter.",
+    "descFormat" : "Wiki",
+    "comments" : [ {
+      "uri" : "/item/1000/comment/1047",
+      "version" : 1,
+      "depth" : 0,
+      "createdAt" : "2013-03-12T14:38:59+01:00",
+      "createdBy" : {
+        "uri" : "/user/1",
+        "name" : "bond"
+      },
+      "modifiedAt" : "2013-03-12T14:38:59+01:00",
+      "modifier" : {
+        "uri" : "/user/1",
+        "name" : "bond"
+      },
+      "comment" : "This is an __example__ comment with two attachments",
+      "commentFormat" : "Wiki",
+      "attachments" : [ {
+        "uri" : "/item/1000/attachment/1047",
+        "version" : 1,
+        "name" : "file1.png",
+        "size" : 406,
+        "modifiedAt" : "2013-03-12T14:38:59+01:00",
+        "modifier" : {
+          "uri" : "/user/1",
+          "name" : "bond"
+        }
+      }, {
+        "uri" : "/item/1000/attachment/1048",
+        "version" : 1,
+        "name" : "file2.jpg",
+        "size" : 17828,
+        "modifiedAt" : "2013-03-12T14:38:59+01:00",
+        "modifier" : {
+          "uri" : "/user/1",
+          "name" : "bond"
+        }
+      } ]
+    } ]
+  }
+}}}
+* __"type"__ is the JSON schema to edit properties of the "item".
+* __"permissions"__ defines per schema property, whether the current user can change/edit the property value (3) or not (1).
+\\
+After having optionally modified additional "item" properties, you update the tracker item via:
+{{{PUT /item}}}
+\\
+If you do not have any additional attachments to upload, then the body __must__ contain the "item" object, otherwise the "item" object must be in the part named "body" of a multipart request and each new attachment must be an extra part.\\
+\\
+For example: Execute the transition with a comment and add an additional attachment:
+{{{
+PUT https://hostname/cb/rest/item
+Authorization: (Data not shown)
+Accept: application/json
+Accept-Language: en
+Content-Type: multipart/form-data; boundary=--MULTIPART-BOUNDARY--
+Content-Length: 43278
+
+----MULTIPART-BOUNDARY--
+Content-Disposition: form-data; name="body"
+Content-type: application/json; charset=utf-8
+
+{
+    "uri" : "/item/1000",
+    "version" : 1,
+    "tracker" : {
+      "project" : {
+        "uri" : "/project/1",
+        "name" : "Test"
+      },
+      "uri" : "/tracker/1033",
+      "name" : "Tasks"
+    },
+    "priority" : {
+      "id" : 1,
+      "name" : "Highest"
+    },
+    "name" : "Add dimmer function to light switch",
+    "status" : {
+      "id" : 3,
+      "name" : "In progress"
+    },
+    "submittedAt" : "2013-03-12T14:38:06+01:00",
+    "submitter" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "modifiedAt" : "2013-03-12T14:38:59+01:00",
+    "modifier" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "description" : "When turning the on/off switch in the on position to the left or right, the light must get darker/brighter.",
+    "descFormat" : "Wiki",
+    "comments" : {
+      "comment" : "Starting work is absolutely necessary, in order to get things done ;-)",
+      "commentFormat" : "Plain",
+      "attachments" : { "name" : "ToDo.doc" }
+     }
+}
+----MULTIPART-BOUNDARY--
+Content-Disposition: form-data; name="ToDo.doc"; filename="ToDo.doc"
+Content-Type: application/msword
+
+(Binary data not shown)
+----MULTIPART-BOUNDARY----
+}}}
+
+In order to add new comments/attachments, simply add them to the {{"attachments"}} array property as shown above. It is not necessary (even preferrable) to not re-send existing comments in the {{PUT /item}} request. This does not harm, because you cannot update or delete comments via {{PUT /item}}, only via the special requests below.\\
+\\
+
+!3 Add a new item comment (plus attachments)
+
+{{{POST {itemURI}/comment}}}
+\\
+If you only want to add a comment without attachments, then the body simply contains the comment object, otherwise the comment object must be in the part named "body" of a multipart request and each new attachment must be an extra part.\\
+\\
+For example: Add a comment, which is a reply to a previous comment, without attachments:
+{{{POST https://hostname/cb/rest/item/1000/comment}}}
+
+{{{
+{
+  "replyTo" : "/item/1000/comment/1049",
+  "comment" : "Now, that we've got so far, we should also bring it to an end !"
+}
+}}}
+\\
+
+!3 Update an existing item comment (including attachments)
+
+{{{PUT {itemURI}/comment}}}
+\\
+If you only want to modify a comment, then the body simply contains the comment uri and the comment text, otherwise the comment object must be in the part named "body" of a multipart request and each attachment to add or replace must be an extra part.\\
+\\
+For example: Add a picture to the comment and also embed the picture into the comment text (via a Wiki image reference).
+{{{
+PUT https://hostname/cb/rest/item/1000/comment
+Authorization: (Data not shown)
+Accept: application/json
+Accept-Language: en
+Content-Type: multipart/form-data; boundary=--MULTIPART-BOUNDARY--
+Content-Length: 43278
+
+----MULTIPART-BOUNDARY--
+Content-Disposition: form-data; name="body"
+Content-type: application/json; charset=utf-8
+
+{
+    "uri"           : "/item/1000/comment/1050",
+    "version"       : 1,
+    "comment"       : "Now, that we've got so far, we should also bring it to an end ! [!cube.png!]",
+    "commentFormat" : "Wiki",
+    "attachments"   : { "name" : "cube.png" }
+}
+----MULTIPART-BOUNDARY--
+Content-Disposition: form-data; name="cube.png"; filename="cube.png"
+Content-Type: image/png
+
+(Binary data not shown)
+----MULTIPART-BOUNDARY----
+}}}
+\\
+
+!3 Delete an existing item comment (including attachments)
+
+{{{DELETE {itemCommentURI} }}}
+
+This will also delete all replies to the comment (recursively).\\
+\\
+
+!3 Add new item attachments
+
+{{{POST {itemURI}/attachment}}}
+
+This is a special variant to attach files without a comment. The request must be a multipart request, one part per file to attach. No "body" part.\\
+\\
+
+!3 Get the content of a file attached to an item
+
+{{{GET {itemAttachmentURI} }}}
+
+For example:
+{{{GET https://hostname/cb/rest/item/1000/attachment/1047}}}
+
+This will return the content of the attached file (in the example "file1.png") in the response body (incl. file name and content type).\\
+\\
+
+!3 Get the content of a file attached to an item by name
+
+You can also get the attachments of an item by name, just use the attachment name as last part of the uri.\\
+
+For example:
+
+{{{GET https://hostname/cb/rest/item/1000/attachment/file1.png}}}
+
+This will return the content of the attached file named "file1.png" in the response body (incl. file name and content type).\\
+
+!3 Update the content of a file attached to an item
+
+{{{PUT {itemAttachmentURI} }}}
+
+The request body must contain the new file content (either singlepart or multipart with one part).\\
+\\
+
+!3 Remove a file attached to an item
+
+{{{REMOVE {itemAttachmentURI} }}}
+\\
+
+!3 Get the schema for an item
+
+{{{GET {itemURI}/schema}}}
+\\
+
+!3 Get information about an item
+
+{{{GET {itemURI} }}}
+\\
+
+!3 Get the item history schema
+
+{{{GET /item/history/schema}}}
+\\
+
+!3 Get the change history of an item
+
+{{{GET {itemURI}/history}}}
+\\
+For example:
+{{{GET https://hostname/cb/rest/item/1001/history}}}
+
+{{{
+[ {
+  "version" : 1,
+  "submittedAt" : "2013-03-20T10:52:43+01:00",
+  "submitter" : {
+    "uri" : "/user/1",
+    "name" : "bond"
+  },
+  "transition" : {
+    "uri" : "/transition/null",
+    "name" : "Submit",
+    "descFormat" : "Plain"
+  },
+  "changes" : [ ]
+}, {
+  "version" : 2,
+  "submittedAt" : "2013-03-20T10:52:44+01:00",
+  "submitter" : {
+    "uri" : "/user/1",
+    "name" : "bond"
+  },
+  "transition" : {
+    "uri" : "/transition/232",
+    "name" : "Design",
+    "descFormat" : "Plain"
+  },
+  "changes" : [ {
+    "field" : "status",
+    "oldValue" : {
+      "id" : 1,
+      "name" : "New"
+    },
+    "newValue" : {
+      "id" : 2,
+      "name" : "In Design"
+    }
+  } ]
+} ]
+}}}
+\\
+
+!3 Get the children (sub items) of an item
+
+{{{GET {itemURI}/children}}}
+\\
+This returns fully populated objects for all children of the specified item, in contrast to the "children" property of the item, that only contains children reference information.\\
+\\
+
+!3 Get a summary of other items referring to an item
+
+{{{GET {itemURI}/references/summary[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|type|String|No|Comma-separated list of Tracker/CMDB (item) types (ids or names (singular or plural)) to only show referring items of these types. Default is any type.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+\\
+E.g. Get a summary of items referencing the requirement {{/item/1001}}:
+{{{GET https://hostname/cb/rest/item/1001/references/summary}}}
+
+{{{
+{
+  "All" : [ {
+    "field" : "Total",
+    "label" : "Total",
+    "total" : 2,
+    "open" : 2,
+    "overTime" : 0
+  }, {
+    "field" : "Subject",
+    "label" : "Subject",
+    "total" : 1,
+    "open" : 1,
+    "overTime" : 0
+  }, {
+    "field" : "Verifies",
+    "label" : "Verifies",
+    "total" : 1,
+    "open" : 1,
+    "overTime" : 0
+  } ],
+  "Tasks" : [ {
+    "field" : "Total",
+    "label" : "Total",
+    "total" : 1,
+    "open" : 1,
+    "overTime" : 0
+  }, {
+    "field" : "Subject",
+    "label" : "Subject",
+    "total" : 1,
+    "open" : 1,
+    "overTime" : 0
+  } ],
+  "Test cases" : [ {
+    "field" : "Total",
+    "label" : "Total",
+    "total" : 1,
+    "open" : 1,
+    "overTime" : 0
+  }, {
+    "field" : "Verifies",
+    "label" : "Verifies",
+    "total" : 1,
+    "open" : 1,
+    "overTime" : 0
+  } ]
+}
+}}}
+\\
+In this example, there are two items referring to the requirement:
+* one Test Case, that "Verifies" the requirement, and
+* one Task whose "Subject" is to implement the requirement.
+\\
+
+!3 Get other items referring to an item
+
+{{{GET {itemURI}/references[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|field|String|No|Name of a reference field, to only show referring items, that refer to this item via this field. Default is any field.
+|type|String|No|Comma-separated list of Tracker/CMDB (item) types (ids or names (singular or plural)) to only show referring items of these types. Default is any type.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+\\
+E.g. Get all items (any type, any status) referencing the requirement {{/item/1001}} via any field:
+{{{GET https://hostname/cb/rest/item/1001/references}}}
+
+{{{
+[ {
+  "uri" : "/item/1004",
+  "version" : 1,
+  "field" : [ "verifies" ],
+  "tracker" : {
+    "uri" : "/category/1027",
+    "name" : "Test Cases"
+  },
+  "priority" : {
+    "id" : 2,
+    "name" : "High"
+  },
+  "name" : "Test dimmer switch",
+  "status" : {
+    "id" : 1,
+    "name" : "New"
+  },
+  "type" : {
+    "id" : 3,
+    "name" : "Functional"
+  },
+  "submittedAt" : "2013-03-20T11:06:53+01:00",
+  "submitter" : {
+    "uri" : "/user/1",
+    "name" : "bond"
+  },
+  "modifiedAt" : "2013-03-20T11:06:53+01:00",
+  "modifier" : {
+    "uri" : "/user/1",
+    "name" : "bond"
+  },
+  "verifies" : [ {
+    "uri" : "/item/1002",
+    "name" : "The light must be dimmable"
+  } ],
+  "preAction" : "Prepare the test environment",
+  "testSteps" : [ [ "Switch on", "Light is on", true ], [ "Turn dimmer", "Its getting brighter or darker", false ], [ "Switch off", "Light is off", true ] ],
+  "postAction" : "Cleanup the test environment",
+  "description" : "Test dimmer switch",
+  "descFormat" : "Wiki"
+}, {
+  "uri" : "/item/1003",
+  "version" : 1,
+  "field" : [ "subject" ],
+  "tracker" : {
+    "uri" : "/tracker/1033",
+    "name" : "Tasks"
+  },
+  "priority" : {
+    "id" : 2,
+    "name" : "High"
+  },
+  "name" : "Add dimmer function to light switch",
+  "status" : {
+    "id" : 1,
+    "name" : "New"
+  },
+  "subject" : {
+    "uri" : "/item/1002",
+    "name" : "The light must be dimmable"
+  },
+  "severity" : {
+    "id" : 2,
+    "name" : "Critical"
+  },
+  "assignedTo" : [ {
+    "uri" : "/role/2",
+    "name" : "Developer"
+  } ],
+  "submittedAt" : "2013-03-20T11:04:06+01:00",
+  "submitter" : {
+    "uri" : "/user/1",
+    "name" : "bond"
+  },
+  "modifiedAt" : "2013-03-20T11:04:06+01:00",
+  "modifier" : {
+    "uri" : "/user/1",
+    "name" : "bond"
+  },
+  "description" : "When turning the on/off switch in the on position to the left or right, the light must get darker/brighter.",
+  "descFormat" : "Wiki"
+} ]
+}}}
+\\
+
+!3 Get other items related to an item
+
+{{{GET {itemURI}/relatedIssues/page/{pageNo} }}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+\\
+
+!3 Get a summary of all items related to a user
+
+{{{GET {userURI}/item/summary[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|role|String|No|Comma-separated list of item member fields (ids or names), that must refer to the user (if onlyDirect=true) or to a role owned by the user (if onlyDirect=false), e.g. submitter, assignee, owner, supervisor.
+|type|String|No|Comma-separated list of Tracker/CMDB (item) types (ids or names (singular or plural)) to only show referring items of these types. Default is any type.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+|onlyDirect|boolean|No|Whether to only show items directly related to the user (true) or also items indirectly related via the user's role (false). Default is false.
+\\
+E.g. Get summary of all unresolved bugs and tasks assigned to the user bond directly or indirectly
+{{{GET https://hostname/cb/rest/user/bond/item/summary?role=assigned to&type=Bugs,Tasks&status=Unresolved}}}
+
+{{{
+{
+  "Total" : {
+    "total" : 2,
+    "today" : 0,
+    "tomorrow" : 0,
+    "next7Days" : 0
+  },
+  "assignedTo" : {
+    "total" : 2,
+    "today" : 0,
+    "tomorrow" : 0,
+    "next7Days" : 0
+  }
+}
+}}}
+\\
+
+!3 Get items related to a user
+
+{{{GET {userURI}/items/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|role|String|No|Comma-separated list of item member fields (ids or names), that must refer to the user (if onlyDirect=true) or to a role owned by the user (if onlyDirect=false), e.g. submitter, assignee, owner, supervisor.
+|type|String|No|Comma-separated list of Tracker/CMDB (item) types (ids or names (singular or plural)) to only show referring items of these types. Default is any type.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+|onlyDirect|boolean|No|Whether to only show items directly related to the user (true) or also items indirectly related via the user's role (false). Default is false.
+\\
+E.g. Get first page of all unresolved bugs and tasks assigned to the user bond directly or indirectly
+{{{GET https://hostname/cb/rest/user/bond/items/page/1?role=assigned to&type=Bugs,Tasks&status=Unresolved}}}
+
+{{{
+{
+  "page" : 1,
+  "size" : 100,
+  "total" : 2,
+  "items" : [ {
+    "uri" : "/item/1009",
+    "version" : 1,
+    "tracker" : {
+      "project" : {
+        "uri" : "/project/1",
+        "name" : "Test"
+      },
+      "uri" : "/tracker/1032",
+      "name" : "Bugs"
+    },
+    "priority" : {
+      "id" : 5,
+      "name" : "Lowest"
+    },
+    "name" : "Documentation is not complete",
+    "status" : {
+      "id" : 1,
+      "name" : "New"
+    },
+    "submittedAt" : "2013-03-20T15:03:21+01:00",
+    "submitter" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "modifiedAt" : "2013-03-20T15:03:21+01:00",
+    "modifier" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "assignedTo" : [ {
+      "uri" : "/user/1",
+      "name" : "bond"
+    } ],
+    "description" : "Finish it!",
+    "descFormat" : "Wiki"
+  }, {
+    "uri" : "/item/1007",
+    "version" : 1,
+    "tracker" : {
+      "project" : {
+        "uri" : "/project/1",
+        "name" : "Test"
+      },
+      "uri" : "/tracker/1033",
+      "name" : "Tasks"
+    },
+    "priority" : {
+      "id" : 2,
+      "name" : "High"
+    },
+    "name" : "Check Rest API documentation",
+    "status" : {
+      "id" : 1,
+      "name" : "New"
+    },
+    "assignedTo" : [ {
+      "uri" : "/role/1",
+      "name" : "Project Admin"
+    } ],
+    "submittedAt" : "2013-03-20T15:02:31+01:00",
+    "submitter" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "modifiedAt" : "2013-03-20T15:02:31+01:00",
+    "modifier" : {
+      "uri" : "/user/1",
+      "name" : "bond"
+    },
+    "description" : "Check Rest API documentation",
+    "descFormat" : "Wiki"
+  } ]
+}
+}}}
+\\
+
+!3 Get a summary of all items related to a user, grouped per project
+
+{{{GET {userURI}/projects/item/summary[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|role|String|No|Comma-separated list of item member fields (ids or names), that must refer to the user (if onlyDirect=true) or to a role owned by the user (if onlyDirect=false), e.g. submitter, assignee, owner, supervisor.
+|type|String|No|Comma-separated list of Tracker/CMDB (item) types (ids or names (singular or plural)) to only show referring items of these types. Default is any type.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+|onlyDirect|boolean|No|Whether to only show items directly related to the user (true) or also items indirectly related via the user's role (false). Default is false.
+\\
+
+!3 Get a summary of items related to a user in a specific project
+
+{{{GET {userURI}{projectURI}/item/summary[?query] }}}
+{{{GET {projectURI}{userURI}/item/summary[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|role|String|No|Comma-separated list of item member fields (ids or names), that must refer to the user (if onlyDirect=true) or to a role owned by the user (if onlyDirect=false), e.g. submitter, assignee, owner, supervisor.
+|type|String|No|Comma-separated list of Tracker/CMDB (item) types (ids or names (singular or plural)) to only show referring items of these types. Default is any type.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+|onlyDirect|boolean|No|Whether to only show items directly related to the user (true) or also items indirectly related via the user's role (false). Default is false.
+\\
+
+!3 Get items related to a user in a specific project
+
+{{{GET {userURI}{projectURI}/items/page/{page}[?query]}}}
+{{{GET {projectURI}{userURI}/items/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|role|String|No|Comma-separated list of item member fields (ids or names), that must refer to the user (if onlyDirect=true) or to a role owned by the user (if onlyDirect=false), e.g. submitter, assignee, owner, supervisor.
+|type|String|No|Comma-separated list of Tracker/CMDB (item) types (ids or names (singular or plural)) to only show referring items of these types. Default is any type.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+|onlyDirect|boolean|No|Whether to only show items directly related to the user (true) or also items indirectly related via the user's role (false). Default is false.
+\\
+
+!3 Get a summary of items related to a user in a specific tracker/category
+
+{{{GET {userURI}{trackerURI}/item/summary[?query] }}}
+{{{GET {trackerURI}{userURI}/item/summary[?query] }}}
+{{{GET {userURI}{categoryURI}/item/summary[?query] }}}
+{{{GET {categoryURI}{userURI}/item/summary[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|role|String|No|Comma-separated list of item member fields (ids or names), that must refer to the user (if onlyDirect=true) or to a role owned by the user (if onlyDirect=false), e.g. submitter, assignee, owner, supervisor.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+|onlyDirect|boolean|No|Whether to only show items directly related to the user (true) or also items indirectly related via the user's role (false). Default is false.
+\\
+
+!3 Get items related to a user in a specific tracker/category
+
+{{{GET {userURI}{trackerURI}/items/page/{page}[?query]}}}
+{{{GET {trackerURI}{userURI}/items/page/{page}[?query]}}}
+{{{GET {userURI}{categoryURI}/items/page/{page}[?query]}}}
+{{{GET {categoryURI}{userURI}/items/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of items, valid range is ~[1 .. 500~]. Default is 100.
+|role|String|No|Comma-separated list of item member fields (ids or names), that must refer to the user (if onlyDirect=true) or to a role owned by the user (if onlyDirect=false), e.g. submitter, assignee, owner, supervisor.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show referring items with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return items that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+|onlyDirect|boolean|No|Whether to only show items directly related to the user (true) or also items indirectly related via the user's role (false). Default is false.
+\\
+\\
+
+!2 Forums
+
+Forums have URIs of the form: "__/forum/''{id}''__" or "__{projectURI}/forum/''{name}''__", where ''{id}'' is the internal unique forum id/number and ''{name}'' is the forum name, which is only unique within a project.\\
+\\
+
+!3 Get the available forum permissions
+
+{{{GET /forum/permissions}}}
+\\
+All forum permissions are predefined. You cannot create, update or delete forum permissions.\\
+\\
+
+!3 Get a forum permission
+
+{{{GET /forum/permission/{permissionIdOrName} }}}
+\\
+Get the immutable definition of a forum permission.\\
+\\
+
+!3 Get the forum schema
+
+{{{GET /forum/schema}}}
+\\
+
+!3 Create a new forum
+
+{{{POST /forum}}}
+\\
+The request body must contain a valid forum object with all required properties, e.g.:
+{{{
+{
+  "project"     : "/project/1",
+  "name"        : "News",
+  "keyName"     : "NEWS",
+  "description" : "News about the project",
+  "descFormat"  : "Plain"
+}
+}}}
+\\
+
+!3 Create a new forum as a clone of another forum
+
+{{{POST {forumURI}/clone}}}
+\\
+The request body must contain a valid forum object, same as above, but the new forum will use the specified forum as template and inherit the forum schema and permissions.
+\\
+
+!3 Update forum settings
+
+{{{PUT /forum}}}
+\\
+The request body must contain the forum URI and the properties to update, e.g. to change the description of a forum:
+{{{
+{
+  "uri"         : "/project/1/forum/News",
+  "description" : "__Important__ News about the project",
+  "descFormat"  : "Wiki"
+}
+}}}
+\\
+
+!3 Delete a forum
+
+{{{DELETE {forumURI} }}}
+\\
+
+!3 Get a forum definition
+
+{{{GET {forumURI} }}}
+\\
+
+!3 Get the forum post schema
+
+{{{GET {forumURI}/schema}}}
+\\
+Note: You cannot configure the post schema of a forum via the REST API.\\
+\\
+
+!3 Get all granted forum permissions per role
+
+{{{GET {forumURI}/roles/permissions }}}
+\\
+
+!3 Get the forum permissions granted to a specific role
+
+{{{GET {forumURI}{roleURI}/permissions }}}
+{{{GET {roleURI}{forumURI}/permissions }}}
+\\
+
+!3 Set the forum permissions for a specific role
+
+{{{PUT {forumURI}{roleURI}/permissions }}}
+{{{PUT {roleURI}{forumURI}/permissions }}}
+\\
+The request body must contain an array of forum permissions to grant to the role (passing the permission id or name is sufficient), e.g.:
+{{{
+  [ "Issue - View Any", "Issue - View Comments/Attachments" ]
+}}}
+\\
+
+!3 Remove all forum permissions for a specific role
+
+{{{DELETE {forumURI}{roleURI}/permissions }}}
+{{{DELETE {roleURI}{forumURI}/permissions }}}
+\\
+
+!3 Get the effective permissions of a user on a forum
+
+{{{GET {forumURI}{userURI}/permissions }}}
+{{{GET {userURI}{forumURI}/permissions }}}
+\\
+
+!3 Get a list of all forums in a project
+
+{{{GET {projectURI}/forums[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|hidden|boolean|No|True to also show hidden forums. Default is false.
+|deleted|boolean|No|If true, also show removed forums. Default is false.
+\\
+E.g. Show all forums in the test project:
+{{{GET https://hostname/cb/rest/project/1/forums?hidden=true}}}
+\\
+
+!3 Get a list of all forums visible to a user (grouped by project)
+
+{{{GET {userURI}/forums[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|hidden|boolean|No|True to also show hidden forums. Default is false.
+|deleted|boolean|No|If true, also show removed forums. Default is false.
+\\
+
+!3 Get a list of all forums in a project visible to a user
+
+{{{GET {userURI}{projectURI}/forums[?query] }}}
+{{{GET {projectURI}{userURI}/forums[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|hidden|boolean|No|True to also show hidden forums. Default is false.
+|deleted|boolean|No|If true, also show removed forums. Default is false.
+\\
+
+!3 Get a list of all forums where a user has a specific permission (grouped by project)
+
+{{{GET {userURI}/forums/permission/{permissionIdOrName}[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|permissionIdOrName|String|Yes|Id or Name of a forum permission
+|hidden|boolean|No|True to also show hidden forums. Default is false.
+|deleted|boolean|No|If true, also show removed forums. Default is false.
+\\
+E.g. Find all forums where the current user has permission to add posts:
+{{{GET https://hostname/cb/rest/user/self/forums/permission/Issue - Add}}}
+\\
+
+!3 Get a list of all forums in a project where a user has a specific permission
+
+{{{GET {userURI}{projectURI}/forums/permission/{permissionIdOrName}[?query] }}}
+{{{GET {projectURI}{userURI}/forums/permission/{permissionIdOrName}[?query] }}}
+\\
+||Parameter||Type||Required||Meaning
+|permissionIdOrName|String|Yes|Id or Name of a forum permission
+|hidden|boolean|No|True to also show hidden forums. Default is false.
+|deleted|boolean|No|If true, also show removed forums. Default is false.
+\\
+
+!3 Get a summary of all posts in a forum
+
+{{{GET {forumURI}/post/summary}}}
+\\
+For example:
+{{{GET https://hostname/cb/rest/project/1/forum/News/post/summary}}}
+
+{{{
+{
+  "total" : 12,
+  "open"  : 12
+}
+}}}
+\\
+
+!3 Get a page of forum posts
+
+{{{GET {forumURI}/posts/page/{page}[?query]}}}
+\\
+||Parameter||Type||Required||Meaning
+|page|int|Yes|Number of the result page to return. First page has number 1.
+|pagesize|int|No|Page size in number of posts, valid range is ~[1 .. 500~]. Default is 100.
+|status|String|No|One of {"Open", "Closed", "Resolved", "Unresolved", "Successful", "Unsuccessful"} to only show forum posts with this (meta) status. Default is any status.
+|newerThen|String|No|A timestamp, to only return posts that were created/modified after this date and time.\\You can specify a relative timestamp as "~[{This ~| Last ~[n~]}~] ~[{minute ~| hour ~| day ~| week ~| month ~| quarter ~| year}~[s~]~]", where "Today" is a synonym for "This day" and "Yesterday" is a synonym for "Last day", e.g. "Last week", "This month", "Last 2 days"; or as "hh~[:mm~[:ss~]~]"; or as "n {h~[our~] ~| m~[in~[ute~]~] ~| s~[ec~[ond~]~]}~[s~]", e.g. "30 min", "6 hours".\\An absolute timestamp is specified in ISO 8601 format, e.g. "2013-03-12T14:38:06+01:00".
+\\
+
+!3 Submit a new forum post
+
+Similar to CMDB/Tracker items, you can also request the initial "item", "schema" and "permissions" for a new forum post via
+{{{GET {forumURI}/newPost}}}
+\\
+But typically this can be ommitted, because the forum schema is very simply and forum posts also only have a limited set of properties.\\
+So you should be save to post new items directly:
+\\
+{{{POST /item}}}
+\\
+If you do not have any item attachments to upload, then the body simply contains the item object, otherwise the item to create must be in the part named "body" of a multipart request and each attachment must be an extra part (see the example for creating a new tracker item below).\\
+\\
+For example: Create a simple forum post, without attachments
+{{{
+{
+  "tracker"     : "/project/Test/forum/News",
+  "name"        : "New REST API available now!",
+  "description" : "Did you know, that you can now also create forum posts via REST API ?",
+  "descFormat"  : "Plain"
+}
+}}}
+\\
+Please note: Only top level forum posts are items! You can apply all item operations also on forum posts, including updating and deleting items.\\
+Replies to top-level forum posts or to other replies are comments. See the description of adding, updating and removing item comments.\\
+\\
+\\
+
+!2 Client side implementations
+
+Because the REST API is completely platform independent, your are free to choose the development and runtime environment most suitable to you.\\
+\\
+Support for [HTTP|http://en.wikipedia.org/wiki/HTTP], [JSON|http://en.wikipedia.org/wiki/JSON] and [JSON Schema|http://json-schema.org/implementations.html] is available in almost any modern programming language/environment.\\
+\\
+%%information Any implementation examples given here or elsewhere do not mean that this is the preferred or best way to implement things, it's just one way to implement it.%%
+\\
+
+!3 Java sample implementation
+
+We show a sample [Java|http://en.wikipedia.org/wiki/Java_(programming_language)] client for the REST API based on the [Spring 3.2|http://www.springsource.org] [Rest Template|http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/web/client/RestTemplate.html].\\
+\\
+Again: This is not the preferred or best Java implementation, it is just one way to implement it!\\
+\\
+In the examples, we either use generic Java Maps or [JSON|http://jackson.codehaus.org/1.0.1/javadoc/org/codehaus/jackson/JsonNode.html] objects, to represent objects as sparse sets of name/value pairs.\\
+There are tools to convert [JSON Schema|http://json-schema.org] into Java Classes, e.g. [http://www.jsonschema2pojo.org/], but we do not recommend to do it that way (at least not for tracker/category item schemas), because these schemas can be extended and customized at run time, which would break any clients relying on a pre-compiled schema to class model.\\
+\\
+The examples also assume, that a project with name "Test" already exists and that the user whose {{username}} and {{password}} are used for the REST API calls has the role "Project Admin" in the "Test" project.\\
+\\
+
+!4 Setup the REST API connection
+
+{{{
+final String restUrl 	= "http://localhost:8080/cb/rest";
+final String username   = ...
+final String password   = ...
+final String authHeader = "Basic " + Base64.encode((username + ":" + password).getBytes("UTF-8"));
+
+// Create a HttpRequestFactory that passes the required Basic "Authorization" header
+final SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory() {
+	@Override
+	protected void prepareConnection(HttpURLConnection connection, String httpMethod) throws IOException {
+		super.prepareConnection(connection, httpMethod);
+
+		connection.setRequestProperty("Authorization", authHeader);
+	}
+};
+
+// Create a RestTemplate that uses the pre-configured HttpRequestFactory
+final RestTemplate restApi = new RestTemplate(requestFactory);
+
+// We need two HttpMessageConverters for the Rest API:
+// A JSON converter for singlepart messages and for multipart message parts with "Content-type: application/json"
+MappingJacksonHttpMessageConverter jsonConverter = new MappingJacksonHttpMessageConverter();
+
+// And a converter for Content-type: multipart/form-data
+FormHttpMessageConverter multiPartConverter = new FormHttpMessageConverter();
+multiPartConverter.addPartConverter(jsonConverter);
+
+List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>(2);
+converters.add(multiPartConverter);
+converters.add(jsonConverter);
+
+restApi.setMessageConverters(converters);
+}}}
+\\
+
+!4 Create a new Test Case
+
+{{{
+// Get the necessary information to create a new test case
+Map<String,Object> newTestCaseContext = restApi.getForObject(restUrl + "/project/Test/category/Test Cases/newItem", Map.class);
+
+// Set additional test case attributes
+Map<String,Object> testCaseAttrs = newTestCaseContext.get("item");
+
+testCaseAttrs.put("name",        "Test dimmer switch");
+testCaseAttrs.put("description", "Test the new dim function of the lights switch");
+testCaseAttrs.put("priority",    "High");
+testCaseAttrs.put("type",        "Functional");
+testCaseAttrs.put("preAction",   "Prepare the test environment");
+testCaseAttrs.put("postAction",  "Cleanup the test environment");
+testCaseAttrs.put("testSteps",    Arrays.asList(
+                                    Arrays.asList("Switch on",   "Light is on",                    Boolean.TRUE , ""),
+                                    Arrays.asList("Turn dimmer", "Its getting brighter or darker", Boolean.FALSE, ""),
+                                    Arrays.asList("Switch off",  "Light is off",                   Boolean.TRUE , "")
+                                  ));
+testCaseAttrs.put("comments",    Collections.singletonMap("comment", "I have to test this"));
+
+// Now create the new Test Case
+ObjectNode testCaseRef = restApi.postForObject(restUrl + "/item", testCaseAttrs, ObjectNode.class);
+
+// Get URI of the newly created Test Case
+String testCaseURI = testCaseRef.get("uri").asText();
+}}}
+\\
+
+!4 Find unresolved Test Cases by category
+
+{{{
+ArrayNode newUnresolvedTestCases = restApi.getForObject(restUrl + "/project/Test/category/Test Cases/items?status=Unresolved&newerThen=10 min", ArrayNode.class);
+}}}
+\\
+
+!4 Find Test Cases created by ourselves within the last 10min
+
+{{{
+ArrayNode myRecentlySubmittedTestCases = restApi.getForObject(restUrl + "/user/self/items?role=submitter&type=Test Case&newerThen=10 min", ArrayNode.class);
+}}}
+\\
+
+!4 Execute a state transition on the new Test Case
+
+{{{
+// Get the next possible state transitions for the test case
+ArrayNode transitions = restApi.getForObject(restUrl + testCaseURI + "/transitions", ArrayNode.class);
+
+// Pick the first transition (not very useful, but this is only an example)
+String transitionURI = transitions.get(0).get("uri").asText();
+
+// Prepare transition execution
+Map<String,Object> transitionContext = restApi.getForObject(restUrl + testCaseURI + transitionURI, Map.class);
+
+// Add a comment with a single file attachment to the Test Case
+Map<String,Object> comment = new LinkedHashMap<String,Object>(4);
+comment.put("comment",       "__This__ is only for testing: Here goes the image: [!Image.jpg!]");
+comment.put("commentFormat", "Wiki");
+comment.put("attachments",   Collections.singletonMap("name", "Image.jpg"));
+
+// Set additional attributes we want to change upon this state transition
+Map<String,Object> testCaseAttrs = transitionContext.get("item");
+testCaseAttrs.put("comments", comment);
+
+// Because we have an attachment, we need a multipart message
+MultiValueMap<String,Object> multipart = new LinkedMultiValueMap<String,Object>();
+
+// The TestCase object goes into the "body" part
+multipart.add("body", testCaseAttrs);
+
+// The image file to attach goes into an extra part (we simply assume the "Image.jpg" file is in our class path)
+multipart.add("Image.jpg", new ClassPathResource("Image.jpg", getClass());
+
+// Execute the TestCase state transition
+restApi.put(restUrl + "/item", multipart);
+}}}
+\\
+
+!4 Add a reply to a previous comment on the Test Case
+
+{{{
+// Reload the Test Case object, in order to get accurate comments list
+ObjectNode testCase = restApi.getForObject(restUrl + testCaseURI, ObjectNode.class);
+
+// Now create a reply to the first comment on the TestCase
+String firstCommentURI = testCase.get("comments").get(0).get("uri").asText();
+
+// We simply reply to the first comment on the TestCase
+Map<String,Object> reply = new LinkedHashMap<String,Object>(4);
+reply.put("replyTo", firstCommentURI);
+reply.put("comment", "Yes, I totally agree !");
+
+// Now post the reply
+URI replyURI = restApi.postForLocation(restUrl + testCaseURI + "/comment", reply);
+}}}
+\\
+
+!4 Update an existing comment on the Test Case
+
+We use the reply from the previous example, because we already know it's URI.
+{{{
+// We need a multipart request, because we add an additional attachment
+LinkedMultiValueMap<String,Object> update = new LinkedMultiValueMap<String,Object>(4);
+
+// The comment to update goes into the "body" part (We only need the URI, because we don't want to update other comment properties)
+update.add("body", Collections.singletonMap("uri", replyURI));
+
+// The new image to attach goes into an extra part
+update.add("cube.png", new ClassPathResource("cube.png", getClass()));
+
+// Update the reply
+restApi.put(restUrl + testCaseURI + "/comment", update);
+}}}
+\\
+
+!4 Download a file attached to the Test Case
+
+In order to download files with the [Rest Template|http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/web/client/RestTemplate.html], we need a helper class to extract a downloaded file from a ClientHttpResponse:
+{{{
+public class FileExtractor implements ResponseExtractor<File> {
+	private File file;
+
+	/**
+	 * Create a new FileExtractor that will write the extracted file content to the specified file,
+	 * or, if the specified file is a directory, to a file with the filename extracted from the response in that directory.
+	 * @param file either a file, a directory or null, to return a new temporary file.
+	 */
+	public FileExtractor(File file) {
+		this.file = file;
+	}
+
+	public File extractData(ClientHttpResponse response) throws IOException {
+		InputStream body = response.getBody();
+		if (body != null) {
+			try {
+				String name = StringUtils.substringBetween(response.getHeaders().getFirst("Content-Disposition"), "filename=\"", "\"");
+
+				if (file == null) {
+					String prefix = StringUtils.defaultIfEmpty(StringUtils.substringBeforeLast(name, "."), "download");
+					String suffix = StringUtils.substringAfterLast(name, ".");
+
+					file = File.createTempFile(prefix, suffix != null ? "." + suffix : null);
+				} else if (file.isDirectory()) {
+					file = new File(file, name);
+				}
+
+				OutputStream out = new FileOutputStream(file);
+				try {
+					IOUtils.copyLarge(body, out);
+				} finally {
+					IOUtils.closeQuietly(out);
+				}
+			} finally {
+				IOUtils.closeQuietly(body);
+			}
+		}
+
+		return file ;
+	}
+}
+}}}
+\\
+Again, we use the reply from the previous example, because we already know it's URI.
+{{{
+// Reload the reply object, in order to find the URI of the attachment
+ObjectNode reply = restApi.getForObject(restUrl + replyURI, ObjectNode.class);
+
+// Find the URI of the "cube.png" image, that we attached to the reply in the previous example
+String attachmentURI = null;
+
+for (Iterator<JsonNode> it = reply.get("attachments").getElements(); it.hasNext();) {
+	JsonNode attachment = it.next();
+	if ("cube.png".equals(attachment.get("name").asText()) {
+		attachmentURI = attachment.get("uri").asText();
+		break;
+   	}
+}
+
+// Now we can download the attached file into some download directory
+File downloadDir = ...
+File attachment = restApi.execute(restUrl + attachmentURI, HttpMethod.GET, null, new FileExtractor(downloadDir));
+}}}
+\\
+\\
+
+!3 C# sample implementation
+
+''Will be added soon.''
+\\
+\\
+
+!3 Other sample implementations
+
+Will be added, as soon as our dear customers and partners are willing to share their implementations with us.\\
+\\
+

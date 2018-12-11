@@ -1,0 +1,109 @@
+#!/bin/sh
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+#
+# $Id$
+# resolve links - $0 may be a softlink
+PRG="$0"
+while [ -h "$PRG" ] ; do
+	ls=`ls -ld "$PRG"`
+	link=`expr "$ls" : '.*-> \(.*\)$'`
+	if expr "$link" : '.*/.*' > /dev/null; then
+		PRG="$link"
+	else
+		PRG=`dirname "$PRG"`/"$link"
+	fi
+done
+
+PRGDIR=`dirname "$PRG"`
+
+umask 0
+
+LANG=en_US.UTF-8	# Important for international characters.
+LC_ALL=$LANG
+export LANG LC_ALL
+
+# This script sets LD_LIBRARY_PATH to include some apache shared libraries.
+# if [ -x /usr/local/apache2/bin/envvars ]
+# then
+# 	. /usr/local/apache2/bin/envvars
+# fi
+
+JAVA="java"
+CB_BASE_URL="http://localhost:8080/cb"
+SCM_DIR="/your_install_dir/scmloop"
+
+#Add a directory where "svnlook" is (if not found above).
+#PATH=/opt/bin:$PATH
+#PATH=./libexec/git/bin:./libexec/hg:./libexec/svn/bin:$PATH
+#export PATH
+
+# "PROXY_OPTIONS" are optional HTTP Proxy settings
+#PROXY_OPTIONS=-Dhttp.proxyHost=<hostname> -Dhttp.proxyPort=<portno>
+
+CP="$SCM_DIR:$SCM_DIR/*"
+
+stdin="#"
+
+start_bg=0
+scm_mode="unknown"
+prev_arg="x"
+for i in $*
+do
+	if [ $prev_arg = "-mode" ]
+	then
+		scm_mode="$i"
+		if [ "$scm_mode" = "git_post_receive" ]
+		then
+			start_bg=1
+			stdin=scminput$$
+			cat > $stdin
+		elif [ "$scm_mode" = "svn_post_receive" -o "$scm_mode" = "hg_post_receive" ]
+		then
+			start_bg=1
+		fi
+		break
+	elif [ "$prev_arg""x" != "$i" ]
+	then
+		prev_arg="$i"
+	fi
+done
+
+## Use -background or -foreground param to run the java executable in background/foreground
+for i in $*
+do
+	if [ "$i" = "-background" ]
+	then
+		start_bg=1
+	elif [ "$i" = "-foreground" ]
+	then
+		start_bg=0
+	fi
+done
+
+#echo `date` $scm_mode $start_bg >> "$SCM_DIR"/debug.txt
+
+## function to call commitClient
+commitClient() {
+##add these JVM parameters to debug CommitClient code in Eclipse
+DEBUG_OPTS=""
+##	DEBUG_OPTS="-Xdebug" "-Xrunjdwp:transport=dt_socket,server=y,address=8890,suspend=y"
+	exec $JAVA -Xmx256M -cp "$CP" \
+		-DLANG=$LANG $PROXY_OPTIONS \
+		"-DCVS_USER=$CVS_USER" \
+		"-DCVSROOT=$CVSROOT" \
+		"-DSCM_DIR=$SCM_DIR" \
+		com.intland.codebeamer.scm.chain.client.CommitClient \
+		-url "$CB_BASE_URL/sccCommitInfo" \
+		-stdin $stdin \
+		$SCM_OPTIONS \
+		"$@"
+}
+
+if [ $start_bg -eq 0 ]
+then
+##	echo "Executing commitClient in foreground"
+	commitClient "$@"
+else
+##	echo "Executing commitClient in background"
+	commitClient "$@" 0>&- 1>&- 2>&- &
+fi

@@ -1,0 +1,154 @@
+.actionBar .button {
+	margin-left: 1em;
+}
+
+.deleteTestCaseIcon {
+	visibility: hidden;
+	cursor: pointer;
+}
+
+#testCasesTable {
+	padding-bottom: 50px;
+}
+
+#testCasesTable tr:hover .deleteTestCaseIcon {
+	visibility: visible;
+}
+
+#centerDiv {
+	border: none;
+}
+
+#rightPane {
+	margin-right: 5px;
+}
+
+#rightPanels .actionBar {
+	margin: 0;
+}
+
+.actionBar .treeFilterBox {
+	width: 100%;
+}
+
+.newskin .treeFilterBox {
+	margin-bottom: 0;
+}
+
+tr.dragRowPlaceholder {
+	height: 41px;
+	width: 100%;
+}
+
+.actionBar {
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
+
+.newskin #rightPane {
+	margin-right: 0;
+}
+
+.newskin .ui-accordion-content {
+	padding: 0 !important;
+}
+
+.newskin #testAccordion #testPlanLibraryPane .actionBar,
+.newskin #testAccordion #testSetLibraryPane .actionBar {
+	padding-right: 0;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.newskin #testAccordion .actionBar .filterBoxContainer,
+.newskin #testAccordion .actionBar .toolsContainer {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+.newskin #testAccordion .actionBar .filterBoxContainer {
+	width: 90%; /* fallback */
+	width: calc(100% - 30px);
+}
+
+.newskin #testAccordion #testSetLibraryPane .actionBar .filterBoxContainer {
+	width: 54%; /* fallback */
+	width: calc(70% - 30px);
+}
+
+.newskin #testAccordion .actionBar .filterBoxContainer .treeFilterBox {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.newskin #testAccordion .actionBar .toolsContainer {
+	width: 30px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.newskin #testAccordion .pane {
+	height: 96%; /* fallback */
+	height: calc(100% - 36px);
+	overflow: visible;
+}
+
+#east {
+	overflow-y: hidden;
+}
+
+body > .ui-layout-center {
+	overflow: hidden; /* without this, the appearing scroll bar would interfere with panes width calculation */
+}
+
+.removeOtherDuplicates {
+	display:none;
+}
+
+.duplicate {
+	td {
+		/* border: solid 1px red !important; */
+	}
+	.removeOtherDuplicates {
+		display:block;
+	}
+}
+
+.action-column-minwidth {
+	white-space:nowrap !important;
+}
+
+.removeOtherDuplicates {
+	cursor: pointer;
+}
+
+/* The button to expand TestSets */
+.expandTestSet {
+	display:none;
+	cursor: pointer;
+	visibility: hidden;
+}
+
+#testCasesTable tr:hover .expandTestSet {
+	visibility: visible;
+}
+
+/* TestSets' css */
+tr.itemType_Testset {
+	.expandTestSet {
+		display:block;
+	}
+}
+/* TestCases' css */
+tr.itemType_Testcase {
+}
+
+#testCasesTable tr.testSetInCycle {
+	background-color: #ffe8e9;
+    border-color: #b31317;
+}
+
+
+
+

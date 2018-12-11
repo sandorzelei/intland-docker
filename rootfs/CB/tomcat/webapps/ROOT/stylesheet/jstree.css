@@ -1,0 +1,173 @@
+
+
+.newskin {
+	.jstree-default > .jstree-container-ul > .jstree-node {
+  		margin-left: 0;
+  		margin-right: 0;
+	}
+
+	.jstree-default .jstree-icon, .jstree-default .jstree-icon:empty {
+		width: 16px;
+		height: 16px;
+	}
+
+	.jstree-default .jstree-anchor {
+	    line-height: 16px;
+	    height: 16px;
+		margin-top: 2px;
+		margin-left: 2px;
+	}
+
+	.jstree-default .jstree-node {
+		min-height: 16px;
+		line-height: 16px;
+		margin-left: 16px;
+		min-width: 16px;
+	}
+
+	.jstree-default .jstree-open > .jstree-ocl {
+	    background-position: -132px -9px;
+	}
+
+	.jstree-default .jstree-closed > .jstree-ocl {
+	    background-position: -100px -9px;
+	}
+
+	.jstree .jstree-search {
+		font-weight: normal;
+		font-style: normal;
+	}
+
+	i.jstree-icon.jstree-checkbox {
+	    width: 16px !important;
+	    height: 16px !important;
+	    padding: 5px;
+	    background-color: transparent !important;
+	}
+
+	.jstree-contextmenu {
+		z-index: 1000;
+	}
+
+	.vakata-context li > a {
+		text-shadow: 0px 0px 0 transparent;
+	}
+
+	.vakata-context li > a .vakata-contextmenu-sep {
+		display: none;
+	}
+
+	.vakata-context li > a > i {
+		display: none;
+	}
+
+	.vakata-context .vakata-context-separator > a, .vakata-context .vakata-context-separator > a:hover {
+		margin: 5px 0px;
+		border-top: 1px solid #CCC;
+	}
+
+	.jstree-default .jstree-closed > .jstree-ocl {
+	    background-position: -54px 0px;
+	}
+
+	.jstree-default .jstree-open > .jstree-ocl {
+	    background-position: -72px 0px;
+	}
+
+	.jstree-default .jstree-node {
+	    background-position: -90px -0px;
+	    background-repeat: repeat-y;
+	}
+
+	.jstree-default .jstree-leaf  > .jstree-ocl { background-position:-36px 0 !important; }
+
+	.jstree-default  .jstree-checkbox { display:inline-block; }
+	.jstree-default .jstree-no-checkboxes .jstree-checkbox { display:none !important; }
+
+	.jstree-default i.jstree-icon.jstree-checkbox {
+	    background-position: -2px -19px;
+	    padding: 0px;
+	}
+
+	.jstree-default .jstree-hovered i.jstree-icon.jstree-undetermined.jstree-checkbox {
+	    background-position: -20px -37px;
+	}
+
+	.jstree-default .jstree-undetermined.jstree-checkbox {
+	    background-position: -2px -19px;
+	}
+
+	.jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox, .jstree-default .jstree-checked > .jstree-checkbox {
+	    background-position: -38px -19px;
+	}
+
+	.jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox:hover, .jstree-default .jstree-checked > .jstree-checkbox:hover {
+	    background-position: -38px -37px;
+	}
+
+	.jstree li.modified > a{ background-color: #27c27c; }
+	.jstree li.modified > a:hover{ background-color: #93f5c9; }
+
+	.jstree-initial-node.jstree-loading {
+		background-image: url("../js/yui/assets/skins/sam/ajax-loader.gif");
+		background-repeat: no-repeat;
+    	background-position: 20px 12px;
+    	width: 180px;
+    	padding: 15px;
+    	padding-left: 40px;
+    	text-align: center;
+    	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+		-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+		box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
+		position: relative;
+		margin-left: 15%;
+		margin-top: 20px;
+	}
+
+	#jstree-dnd {
+	  line-height: 16px;
+	  margin: 0;
+	  padding: 4px;
+	}
+	#jstree-dnd .jstree-icon,
+	#jstree-dnd .jstree-copy {
+	  display: inline-block;
+	  text-decoration: none;
+	  margin: 0 2px 0 0;
+	  padding: 0;
+	  width: 16px;
+	  height: 16px;
+	}
+	#jstree-dnd .jstree-ok {
+	  background: green;
+	}
+	#jstree-dnd .jstree-er {
+	  background: red;
+	}
+	#jstree-dnd .jstree-copy {
+	  margin: 0 2px 0 2px;
+	}
+
+	#jstree-dnd.jstree-default {
+	  line-height: 24px;
+	  padding: 0 4px;
+	}
+	#jstree-dnd.jstree-default .jstree-ok,
+	#jstree-dnd.jstree-default .jstree-er {
+		background-image: url("../js/jquery/jquery-jstree/themes/default/32px.png");
+	  background-repeat: no-repeat;
+	  background-color: transparent;
+	}
+	#jstree-dnd.jstree-default i {
+	  background: transparent;
+	  width: 24px;
+	  height: 24px;
+	  line-height: 24px;
+	}
+	#jstree-dnd.jstree-default .jstree-ok {
+	  background-position: 4px -52px;
+	}
+	#jstree-dnd.jstree-default .jstree-er {
+	  background-position: -16px -52px;
+	}
+}

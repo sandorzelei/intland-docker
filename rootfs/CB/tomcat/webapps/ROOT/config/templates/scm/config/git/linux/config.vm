@@ -1,0 +1,28 @@
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	logallrefupdates = true
+	autocrlf = false
+	bare = false
+	sharedrepository = 1
+	quotepath = false
+[receive]
+	denyCurrentBranch = ignore
+	denyCurrentBranch = ignore
+# enables push through smart http
+[http]
+	receivepack = true
+	postBuffer = 524288000
+#if(${branchName})
+[branch "${branchName}"]
+	merge = ${merge}
+	remote = ${remote}
+#end
+[daemon]
+#if(${public})
+    uploadpack = true
+#else
+	uploadpack = false
+#end
+    receivepack = false

@@ -1,0 +1,105 @@
+#parse("./includes/activitystream-macros.vm")
+
+#set($red = "#B31317")		## used with "high-importance dangerous" items
+#set($green = "#00A85D")	## used with "new content" items
+#set($blue = "#00566B")		## used with "additional content" items (comments, attachments)
+#set($grey = "#5f5f5f")		## used with "updated content" items
+#set($brown = "#D9923B")	## used with "deleted content"
+
+<style type="text/css">
+	.activityStreamPlugin > h4 {
+		margin-bottom: 0 !important;
+	}
+
+	.activityStreamPlugin .activities td {
+		padding: 10px 0 0 0 !important;
+	}
+	.activityStreamPlugin .photoBox {
+		margin: 0 10px 0 0;
+	}
+	.activityStreamPlugin .activityDateBucket, .activityStreamPlugin .activity {
+		padding: 0;
+	}
+	.activityStreamPlugin .activities td.activityDateBucket {
+		padding-bottom: 5px !important;
+		color: #2b2b2b;
+		font-weight: bold;
+	}
+	.activityStreamPlugin .activities td.separator {
+		padding-top: 5px !important;
+	}
+
+	.activityStreamPlugin .activity {
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+	}
+
+	.activityStreamPlugin .activityUserPhoto {
+		width: 45px;
+	}
+</style>
+
+<div class="newskin">
+#wikiBoxOpen(${command}, "activityStreamPlugin")
+	#set($title = $textFormatter.escape($!{command.title}))
+	#set($defaultTitle = $textFormatter.getMessage('activity.stream.title'))
+	#wikiBoxTitle("$!{title}" "$!{defaultTitle}" "$!{rss}")
+
+	#if(!${recentActivities.isEmpty()})
+		<table class="activities" cellpadding="0" cellspacing="0" border="0">
+			<tbody>
+                #foreach($activity in $recentActivities)
+					#renderActivity($activity 96)
+
+					## abbreviate
+					#set($targetFull = $target)
+					#set($target = $textFormatter.abbreviate($target, 64))
+					#set($excerpt = $textFormatter.abbreviate($excerpt, 256))
+
+					#set($currentDateBucket = $dateBucketTool.render(${activity.date}))
+					#if($previousDateBucket != $currentDateBucket)
+						<tr>
+                            <td colspan="2" class="activityDateBucket" >
+  							  $textFormatter.escape($currentDateBucket)
+							</td>
+						</tr>
+						#set($previousDateBucket = $currentDateBucket)
+					#end
+					<tr class="activity">
+						<td class="activityUserPhoto">
+							$userPhotoTool.render(${activity.madeBy}, false)
+						</td>
+
+						<!-- TODO: should be stretched -->
+						<td class="activityText" title="${tooltip}">
+							#if(${eventClassName} == "Delete")
+								$textFormatter.escape(${target})
+							#else
+								<a title="$textFormatter.escape(${targetFull})" href="${contextPath}${activity.target.urlLink}">$textFormatter.escape(${target})</a>
+							#end
+							<span #if($actionStyle != '')style="${actionStyle}"#end>${action} ${textFormatter.getMessage('document.lastModifiedBy.short')}</span> #linkUserShort(${activity.madeBy})<br/>
+							#if($excerpt != "")
+								<div class="subtext excerpt"#if($excerptStyle != '') style="${excerptStyle}"#end>$excerpt</div>
+							#end
+            				<span class="subtext">$textFormatter.formatDate(${user}, ${activity.date})
+								#if(${reference})
+    								<span class="separator">&bull;</span>
+    								<small>$textFormatter.escape(${reference})</small>
+								#end
+							</span>
+						</td>
+					</tr>
+					#if($velocityCount != $recentActivities.size())
+						## insert a "separator" row
+						<tr>
+                            <td class="separator" colspan="2" />
+						</tr>
+					#end
+                #end
+			</tbody>
+		</table>
+	#else
+		${textFormatter.getMessage('activity.stream.empty')}
+    #end
+#wikiBoxClose()
+</div>

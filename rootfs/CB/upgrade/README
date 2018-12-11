@@ -1,0 +1,11 @@
+#
+# Copyright by Intland Software, http://www.intland.com
+#
+# All rights reserved.
+#
+
+To upgrade codeBeamer run the following script:
+
+Linux: upgrade.sh (WARNING!!! Java JDK is required!)
+
+Windows: upgrade.bat

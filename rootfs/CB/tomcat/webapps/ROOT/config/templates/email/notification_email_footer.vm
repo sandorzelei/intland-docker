@@ -1,0 +1,12 @@
+## Copyright Intland GmbH; All rights reserved.
+## Don't modify, change or delete this file without a written permission from Intland.
+##
+## When this text is changed also ensure that the regular expression defined as key "email.codebeamer.copyright.footer.html.regexp" in ApplicationResources.properties will match with this
+## 			 this is important for parsing the incoming emails (when replying to an email sent by CB)
+<div class="footer">$!{footerText}
+## #if(${canReply}) <p class="emailReplyHint">${textFormatter.getMessage("email.reply.hint")}</p> #end
+<a href="https://codebeamer.com">codeBeamer ${product}</a> Copyright &copy; 2001-${buildYear} <a href="http://www.intland.com">Intland Software</a>. All rights reserved.
+</div>
+
+</body>
+</html>

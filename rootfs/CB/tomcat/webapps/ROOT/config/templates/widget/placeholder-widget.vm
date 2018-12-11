@@ -1,0 +1,11 @@
+#if($isPinned)<div class="pinned-content ${justifyContent}">#end
+<div id="${id}">
+	#@message('warning' true)
+		<ul>
+	        <li>${text}</li>
+            </ul>
+        </div>
+	#end
+
+</div>
+#if($isPinned)</div>#end

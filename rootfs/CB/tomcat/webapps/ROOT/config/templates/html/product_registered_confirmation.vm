@@ -1,0 +1,15 @@
+##$Revision: 22740:c1a8d5d61e89 $ $Date: 2009-10-14 12:26 +0000 $
+##
+## The following special context objects are available:
+## 	user 		- is a UserDto with the customer information
+##	installed 	- is the installed ProductLicense
+##  hostId		- is a String with the target host ID
+##	validUntil	- is the license expiration Date
+
+<br/>
+
+<div class="messagetext">
+	$textFormatter.getMessage("cb.registration.confirmation", ${user.realName}, ${user.email}, ${installed.type})
+</div>
+
+<br/>

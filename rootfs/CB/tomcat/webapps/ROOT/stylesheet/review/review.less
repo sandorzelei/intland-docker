@@ -1,0 +1,489 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+ /*
+  * css definitions for review.jsp
+  */
+
+  .review-button {
+	  	height: 40px;
+	    width: 14px;
+	    background-color: #454545;
+	    -webkit-border-radius: 7px;
+	    -ms-border-radius: 7px;
+	    border-radius: 7px;
+	    margin-left: 13px;
+	    cursor: pointer;
+
+	    .switch {
+	    	background-image: url("../../images/newskin/item/review/button_icons.png");
+	    	display: inline-block;
+		    width: 8px;
+		    height: 16px;
+		    background-repeat: no-repeat;
+		    background-size: cover;
+		    margin: 1px;
+		    border-radius: 6px;
+		    padding: 1px;
+		}
+
+
+	  .accept {
+		  background-position: 0px 6px;
+	  }
+
+	  .reject {
+		  background-position: 0px -18px;
+
+	  }
+
+  }
+
+
+	.canedit .review-button {
+		.accept:hover {
+				background-color: #27c27c;
+		}
+
+		.reject:hover {
+				background-color: #cc3f44;
+		}
+	}
+
+  .closed .accept:hover, .closed .reject:hover {
+  	background-color: transparent;
+  }
+
+  .review-button.rejected .reject {
+  		background-color: #cc3f44
+  }
+
+  .review-button.accepted .accept {
+  		background-color: #27c27c;
+  }
+
+  #left-tabs .ditch-tab-wrap {
+  	width: 100%;
+
+  	.ditch-tab {
+  		box-sizing: border-box;
+  		width: 50%;
+  		height: 33px;
+  	}
+  }
+
+  /* .done-button {
+    cursor: pointer;
+    padding-left: 20px;
+    background-image: url(../../images/newskin/item/review/icon_done.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }*/
+
+  .viewsMenu .reviewActionIcon {
+  	background-image: url("../../images/newskin/item/review/icon_list_grey.png");
+	  background-size: 24px;
+
+  	&.active {
+  		background-image: url("../../images/newskin/item/review/icon_list_white.png");
+		background-size: 22px;
+		top: 2px;
+		position: relative;
+  	}
+  }
+
+  .viewsMenu .feedbackActionIcon {
+  	background-image: url("../../images/newskin/item/review/icon_comment_grey.png");
+
+  	&.active {
+  		background-image: url("../../images/newskin/item/review/icon_comment_white.png");
+  	}
+  }
+
+  .viewsMenu .statisticsActionIcon {
+  	background-image: url("../../images/newskin/item/review/icon_stats_grey.png");
+
+  	&.active {
+  		background-image: url("../../images/newskin/item/review/icon_stats_white.png");
+  	}
+  }
+
+  .viewsMenu .historyActionIcon {
+  	background-image: url("../../images/newskin/item/review/icon_review_history_grey.png");
+
+  	&.active {
+  		background-image: url("../../images/newskin/item/review/icon_review_history_white.png");
+  	}
+  }
+
+  .tracker-baseline .viewsMenu {
+	  .historyActionIcon {
+		  background-image: url("../../images/newskin/item/review/icon_review_history_blue.png");
+
+		  &.active {
+			  background-image: url("../../images/newskin/item/review/icon_review_history_white.png");
+		  }
+	  }
+
+	  .statisticsActionIcon {
+		  background-image: url("../../images/newskin/item/review/icon_stats_blue.png");
+
+		  &.active {
+			  background-image: url("../../images/newskin/item/review/icon_stats_white.png");
+		  }
+	  }
+
+	  .feedbackActionIcon {
+		  background-image: url("../../images/newskin/item/review/icon_comment_blue.png");
+
+		  &.active {
+			  background-image: url("../../images/newskin/item/review/icon_comment_white.png");
+		  }
+	  }
+
+	  .reviewActionIcon {
+		  background-image: url("../../images/newskin/item/review/icon_list_blue.png");
+
+		  &.active {
+			  background-image: url("../../images/newskin/item/review/icon_list_white.png");
+		  }
+	  }
+  }
+
+  #review-ended {
+  	display: none;
+  }
+
+  #review-ended.closed {
+  	display: block;
+  }
+
+  .review-container.closed #review-ended {
+  	display: block;
+  }
+
+  div.review-container {
+  	border-left: 0px;
+  }
+
+  #tree {
+  	margin: 0px;
+  	margin-top: -10px;
+  }
+
+ .miniprogressbar div.progressBarRed {
+  	padding-bottom: 0px;
+  }
+
+  .stat.accepted, select.mapper.SetToApproved {
+  	color: #00a85d;
+  }
+
+  .stat.rejected, select.mapper.SetToRejected {
+  	color: #B31317;
+  }
+
+  select.mapper {
+  }
+
+  .miniprogressbar {
+  	width: 80%;
+  }
+
+  .actionLink {
+  	cursor: pointer;
+  }
+
+  .request-new-button {
+    margin-left: 0px;
+  }
+
+.newskin .propertyTable tr {
+	border-top: 0px;
+}
+
+.reply-to-box {
+	float: right;
+	margin-right: 25px;
+
+	.commentType {
+		padding-left: 21px;
+		display: block;
+	}
+}
+
+.reply-to {
+	display: inline-block;
+	background-image: url("../../images/newskin/item/review/icon_reply_blue.png");
+	background-repeat: no-repeat;
+    padding-left: 21px;
+    background-position: 0px -1px;
+    float: right;
+    margin-right: 0px;
+}
+
+.replyLevel(@level) {
+	padding-left: @level * 20px !important;
+}
+
+.reply {
+
+	.replied {
+		background-image: url("../../images/newskin/item/review/icon_reply_grey.png");
+	    background-repeat: no-repeat;
+	    width: 20px;
+	    height: 12px;
+	    display: inline-block;
+	}
+
+	&.level-1 {
+		.replyLevel(1);
+	}
+
+	&.level-2 {
+		.replyLevel(2);
+	}
+
+	&.level-3 {
+		.replyLevel(3);
+	}
+
+	&.level-4 {
+		.replyLevel(4);
+	}
+
+	&.level-5 {
+		.replyLevel(5);
+	}
+
+	.replyToContainer {
+		margin-left: 23px;
+	}
+}
+
+.replyToContainer {
+	a {
+		font-size: 10px !important;
+	}
+}
+
+.assocSubmitterCol, .editCommentSection, .commentGroup {
+	border-left: 5px solid transparent;
+	padding-left: 5px;
+
+	&.Question {
+		border-left: 5px solid #2ab0d1;
+	}
+
+	&.FeatureRequest {
+		border-left: 5px solid #3d998d;
+	}
+
+	&.Problem {
+		border-left: 5px solid #cc3f44;
+	}
+}
+
+.newskin #requirements {
+	margin-left: 0px;
+}
+
+.newskin .displaytag tr.requirementTr.closed {
+	background-color: #f5f5f5;
+}
+
+.closed .review-button {
+	cursor: auto;
+}
+
+.commentFilterContainer {
+	display: none !important;
+}
+
+.addCommentLink {
+	display: none !important;
+}
+
+.editCommentSection {
+	margin-top: 10px;
+}
+
+.stats-box {
+	display: inline-block;
+	width: 48%;
+	vertical-align: top;
+}
+
+.pagelinks {
+	margin-left: 10px;
+}
+
+.separatorLikeCollapsingBorder.referenceContainer {
+
+	background-color: white;
+
+	legend.collapsingBorder_legend {
+		padding: 5px;
+	    border: 1px solid #CCC;
+	    background-color: white;
+	}
+
+	.psSettingBadge, .suspectedLinkBadge {
+		display: none;
+	}
+
+	.collapsingBorder_content {
+		 border: 1px solid #CCC;
+   		 margin-top: -1px;
+   		 background-color: white;
+	}
+
+	.addAssociationControl {
+		display: none;
+	}
+
+	.references {
+		width: 100%;
+	}
+
+	.collapseToggle {
+		font-size: 15px;
+	}
+
+	.reficon  {
+		vertical-align: middle;
+		width: 16px;
+	}
+
+	.references {
+		box-shadow: none !important;
+	}
+}
+
+#requirements .referenceContainer {
+	background-color: transparent;
+}
+
+.itemProgress .key {
+	position: relative;
+	top: -3px;
+}
+
+#filters-tab {
+	border-right: 0px;
+}
+
+#west .ditch-tab-pane-wrap {
+	border-bottom: 0px;
+	border-right: 0px;
+}
+
+.stats-box .highchartbox {
+	border: 0px;
+}
+
+.newskin .displaytag td .trackerCategoryLabel {
+	padding-bottom: 0px;
+}
+
+.ratingwidget {
+	display: none;
+}
+
+.newskin #opener-west {
+	top: -25px;
+	left: 5px;
+}
+
+/* .actionLink.export-to-word {
+	background-image: url("../../images/newskin/action/icon_excel_export_blue.png");
+	padding-left: 20px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}*/
+
+.propertyTable .smallPhoto {
+	vertical-align: middle;
+}
+
+.link-and-date {
+	vertical-align: middle;
+	display: inline-block;
+
+	.date {
+		display: block;
+	}
+}
+
+.added-before-review .smallWarning {
+	display: inline-block;
+    padding: 3px;
+}
+
+#emptyAttachment thead {
+	display: none;
+}
+
+.name .referenceSettingBadge {
+	position: relative;
+	cursor: pointer;
+}
+
+.item-progress.displaytag tr.invalid-mapping {
+	background-color: #fff7eb;
+}
+
+#opener-east {
+	z-index: 1000;
+}
+
+.wikiLinkContainer .jumpToDocumentViewBadge a {
+	top: -4px;
+}
+
+#middleHeaderDiv .actionBar {
+	margin-top: -5px;
+}
+
+.overlayMessageBoxContainer {
+	max-width: 90%;
+}
+
+.overlayMessageBoxContainer .overlayMessageBox {
+	white-space: normal !important;
+}
+
+.branch-badge-group {
+	margin-left: -2px;
+}
+
+.review-completed-icon, .review-completed-placeholder, .reviewSignedIcon {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+}
+
+.review-completed-icon {
+	background-image: url("../../images/tick.png");
+	background-size: cover;
+}
+
+.actionMenuBar .branchBaselineBadge {
+	position: relative;
+	top: 7px;
+}
+
+.reviewSignedIcon.signed {
+	background-image: url("../../images/newskin/item/icon-user-review-close-grey.png");
+	background-size: cover;
+}

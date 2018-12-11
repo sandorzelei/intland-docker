@@ -1,0 +1,54 @@
+#wikiBoxOpen(${command})
+    #if(${command.title})
+    	#wikiBoxTitle("${textFormatter.getMessageWithDefault(${command.title}, ${command.title})}: ${displayedAndTotalIssues}")
+    #else
+    	#wikiBoxTitle("${textFormatter.getMessage('simple.issue.query.label')}: ${displayedAndTotalIssues}")
+    #end
+	<table>
+    	<tbody>
+            #if(!${issues.isEmpty()})
+    			#trOpen
+    				<td class="textdata" colspan="2"></td>
+    				<td class="textdata">$textFormatter.getMessage('tracker.field.Summary.label')</td>
+	   				<td class="textdata">$textFormatter.getMessage('tracker.field.Status.label')</td>
+	   				<td class="textdata">$textFormatter.getMessage('tracker.field.Release.label')</td>
+	   				<td class="textdata">$textFormatter.getMessage('tracker.field.Modified by.label')</td>
+   				#trClose
+
+        		#foreach($issue in ${issues})
+        			#trOpen
+						<td class="compact">${priorityRenderer.render($issue)}</td>
+        				<td class="compact subtext" nowrap>#esc(${issue.keyAndId})</td>
+        				<td><a title="$textFormatter.getMessage('project.label'): #esc(${issue.project.name}), $textFormatter.getMessage('tracker.label.general'): #esc(${issue.tracker.name})" href="${cbBaseUrl}${issue.urlLink}">#esc(${issue.name})</a></td>
+						#if(!$issue.status || ! $issue.status.name)
+							<td>--</td>
+						#else
+							<td>$issueStatusStyles.getStyle($issue, false).renderHtml(${issue.status.name})</td>
+						#end
+
+##						target versions
+						<td class="compact" style="white-space:nowrap;" title='${textFormatter.getMessage('tracker.type.Version.plural')}'>
+							<span class="subtext">
+							#if(${issue.versions} && !${issue.versions.isEmpty()})
+    							#foreach($version in ${issue.versions})
+									#if( $velocityCount > 1 ),#end
+									#linkReferableDto($version)
+								#end
+							#else
+								--
+							#end
+							</span>
+						</td>
+
+##        				<td>$textFormatter.formatDate(${user}, ${issue.submittedAt})</td>
+        				<td>#linkUserShort(${issue.modifier}) $textFormatter.formatDate(${user}, ${issue.modifiedAt})</td>
+        			#trClose
+				#end
+			#else
+				#trOpen()
+					<td>$textFormatter.getMessage('simple.issue.query.none')</td>
+				#trClose()
+			#end
+    	</tbody>
+	</table>
+#wikiBoxClose()

@@ -1,0 +1,47 @@
+##$RCSfile$ $Revision$ $Date$
+
+${textFormatter.getMessage('comments.label')}:
+
+#tableOpen()
+
+#trOpen()
+	#tdText("${textFormatter.getMessage('comment.label')}")
+	#tdSeparator()
+	#tdText("${textFormatter.getMessage('comment.submittedAt.label')}")
+#trClose()
+
+#foreach($comment in $comments)
+	#trOpen()
+
+	#set($text = $textFormatter.format(${comment.description}, ${comment.descriptionFormat}, ${wikiContext}))
+	#if($comment.icon)
+		#set($Q = '"')
+		#set($click_url = "${cbBaseUrl}/displayDocument/${textFormatter.encodeURL($comment.filename)}?object_comment_id=$comment.id")
+		#set($onclick = "launch_url('$click_url');return false;")
+		#if($comment.target != "_top")
+			#set($link = "<A TARGET=$Q$comment.target$Q ONCLICK=$Q$onclick$Q HREF=$Q$click_url$Q>$comment.filename</A>")
+		#else
+			#set($link = "<A HREF=$Q$click_url$Q>$comment.filename</A>")
+		#end
+		#set($size = "${comment.size}")
+
+		#set($text = "$text#br()<img src=$Q${cbBaseUrl}$comment.icon$Q />$link, $size bytes")
+	#end
+
+	#tdText($text)
+
+	#tdSeparator()
+
+	#tdText("#linkUser($comment.submitter)#br()$comment.submittedAt")
+
+	#tdSeparator()
+
+	#trClose()
+#end
+
+#tableClose()
+
+#if($limited)
+	<A HREF="${cbBaseUrl}/proj/wiki/displayWikiPageProperties.spr?doc_id=$page.id&orgDitchnetTabPaneId=wiki-page-comments">More...</A>
+#end
+

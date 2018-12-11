@@ -1,0 +1,2 @@
+<div #if($excerptStyle != '') style="${excerptStyle}"#end>${excerpt}</div>
+

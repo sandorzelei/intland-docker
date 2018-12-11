@@ -1,0 +1,454 @@
+
+.cardLink {
+	direction: ltr;
+}
+
+.planner-icon {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background-image: url("../images/newskin/action/planner_icon.png");
+	float: right;
+	margin-right: 6px;
+}
+
+.groupHeader {
+	.swimlaneHeader {
+		background-color: transparent !important;
+		height: auto !important;
+		padding: 0 !important;
+	}
+	.swimlaneContent {
+		background-color: transparent !important;
+		height: auto !important;
+		padding: 1px !important;
+		white-space: nowrap;
+	}
+	.swimlaneToggler {
+		background-color: transparent !important;
+	}
+	.nameLabel {
+		background-color: transparent !important;
+	}
+	&.headerLevel0 {
+		td {
+			background-color: #aff0ff !important;
+		}
+	}
+	&.headerLevel1 {
+		td {
+			background-color: #c9f4ff !important;
+		}
+		.swimlaneHeader {
+			padding-left: 10px !important;
+		}
+	}
+	&.headerLevel2 {
+		td {
+			background-color: #e1f9ff !important;
+		}
+		.swimlaneHeader {
+			padding-left: 20px !important;
+		}
+	}
+	td {
+		vertical-align: middle;
+	}
+}
+
+#cardboard {
+
+	.priorityIcon,
+	.priorityIcon + .storyPoints {
+		text-align: center;
+	}
+
+	.priorityIcon {
+		margin-right: 3px;
+		margin-top: 2px;
+	}
+
+}
+
+#cardboard-legend {
+	padding: 5px 10px;
+	background-color: #f5f5f5;
+	font-size: 11px;
+	ol, ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		li {
+			margin: 0 20px 0 0;
+			display: inline-block;
+			a {
+				color: black;
+				text-decoration: none;
+				.color-preview-circle {
+					vertical-align: middle;
+				}
+				.item-name {
+					line-height: 16px;
+					height: 16px;
+					display: inline-block;
+					vertical-align: middle;
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+	}
+}
+
+.new-column-icon {
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
+	background: url("../images/newskin/action/add-new-s.png") no-repeat 0 center;
+}
+
+tr.header {
+	.column-title {
+		margin-bottom: 15px;
+	}
+
+	.wip-title {
+		font-size: 12px;
+	}
+
+	.header-separator {
+		height: 30px;
+	}
+
+	span.remove-column-icon, span.insert-column-icon {
+		width: 12px;
+		height: 12px;
+		cursor: pointer;
+		display: inline-block;
+		float: right;
+	}
+
+	span.remove-column-icon {
+		background-image: url("../images/newskin/action/closewindow-round-bgwhite.png");
+		clear: right;
+	}
+
+	span.insert-column-icon {
+		background-image: url("../images/newskin/action/agile/insert-nextto.png");
+		width: 23px;
+		background-repeat: no-repeat;
+		margin-top: -18px;
+	}
+}
+
+.default .icon-placeholder {
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	float: right;
+	clear: right;
+}
+
+.tracker-list {
+	padding-left: 10px;
+}
+
+.status-list .status {
+	cursor: pointer;
+	padding: 2px;
+	padding-left: 4px;
+	background-color: white;
+
+	&:hover {
+		border: 1px solid #d1d1d1;
+		padding: 1px;
+		//background-image: url("../images/newskin/action/agile/drag-status.png");
+		background-repeat: no-repeat;
+		background-position: 1px;
+		padding-left: 3px;
+	}
+}
+
+.reportSelectorActionBar {
+	padding: 3px 3px 2px 10px !important;
+}
+
+.cardboardMoreMenu {
+	display: inline-block;
+	position: relative;
+	top: 5px;
+}
+
+.newskin .actionBar .menuArrowDown.extendedCardboardMoreMenu {
+	width: 17px;
+	height: 16px;
+	margin-right: 15px;
+	top: 0px;
+}
+
+.newCardboardItemLink {
+  	position: relative;
+  	top: -7px;
+}
+
+.dragHandle {
+	vertical-align: middle;
+}
+
+.dragHandle > a {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+.card-content {
+	margin: 5px;
+	display: flex;
+	flex-direction: column;
+}
+
+.card-header {
+	flex: 0;
+	display: flex;
+	flex-basis: 20px;
+	justify-content: space-between;
+}
+
+.key-and-id-container {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+.user-photo-container {
+	flex: 0;
+	flex-basis: 20px;
+}
+
+.item-icon {
+	flex: 0;
+	flex-basis: 16px;
+	position: relative;
+	top: 1px;
+}
+
+.item-link {
+	margin-left: 5px;
+	margin-right: 5px;
+	height: 14px;
+	flex: 1;
+}
+.main-section {
+	flex: 4;
+	display: flex;
+	overflow: hidden;
+}
+
+.main-section-icon-container {
+	flex: 0;
+	align-self: flex-start;
+	flex-basis: 16px;
+}
+
+.main-section-content-container {
+	flex: 1;
+	align-self: flex-start;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.IE .main-section-content-container {
+	padding-left: 5px;
+}
+
+.user-story-section {
+	flex: 1;
+	display: flex;
+	overflow: hidden;
+	margin-top: 5px;
+	flex-basis: 20px;
+}
+
+
+.user-story-section-icon-container {
+	flex: 0;
+	align-self: center;
+	flex-basis: 16px;
+}
+
+.user-story-section-content-container {
+	flex: 1;
+	align-self: center;
+	overflow: hidden;
+}
+
+.card-footer {
+	flex: 0;
+	display: flex;
+	flex-basis: 20px;
+}
+
+.card-footer-content-container {
+	flex: 1;
+	flex-basis: 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	overflow: hidden;
+}
+
+div.card-name, div.user-story-name {
+	font-size: 11px;
+}
+
+.badge {
+	border-radius: 5px;
+	margin: 5px;
+	padding: 2.5px;
+}
+
+.user-story-name {
+	color: white;
+}
+
+div.userStory .user-story-name a {
+	color: white;
+	text-decoration: none;
+}
+
+.Chrome div.userStory .user-story-name a,
+.IE11 div.userStory .user-story-name a {
+	position: relative;
+	top: 1px;
+}
+
+div.userStory .empty-badge .user-story-name a {
+	color: black;
+	text-decoration: none;
+}
+
+.user-photo-container .smallPhoto {
+	height: 20px;
+	width: 20px;
+	margin: 0;
+}
+
+.ellipsis {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.assigneeList {
+	cursor: default;
+	flex: 1;
+	text-align: right;
+	font-size: 11px;
+}
+
+.versionList {
+	flex: 1;
+	margin-right: 5px;
+}
+
+.versionList [data-hover-tooltip-target] {
+	height: 20px;
+	display: inline-block;
+	line-height: 20px;
+	vertical-align: middle;
+	position: relative;
+	top: 1px;
+}
+
+.versionList a {
+	height: 20px;
+	line-height: 20px;
+}
+
+.ui-tooltip .tooltip-marker {
+	position: relative;
+	top: 3px;
+}
+
+.ui-tooltip .comma-separator:after {
+	content: "\a";
+	white-space: pre;
+}
+
+.ui-tooltip a {
+	color: #0093b8;
+}
+
+.user-photo-placeholder {
+	color: #FFFFFF;
+	text-align: center;
+	font-size: 11px;
+	padding: 3px;
+}
+
+.card-issue-editor-icon {
+	display: none;
+}
+
+.userStory:hover .card-issue-editor-icon {
+	display: block;
+}
+
+/*
+ * Sticky header style.
+ */
+
+.newskin .userStories.stuck {
+	position: fixed;
+	top: 31px;
+	display: block;
+	margin-top: 0px;
+	padding-left: 10px;
+	width: auto;
+	height: auto;
+	.header {
+		background-color: #FFFFFF;
+	}
+}
+
+.sticky-wrapper {
+	position: fixed;
+	top: 31px;
+}
+
+.newskin .userStories {
+	display: none;
+}
+
+.userStories.stuck .rotate {
+	margin-top: 0px;
+}
+
+.card-footer.footer-only {
+	margin-top: 5px;
+}
+
+.add-new-item, .show-baselines {
+	position: relative;
+	top: -5px;
+}
+
+.add-new-item-link {
+	background: url("../images/newskin/actionIcons/icon-add-blue.png") no-repeat;
+	height: 16px;
+	width: 16px;
+	display: inline-block !important;
+	vertical-align: 0px !important;
+}
+
+.empty-badge {
+	border: 1px solid #ababab;
+}
+
+.empty-badge .user-story-name {
+	color: black;
+}

@@ -1,0 +1,11 @@
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+
+[collections]
+${repoDir}/hg/ = ${repoDir}/hg/
+
+[web]
+baseurl=/hg
+
+[trusted]
+users = *
+

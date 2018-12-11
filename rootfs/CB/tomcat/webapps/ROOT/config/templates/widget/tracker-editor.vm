@@ -1,0 +1,40 @@
+#if ($projectSelector)
+	${projectSelector}
+#end
+
+<div class="form-field">
+	<label for="${fieldName}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+	<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end multiple="multiple">
+		#foreach ($project in $trackersByProject)
+			<optgroup label="${project.get("name")}">
+				#foreach ($tracker in $project.get("trackers"))
+					<option value="$tracker.get("id")"
+						#if ($tracker.get("level") > 0) data-level="$tracker.get("level")" #end
+						#if ($tracker.get("selected")) selected="selected" #end>$tracker.get("name")</option>
+				#end
+			</optgroup>
+		#end
+	</select>
+
+	<script type="text/javascript" src="${trackerEditorJsUrl}"></script>
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			#if ($isMultipleChoiceAllowed)
+				codebeamer.dashboard.multiSelect.init("${selectorId}", "trackerSelector:tracker:changed");
+			#else
+				codebeamer.dashboard.multiSelect.initSingleSelect("${selectorId}", "trackerSelector:tracker:changed");
+			#end
+
+			codebeamer.dashboard.multiSelect.attachEventListener("projectSelector:project:changed", function(projectIds) {
+				codebeamer.dashboard.trackerEditor.getTrackers(projectIds, ${trackerTypeIds}, "${getTrackersUrl}", "${selectorId}");
+			});
+
+            codebeamer.dashboard.multiSelect.attachEventListener("fixedChoice:types:changed", function() {
+                $('#${selectorId}').multiselect('uncheckAll');
+            });
+		});
+	</script>
+
+</div>

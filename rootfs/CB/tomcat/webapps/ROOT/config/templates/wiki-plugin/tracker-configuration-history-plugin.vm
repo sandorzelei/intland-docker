@@ -1,0 +1,9 @@
+#wikiBoxOpen(${command}, "trackerHistoryAuditTrailPlugin")
+#if(${projectIsMissingMessage})
+    <span class="error" style="padding-left: 40px;">${projectIsMissingMessage}</span>
+#elseif(${permissionIsMissingMessage})
+    <span class="warning" style="padding-left: 40px;">${permissionIsMissingMessage}</span>
+#else
+    ${content}
+#end
+#wikiBoxClose()

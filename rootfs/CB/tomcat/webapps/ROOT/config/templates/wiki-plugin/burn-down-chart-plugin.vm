@@ -1,0 +1,77 @@
+#if(${chartSupport})
+	#set($tableMarkup = "")
+	#if(${daysToWait} > 0)
+		#set ($notEnoghDataStyle = "display: none;")
+	#else
+		#set ($notEnoghDataStyle = "")
+	#end
+    #if(${showTip})
+		#set(${command.table} = true)
+		#set($tableMarkup = "<div class='subtext' style='padding:5px; $notEnoghDataStyle'>${textFormatter.getMessage('cmdb.release.stats.burndown.chart.hint')}</div>")
+	#end
+
+	#set ($chartMarkup = ${chartSupport.chartMarkup})
+	#set ($notification = ${notificationProvider.notification})
+
+	#if(!$command.showChartOnly)
+        #wikiBoxOpen(${command})
+    	    #wikiBoxTitle("$!{command.title}", "#if(${release})${release.name}#end ${textFormatter.getMessage($titleKey)}")
+   		    ${tableMarkup}
+   		#if($!notification)
+   			<div class='subtext' style='padding:5px; $notEnoghDataStyle'>$notification</div>
+   		#end
+	#end
+		<script type="text/javascript">
+			var burDownChart_${pluginId} = {
+				updateChart: function() {
+                    var url = "${ajaxRefreshURL}";
+					url += "&generateData=true"
+                    ajaxPluginRendererSupport.updatePlugin('${contextPath}', '${pluginId}', url, ${command.width}, ${command.height});
+				}
+			}
+		</script>
+		<span id="chart_${pluginId}" style="$notEnoghDataStyle">
+			$chartMarkup
+	    </span>
+
+	#if(!$command.showChartOnly)
+		#if(${invalidReleaseDates})
+			<table class="embedded">
+				<tbody>
+					<tr>
+						<td>$textFormatter.getMessage('cmdb.release.stats.burndown.chart.bad_release_dates',
+								$textFormatter.formatDate(${user}, ${release.endDate}),
+								$textFormatter.formatDate(${user}, ${release.startDate}))</td>
+					</tr>
+				</tbody>
+			</table>
+		#elseif(${release})
+			#if (${daysToWait} > 0)
+				<table class="embedded">
+					<tbody>
+						<tr>
+							<td>
+								$textFormatter.getMessage($noDataKey, ${daysToWait})
+								#if (${hasUserGenerateData})
+									<br />
+									<input type="button" value="${textFormatter.getMessage('cmdb.release.stats.burndown.calculate.now')}" onclick="burDownChart_${pluginId}.updateChart();"/>
+								#end
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			#end
+		#else
+			<table class="embedded">
+				<tbody>
+					<tr>
+						<td>${textFormatter.getMessage('cmdb.release.stats.burndown.chart.not.sprint')}</td>
+					</tr>
+				</tbody>
+			</table>
+		#end
+		#wikiBoxClose()
+	#end
+
+#end

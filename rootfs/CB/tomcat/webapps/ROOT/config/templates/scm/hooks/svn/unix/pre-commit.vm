@@ -1,0 +1,3 @@
+#!/bin/sh
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+exec "${scmloop}/scmloop" -mode svn_pre_update "$@"

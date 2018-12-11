@@ -1,0 +1,2 @@
+#parse("/wiki-plugin/includes/activitystream-macros.vm")
+#renderActivity($activity 1000)

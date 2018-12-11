@@ -1,0 +1,213 @@
+## renders the Activity of the ActivityStream
+## @param activity The Acitivity object
+##
+## The rendered output is in the variables like $excerpt, $target
+## @param activity The Activity object to render
+## @param abbreviateLen The length of the abbreviate
+#macro(renderActivity $activity $abbreviateLen)
+	#set($eventClassName = $!{activity.type.name()})
+	#set($targetClassName = "")
+	#set($targetClassName = $!{activity.target.class.name})
+	#set($changeClassName = "")
+
+	## convert event type to action, target, excerpt, etc.
+	#set($action = $textFormatter.getMessage('activity.worked'))
+	#set($actionStyle = "")
+	#set($target = $textFormatter.getMessage('activity.unknown')) ## necessary to unsure that it has some value even if the next line evaluates to NULL
+	#set($target = ${activity.target.name})
+	#if(${targetClassName} == "com.intland.codebeamer.persistence.dto.TrackerItemDto" || ${targetClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyTrackerItemDto")
+		#if(${activity.target.name})
+			#set($target = ${activity.target.name})
+		#else
+			#set($target = "${activity.target.interwikiLink} ${textFormatter.getMessage('tracker.view.layout.document.no.summary')}")
+		#end
+	#end
+	#set($reference = ${activity.target.interwikiLink})
+	#set($excerpt = "")
+	#set($excerptStyle = "")
+    #set($tooltip = "")
+    #if(${activity.target.project})
+    	#set($tooltip = "Project: $textFormatter.escape(${activity.target.project.name})")
+    #elseif(${change.detail.project})
+    	#set($tooltip = "Project: $textFormatter.escape(${change.detail.project.name})")
+    #end
+
+	#if(${eventClassName} == "Create")
+		## create
+		#set($action = $textFormatter.getMessage('activity.created'))
+		#set($actionStyle = "color:$green;")
+
+		#if(${targetClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyWikiPageDto" || ${targetClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyArtifactDto")
+            #if(${targetClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyArtifactDto")
+            	#set($action = $textFormatter.getMessage('activity.uploaded'))
+            #end
+			#set($excerpt = $textFormatter.escape(${change.subject}))
+		#elseif(${targetClassName} == "com.intland.codebeamer.persistence.dto.TrackerItemDto" || ${targetClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyTrackerItemDto")
+			#if(${activity.target.tracker.type.id} == 7)
+				#set($action = $textFormatter.getMessage('activity.sent'))
+			#else
+				#set($action = $textFormatter.getMessage('activity.reported'))
+			#end
+		#elseif(${targetClassName} == "com.intland.codebeamer.persistence.dto.ForumPostDto")
+			#if(${activity.target.replyToId})
+				#set($action = $textFormatter.getMessage('activity.replied'))
+				#set($actionStyle = "color:$blue;")
+			#else
+				#set($action = $textFormatter.getMessage('activity.started'))
+			#end
+			#set($excerpt = $textFormatter.formatAsText($activity.target.description, $activity.target.descriptionFormat, $request, $activity.target))
+		#elseif(${targetClassName} == "com.intland.codebeamer.persistence.dto.ScmChangeSetDto")
+			#if(${activity.target.priority} == 1)
+				#if(${activity.target.children.size()} == 1)
+					#set($target = "1 ${textFormatter.getMessage('tracker.field.Change.label')}" )
+				#else
+					#set($target = "${activity.target.children.size()} ${textFormatter.getMessage('tracker.field.Changes.label')}" )
+				#end
+				#set($action = $textFormatter.getMessage('activity.pushed'))
+			#else
+				#set($action  = $textFormatter.getMessage('activity.committed'))
+				#set($excerpt = $textFormatter.escape(${activity.target.description}))
+			#end
+			#set($actionStyle = "color:$green;")
+		#end
+	#elseif(${eventClassName} == "Modify")
+		## update
+		#set($action = $textFormatter.getMessage('activity.updated'))
+		#set($actionStyle = "color:$grey;")
+
+		#if(${targetClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyWikiPageDto" || ${targetClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyArtifactDto")
+			#set($changed = ${activity.changes.get(0).detail})
+			#if(${changed.typeId} == 13)
+            	#set($actionStyle = "color:$blue;")
+            	#if(${changed.fileSize})
+                	#set($action = $textFormatter.getMessage('activity.attached'))
+                	#if($!{changed.description})
+                		#set($excerpt = "$textFormatter.escape($textFormatter.abbreviate($!{changed.description}, $abbreviateLen))<br/>$textFormatter.escape(${changed.name})")
+                	#else
+                		#set($excerpt = "$textFormatter.escape(${changed.name})")
+                	#end
+            	#else
+                	#set($action = $textFormatter.getMessage('activity.commented'))
+					#set($excerpt = $textFormatter.escape(${changed.description}))
+            	#end
+			#elseif(${changed.typeId} == 14)
+				#set($excerpt = $textFormatter.escape(${activity.target.comment}))
+			#else
+ 				#set($excerpt = $textFormatter.escape(${change.subject}))
+            #end
+		#elseif(${targetClassName} == "com.intland.codebeamer.persistence.dto.TrackerItemDto" || ${targetClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyTrackerItemDto")
+			## "changes" can contain comments, attachment and actual changes
+			#set($comments = "")
+			#set($fldUpdates = "")
+			#set($attachments = "")
+
+			#foreach($change in ${activity.changes})
+				#if(${change.detail})
+					#set($changeClassName = ${change.detail.class.name})
+				#else
+					#set($changeClassName = "comment")
+				#end
+
+				#if(${changeClassName} == "comment")
+					#set($action = $textFormatter.getMessage('activity.commented'))
+					#set($actionStyle = "color:$blue;")
+					#set($excerptLine = $textFormatter.formatAsText($change.subject, $change.subjectFormat, $request, $activity.target))
+                    #if($comments != "")
+						#set($comments = "$comments<br/>$excerptLine")
+					#else
+                    	#set($comments = $excerptLine)
+					#end
+				#elseif(${changeClassName} == "com.intland.codebeamer.persistence.dto.ArtifactDto" || ${changeClassName} == "com.intland.codebeamer.persistence.dto.ReadOnlyArtifactDto")
+					#set($action = $textFormatter.getMessage('activity.attached'))
+					#set($actionStyle = "color:$blue;")
+					#set($excerptLine = $textFormatter.formatAsText($change.subject, $change.subjectFormat, $request, $activity.target))
+                    #if($attachments != "")
+						#set($attachments = "$attachments<br/>$excerptLine")
+					#else
+                    	#set($attachments = $excerptLine)
+					#end
+				#elseif(${changeClassName} == "com.intland.codebeamer.persistence.dto.TrackerItemHistoryEntryDto")
+					#set($action = $textFormatter.getMessage('activity.updated'))
+					#set($actionStyle = "color:$grey;")
+##					#if(${change.detail.oldValue} && ${change.detail.oldValue} != "--")
+##						#if(${change.detail.newValue})
+##							#set($excerptLine = "${change.subject}: ${change.detail.oldValue} &rarr; ${change.detail.newValue}")
+##						#else
+##							#set($excerptLine = "${change.subject}: ${change.detail.oldValue} &rarr; --")
+##						#end
+##					#elseif(${change.detail.newValue})
+##						#set($excerptLine = "${change.subject}: ${change.detail.newValue}")
+##					#else
+##						#set($excerptLine = "${change.subject}: --")
+##					#end
+					## append
+##                  #if($excerpt != "")
+##                    	#set($excerpt = "$excerpt<br/>$excerptLine")
+##                  #else
+##                    	#set($excerpt = $excerptLine)
+##                  #end
+##
+                    #if($fldUpdates == "")
+                    	#set($fldUpdates = "${textFormatter.getMessage('document.modifications.label')}: ${change.subject}")
+                    #else
+                    	#set($fldUpdates = "${fldUpdates}, ${change.subject}")
+                    #end
+				#end
+
+				#set($excerpt = ${comments})
+
+				#if($fldUpdates != "")
+                  	#if($excerpt != "")
+                    	#set($excerpt = "$excerpt<br/>$fldUpdates")
+                  	#else
+                    	#set($excerpt = $fldUpdates)
+                  	#end
+				#end
+
+				#if($attachments != "")
+                  	#if($excerpt != "")
+                    	#set($excerpt = "$excerpt<br/>$attachments")
+                  	#else
+                    	#set($excerpt = $attachments)
+                  	#end
+				#end
+
+			#end
+	    #elseif(${targetClassName} == "com.intland.codebeamer.persistence.dto.TrackerItemCommentDto")
+			#set($target = ${change.detail.trackerItem.summary})
+			#set($action = $textFormatter.getMessage('activity.updated'))
+			#set($excerpt = "$textFormatter.escape($textFormatter.abbreviate(${change.detail.oldValue}, $abbreviateLen)) &rarr; $textFormatter.escape($textFormatter.abbreviate(${change.detail.newValue}, $abbreviateLen))")
+		#elseif(${targetClassName} == "com.intland.codebeamer.persistence.dto.BuildDto")
+			#set($target = $textFormatter.getMessageWithDefault("build.${activity.target.name}.label", ${activity.target.name}))
+			#set($action = $textFormatter.getMessage('activity.executed'))
+			#set($change = ${activity.changes.get(0)})
+
+			#if(${change.detail.status} == "Failed")
+				#set($action = $textFormatter.getMessage('activity.executed.failure'))
+				#set($actionStyle = "color:$red;")
+			#end
+			#set($excerpt = $textFormatter.escape(${change.subject}))
+		#end
+	#elseif(${eventClassName} == "Delete")
+		## delete
+		#set($action = $textFormatter.getMessage('activity.deleted'))
+		#set($actionStyle = "color:$brown;")
+
+##		#if(${targetClassName} == "com.intland.codebeamer.persistence.dto.TrackerItemCommentDto")
+##			#set($target = ${change.detail.trackerItem.summary})
+##			#set($action = "comment deleted")
+##			#set($excerpt = $textFormatter.escape(${activity.target.description}))
+##			#set($excerptStyle = "text-decoration: line-through;")
+##		#elseif(${targetClassName} == "com.intland.codebeamer.persistence.dto.TrackerItemAttachmentDto")
+##			#set($target = ${change.detail.trackerItem.summary})
+##			#set($action = "attachment deleted")
+##			#set($excerpt = $textFormatter.escape(${activity.target.description}))
+##			#set($excerptStyle = "text-decoration: line-through;")
+##		#end
+	#elseif(${eventClassName} == "Restore")
+		#set($action = $textFormatter.getMessage('activity.restored'))
+		#set($actionStyle = "color:$brown;")
+	#else
+		## unknown event, use this for debugging: $eventClassName $targetClassName
+	#end
+#end

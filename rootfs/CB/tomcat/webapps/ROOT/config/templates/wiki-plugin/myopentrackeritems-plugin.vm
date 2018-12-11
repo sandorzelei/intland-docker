@@ -1,0 +1,123 @@
+## $Id: zsolt 2009-11-27 19:54 +0100 23955:cdecf078ce1f  $
+
+<script type="text/javascript">
+<!--
+
+#*
+Generate data necessary for JavaScript part
+*#
+
+var projects = new Array(#foreach( $item in $projectsList )#if( $velocityCount!=1 ),#end "${item.projectName}"#end);
+var projectIDs = new Array(#foreach( $item in $projectsList )#if( $velocityCount!=1 ),#end "$!{item.project.Id}"#end);
+var workSetIDs = new Array(#foreach( $item in $projectsList )#if( $velocityCount!=1 ),#end "$!{item.workingSet.Id}"#end);
+var #PrintArrayJSnamed("filters" $filters )
+var selectorParams = new Array ( #printParametersSet($selectors) );
+var filterParams = new Array ( #printParametersSet($filters) );
+var values = new Array();
+## #evaluate() directive introduced in 1.6 only!
+## #evaluate( "${source1}.${source2}.$src1"  ) - Should work!
+#set( $projCnt = 0 )
+#foreach ( $project in $projectsList )
+		values[${projCnt}] = new Array();
+		#set( $selCnt = 0 )
+		#foreach( $sel in $selectors )
+				values[${projCnt}][${selCnt}] = new Array(#set($comma="")#foreach( $flt in $filters )#set($source1 = '$project')$comma $render.eval($ctx, "${source1}.stats.$sel.prefix$flt.prefix"  )#if(${comma} != ",") #set($comma = ",") #end#end );
+				#set( $selCnt = $selCnt + 1 )
+		#end
+		#set( $projCnt = $projCnt + 1 )
+#end
+// -->
+</script>
+
+<form name="myOpenItems" action="#">
+<div id="myOpentrackerItemsPlugin">
+#bold("${title} in:")
+<select id="projectsList" name="projects" onChange="makeFilters(this.selectedIndex)"></select>
+
+#if(${selectedWorkingSetName})
+	#bold("${textFormatter.getMessage('my.open.issues.workingset')}:")
+	#if (${selectedWorkingSetURL})
+   		<a href="${selectedWorkingSetURL}" title="${textFormatter.getMessage('workingset.customize.tooltip')}" >${textFormatter.getMessageWithDefault(${selectedWorkingSetName}, ${selectedWorkingSetName})}</a>
+   	#else
+   		$textFormatter.getMessageWithDefault(${selectedWorkingSetName}, ${selectedWorkingSetName})
+   	#end
+#end
+#if (${numProjects} != 0)
+	&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="createNewIssue(this, 'projectsList');" title="${textFormatter.getMessage('my.open.issues.new.issue.tooltip')}" href="#">${textFormatter.getMessage('my.open.issues.new.issue.label')}</a>
+#end
+
+<hr/>
+<table>
+		#set( $counter = 0 )
+		#foreach( $sel in $selectors )
+			<tr>
+				<td width="10"><img src="${contextPath}/images/r_arrow.gif" height="10" width="10" border="0"/></td>
+				<td>
+					<a id="href${counter}" href="#">$sel.name</a> (<strong><span id="counter${counter}"></span></strong>)
+				</td>
+				<td>
+					Select: <select style="width:300px" name="selector${counter}" onchange="submitFunction(${counter}, this.selectedIndex )"></select>
+				</td>
+			</tr>
+			#set( $counter = $counter + 1 )
+		#end
+</table>
+</div>
+</form>
+
+<script type="text/javascript">
+<!--
+function submitFunction( selector, filter) {
+	 var index = document.getElementById("projectsList").selectedIndex;
+	 document.location.href = makeSelectorLink( index, selector ) + filterParams[filter];
+}
+function makeSelectorLink( projectIndex, selectorIndex ) {
+		var proj = (projectIDs[projectIndex] != "") ? "&proj_id=" + projectIDs[projectIndex] : "";
+		var wset = (workSetIDs[projectIndex] != "") ? "&workingset_id=" + workSetIDs[projectIndex] : "";
+		result = "${contextPath}/browseIssues.spr?user_id=${userId}" + selectorParams[selectorIndex] + proj + wset;
+		return result;
+}
+
+// Build selection for filters
+function makeFilters(index){
+		for (sel = 0; sel < ${selectors.size()}; sel++) {
+				var projectValues = values[index][sel];
+				var projectValuesCnt = projectValues.length;
+
+				var par = document.getElementById("counter" + sel);
+				par.innerHTML = projectValues[0];
+				var selectorLink = document.getElementById("href" + sel);
+				selectorLink.href = makeSelectorLink(index, sel);
+
+				var allList = document.forms["myOpenItems"].elements["selector" + sel];
+				allList.length = 0; // Clear list
+				for (i = 0; i < projectValuesCnt; i++){
+						allList.options[i] = new Option(filters[i] + " (" + projectValues[i] + ")", projectValues[i]);
+				}
+		}
+}
+
+// Build the projects selector
+function makeProjects() {
+		var projectsList = document.getElementById("projectsList");
+		projectsList.options.length = 0; // Doesn't work in IE;/
+		for (i = 0; i < ${projectsList.size()}; i++){
+				projectsList.options[i] = new Option(projects[i] + " (" + values[i][0][0] + ")", i);
+		}
+		projectsList.selectedIndex = 0;
+}
+
+// Init selectors
+function init() {
+    makeProjects();
+    makeFilters(0);
+}
+
+$(function() {
+	init();
+});
+
+// -->
+</script>
+
+

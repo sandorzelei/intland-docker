@@ -1,0 +1,994 @@
+/**
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+.reportSelectorTag {
+
+	width: 100%;
+	display: none;
+	padding: 5px 0;
+	background-color: #f5f5f5;
+	z-index: 10;
+	border-bottom: 1px solid #d1d1d1;
+
+	&.mergeToActionBar {
+		padding: 0;
+		border-bottom: none;
+		border-left: 1px solid #d1d1d1;
+	}
+
+	.droppableArea {
+		display: block;
+		width: 100%;
+		&.highlighted {
+			background-color: #ccffe8;
+		}
+		&.dropHover {
+			background-color: darken(#ccffe8, 10%) !important;
+		}
+	}
+
+	.reportSelectorTable {
+		width: 100%;
+		.filterTd {
+			padding-left: 3px;
+			.filterLabel {
+				color: black;
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				background: url("../images/newskin/actionIcons/icon_add_filter.png") no-repeat;
+				margin-right: -5px;
+				margin-left: 5px;
+				cursor: pointer;
+			}
+		}
+		.groupByTd {
+			border-left: 1px solid #d1d1d1;
+			padding-left: 3px;
+			width: 20%;
+		}
+		.orderByTd {
+			border-left: 1px solid #d1d1d1;
+			padding-left: 3px;
+			width: 15%;
+		}
+		.controlTd {
+			width: 2%;
+			.button {
+				margin: 0 4px !important;
+				padding: 2px 5px !important;
+				min-height: initial !important;
+				min-width: 60px !important;
+			}
+		}
+		.contextualSearchTd {
+			border-left: 1px solid #d1d1d1;
+			border-right: 1px solid #d1d1d1;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+		.reportSelectorButtonTd {
+			border-left: 1px solid #d1d1d1;
+			.reportSelectorButton {
+				cursor: pointer;
+				display: inline-block;
+				width: 30px;
+				height: 16px;
+				background: url("../images/newskin/actionIcons/icon-filter-setting.png") center center no-repeat;
+			}
+		}
+	}
+
+	.addButton {
+		margin-left: 3px;
+	}
+
+	.logicButton {
+		float: right;
+		position: relative;
+		top: 3px;
+		padding-right: 3px;
+		padding-left: 14px;
+		background: url("../images/newskin/actionIcons/small/icon_add_blue.png") no-repeat 0 1px;
+	}
+
+	.addButton, .addGroupByButton, .addOrderByButton, .logicButton {
+		cursor: pointer;
+		color: #0093b8;
+		white-space: nowrap;
+	}
+
+	.addButton:hover, .addGroupByButton:hover, .addOrderByButton:hover, .logicButton:hover {
+		text-decoration: underline;
+	}
+
+	.projectSelectorLabel, .trackerSelectorLabel {
+		color: black;
+		padding-left: 5px;
+	}
+
+	.droppableField {
+		font-weight: bold;
+		margin-right: 3px;
+		white-space: nowrap;
+		display: inline-block;
+		cursor: default;
+		color: black;
+	}
+
+	.descDroppableButton, .truncateDroppableButton, .aggregateDroppableButton {
+		display: inline-block;
+		margin: 0 2px 0 4px;
+		background-color: #454545;
+		color: white;
+		border-radius: 3px;
+		font-size: 11px;
+		position: relative;
+		top: -1px;
+		cursor: pointer;
+		padding: 1px;
+	}
+
+	.removeDroppableButton {
+		background: url("../images/newskin/action/delete-grey-12x12.png") no-repeat;
+		cursor: pointer;
+		display: inline-block;
+		width: 12px;
+		height: 12px;
+		margin: 0 3px;
+		position: relative;
+		top: 1px;
+	}
+
+	.queryConditionSelectorPlaceHolder {
+		display: inline-block;
+		height: 14px;
+		width: 1px;
+		padding: 0;
+		margin: 0;
+	}
+
+	.ui-multiselect.queryConditionSelector {
+
+		border: none !important;
+		background-color: transparent !important;
+		min-width: 0 !important;
+		max-width: none !important;
+		margin-right: 18px;
+
+		&.projectAndTrackerSelector {
+			margin-right: 0;
+		}
+
+		.ui-icon.deletePlaceholder {
+			display: none;
+		}
+
+		.ui-icon.ui-icon-triangle-1-s {
+			display: none !important;
+		}
+
+		span {
+			white-space: nowrap;
+		}
+
+		.range {
+			margin-right: 2px;
+		}
+
+	  	&.includePart {
+		  	font-style: italic;
+		}
+
+	}
+
+	.ui-icon.removeIcon {
+		background: url("../images/newskin/action/delete-grey-12x12.png") no-repeat 1px 1px;
+		cursor: pointer;
+		display: inline-block;
+		position: relative;
+		top: 1px;
+		margin-left: -16px;
+	}
+
+	.reportAjaxLoading {
+		display: inline-block;
+		margin-left: 5px;
+	}
+
+	.contextualSearchBox {
+		font-size: 11px;
+		padding: 3px 8px;
+		background-color: #fff;
+		width: 100px;
+		height: 13px;
+	}
+
+	.logicStripe {
+		display: none;
+		height: 0;
+		float: right;
+		position: relative;
+		top: -3px;
+	}
+
+	.logicStripeTable {
+		td.logicStripeText {
+			font-weight: bold;
+			white-space: nowrap;
+			padding-top: 3px;
+		}
+		.logicStripeInput {
+			input {
+				font-weight: bold;
+				padding: 3px !important;
+				width: 150px;
+			}
+			input.validLogic {
+				color: #00a85d;
+			}
+			input.invalidLogic {
+				color: #b31317;
+			}
+			input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+				font-weight: normal;
+			}
+			input::-moz-placeholder { /* Firefox 19+ */
+				font-weight: normal;
+			}
+			input:-ms-input-placeholder { /* IE 10+ */
+				font-weight: normal;
+			}
+			input:-moz-placeholder { /* Firefox 18- */
+				font-weight: normal;
+			}
+		}
+		.logicStripeRemove {
+			width: 5%;
+			text-align: right;
+		}
+		.removeLogic {
+			margin: 0 !important;
+		}
+	}
+
+	.groupByOrderByLabel {
+		color: black;
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		position: relative;
+		top: 2px;
+		left: 4px;
+		cursor: pointer;
+		&.groupByLabel {
+			background: url("../images/newskin/actionIcons/icon-group-by.png") no-repeat;
+		}
+		&.orderByLabel {
+			background: url("../images/newskin/actionIcons/icon-order-by.png") no-repeat;
+		}
+		&.inactive {
+			cursor: auto;
+			&.groupByLabel {
+				background: url("../images/newskin/actionIcons/icon-group-by-grey.png") no-repeat;
+			}
+			&.orderByLabel {
+				background: url("../images/newskin/actionIcons/icon-order-by-grey.png") no-repeat;
+			}
+		}
+	}
+
+	.filterSelector {
+		display: none;
+	}
+
+}
+
+.ui-multiselect-menu.queryConditionSelector {
+	background: white;
+	border: 1px solid #ababab;
+	padding: 0;
+	max-width: none !important;
+	display: none;
+	height: auto !important;
+
+	div.showHiddenCheckBox {
+		padding: 0.3em;
+		font-size: 13px;
+		margin: 0;
+	}
+
+	.ui-widget-header {
+		display: block;
+		padding: 0 !important;
+		background: none;
+		border-top: hidden;
+		border-right: hidden;
+		border-left: hidden;
+		border-bottom: 1px solid #d1d1d1;
+		margin: 0;
+		text-align: left !important;
+	}
+
+	.ui-multiselect-filter {
+		padding: 0.3em;
+		float: none;
+		input {
+			width: 100%;
+			margin: 0;
+		}
+	}
+
+	.ui-multiselect-checkboxes {
+		padding: 0 !important;
+	}
+
+	li {
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		padding-top: 0 !important;
+	}
+
+	li.branchTracker {
+		span {
+			padding-left: 10px;
+			color: #187a6d;
+		}
+	}
+
+  	li.hiddenTracker span {
+	  	color: #ababab;
+	}
+
+	.ui-multiselect-optgroup {
+		padding: 0 !important;
+		margin: 0 !important;
+		a {
+			display: block !important;
+			border-bottom: 1px solid #d1d1d1;
+		}
+	}
+
+	li input {
+		margin-right: 0 !important;
+	}
+
+	&.textFieldMenu, &.referenceFieldMenu, &.numberFieldMenu, &.durationFieldMenu, &.orderByFieldMenu, &.booleanFieldMenu, &.colorFieldMenu, &.tagFieldMenu {
+		padding: 0.2em !important;
+		.textMenuContInfo {
+			padding: 1em 0.5em 0.5em 0.4em;
+			color: #858585;
+			font-size: 11px;
+		}
+		.textMenuCont, .colorMenuCont {
+			padding: 0.2em;
+			font-size: 12px;
+			.fieldLabel {
+				display: inline-block;
+				font-size: 12px;
+				font-weight: bold;
+				padding: 0 0.3em;
+			}
+			.notCheckBox {
+				position: relative;
+				top: 2px;
+			}
+		}
+		.urlFieldPencilIcon {
+			width: 12px;
+			height: 12px;
+			display: inline-block;
+			background: url("../images/newskin/action/edit-s.png") no-repeat center center;
+			padding: 3px;
+			cursor: pointer;
+			position: relative;
+			top: 4px;
+			left: 3px;
+		}
+	  	.colorPicker {
+			position: relative;
+			top: 3px;
+			left: 3px;
+			text-decoration: none !important;
+		}
+	}
+
+	&.numberFieldMenu, &.durationFieldMenu, &.booleanFieldMenu {
+		select {
+			padding: 3px;
+			margin: 0 0.2em;
+		}
+		.numberInput {
+			width: 30px;
+			margin-left: 0.2em;
+		}
+	}
+
+	.numberField, .durationField, .booleanField {
+		select {
+			padding: 3px;
+			margin: 0 0.2em;
+		}
+	}
+
+	&.dateFieldMenu {
+		padding: 0.2em !important;
+		.dateMenuCont {
+			padding: 0.2em;
+			select {
+				padding: 3px;
+				margin: 0 0.2em;
+			}
+			.numberInput {
+				width: 30px;
+				margin-right: 0.2em;
+			}
+			span {
+				font-size: 12px;
+			}
+			.fieldLabel {
+				width: 40px;
+				display: inline-block;
+				font-size: 12px;
+				font-weight: bold;
+				text-align: right;
+				padding: 0 0.3em;
+			}
+		}
+	}
+
+	&.filterSelector {
+		.clearAllButton {
+			color: #0093b8;
+			float: right;
+			padding: 8px;
+		}
+		.ui-multiselect-checkboxes {
+			.ui-multiselect-optgroup, .ui-multiselect-optgroup a {
+				cursor: default !important;
+			}
+			li {
+				padding-left: 10px;
+			}
+			li:hover {
+				background-color: #eeeeee !important;
+			}
+			label {
+				cursor: pointer;
+				input {
+					display: none;
+				}
+			}
+			li.ui-multiselect-disabled label {
+				opacity: 0.35 !important;
+				font-weight: normal !important;
+			}
+		}
+	}
+}
+
+.reportColorPicker {
+	z-index: 200;
+}
+
+.ui-multiselect-filter {
+	display: inline-block;
+}
+
+.notEmptyBadgeContainer {
+	display: inline-block;
+	margin: 0 4px;
+	padding-left: 4px;
+	border-left: 1px solid #d1d1d1;
+}
+
+.addExtraUserContainer {
+	display: block;
+	padding: 0px 5px 3px 5px;
+	text-align: right;
+	a {
+		color: #0093b8 !important;
+		cursor: pointer !important;
+	}
+}
+
+.indirectUserContainer {
+	text-align: right;
+	padding: 0 5px 5px 5px;
+	input {
+		position: relative;
+		top: 2px;
+	}
+	label.ui-state-hover {
+		background: none !important;
+		color: black !important;
+		border: none !important;
+	}
+}
+
+#extraUserDialog {
+	display: none;
+	.extraUserDialogInfo {
+		padding: 0.5em 0;
+	}
+}
+
+.referenceDialog .notEmptyBadgeContainer {
+	float: right;
+}
+
+.referenceDialog .chooseReferences.disabled {
+	border-color: #cccccc;
+	.popupButton {
+		display: none;
+	}
+	ul.token-input-list-facebook {
+		display: none;
+	}
+}
+
+.filterCounter {
+	display: inline-block;
+	margin-right: 5px;
+	float: left;
+}
+
+.notBadge, .emptyBadge, .extraBadge {
+	display: inline-block;
+	margin: 2px;
+	background-color: #d1d1d1;
+	font-size: 11px;
+	font-weight: bold;
+	text-transform: uppercase;
+	border-radius: 2px;
+	color: white;
+	padding: 2px;
+	cursor: pointer;
+	&.active {
+		background-color: #666666;
+	}
+}
+
+.orderByFieldMenu {
+	select {
+		padding: 3px;
+		margin: 0 0.2em;
+	}
+	.descCheckBox {
+		position: relative;
+		top: 2px;
+	}
+}
+
+.queryConditionSelector {
+	outline: none;
+}
+
+.referenceDialog {
+	.referenceSpan {
+		width: 570px;
+		display: block;
+	}
+
+	.referenceStep {
+		padding: 1em 0 0.2em 0;
+	}
+
+	button.queryConditionSelector {
+		width: 570px !important;
+		min-width: 570px !important;
+		border: 1px solid #cccccc;
+		background: white;
+		&.ui-state-focus, &.ui-state-hover {
+			border: 1px solid #cccccc !important;
+			background: white !important;
+		}
+		.ui-icon {
+			float: right;
+		}
+	}
+
+	.collapsingBorder {
+		margin-top: 1em !important;
+		.collapsingBorder_content {
+			padding: 0 !important;
+		}
+		.referenceStep {
+			padding: 0.3em 0.2em !important;
+		}
+	}
+}
+
+.dateTypeLabel {
+	padding: 0.5em 0 0.5em 0;
+	font-size: 12px;
+	font-weight: bold;
+	input[type="radio"] {
+		position: relative;
+		top: 2px;
+	}
+}
+
+.referenceDialog {
+	.ui-multiselect.ui-state-active,
+	.ui-multiselect.ui-state-active {
+		border: 1px solid #CCCCCC !important;
+	}
+	.suspectedFilterSelector {
+		padding: 3px;
+		margin: 0.2em 0;
+	}
+	.referenceTrackerAjaxLoading {
+		display: inline-block;
+		width: 12px;
+		height: 11px;
+		margin-left: 10px;
+		position: relative;
+		top: 1px;
+	}
+}
+
+.ui-multiselect-menu.queryConditionSelector .disabledUser span {
+	text-decoration: line-through;
+}
+
+.context-menu-item.context-menu-icon {
+	background-repeat: no-repeat;
+	&.context-menu-disabled {
+		color: black !important;
+		opacity: 0.4;
+	}
+}
+
+.context-menu-item.context-menu-icon-removeColumn {
+	background-image: url('../images/newskin/action/query_context_delete.png');
+	background-position: left 5px top 5px;
+}
+
+.context-menu-item.context-menu-icon-summarize {
+	background-image: url('../images/newskin/action/query_context_summarize.png');
+	background-position: left 5px top 5px;
+}
+
+.context-menu-item.context-menu-icon-left {
+	background-image: url('../images/newskin/action/query_context_left.png');
+	background-position: left 5px top 5px;
+}
+
+.context-menu-item.context-menu-icon-right {
+	background-image: url('../images/newskin/action/query_context_right.png');
+	background-position: left 5px top 5px;
+}
+
+.duringDragHelper {
+	z-index: 1000;
+	a {
+		background-color: #0093b8;
+		color: white !important;
+		line-height: 16px;
+		height: 16px;
+		border-radius: 2px;
+		white-space: nowrap;
+		padding: 1px 4px 1px 4px;
+		font-size: 13px;
+		font-weight: normal;
+		width: auto !important;
+		.jstree-icon {
+			display: none;
+		}
+	}
+}
+
+th.duringDragHelper {
+	background-color: #0093b8;
+	width: auto;
+	color: white !important;
+	line-height: 16px;
+	height: 16px;
+	border-radius: 2px;
+	white-space: nowrap;
+	padding: 1px 4px 1px 4px;
+	font-size: 13px;
+	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.trackerItems.resizeableColumns {
+	.column-minwidth, .checkbox-column-minwidth {
+		min-width: 15px;
+	}
+}
+
+.trackerItems.resizeableColumns td.fieldColumn {
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+}
+
+.trackerItems.resizeableColumns th[data-fieldlayoutid] {
+	white-space: normal !important;
+	text-align: left !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	.ui-resizable-handle.ui-resizable-w {
+		background: url("../images/newskin/action/resizer.png") no-repeat center center;
+	}
+}
+
+.trackerItems.resizeableColumns th.checkbox-column-minwidth input {
+	position: relative;
+	left: -4px;
+}
+
+.JColResizer {
+	opacity: 1 !important;
+	background-color: transparent !important;
+	background: url("../images/newskin/action/resizer.png") no-repeat center left;
+}
+
+#reportSelectorResult th,
+#plannerCenterPane .headerRow th,
+#plannerCenterPane thead th,
+#requirements th,
+#main-header-sticky th {
+	cursor: pointer;
+	.drop-marker {
+		position: absolute;
+		display: block;
+		background-color: darken(#ccffe8, 20%) !important;
+		height: 100px;
+		width: 10px;
+		z-index: 999;
+		opacity: 0.6;
+		top: 0;
+		padding: 0;
+		margin: 0;
+	}
+	&.highlighted {
+		background-color: #ccffe8;
+	}
+	&.dropHover {
+		background-color: darken(#ccffe8, 10%) !important;
+	}
+  	.tracker-context-menu {
+	  	visibility: hidden;
+		position: relative;
+	  	top: 2px;
+		padding: 0 3px;
+	  	&.activeMenu {
+			visibility: visible;
+	  	}
+	}
+	.removeColumn {
+		visibility: hidden;
+		display: inline-block;
+		width: 12px;
+		height: 12px;
+		background: url("../images/newskin/action/delete-grey-12x12.png") center no-repeat;
+	  	background-size: cover;
+	  	position: relative;
+	  	top: 1px;
+	}
+	&:hover {
+	  	.tracker-context-menu {
+		  	visibility: visible;
+		}
+		.removeColumn {
+			visibility: visible;
+		}
+	}
+}
+
+.saveReportDialog {
+	display: none;
+}
+
+.reportPickerContainer {
+	position: absolute;
+	background-color: white;
+	border: 1px solid #ababab;
+	border-top: none;
+	width: 700px;
+	height: 400px;
+	z-index: 10;
+	display: none;
+
+	.reportPickerMenuHeader {
+		background-color: #f5f5f5;
+		padding: 10px;
+		.reportPickerMenu {
+			display: inline-block;
+			margin-left: 5px;
+			margin-right: 10px;
+		}
+		.save, .saveAs, .savePublic {
+			font-weight: bold;
+		}
+		.properties, .delete, .revert {
+			a {
+				font-weight: normal !important;
+			}
+		}
+		.revert {
+			float: right;
+			background: url("../images/newskin/queries/icon_revert.png") no-repeat left center;
+			padding-left: 18px;
+		}
+	}
+
+	.reportPickerCurrentHeader {
+		padding: 8px;
+		.reportNameLabel {
+			position: relative;
+			top: -1px;
+			font-size: 10px;
+			font-weight: bold;
+			color: #ababab;
+		}
+		.reportName {
+			font-weight: bold;
+			color: black;
+		}
+		.setAsDefault, .clearDefault {
+			display: none;
+			margin-left: 10px;
+			a {
+				font-weight: normal !important;
+			}
+		}
+		.resizeableColumns {
+			float: right;
+			input {
+				position: relative;
+				top: 2px;
+			}
+			label {
+				font-weight: normal;
+			}
+		}
+	}
+
+	.reportPickerIntelligentTableView {
+		display: block;
+		padding: 0 12px;
+		text-align: right;
+		a {
+			font-weight: normal;
+		}
+	}
+
+	table {
+		width: 100%;
+		td {
+			vertical-align: top;
+			.reportTypeContainer {
+				margin: 0 8px 8px 8px;
+				.reportTypeHeader {
+					font-weight: bold;
+					padding: 2px 0 2px 18px;
+					margin: 5px 0 0 0;
+					border-bottom: 1px solid #ababab;
+					&.publicReports {
+						background: url("../images/newskin/queries/icon_public.png") no-repeat left center;
+					}
+					&.privateReports {
+						background: url("../images/newskin/queries/icon_private.png") no-repeat left center;
+					}
+				}
+				.reportTypeListContainer {
+					height: 297px;
+					overflow: auto;
+					ul {
+						padding: 0;
+						margin: 0;
+						list-style-type: none;
+						li {
+							padding: 3px;
+							.reportName, .reportEdit, .reportDelete {
+								cursor: pointer;
+								color: black;
+							}
+							.reportEdit {
+								float: right;
+								display: none;
+								background: url("../images/newskin/queries/icon_edit.png");
+								width: 16px;
+								height: 16px;
+							}
+							.reportDelete {
+								float: right;
+								display: none;
+								background: url("../images/newskin/queries/icon_delete.png");
+								width: 16px;
+								height: 16px;
+							}
+							&:hover {
+								background-color: #f5f5f5;
+								.reportEdit, .reportDelete {
+									display: inline-block;
+								}
+							}
+							input {
+								position: relative;
+								top: 2px;
+							}
+						}
+						li.predefined {
+							background-color: #e1f9ff;
+							&:hover {
+								background-color: #c9f4ff;
+							}
+						}
+					}
+					.publicReportPicker ul {
+						border-top: 1px solid #ababab;
+					}
+				}
+			}
+		}
+	}
+
+	.predefinedReports {
+		.collapsingBorder {
+			border: none;
+			padding: 0;
+			.collapsingBorder_legend {
+				padding: 2px 2px 2px 7px;
+			}
+		}
+	}
+}
+
+.reportContextMenu {
+  	z-index: 31 !important;
+	.context-menu-item.disabled {
+		cursor: default;
+		color: #BDBDBD;
+	}
+}
+
+.reportFilterContextMenu {
+	.context-menu-item.disabled {
+		display: none;
+	}
+	.placeHolder {
+		padding: 2px 2px 2px 24px;
+		line-height: 1.5;
+		cursor: default;
+		color: #BDBDBD;
+	}
+}
+
+.invalidLogicTooltip {
+	font-size: 13px;
+	background-color: white;
+	color: #b31317;
+	white-space: pre-line;
+}
+
+.specialChoiceFieldWarning {
+	background: url("../images/newskin/action/testrun-block.png") center center no-repeat;
+	display: inline-block;
+	width: 16px;
+	height: 14px;
+	float: left;
+	margin-right: 3px;
+}
+
+.projectAndTrackerSelector.ui-multiselect-single .ui-multiselect-checkboxes label {
+	padding: 5px !important;
+}
+
+.currentProjectSelector {
+	margin: 1em 0;
+}

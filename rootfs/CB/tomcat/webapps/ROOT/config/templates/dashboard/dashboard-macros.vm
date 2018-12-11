@@ -1,0 +1,64 @@
+## Renders a widget
+## @param widget The widget object
+## @param renderingContext The rendering context object containing useful data for rendering the widget
+#macro(renderWidget $widget $renderingContext $editable)
+	#set($extraClass = "#if($widget.fullWidth)full-width#end #if($widget.color && $!widget.color != '')colored#end")
+	#set($fontColor = "#if($paletteColors.containsKey(${widget.color}))${paletteColors.get(${widget.color})}#end")
+	<div class="widget-container $extraClass #if($widget.headerHidden) hidden #end" data-widget-id="${widget.id}" data-dashboard-id="${renderingContext.dashboard.id}">
+		<div class="widget-title #if($widget.headerHidden) widget-title-hidden #end" #if(!$widget.headerHidden) style="background-color: ${widget.color};color:$fontColor;" #end>
+			<span class="handle"></span>
+			#if(!$widget.headerHidden) $textFormatter.escape(${widget.title}) #end
+			<span class="menuArrowDown"></span>
+		</div>
+		$widget.renderToHtml($renderingContext)
+	</div>
+#end
+
+#macro(lazyRenderWidget $widget $renderingContext $editable)
+	#set($extraClass = "#if($widget.fullWidth)full-width#end #if($widget.color && $!widget.color != '')colored#end")
+	#set($fontColor = "#if($paletteColors.containsKey(${widget.color}))${paletteColors.get(${widget.color})}#end")
+	<div class="widget-container $extraClass #if($widget.headerHidden) hidden #end" data-widget-id="${widget.id}" data-dashboard-id="${renderingContext.dashboard.id}">
+		<div class="widget-title #if($widget.headerHidden) widget-title-hidden #end" #if(!$widget.headerHidden) style="background-color: ${widget.color};color:$fontColor;" #end>
+			<span class="handle"></span>
+			#if(!$widget.headerHidden) $textFormatter.escape(${widget.title}) #end
+			<span class="menuArrowDown"></span>
+		</div>
+
+		<img class="loaderImage" src="${loaderImage}" />
+
+		<script type="text/javascript">
+
+			$("#dashboard").one("dashboard:loading:finished", function() {
+				codebeamer.dashboard.loadWidget("${widget.id}");
+			});
+
+		</script>
+	</div>
+#end
+
+#macro(renderWidgetContainer $widget $renderingContext $editable)
+	#set($extraClass = "#if($widget.fullWidth)full-width#end #if($widget.color && $!widget.color != '')colored#end")
+	#set($fontColor = "#if($paletteColors.containsKey(${widget.color}))${paletteColors.get(${widget.color})}#end")
+	<div class="widget-container $extraClass #if($widget.headerHidden) hidden #end" data-widget-id="${widget.id}"
+		data-dashboard-id="${renderingContext.dashboard.id}">
+		<div class="widget-title #if($widget.headerHidden) widget-title-hidden #end" #if(!$widget.headerHidden) style="background-color: ${widget.color};color:$fontColor;" #end>
+			<span class="handle"></span>
+			#if(!$widget.headerHidden) $textFormatter.escape(${widget.title}) #end
+			<span class="menuArrowDown"></span>
+		</div>
+
+		<img class="loaderImage" src="${loaderImage}" />
+
+	</div>
+#end
+
+#macro(exportWidget $widget $renderingContext)
+	#set($fontColor = "#if($paletteColors.containsKey(${widget.color}))${paletteColors.get(${widget.color})}#end")
+	<div class="widget-container #if($widget.headerHidden) hidden #end">
+		<div class="widget-title #if($widget.headerHidden) widget-title-hidden #end" #if(!$widget.headerHidden) style="background-color: ${widget.color};color:$fontColor;" #end>
+			<span class="handle"></span>
+			#if(!$widget.headerHidden) $textFormatter.escape(${widget.title}) #end
+		</div>
+		$widget.renderToHtml($renderingContext)
+	</div>
+#end

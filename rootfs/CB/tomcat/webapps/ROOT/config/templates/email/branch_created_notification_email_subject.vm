@@ -1,0 +1,6 @@
+#if($exception)
+	${textFormatter.getMessage('tracker.branching.notification.error.subject')}
+#else
+	${textFormatter.getMessage('tracker.branching.notification.success.subject')}
+#end
+

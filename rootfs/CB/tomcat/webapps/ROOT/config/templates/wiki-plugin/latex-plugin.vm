@@ -1,0 +1,5 @@
+## markup for Latex/Math plugin
+<img src="${imgSrc}"
+	alt="#esc(${latexTextShort})"
+	title="#esc($!{command.title})"
+	style="vertical-align: middle" />

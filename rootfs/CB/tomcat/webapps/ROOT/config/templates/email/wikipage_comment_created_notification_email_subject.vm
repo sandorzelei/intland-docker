@@ -1,0 +1,1 @@
+#showProjectNameInSubjects("New Comment to CB Wiki Page [#${artifact.id}] ${artifact.name}")

@@ -1,0 +1,31 @@
+#if(!${daysToWait})
+	#set($tableMarkup = "")
+    #if(!${release.startDate} || !${release.endDate})
+		#set(${command.table} = true)
+		#set($tableMarkup = "<div class='subtext' style='padding:5px'> $release.summary Velocity Trends </div>")
+	#end
+
+    #wikiBoxOpen(${command})
+    	#wikiBoxTitle("$!{command.title}", "#if(${release})${release.name}#end Velocity Trends")
+		<span id="chart_${pluginId}">
+			${chartSupport.chartMarkup}
+	    </span>
+    #wikiBoxClose()
+#else
+	#wikiBoxOpen(${command})
+		#wikiBoxTitle("$!{command.title}", "#if(${release})${release.name}#end Velocity Trends")
+        <table class="embedded">
+            <tbody>
+            	<tr>
+            		<td>
+            			#if(${release})
+            				$textFormatter.getMessage('cmdb.release.stats.burndown.chart.not_enough_data', ${daysToWait})
+            			#else
+            				No sprint defined yet.
+            			#end
+            		</td>
+            	</tr>
+            </tbody>
+        </table>
+	#wikiBoxClose()
+#end

@@ -1,0 +1,1 @@
+Version: swagger-ui-3.19.4

@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="$styles" type="text/css" media="all" />
+
+<a class="userProfileContainer" href="$userUrl">
+	#if($imageMarkup)
+		$imageMarkup
+	#else
+		<img class="largePhoto photoBox profilePhoto" src="$imageUrl" />
+	#end
+	<div class="userDetails">
+		<div>$userName</div>
+		#if ($license)
+			<div class="licenseInfo licenseCode">$license</div>
+		#end
+		#if($licenseCompany)
+            <div class="licenseInfo">$licenseCompany</div>
+		#end
+		#if($warning)
+            <div class="licenseInfo licenseWarning">$warning</div>
+		#end
+	</div>
+</a>

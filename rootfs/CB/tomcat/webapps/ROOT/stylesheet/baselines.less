@@ -1,0 +1,593 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+@baselineImagePath: "../images/newskin/action/baselines";
+
+.dateData td {
+  text-align: left;
+}
+
+.documentinuse {
+  font-style: normal;
+}
+
+.actionBar {
+  height: 22px !important;
+  .actionLink {
+    position: static;
+  }
+  input {
+    position: static !important;
+  }
+}
+
+.IE8 .actionBar input {
+  position: static !important;
+  min-height: 16px !important;
+  height: 16px !important;
+}
+
+.bcbHeader {
+  padding-left: 12px !important;
+}
+
+.bcHeader {
+  text-align: center;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+body.baselinesModule {
+  overflow: hidden;
+  #baselineAccordion {
+    .accordion-content {
+      padding-top: 0 !important;
+    }
+  }
+}
+
+body.branchesModule.branchesModule {
+  overflow: auto;
+}
+
+.compareBaselinesCont {
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding: 10px;
+}
+
+#baselineLibrary {
+  .baselineName {
+    display: block;
+    color: #0093b8;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+.baselineFilterBox {
+  font-size: 11px;
+  margin-right: 15px;
+  background-color: #fff;
+  float: right;
+}
+
+.baselineListWrapper {
+  @verticalSpacingWithoutSelection: 70px;
+  @verticalSpacingWithSelection: 140px;
+
+  &.noSelectionYet {
+    .compareBaselinesCont {
+      margin-bottom: -45px;
+    }
+  }
+
+  &.atLeastOneSelection {
+    .baselineDropArea {
+      margin-top: -@verticalSpacingWithSelection;
+      .leftBaselineWrapper,
+      .rightBaselineWrapper {
+        display: inline-block;
+      }
+    }
+    .filter {
+      margin-top: @verticalSpacingWithSelection;
+      background-color: #FFFFFF;
+    }
+    #baseline {
+      margin-top: 0px;
+    }
+    .dropHint {
+      margin-top: -98px !important;
+    }
+  }
+  .baselineDropArea {
+    @spacing: 5px;
+
+    position: fixed;
+    background-color: #fff;
+    width: ~"calc(100% - 40px)";
+    margin-top: -@verticalSpacingWithoutSelection;
+
+    body.IE8 & {
+      width: 95%;
+    }
+    padding-top: 10px;
+
+    div {
+      box-sizing: border-box;
+    }
+    .leftBaselineWrapper,
+    .rightBaselineWrapper {
+      width: 50%;
+      padding: 0;
+      margin: 0 0 @spacing 0;
+      display: none;
+      .leftBaseline,
+      .rightBaseline {
+        padding: 0.7em;
+        background-color: #fff7eb;
+        border: 1px solid #ffd9ab;
+        display: none;
+        -webkit-transition: background-color 500ms ease;
+        -o-transition: background-color 500ms ease;
+        -moz-transition: background-color 500ms ease;
+        transition: background-color 500ms ease;
+        &.notEmpty {
+          display: block;
+        }
+      }
+      .leftBaseline {
+        margin-right: @spacing / 2;
+      }
+      .rightBaseline {
+        margin-left: @spacing / 2;
+      }
+      .selectedBaselineInfo {
+        width: 100%;
+        table-layout: fixed;
+        td {
+          width: 33%;
+        }
+        .description, .source {
+          display: block;
+        }
+        .name {
+          #baselineLibrary.baselineName;
+        }
+        .description {
+        }
+        .date {
+          display: block;
+          text-align: center;
+          font-size: 11px;
+        }
+        .id,
+        .timestamp {
+          display: none;
+        }
+        .parentTypeId {
+          display: none;
+        }
+        .changeComparison {
+          float: right;
+          font-size: 11px;
+        }
+      }
+    }
+    .dropHint {
+      margin: 25px 0px 0px 0px;
+      padding: 0;
+       cursor: default;
+        table {
+        width: 100%;
+          td {
+            width: 30%;
+            vertical-align: middle;
+            text-align: center;
+            color: #0093b8;
+            padding: 0.7em 0.7em 0.4em;
+            input {
+              font-weight: normal;
+              font-size: 11px !important;
+              padding: 2px 20px;
+              text-transform: uppercase;
+              border-radius: 4px;
+              line-height: 11px;
+              color: #454545 !important;
+          }
+          button {
+              font-weight: normal;
+              font-size: 11px !important;
+              padding: 2px 20px;
+              text-transform: uppercase;
+              border-radius: 4px;
+              line-height: 11px;
+          }
+        }
+      }
+    }
+    &.highlightAsTarget {
+      .dropHint {
+        border-color: #ffd9ab;
+      }
+    }
+    &.highlighted {
+      .dropHint {
+        background-color: #efefef;
+      }
+    }
+  }
+
+  .filter {
+    margin: @verticalSpacingWithoutSelection 0 0;
+    background-color: #FFFFFF;
+  }
+
+  #baseline, #branch {
+    ol li.propertiesLink {
+      background-image: url("@{baselineImagePath}/edit.png");
+      &:hover {
+        background-image: url("@{baselineImagePath}/edit_on.png");
+      }
+    }
+  }
+
+  #baseline, #branch {
+    width: 100%;
+    margin: 0px;
+    box-sizing: border-box;
+    tr {
+      border-top-color: #d1d1d1;
+    }
+    tr.ui-draggable-helper {
+      background-color: white;
+      width: 700px;
+      border: 1px solid #d1d1d1;
+    }
+    tr:hover,
+    tr.ui-draggable-helper {
+      .issueHandle {
+        background-color: #ffab46;
+      }
+    }
+    td {
+      vertical-align: middle;
+      padding: 0;
+      .issueHandle {
+        display: block;
+        width: 10px;
+        background: #d1d1d1 url("../images/newskin/action/dragbar-dark.png") no-repeat 3px center;
+        height: 54px;
+        margin: 3px;
+        cursor: move;
+      }
+      p {
+        margin: 0;
+      }
+    }
+    .centered {
+      text-align: center;
+    }
+    .nonEditableItem {
+      cursor: default;
+    }
+    .submission {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .default-left-margin {
+      margin-left: 20px;
+    }
+    .baselineActions {
+      @actionButtonSize: 24px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 0 0 20px;
+      padding: 0 5px;
+      height: @actionButtonSize;
+      box-sizing: border-box;
+        width: 70px;
+      ol {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        border-left: 1px solid #d1d1d1;
+        li {
+          display: inline-block;
+          padding: 0;
+          border: 1px solid #d1d1d1;
+          border-left: none;
+          width: @actionButtonSize;
+          height: @actionButtonSize;
+          box-sizing: border-box;
+          margin: -1px 0 0;
+          cursor: pointer;
+          a {
+            display: block;
+            width: @actionButtonSize;
+            height: @actionButtonSize;
+          }
+          background: no-repeat center;
+          &.propertiesLink {
+            background-image: url("@{baselineImagePath}/edit.png");
+            &:hover {
+              background-image: url("@{baselineImagePath}/edit_on.png");
+            }
+          }
+          &.unstarItLink {
+            background-image: url("@{baselineImagePath}/../star-active.png");
+          }
+          &.starItLink {
+            background-image: url("@{baselineImagePath}/star.png");
+            &:hover {
+              background-image: url("@{baselineImagePath}/star_on.png");
+            }
+          }
+          &.unlockLink {
+            background-image: url("@{baselineImagePath}/../unlock.png");
+          }
+          &.lockLink {
+            background-image: url("@{baselineImagePath}/lock.png");
+            &:hover {
+              background-image: url("@{baselineImagePath}/lock_on.png");
+            }
+          }
+          &.deleteLink {
+            background-image: url("@{baselineImagePath}/delete.png");
+            &:hover {
+              background-image: url("@{baselineImagePath}/delete_on.png");
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.compareContainer {
+  @headerPadding: 3px;
+  @versionCellWidth: 60px;
+  @diffMenuCellWidth: 20px;
+  @diffMenuLeftPadding: 5px;
+
+  .ditch-tab-pane {
+    margin: 0;
+  }
+
+  #statistics-tab.ditch-tab-pane {
+    margin: 15px;
+  }
+
+  margin-top: 15px;
+  th {
+    background: #f5f5f5 !important;
+    vertical-align: middle !important;
+    text-align: center;
+    &.containsBaselineInfo {
+      padding: @headerPadding !important;
+    }
+  }
+  .newskin & .displaytag thead th:first-child { // fix for a forced CSS rule somewhere else
+    padding-left: @headerPadding !important;
+  }
+  .baselineHeader {
+    width: 100%;
+    min-width: 400px;
+    height: 100%;
+    table-layout: fixed;
+    background: #fff7eb;
+    margin: 0;
+    text-align: left;
+    &, td {
+      border: 1px solid #ffd9ab;
+    }
+    td {
+      vertical-align: middle;
+      padding: 7px;
+      &.version {
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+        font-size: 12px;
+        width: @versionCellWidth;
+      }
+      .name {
+        #baselineLibrary.baselineName;
+        display: inline-block;
+        white-space: normal;
+      }
+      .meta {
+        font-size: 11px;
+        margin-left: 2em;
+        float: right;
+      }
+      .description {
+        font-size: 11px;
+        white-space: normal;
+        display: block;
+      }
+    }
+  }
+  td.actionCell,
+  td.commentCell,
+  td.lastModifiedByCell {
+    padding: 3px 15px;
+    vertical-align: middle;
+  }
+  td.textData {
+    white-space: normal;
+  }
+  .td.actionCell {
+    text-align: center;
+  }
+  .withRightSeparator {
+    border-right: 1px solid #e2e2e2 !important;
+  }
+  td.containsDiffDescriptor {
+    padding: 0;
+    .diffDescriptor {
+      table-layout: fixed;
+      width: 100%;
+      td {
+        vertical-align: middle;
+      }
+      .diffDataCell {
+        white-space: normal;
+        .diffNameTable {
+          a, td {
+            font-size: 13px !important;
+          }
+        }
+      }
+      .diffQuickLinkCell {
+        width: 70px;
+        font-weight: bold;
+      }
+      .diffVersionCell {
+        width: calc(@versionCellWidth - (@diffMenuLeftPadding + @diffMenuCellWidth));
+        text-align: center;
+        a {
+          color: #0093b8;
+          font-size: 13px;
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      .diffMenuCell {
+        width: @diffMenuCellWidth;
+        padding: 0 @diffMenuLeftPadding 0 0;
+      }
+      a {
+        font-size: 13px;
+      }
+    }
+  }
+  tr.even:last-child,
+  tr.odd:last-child {
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .compareInfo {
+    .baselineName {
+      display: inline-block;
+      padding: 2px 5px;
+      .date {
+        font-size: 0.9em;
+        color: #aaa;
+      }
+      a {
+        text-decoration: none;
+        color: #0093b8;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .statsPerCategory {
+    @statsGrey: #e5e5e5;
+    width: 800px;
+    margin-bottom: 5em;
+    border-bottom: 1px solid @statsGrey;
+    th {
+      background-color: white;
+      text-align: center;
+      &.filler {
+        background: none !important;
+      }
+    }
+    td.categoryHeader {
+      padding: 0.3em 1em;
+      background: #f5f5f5;
+      border-left: 1px solid @statsGrey;
+      a {
+        font-size: 13px;
+        color: #0093B8;
+      }
+    }
+    th.count {
+      background: none !important;
+    }
+    td.count {
+      text-align: center;
+      padding: 5px 30px;
+      font-size: 13px;
+      &.Removed {
+        border-right: 1px solid @statsGrey;
+      }
+      &.zero {
+        color: #ccc;
+      }
+    }
+    thead tr {
+      border-bottom: 1px solid @statsGrey;
+      th {
+        padding: 5px 0;
+      }
+    }
+    tbody tr {
+      &.total {
+        border-bottom: 1px dotted @statsGrey;
+        td {
+          font-weight: bold;
+        }
+      }
+      &:hover {
+        background: @statsGrey;
+      }
+    }
+  }
+
+  .pagebanner {
+    margin-left: 5px !important;
+  }
+
+  .backContainer {
+    position: relative;
+    display: inline-block;
+    margin-top: 8px;
+    padding-left: 30px;
+    margin-bottom: -25px;
+    white-space: nowrap;
+    z-index: 15;
+    .IE & {
+      float: left;
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .globalAjaxLoader {
+    width: 26px;
+    height: 22px;
+    background: url("../images/ajax-loading_26.gif") no-repeat;
+  }
+}
+
+.baselineDropArea .rightBaselineWrapper .rightBaseline.flash,
+.baselineDropArea .leftBaselineWrapper .leftBaseline.flash {
+    background-color: yellow;
+}

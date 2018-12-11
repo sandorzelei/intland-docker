@@ -1,0 +1,103 @@
+#*
+ Velocity template to create the bug/issue for the testCase
+
+ inputs:
+
+ *user The current user
+ *testCaseIssue The issue of the testCase
+ *testCase The TestCase object wrapping the testCaseIssue
+ *testRunResult The overall result of test test-run. Can be null
+ *stepsResults The collection of each steps results (TestStepWithResult)
+ *bugTemplate The (empty) issue will be initialised
+ *testSetRun The TestRun instance for the testSet
+
+*#
+#macro (interwikiRefOf $entity)
+	#if("$!{entity.interwikiLink}" != "") $!{entity.interwikiLink} #else #if("$!{entity}" != "") $!{entity} #else -- #end #end
+#end
+#macro (setupStepResultColor $step)
+		#set($color = "")
+		#set($colorEnd = "")
+		#if ("$!{step.result}" == "")
+		#elseif (${step.result} == "PASSED")
+			#set($color = "%%green")
+		#elseif (${step.result} == "FAILED")
+			#set($color = "%%red")
+		#elseif (${step.result} == "BLOCKED")
+			#set($color = "%%orange")
+		#end
+		#if($!{color} != "") #set($colorEnd = " %! ") #end
+#end
+## this line sets the subject of the bug
+#set($bugTemplate.name = "${textFormatter.getMessage('testrunner.bug.report.subject', ${testCaseIssue.name})}")
+
+%%collapsebox
+!!${textFormatter.getMessage("testrunner.bug.report.testcase.description")}: [ISSUE:${testCaseIssue.id}]
+#if ("$!{testCaseIssue.description}" != "")
+${testCaseIssue.description}
+#end
+
+#if ("$!{testSetRun}" != "")
+!!${textFormatter.getMessage("tracker.field.Detected in.label")}
+||${textFormatter.getMessage("testrunner.configuration.label")}||${textFormatter.getMessage("testrunner.release.label")} ||${textFormatter.getMessage("testrunner.build.label")}
+|#interwikiRefOf(${testSetRun.testConfiguration})|#interwikiRefOf($!{testSetRun.release})|#interwikiRefOf($!{testSetRun.build})
+
+#end
+
+#if ("$!{testCase.preAction}" != "")
+!!${textFormatter.getMessage("tracker.field.Pre-Action.label")}
+${testCase.preAction}
+#end
+
+#if ("$!{testCase.postAction}" != "")
+!!${textFormatter.getMessage("tracker.field.Post-Action.label")}
+${testCase.postAction}
+#end
+%!
+
+#set($applyColorOnActualResult = false)
+
+## rendering steps
+#if (${stepsResults})
+
+    !!${textFormatter.getMessage("tracker.field.Test Steps.label")}
+    #foreach($step in $stepsResults)
+    	#setupStepResultColor($step)
+
+%%collapsebox#if (${step.result} == "PASSED" || "$!{step.result}" == "" )Closed#end   ## the PASSED or not completed steps are initially closed
+		#set($actionAsPlainText = $textFormatter.formatAsText($!{step.action}, "W", $request, ${testCaseIssue}))
+    	#set($actionShort = $textFormatter.abbreviateFirstLine($!{actionAsPlainText}))
+
+    	!!$!{color} ${textFormatter.getMessage("testrunner.bug.report.teststep")} #${velocityCount}: $!{actionShort} #if ($!{step.critical}) (!) #end $!{step.result} $!{colorEnd}
+    	#if($actionShort != ${step.action})
+    		${step.action}
+    	#end
+
+    	__${textFormatter.getMessage("tracker.field.Expected result.label")}:__ $!{step.expectedResult}
+
+##		__${textFormatter.getMessage("tracker.field.Result.label")}:__
+
+		#if ("$!{step.actualResult}" != "")
+    		__${textFormatter.getMessage("tracker.field.Actual result.label")}:__ $!{color} $!{step.result} $!{colorEnd}
+
+    		#if ($applyColorOnActualResult) $!{color} #end
+    		#if ("$!{step.actualResult}" == "")
+    			--
+    		#else
+    			$!{step.actualResult}
+    		#end
+    		#if($applyColorOnActualResult)
+    		  $!{colorEnd}
+    		#end
+    	#end
+%!
+    #end
+#end
+
+## rendering parameters were used in this test
+#if (! ${testCase.getCurrentParameters().isEmpty()})
+%%collapsebox
+	!! ${textFormatter.getMessage("testrunner.test.case.run.used.parameters", "")}
+	${testCase.getCurrentParametersAsWiki()}
+%!
+#end

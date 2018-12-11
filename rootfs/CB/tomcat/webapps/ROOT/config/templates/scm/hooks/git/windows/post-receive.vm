@@ -1,0 +1,3 @@
+REM DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+@ECHO OFF
+"${scmloop}\scmloop.bat" -mode git_post_receive

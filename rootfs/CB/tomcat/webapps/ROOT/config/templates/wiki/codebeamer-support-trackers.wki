@@ -1,0 +1,14 @@
+!! Using Intland Support: Asking Questions and Reporting Issues
+When reporting bugs please provide the following information if it is applicable: \\
+* test case that demonstrates the specific usage for the bug
+* attach screenshots if applicable
+* attach the logfile {{cb.txt.(datum)}} from the {{~/CB-X.YY/tomcat/logs}} if applicable
+* exact wording of all related error messages if applicable
+Please use the __severity__ level described below when submitting issues. See our [Software Subscription and Support|https://codebeamer.com/cb/wiki/12091] pages for more details.
+*__Critical__, the production system is not available, substantially un-available or normal business operations are seriously disabled. The issue is preventing productive work on your production system, and it affects people performing a business-critical function. If Intland provides an acceptable workaround, the severity classification will drop to Medium or Low.
+*__Major__, the system is available but the issue has a business-critical impact on your production system; a function or functions are not available or not functioning properly, preventing productive work, and affecting people performing a business-critical function. If Intland provides an acceptable workaround, the severity classification will drop to Medium or Low.
+*__Medium__, the issue has business impact on your production system, but does not prohibit the execution of productive work, or a reasonable workaround is available.
+*__Low__, the issue is not production-critical or it is detected on your non-production system. The issue has no impact on production system performance, quality or functionality and no impact on productive work.
+\\
+Please ask questions or report issues only in English or German. Thank you.\\
+\\

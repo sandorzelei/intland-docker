@@ -1,0 +1,27 @@
+#wikiBoxOpen(${command})
+    <table>
+    	<thead>
+			<tr><th>#if(!$isCurrentProject)${project.name} - #end $textFormatter.getMessage('wiki.recent.title')</th></tr>
+    	</thead>
+    	<tbody>
+        	#foreach($wikiPage in $wikiUpdates)
+        		#trOpen()
+        			<td>
+        				<a href="${contextPath}/proj/wiki/displayWikiPageProperties.spr?doc_id=${wikiPage.id}">$textFormatter.escape(${wikiPage.name})</a>
+        				$textFormatter.getMessage('document.lastModifiedBy.short') #linkUserShort(${wikiPage.lastModifiedBy})<br/>
+        				<span class="subtext">$textFormatter.formatDate(${user}, ${wikiPage.lastModifiedAt})</span>
+        				#if(${wikiPage.comment})
+        					<br/>
+                            <span class="subtext">($!textFormatter.abbreviate(${wikiPage.comment}))</span>
+        				#end
+        			</td>
+        		#trClose()
+        	#end
+        	#if( ${wikiUpdates.size()} == 0)
+        		#trOpen()
+        			#tdText("$textFormatter.getMessage('wiki.recent.none')")
+        		#trClose()
+        	#end
+    	</tbody>
+    </table>
+#wikiBoxClose()

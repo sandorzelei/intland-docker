@@ -1,0 +1,102 @@
+#!/bin/sh
+#
+# Copyright by Intland Software, http://www.intland.com
+#
+# All rights reserved.
+#
+
+# resolve links - $0 may be a softlink
+PRG="$0"
+while [ -h "$PRG" ] ; do
+	ls=`ls -ld "$PRG"`
+	link=`expr "$ls" : '.*-> \(.*\)$'`
+	if expr "$link" : '.*/.*' > /dev/null; then
+		PRG="$link"
+	else
+		PRG=`dirname "$PRG"`/"$link"
+	fi
+done
+
+PRGDIR=`dirname "$PRG"`
+cd $PRGDIR/..
+CBPATH=`pwd`
+
+if [ -d $CBPATH/jre/bin ]
+then
+	export PATH="$CBPATH/jre/bin:$PATH"
+fi
+# Checking Java 1.8 is available in PATH
+java_version=`java -version 2>&1 | grep '1\.[8]'`
+# If java is not available, or not 1.8, exit with error message
+if [ $? -ne 0 ]
+then
+	echo "Java 1.8 must be available to launch codeBeamer!"
+	exit 1
+fi
+# If java is available, and is 1.8, use it
+if [ $? -eq 0 ]
+then
+	# Taking java from PATH
+	JVM="java"
+fi
+
+umask 007
+
+#PATH="$CBPATH"/libexec:$PATH	# libexec must have the highest priority!
+#export PATH
+
+TOMCAT_HOME="$CBPATH/tomcat"
+CBTMP=-Djava.io.tmpdir="$TOMCAT_HOME/tmp"
+CBSEC_MAN=-Djava.security.manager
+#CBSEC_POL=$CBSEC_MAN "-Djava.security.policy=$TOMCAT_HOME/conf/catalina.policy"
+
+#User "true" to work without X-Windows access.
+awt_options="-Djava.awt.headless=true"
+
+# turn on extendedDebugInfo if you see mysterious NotSerializableException-s
+JVM_OPTIONS="-Dsun.io.serialization.extendedDebugInfo=false"
+
+# Calculating JVM max heap size in MB
+maxjavaheapsize=2500	# default
+if [ `uname -s` = "Linux" ]
+then
+	# Get total memory of machine
+	total_memory=`vmstat -s | grep -i 'total.*memory' | awk '{ print $1 }'`
+	if [ $total_memory -gt 2000000 ]
+	then
+		# Calculate in MB and divide by 2
+		maxjavaheapsize=`expr $total_memory / 2000`
+	fi
+fi
+
+RESERVED_CODE_CACHE_SIZE="-XX:InitialCodeCacheSize=256m -XX:ReservedCodeCacheSize=256m -XX:+PrintCodeCache -XX:+UseCodeCacheFlushing"
+HEAPSIZE="-Xss1m -Xms64M -Xmx${maxjavaheapsize}M"
+GC_OPT="-XX:+HeapDumpOnOutOfMemoryError"
+
+# To avoid that PhantomJS crashes:
+# https://bugs.launchpad.net/ubuntu/+source/phantomjs/+bug/1586134
+#export QT_QPA_PLATFORM=offscreen
+
+#https://codebeamer.com/cb/issue/38202 Oracle-11 & Linux
+#JAVA_SECURITY_EGD="-Djava.security.egd=file:///dev/urandom"
+CLASSPATH="${TOMCAT_HOME}/bin/commons-daemon.jar:${TOMCAT_HOME}/bin/tomcat-juli.jar:${TOMCAT_HOME}/bin/bootstrap.jar"
+
+$JASPER="-Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Dorg.apache.jasper.runtime.JspFactoryImpl.USE_POOL=false"
+
+exec $JVM -server \
+	${HEAPSIZE} \
+	${RESERVED_CODE_CACHE_SIZE} \
+	${GC_OPT} \
+	-classpath "$CLASSPATH" \
+	$JMXREMOTE \
+	$ANT_URL \
+	$JAVA_SECURITY_EGD \
+	$CBTMP \
+	$CBSEC_POL \
+	$awt_options \
+	"-Dcatalina.home=${TOMCAT_HOME}" \
+	"-Dcatalina.base=${TOMCAT_HOME}" \
+	"-Dcodebeamer.home=${CBPATH}" \
+        $JASPER \
+	$JVM_OPTIONS \
+	org.apache.catalina.startup.Bootstrap "$@"

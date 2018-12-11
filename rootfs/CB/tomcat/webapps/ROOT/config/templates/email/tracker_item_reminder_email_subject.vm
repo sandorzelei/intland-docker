@@ -1,0 +1,3 @@
+##$RCSfile$ $Revision: 23324:48557f26e915 $ $Date: 2009-10-23 14:51 +0200 $
+
+#showProjectNameInSubjects("${textFormatter.getMessage('issue.reminder.subject')} ${trackerItem}")

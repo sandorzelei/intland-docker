@@ -1,0 +1,151 @@
+#wikiBoxOpen(${command}, "testRunsByAssignee")
+	#if($command.chart)
+    	#parse("includes/chartSelect.vm")
+
+		#set($chartControls = '')
+		#if($command.projectId)
+
+			#define($userControls)
+				#renderSelect("${pluginId}" "testRunsByAssignee_${pluginId}.updateChart();", ${users}, "", "users", "-1", true)
+				<br class="responsiveChartControlBreak first" />
+			#end
+
+			#define($testRunStatusesControls)
+				#renderSelect("${pluginId}" "testRunsByAssignee_${pluginId}.updateChart();", ${testRunStatuses}, "", "testRunStatuses", "-1", true)
+				<br class="responsiveChartControlBreak first" />
+			#end
+
+			#define($dateRangeControls)
+				#renderDateRange("${pluginId}", "$.proxy(testRunsByAssignee_${pluginId}.updateChart, testRunsByAssignee_${pluginId})", "dateRange", ${selectorUtilsJsUrl}, ${dateRangeEditorJsUrl}, $selectorUtilsLessUrl)
+			#end
+
+			#set($userLabel = ${textFormatter.getMessage("tracker.view.chart.testRunsByAssignee.user.fitler.label")})
+			#set($testRunLabel = ${textFormatter.getMessage("tracker.view.chart.testRunsByAssignee.status.filter.label")})
+			#set($dateRangeLabel = ${textFormatter.getMessage("tracker.view.chart.testRunsByAssignee.submitted.at.fitler.label")})
+
+			#set($chartControls = "$userLabel: $userControls $testRunLabel: $testRunStatusesControls $dateRangeLabel: $dateRangeControls")
+
+		#end
+
+		#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.testRunsByAssignee.label")}, "${chartControls}")
+
+        <span id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </span>
+
+        <script type="text/javascript">
+        	var testRunsByAssignee_${pluginId} = {
+        		updateChart: function() {
+        			var chartUrl = this.createChartUrl();
+        		    var tableUrl = this.createTableUrl();
+
+        			chartRendererSupport.updateChart('${contextPath}', "chart_${pluginId}", chartUrl, ${command.width}, ${command.height});
+        			chartRendererSupport.updateTable('${contextPath}', "table_${pluginId}", tableUrl);
+        		},
+        		createChartUrl: function() {
+					var chartUrl = "${chartSupport.chartURL}";
+
+					chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "userId", 7, $("#users_${pluginId}").val());
+					chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "testRunStatusId", 16, $("#testRunStatuses_${pluginId}").val());
+
+					var $dateRange = $("#" + "dateRange_hidden_${pluginId}");
+					if ($dateRange.val()) {
+						var dateRangeValue = JSON.parse($dateRange.val());
+
+						if (dateRangeValue.from) {
+							chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "testRunFromDate", 16, encodeURIComponent(dateRangeValue.from));
+						}
+
+						if (dateRangeValue.to) {
+							chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "testRunToDate", 14, encodeURIComponent(dateRangeValue.to));
+						}
+					}
+
+					return chartUrl;
+        		},
+        		createTableUrl: function() {
+        			var tableUrl = contextPath + "$tableUpdateUrl";
+
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "userId", 7, $("#users_${pluginId}").val());
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "testRunStatusId", 16, $("#testRunStatuses_${pluginId}").val());
+
+					var $dateRange = $("#" + "dateRange_hidden_${pluginId}");
+					if ($dateRange.val()) {
+						var dateRangeValue = JSON.parse($dateRange.val());
+
+						if (dateRangeValue.from) {
+							tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "testRunFromDate", 16, encodeURIComponent(dateRangeValue.from));
+						}
+
+						if (dateRangeValue.to) {
+							tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "testRunToDate", 14, encodeURIComponent(dateRangeValue.to));
+						}
+					}
+
+					return tableUrl;
+        		}
+        	}
+        </script>
+    #end
+
+	#if($command.table)
+    	#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.testRunsByAssignee.label")}, "")
+		<div id="table_${pluginId}">
+	    	<table class="embedded">
+	    		<thead>
+	    			<tr>
+	    				<th>${textFormatter.getMessage("user.account.label")}</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="0">${textFormatter.getMessage("tracker.coverage.status.passed.label")}<span class="sortIndicator"></span></div>
+						</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="1">${textFormatter.getMessage("tracker.coverage.status.partlypassed.label")}<span class="sortIndicator"></span></div>
+						</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="2">${textFormatter.getMessage("tracker.coverage.status.failed.label")}<span class="sortIndicator"></span></div>
+						</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="3">${textFormatter.getMessage("tracker.coverage.status.blocked.label")}<span class="sortIndicator"></span></div>
+						</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="4">${textFormatter.getMessage("tracker.coverage.status.notrun.label")}<span class="sortIndicator"></span></div>
+						</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+					#foreach($key in $data.keySet())
+						#set($userMap = ${data.get($key)})
+						#trOpen
+							#if(!$key.id)
+								<td>${textFormatter.getMessage("issue.assignedTo.none")}</td>
+							#else
+								<td><a href="${contextPath}${key.urlLink}" title="$key">${key.name}</a></td>
+							#end
+							#foreach($e in $defaultOrder)
+								<td class="number">
+									#if(${userMap.containsKey($e)})
+										${userMap.get($e)}
+									#else
+										0
+									#end
+								</td>
+							#end
+						#trClose
+					#end
+	    		</tbody>
+	    	</table>
+
+	        <script type="text/javascript">
+				$(function() {
+					$("#table_${pluginId}").on("click", "th.sortable", function(event) {
+						var tableUrl;
+
+						tableUrl = testRunsByAssignee_${pluginId}.createTableUrl();
+
+						chartRendererSupport.sortTable(tableUrl, "table_${pluginId}", "${contextPath}");
+					});
+				});
+	        </script>
+		</div>
+	#end
+#wikiBoxClose()

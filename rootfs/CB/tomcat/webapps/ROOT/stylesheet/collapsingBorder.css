@@ -1,0 +1,58 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+/**
+ * CSS definitions for collapsingBorder.tag
+ */
+fieldset.collapsingBorder {
+	margin:0;
+	padding:0;
+
+	legend.collapsingBorder_legend {
+		margin-left: 0px;
+		padding-right: 2px;
+
+		a.collapseToggle {
+			text-decoration: none;
+			padding-left: 11px;
+			background-image: url("../images/minus.gif") ;
+			background-repeat: no-repeat;
+			background-position: 0 50%;		/* vertical-middle align */
+
+			color: @gray7;
+			font-weight: bold;
+		}
+
+		/* avoid jumping when the collapsing border opens closes */
+		padding-left: 0;
+	}
+}
+fieldset.collapsingBorder_collapsed {
+	margin:0;
+	padding:0;
+	padding-left: 15px;
+	border:none;
+	border-top: 1px solid #d1d1d1;
+
+	div.collapsingBorder_content {
+		display:none;
+	}
+
+	legend.collapsingBorder_legend {
+		/*margin-left: 12px;*/
+
+		a.collapseToggle {
+			background-image: url("../images/plus.gif") ;
+		}
+	}
+}
+

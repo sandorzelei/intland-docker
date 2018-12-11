@@ -1,0 +1,481 @@
+#!/bin/sh
+#
+# Copyright by Intland Software, http://www.intland.com
+#
+# All rights reserved.
+#
+
+product="codeBeamer"
+
+#umask 022
+umask 007
+
+defport="8080"
+defsslport="8443"
+defshtport="8005"
+
+tmpf=`pwd`/$$.tmp
+ECHO=echo
+ECHO_SUF='\c'
+for i in 'echo -e' /usr/bin/echo /bin/echo
+do
+	$i XXXX $ECHO_SUF > $tmpf 2>&1
+	pat=`egrep 'c|e' $tmpf`
+	rm $tmpf
+	if [ "$pat""x" = "x" ]
+	then
+#		echo using: $i
+		ECHO=$i
+		break
+	fi
+done
+
+$ECHO
+$ECHO Executing $product setup...
+$ECHO
+
+whoami="whoami"
+if [ -f /usr/ucb/whoami ]
+then
+	whoami="/usr/ucb/whoami"
+fi
+
+cur_user=`$whoami`
+if [ $cur_user = "root" ]
+then
+	$ECHO "$product cannot be installed by root!"
+	exit 1
+fi
+
+defdir=$1
+
+insdir=__NEVER__
+while [ ! -d $insdir ]
+do
+	$ECHO "Please enter the Installation"
+	$ECHO "Directory ($defdir):" $ECHO_SUF
+	read idir
+	if [ $idir"x" != "x" ]
+	then	insdir=$idir
+	else	insdir=$defdir
+	fi
+
+	if [ -d $insdir ]
+	then
+		$ECHO "$insdir already exists!"
+		insdir=__NEVER__
+	else
+		parent_dir=`dirname $insdir`
+		if [ $parent_dir = "." ]
+		then
+			# The user entered a relative path name.
+			insdir=`dirname $defdir`/$insdir
+		fi
+
+		mkdir $insdir
+		if [ $? -ne 0 ]
+		then
+			$ECHO "Could not create directory: " $insdir
+			exit 2
+		fi
+
+		$ECHO "Installing $product into directory: " $insdir
+	fi
+done
+
+find * -print | cpio -pdm $insdir > /dev/null 2>&1
+
+if [ -d ../setup ]
+then
+	cd ..
+	rm -r -f setup
+fi
+
+cbpath=$insdir
+tomcatpath=$cbpath/tomcat
+cbwebpath=$cbpath/tomcat/webapps/cb
+
+# Checking Java 1.8 is available in PATH
+if [ ! -d $cbpath/jre/bin ]
+then
+	java_version=`java -version 2>&1 | grep '1\.[8]'`
+	# If java is not available, or not 1.8, exit with error message
+	if [ $? -ne 0 ]
+		then
+			$ECHO "Java 1.8 must be installed to install $product !"
+			exit 1
+	fi
+fi
+
+checkup()
+{
+	if [ ! -d $cbpath/bin -o ! -d $cbpath/repository ]
+	then
+		$ECHO Incorrect installation directory.
+		exit 2
+	fi
+
+	ps="ps"
+	ps_switches="uaxw"
+	for i in /usr/ucb /bin
+	do
+		p=$i/ps
+		if [ -f $p ]
+		then
+			ps=$p
+			ps_switches="-uaxw"
+			break
+		fi
+	done
+
+#	if $ps uaxw | grep /mysqld |grep -v grep > /dev/null
+#	then
+#		$ECHO "MySQL Server (mysqld) is already running, $product might be already running!"
+#		yes_no_quetion 'Do you want to continue ? [y-n]:' "y"
+#		if [ $answ != "y" ]
+#		then
+#			$ECHO Installation aborted!
+#			exit 0
+#		fi
+#	fi
+
+	if $ps uaxw | egrep '/java' |grep -v grep > /dev/null
+	then
+		$ECHO "Java applications (java) are running, $product might be already running!"
+		yes_no_quetion 'Do you want to continue ? [y-n]:' "y"
+		if [ $answ != "y" ]
+		then
+			$ECHO Installation aborted!
+			exit 0
+		fi
+	fi
+}
+
+# The return value will be stored into the variable "answ"
+yes_no_quetion()
+{
+	defansw=$2
+	if [ $defansw"x" = "x" -o $defansw != "y" ]
+	then	defansw="n"
+	fi
+
+	answ="k"
+	while [ $answ != "y" -a $answ != "n" ]
+	do
+		$ECHO $1 $defansw $ECHO_SUF
+		read answer
+		if [ $answer"x" != "x" ]
+		then	answ=$answer
+		else	answ=$defansw
+		fi
+		# Convert the answer to lowercase!
+		answ=`echo $answ | tr '[A-Z]' '[a-z]'`
+	done
+}
+
+substitute_MailHost()
+{
+	# Set the mailhost
+	tmp=tmp.$$
+	rm -f $tmp
+	config=$cbwebpath/WEB-INF/classes/general.xml
+	sed 's:.*mail.*host.*:    <mail host="'$mailhost'" localname="" serverPort="'$cbport'">:' $config > $tmp
+	rm -f $config   # It might not be writeable.
+	mv $tmp $config
+}
+
+set_Permissions()
+{
+	find $cbpath -type d -print | xargs chmod 770
+	find $cbpath -type f -print | xargs chmod 660
+
+	# For example mysql stores the blobs into this directory.
+	mkdir -p $tomcatpath/tmp
+	chmod 777 $tomcatpath/tmp
+
+	chmod u+x $cbpath/bin/* $cbpath/office/*.sh $cbpath/upgrade/*.sh $cbpath/upgrade/apache-ant/bin/ant
+	chmod 600 $cbpath/bin/jmxremote.*
+
+	if [ -d $cbpath/jre/bin ]
+	then
+		$ECHO "Configure JAVA.."
+		chmod a+x $cbpath/jre/bin/*
+	fi
+}
+
+setup_end()
+{
+	$ECHO
+	$ECHO
+	$ECHO "$product Installation is READY."
+	$ECHO
+
+	yes_no_quetion "Do you want to upgrade from your existing codeBeamer installation? [y-n]:" "n"
+
+	if [ $answ = "y" ]
+	then
+		$ECHO  To upgrade from your existing installation run the following script:
+		$ECHO '    ' $cbpath/upgrade/upgrade.sh
+	else
+		yes_no_quetion "Do you want to start $product setup wizard now? [y-n]:" "y"
+		if [ $answ = "y" ]
+		then
+			$cbpath/bin/startup
+		fi
+	fi
+
+	$ECHO
+	$ECHO  Please note that after a reboot, $product can be started by the command:
+	$ECHO '    ' $cbpath/bin/startup
+
+	$ECHO
+	$ECHO To access $product, go to your web browser and enter this address: http://`uname -n`:$cbport
+	$ECHO
+}
+
+license_agreement()
+{
+	yes_no_quetion 'Do you want to read the LICENSE AGREEMENT? [y-n]:' "y"
+
+	if [ $answ = "y" ]
+	then
+		$ECHO
+		more $cbpath/LICENSE.txt
+	fi
+
+	yes_no_quetion 'Do you agree with the LICENSE AGREEMENT? [y-n]:' "y"
+
+	if [ $answ != "y" ]
+		then	exit 1
+	fi
+}
+
+execNetstat()
+{
+	tmp=tmp.$$
+	rm -f $tmp
+
+	netstat -antp 2> /dev/null | awk '{print $4}' > $tmp			# Linux
+	if [ $? -ne 0 ]
+	then
+		netstat -ap tcp 2> /dev/null | awk '{print $4}' > $tmp	# Mac-OS
+	fi
+}
+
+setPortAndKeystore()
+{
+	tmpportusage="used"
+	while [ $tmpportusage"x" != "x" ]
+	do
+		$ECHO "Please enter the TCP/IP portnumber for $product ($defport):" $ECHO_SUF
+		read cbport
+		if [ $cbport"x" = "x" ]
+		then
+			cbport=$defport
+		fi
+
+		execNetstat
+
+		tmpportusage=`grep '[^0-9]'$cbport'[^0-9]' $tmp`
+		if test -n "$tmpportusage"
+		then
+			$ECHO "Port $cbport is already in use"
+			tmpportusage="used"
+		fi
+
+		if [ $cbport -le 1024 ]
+		then
+			tmpportusage="used"
+			echo Port should be greater than 1024
+		fi
+	done
+
+	tmpportusage="used"
+	while [ $tmpportusage"x" != "x" ]
+	do
+		$ECHO "Please enter the SSL TCP/IP portnumber for $product ($defsslport):" $ECHO_SUF
+		read cbsslport
+		if [ $cbsslport"x" = "x" ]
+		then
+			cbsslport=$defsslport
+		fi
+
+		execNetstat
+
+		tmpportusage=`grep '[^0-9]'$cbsslport'[^0-9]' $tmp`
+		if test -n "$tmpportusage"
+		then
+			$ECHO "Port $cbsslport is already in use"
+			tmpportusage="used"
+		fi
+
+		if [ $cbsslport -le 1024 ]
+		then
+			tmpportusage="used"
+			echo Port should be greater than 1024
+		fi
+	done
+
+
+	tmpportusage="used"
+	while [ $tmpportusage"x" != "x" ]
+	do
+		$ECHO "Please enter the SHUTDOWN portnumber for $product ($defshtport):" $ECHO_SUF
+		read cbshport
+		if [ $cbshport"x" = "x" ]
+		then
+			cbshport=$defshtport
+		fi
+
+		execNetstat
+
+		tmpportusage=`grep '[^0-9]'$cbshport'[^0-9]' $tmp`
+		if test -n "$tmpportusage"
+		then
+			$ECHO "Port $cbshport is already in use"
+			tmpportusage="used"
+		fi
+
+		if [ $cbshport -le 1024 ]
+		then
+			tmpportusage="used"
+			echo Port should be greater than 1024
+		fi
+	done
+
+	rm -f $tmp
+
+	chmod a+w $tomcatpath/conf/server.xml
+	sed s:8080:$cbport: $tomcatpath/conf/server.xml > $tmp
+	sed s:8005:$cbshport: $tmp > $tomcatpath/conf/server.xml
+	sed s:8443:$cbsslport: $tomcatpath/conf/server.xml > $tmp
+	mv $tmp $tomcatpath/conf/server.xml
+
+	chmod a+w $cbpath/bin/status
+	sed s:8080:$cbport: $cbpath/bin/status > $tmp
+	mv $tmp $cbpath/bin/status
+
+#	keystore=$cbwebpath/config/keystore
+#	sed s:'"KEYSTORE"':'"'$keystore'":' $tomcatpath/conf/server.xml > $tmp
+#	mv $tmp $tomcatpath/conf/server.xml
+
+#	cbDocBase=$tomcatpath/cb
+#	sed s:'"ROOT"':'"'$cbDocBase'":' $tomcatpath/conf/server.xml > $tmp
+#	mv $tmp $tomcatpath/conf/server.xml
+}
+
+getmailhost()
+{
+	defmailhost="my-mail-server"
+#	$ECHO
+#	$ECHO "To send e-mails, $product needs to know the name of the outgoing SMTP mail server."
+#	$ECHO "If you are not sure about your mail server, you can configure it later as well."
+#	$ECHO "Please enter the name of the outgoing mailhost ($defmailhost):" $ECHO_SUF
+#	read mailh
+#	if [ $mailh"x" != "x" ]
+#	then
+#		mailhost=$mailh
+#	else
+		mailhost=$defmailhost
+#	fi
+}
+
+install_javaws()
+{
+	$ECHO
+	$ECHO
+	if [ -f $HOME/.javaws ]
+	then
+		$ECHO Web Start is already installed
+	else
+		$ECHO Installing Web Start
+
+		CBPATH=$cbpath
+		export CBPATH
+		yes_tmp=$$.tmp
+		echo yes > $yes_tmp
+		./javaws_install.sh < $yes_tmp > /dev/null
+		rm -f $yes_tmp
+	fi
+}
+
+create_user_file()
+{
+	# Only this user can start CB
+	$whoami > $cbpath/bin/.user.id
+}
+
+cvs_setup()
+{
+	renameCBcvs=0
+	cvs --version > /dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		renameCBcvs=1
+	else
+		$ECHO
+		$ECHO
+		$ECHO "The cvs client doesn't seem to installed or it is not in your PATH."
+		$ECHO "It is STRONGLY recommended that you install the cvs client from your"
+		$ECHO "Unix distribution, however you can use the cvs client shipped with $product."
+		$ECHO "$product needs the cvs client for projects using source code maintained under CVS."
+		$ECHO "It is not necessary to re-install $product after the cvs client has been"
+		$ECHO "installed from your Unix distribution, that must be just in the PATH".
+		$ECHO
+		yes_no_quetion "Do you want to use the cvs client shipped with $product ? [y-n]:" "n"
+		if [ $answ != "y" ]
+		then
+			renameCBcvs=1
+		fi
+	fi
+	if [ $renameCBcvs -ne 0 ]
+	then
+		# Use "cvs" from PATH and not the shipped one!
+		libexec=$cbpath/libexec
+
+		mv $libexec/cvs $libexec/cb.cvs
+	fi
+}
+
+svn_setup()
+{
+	svn --version > /dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		# Use "svn" from PATH and not the shipped one!
+		libexec=$cbpath/libexec
+
+		mv $libexec/svn $libexec/cb.svn
+	fi
+}
+
+create_path_file()
+{
+	libexec=$cbpath/libexec
+	pathfile=$cbwebpath/config/path.txt
+	echo $libexec:$libexec/svn/bin > $pathfile
+}
+
+checkup
+
+license_agreement
+
+getmailhost
+
+setPortAndKeystore
+
+set_Permissions
+
+#substitute_MailHost
+
+#install_javaws
+
+create_user_file
+
+#cvs_setup
+
+#svn_setup
+
+create_path_file
+
+setup_end

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<script type="text/javascript">
+		window.contextPath = "${contextPath}";
+		window.language = "${language}";
+		window.serverStartupTime = ${serverStartupTime};
+		window.country = "";
+	</script>
+
+	<script type="text/javascript" src="${jqueryLibUrl}"></script>
+	<script type="text/javascript" src="${jqueryStoreLibUrl}"></script>
+	<script type="text/javascript" src="${calendarLibUrl}"></script>
+	<script type="text/javascript" src="${i18nLibUrl}"></script>
+	<script type="text/javascript" src="${dateLibUrl}"></script>
+
+	<script type="text/javascript" src="${jsLibUrl}"></script>
+	<script type="text/javascript" src="${jsExtLibUrl}"></script>
+	<script type="text/javascript" src="${jsTooltipExtLibUrl}"></script>
+	<script type="text/javascript" src="${jsPluginScriptUrl}"></script>
+
+	<script type="text/javascript">
+		DateParsing.dateFormat = "${userDateFormat}";
+	</script>
+
+	<link rel="stylesheet" href="${cssLibUrl}" type="text/css" media="all" />
+	<link rel="stylesheet" href="${ganttLess}" type="text/css" media="all" />
+	<link rel="stylesheet" href="${skinCss}" type="text/css" media="all" />
+</head>
+
+<body>
+
+<div id="releaseGanttChart_${pluginId}" class="releaseGanttChart_plugin" #if(${containerHeight} > 0) style="height: ${containerHeight}px" #end>
+
+	#if($releasesWithNoDates.size() > 0)
+		<div class="information ganttInformationBar">
+			${textFormatter.getMessage('release.gantt.chart.missing.releases.warning')}
+			<ul class="missingDateWarningUl">
+				#foreach($release in $releasesWithNoDates)
+					<li id="missing-date-warning-${release.releaseId}"><a href='${contextPath}/item/${release.releaseId}' target="_blank">#esc(${release.releaseName})</a></li>
+				#end
+			</ul>
+		</div>
+	#end
+
+	<div id="ganttChartContainer_${pluginId}"></div>
+
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			var initialize = function() {
+				if (console) {
+					console.debug("Initializing Gantt chart");
+				}
+				var tasks = {
+					data:[
+						#foreach($release in $result)
+							#if($release.plannedStartDate && $release.plannedEndDate)
+							{
+								id: ${release.id},
+								text: "${textFormatter.escape(${release.releaseName})}",
+								start_date: "${release.plannedStartDate}",
+								end_date: "${release.plannedEndDate}",
+								actualReleaseDate: "${release.actualReleaseDate}",
+								#if($release.parentId)
+									parent: ${release.parentId},
+								#end
+								open: true,
+								progress: ${release.progress},
+								allItemsCount: ${release.allItemsCount},
+								resolvedOrClosedItemsCount: ${release.resolvedOrClosedItemsCount},
+								releaseId: ${release.releaseId},
+								isReferenceRelease: ${release.referenceRelease},
+								isSprint: ${release.sprint},
+								issueBgColor: "${release.issueBgColor}",
+								releaseMethodId: ${release.releaseMethodId},
+								color: "#ababab",
+								progressColor: "#00a85d",
+								readonly: #if(${preventModification}) true #else ${release.readOnly} #end,
+								releaseReadonly: ${release.readOnly},
+								preventModification: ${preventModification},
+								isVirtualLength: ${release.virtualLength}
+							},
+							#end
+						#end
+					],
+					links: [
+						#foreach($release in $result)
+							#if($release.referenceRelease)
+								{ target: "${release.id}", source: "${release.parentId}", type: "1" },
+							#end
+						#end
+					]
+				};
+
+
+				if (typeof gantt != "undefined" && $("#ganttChartContainer_${pluginId}").size() > 0) {
+
+					codebeamer.gantt.addReleaseMethod({
+						key: -1,
+						label: "--"
+					});
+					#foreach ($entry in $releaseMethods.entrySet())
+						codebeamer.gantt.addReleaseMethod({
+							key: $entry.key,
+							label: "$entry.value"
+						});
+					#end
+
+					codebeamer.gantt.initConfig();
+
+					codebeamer.gantt.initColumns("${textFormatter.getMessage('release.gantt.chart.release.label')}", "${textFormatter.getMessage('release.gantt.chart.actual.release.date.label')}",
+						"${textFormatter.getMessage('release.gantt.chart.items.label')}", "${textFormatter.getMessage('release.gantt.chart.missing.date.label')}", "${contextPath}");
+
+					codebeamer.gantt.initTemplates("${textFormatter.getMessage('release.gantt.chart.default.tooltip')}", "${textFormatter.getMessage('release.gantt.chart.missing.date.tooltip')}",
+						"${textFormatter.getMessage('release.gantt.chart.permission.tooltip')}", "${textFormatter.getMessage('release.gantt.chart.modification.tooltip')}",
+						"${textFormatter.getMessage('release.gantt.chart.start.date.tooltip')}", "${textFormatter.getMessage('release.gantt.chart.end.date.tooltip')}");
+
+					gantt.config.autosize = "xy";
+
+					gantt.init("ganttChartContainer_${pluginId}");
+
+					gantt.parse(tasks);
+
+					var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
+					var todayMarkerId = gantt.addMarker({
+						start_date: new Date(),
+						css: "today",
+						text: "${textFormatter.getMessage('Today')}",
+						title: date_to_str(new Date())
+					});
+					gantt.renderMarkers();
+
+					codebeamer.gantt.sortGanttChartByPlannedReleaseDate(false);
+
+					// Scroll to the start of the diagram
+					gantt.scrollTo(0, 0);
+				} else {
+					if (console) {
+						console.error("Could not initialize Gantt chart, library is not loaded properly");
+					}
+				}
+			};
+
+			initialize();
+
+		});
+
+	</script>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+<script data-purpose="information-message-template" type="text/template">
+	#@message('information' true '' '' 'padding-top: 20px; padding-left: 50px;')
+		$textFormatter.getMessage($value)
+	#end
+</script>
+<script type="text/javascript">
+		jQuery(function($) {
+			$("#editor-tab").prepend($('[data-purpose=information-message-template]').html());
+		});
+</script>

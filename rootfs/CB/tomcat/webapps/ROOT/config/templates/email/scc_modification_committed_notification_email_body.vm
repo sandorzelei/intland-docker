@@ -1,0 +1,163 @@
+#parse("notification_email_header.vm")
+
+#set( $wrapperssize = $wrappers.size())
+
+<div class="heading">
+#if(${isPullRequest})
+	${textFormatter.getMessage('scm.pullrequest.notification.title', $textFormatter.escape(${repository.name}), ${pullRequest.targetBranch})} (#linkReferableDto(${repository})) ($textFormatter.getMessage('scm.commit.notification.numberofcommits.label', $changeSetCount), $textFormatter.getMessage('scm.commit.notification.numberofduplicates.label', ${duplicateCount})):
+#else
+	${textFormatter.getMessage('scm.commit.notification.title')} #linkReferableDto(${repository})
+	#if(${distributed})
+		($textFormatter.getMessage('scm.commit.notification.numberofcommits.label', $changeSetCount), $textFormatter.getMessage('scm.commit.notification.numberofduplicates.label', ${duplicateCount})):
+	#end
+#end
+#if(!${distributed})
+	#if(${commit.changeFiles.size()} == 1)
+		(1 ${textFormatter.getMessage('scm.commit.change.label')})
+	#else
+		(${commit.changeFiles.size()} ${textFormatter.getMessage('scm.commit.changes.label')})
+	#end
+#end
+</div>
+
+#if(${deletedBranches})
+	#partHeader("${textFormatter.getMessage('scm.commit.deleted.branches.label')}")
+	#foreach($b in $deletedBranches)
+		#if( $velocityCount!=1 ), #end
+		${b}
+	#end
+#end
+
+#if(${newBranches})
+	#partHeader("${textFormatter.getMessage('scm.commit.created.branches.label')}")
+	#foreach($b in $newBranches)
+		#if( $velocityCount!=1 ), #end
+		<a href="${cbBaseUrl}${repository.changeSetsUrlLink}/${b}">${b}</a>
+	#end
+#end
+
+#set($diffSizeSoFar = 0)
+#foreach($w in $wrappers)
+	#if( $velocityCount!=1 )<div class="separator"></div>#end
+	#if(${distributed} || ${isPullRequest})
+		#partHeader("$textFormatter.getMessage('scm.commit.notification.count.label', $velocityCount, $changeSetCount)")
+	#end
+	#if(${w.changeSet.branch})
+		#bold("${textFormatter.getMessage('scm.commit.branch.label')}:") <a href="${cbBaseUrl}${repository.changeSetsUrlLink}/${w.changeSet.branch}">${w.changeSet.branch}</a>
+	#end
+
+	<ul class="commitProperties">
+		<li>
+		#bold("${textFormatter.getMessage('scm.commit.committer.label')}:")
+		#if(${w.changeSet.submitter} && ${w.changeSet.submitter.id} > 0)
+			#linkUser(${w.changeSet.submitter})
+		#elseif(${w.changeSet.submitterName})
+			${w.changeSet.submitterName}
+		#else
+			--
+		#end
+		<li>
+
+		#if(${w.changeSet.authorName} && ${w.changeSet.submitterName} != ${w.changeSet.authorName})
+			<li>
+				#bold("${textFormatter.getMessage('scm.commit.author.label')}:")
+				${w.changeSet.authorName}
+			</li>
+		#end
+		#if(${w.changeSet.tag})
+			<li>
+			#bold("${textFormatter.getMessage('scm.commit.branch.label')}:")
+			#foreach($t in ${w.changeSet.tags})
+				#if( $velocityCount!=1 ), #end
+				<a href="${cbBaseUrl}${repository.changeSetsUrlLink}/${t}">${t}</a>
+			#end
+			</li>
+		#end
+		<li>
+			#bold("${textFormatter.getMessage('scm.commit.date.label')}:") ${textFormatter.formatDate($recipient, ${w.changeSet.submittedAt})}
+		</li>
+	</ul>
+
+	#partHeader("${textFormatter.getMessage('comment.label')}")
+	<pre class="commitmessage">$textFormatter.escape(${w.changeSet.message})</pre>
+
+	#if(${w.changeSet.trackerItems.size()} != 0)
+		#partHeader("${textFormatter.getMessage('scm.commit.tasks.label')}")
+		#foreach($trackerItem in ${w.changeSet.trackerItems})
+			<div>#linkTrackerItem(${trackerItem})</div>
+		#end
+	#end
+
+	#if(${w.changeSet.changeFiles.size()} > 0 && ${w.changeSet.firstModifiedFile})
+		#if($w.summarizedStats)
+			#set( $addedSum = $w.summarizedStats.linesAdded )
+			#set( $removedSum = $w.summarizedStats.linesRemoved )
+		#else
+			#set( $addedSum = 0 )
+			#set( $removedSum = 0 )
+		#end
+		<style type="text/css">
+			.revisionLink, .revisionLink * {
+				font-size: 12px;
+				font-weight: normal;
+			}
+		</style>
+
+		#set($revisionLink = "<a href='${cbBaseUrl}${w.changeSet.urlLink}'>${w.changeSet.revision}</a>")
+		#set($linesadded = "")
+		#if(!${isPullRequest})
+			#set($linesadded = "<span class='linesadded'>+$addedSum</span> <span class='linesdeleted'>-$removedSum</span>")
+		#end
+		#define($revisionLinkCombined)
+			<span class='revisionLink'>(${revisionLink} ${linesadded})</span>
+		#end
+		#partHeader("${textFormatter.getMessage('scm.commit.changes.label')} ${revisionLinkCombined}")
+	#end
+	#if(${w.changeSet.changeFiles.size()} > 0)
+		#tableOpenStyled("changeset")
+			#foreach($changeFile in ${w.changeSet.changeFiles})
+				#trOpen()
+					#if(${changeFile.action} == 'A')
+						#tdField("<div class='added changeFileBox'><span class='scmChangeType'>${textFormatter.getMessage('scm.commit.file.added')}</span></div>${changeFile.path}")
+					#elseif(${changeFile.action} == 'D')
+						#tdField("<div class='deleted changeFileBox'><span class='scmChangeType'>${textFormatter.getMessage('scm.commit.file.deleted')}</span></div>${changeFile.path}")
+					#elseif(${changeFile.action} == 'M')
+						#if($w.stats.get($changeFile.path))
+							#set( $added = $w.stats.get($changeFile.path).linesAdded )
+							#set( $removed = $w.stats.get($changeFile.path).linesRemoved )
+							#set( $fileStat = "<span class='linesadded'>+$added</span> <span class='linesdeleted'>-$removed</span>" )
+						#else
+							#set( $fileStat = "" )
+						#end
+						#if(!${isPullRequest})
+							#tdField("<div class='modified changeFileBox'><span class='scmChangeType'>${textFormatter.getMessage('scm.commit.file.modified')}</span></div>${changeFile.path}$fileStat")
+						#else
+							#tdField("<div class='modified changeFileBox'><span class='scmChangeType'>${textFormatter.getMessage('scm.commit.file.modified')}</span></div>${changeFile.path}")
+						#end
+					#else
+						#tdField("${changeFile.path}")
+					#end
+				#trClose()
+			#end
+		#tableClose()
+	#end
+
+	#if(${w.diffHtml})
+		#set($diffSizeSoFar = $diffSizeSoFar + $w.diffSize)
+		#partHeader("${textFormatter.getMessage('wiki.diff.label')}")
+
+		#if (${diffSizeSoFar} < ${maxDiffSizesInEmail})
+			${w.diffHtml}
+		#else
+			## diff is not included because the email would be too big
+			<a href='${cbBaseUrl}${w.changeSet.diffUrl}'>${textFormatter.getMessage('wiki.diff.click.to.see')}</a><br/>
+		#end
+		#if(${w.onlyEolsChanged})
+			#bold("${textFormatter.getMessage('scm.commit.only.eols.differ')}")
+		#end
+		#if(${w.binaryFile})
+			#bold("${textFormatter.getMessage('scm.commit.binary.files.differ')}")
+		#end
+	#end
+#end
+#parse("notification_email_footer.vm")

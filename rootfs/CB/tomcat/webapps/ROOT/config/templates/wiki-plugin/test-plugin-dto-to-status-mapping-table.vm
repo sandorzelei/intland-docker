@@ -1,0 +1,27 @@
+<table class="embedded">
+	<thead>
+		<tr>
+			<th>${textFormatter.getMessage("testrunner.configuration.label")}</th>
+
+			#foreach($columnTitle in $columnTitles)
+				<th class="number sortable">
+					<div data-column-index="${foreach.index}" #if(${foreach.index} == ${sortColumnIndex}) class="${sortingDirection}" #end>
+						${textFormatter.getMessage(${columnTitle.getMessageCode()})}<span class="sortIndicator"></span>
+					</div>
+				</th>
+			#end
+		</tr>
+	</thead>
+	<tbody>
+			#foreach($chartTableRowDto in $rows)
+				#trOpen
+					<td><a href="$chartTableRowDto.url" title="$chartTableRowDto.title">$chartTableRowDto.title</a></td>
+					#foreach($value in $chartTableRowDto.columnValues)
+						<td class="number">
+							$value
+						</td>
+					#end
+				#trClose
+			#end
+	</tbody>
+</table>

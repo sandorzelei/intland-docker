@@ -1,0 +1,767 @@
+<!DOCTYPE struts-config PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+	"http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<!--
+	This is the Struts configuration file for the example application,
+	using the proposed new syntax.
+
+	NOTE: You would only flesh out the details in the "form-bean"
+	declarations if you had a generator tool that used them to create
+	the corresponding Java classes for you.  Otherwise, you would
+	need only the "form-bean" element itself, with the corresponding
+	"name" and "type" attributes.
+-->
+
+<struts-config>
+	<!-- ========== Form Bean Definitions =================================== -->
+	<form-beans>
+
+		<form-bean name="wikiPageRevisionComparionForm" type="com.intland.codebeamer.struts.DynaTrimValidatorForm">
+			<form-property name="doc_id" type="java.lang.String" initial="-1" />
+			<form-property name="selectedRevisions" type="java.lang.String[]" />
+		</form-bean>
+
+		<form-bean name="entityLabelForm" type="com.intland.codebeamer.struts.DynaTrimValidatorForm">
+			<form-property name="entityTypeId" type="java.lang.Integer" />
+			<form-property name="entityId" type="java.lang.Integer" />
+			<form-property name="entityLabels" type="java.lang.String" />
+			<form-property name="forwardUrl" type="java.lang.String" />
+			<form-property name="itemIds" type="java.lang.String" />
+			<form-property name="parentIdAmount" type="java.lang.Integer" />
+			<form-property name="branchId" type="java.lang.Integer" />
+		</form-bean>
+
+		<form-bean name="labelForm" type="com.intland.codebeamer.struts.DynaTrimValidatorForm">
+			<form-property name="id" type="java.lang.Integer" />
+			<form-property name="displayName" type="java.lang.String" />
+			<form-property name="displayNameToConfirm" type="java.lang.String" />
+		</form-bean>
+
+		<form-bean name="browseAccountsForm" type="com.intland.codebeamer.struts.EncodedDynaValidatorForm">
+			<form-property name="userFilter" type="java.lang.String" />
+			<form-property name="listType" type="java.lang.String" />
+			<form-property name="initial_role_id" type="java.lang.String" />
+		</form-bean>
+
+		<form-bean name="userSessionsForm" type="com.intland.codebeamer.struts.DynaTrimValidatorForm">
+			<form-property name="targetURL" type="java.lang.String" />
+			<form-property name="sessionId" type="java.lang.String[]" />
+		</form-bean>
+
+		<form-bean name="addUpdateTrackerReportForm"
+			type="com.intland.codebeamer.servlet.report.AddUpdateTrackerReportForm" />
+
+		<form-bean name="startPageForm" type="com.intland.codebeamer.struts.DynaTrimValidatorForm">
+			<form-property name="proj_id" type="java.lang.String" />
+			<form-property name="due_all_user_items" type="java.lang.String" />
+			<form-property name="due_items_assigned_to_me" type="java.lang.String" />
+			<form-property name="due_items_submitted_by_me" type="java.lang.String" />
+		</form-bean>
+
+		<form-bean name="editWikiPageForm" type="com.intland.codebeamer.struts.DynaTrimValidatorForm">
+			<form-property name="doc_id" type="java.lang.String" />
+			<form-property name="dir_id" type="java.lang.String" />
+			<form-property name="proj_id" type="java.lang.String" />
+			<form-property name="name" type="java.lang.String" />
+			<form-property name="scopeName" type="java.lang.String" />
+			<form-property name="text" type="java.lang.String" />
+			<form-property name="commit_text" type="java.lang.String" />
+			<form-property name="preview" type="java.lang.Boolean" initial="false" />
+			<form-property name="uploadConversationID" type="java.lang.String" />
+		</form-bean>
+
+		<form-bean name="projectMountPointForm" type="com.intland.codebeamer.struts.DynaTrimValidatorForm">
+			<form-property name="proj_id" type="java.lang.Integer" />
+			<form-property name="mountPoint" type="java.lang.String" />
+		</form-bean>
+
+		<form-bean name="associationForm" type="com.intland.codebeamer.navigation.AddAssociationForm" />
+
+		<form-bean name="criticalSymbols" type="com.intland.codebeamer.struts.DynaTrimValidatorForm">
+			<form-property name="limit" type="java.lang.String" initial="25" />
+		</form-bean>
+
+		<form-bean name="documentCommentForm" type="com.intland.codebeamer.servlet.docs.DocumentCommentForm" />
+
+		<form-bean name="miscellaneousForm" type="com.intland.codebeamer.servlet.admin.MiscellaneousForm">
+			<form-property name="role" type="java.lang.String[]" />
+			<form-property name="availableRoles" type="java.util.List" />
+			<form-property name="defaultAccountType" type="java.lang.String" />
+			<form-property name="availableAccountTypes" type="java.util.List" />
+			<form-property name="registration" type="java.lang.String" />
+			<form-property name="notificationFrom" type="java.lang.String" />
+			<form-property name="notificationAddress" type="java.lang.String" />
+			<form-property name="disallowedAddresses" type="java.lang.String" />
+			<form-property name="registrationConfirmationText" type="java.lang.String" />
+			<form-property name="cookiesAllowed" type="java.lang.Boolean" />
+			<form-property name="anonymousUser" type="java.lang.String" />
+			<form-property name="displayLastAccountActivityDate" type="java.lang.Boolean" />
+			<form-property name="accountAutoLoginFromRequestHeader" type="java.lang.String" />
+			<form-property name="accountAutoLoginFromRequestHeaderEnabled" type="java.lang.Boolean" />
+			<form-property name="registrationEmailSubject" type="java.lang.String" />
+		</form-bean>
+
+		<form-bean name="projectChartDateSelectorForm" type="com.intland.codebeamer.struts.ProjectChartDateSelectorForm">
+			<form-property name="duration" type="java.lang.String" />
+			<form-property name="startDate" type="java.lang.String" />
+			<form-property name="closeDate" type="java.lang.String" />
+			<form-property name="proj_id" type="java.lang.String[]" />
+			<form-property name="timeResolutionList" type="java.util.List" />
+			<form-property name="geometry" type="java.lang.String" />
+			<form-property name="dispDate" type="java.lang.String" />
+			<form-property name="groupByUser" type="java.lang.Boolean" />
+			<form-property name="action" type="java.lang.String" />
+		</form-bean>
+
+		<form-bean name="logoAndSloganForm" type="com.intland.codebeamer.servlet.admin.LogoAndSloganForm" />
+
+		<form-bean name="trackerBrowseForm" type="com.intland.codebeamer.servlet.bugs.TrackerBrowseForm" />
+
+		<form-bean name="documentAttributesForm" type="com.intland.codebeamer.servlet.docs.DocumentAttributesForm" />
+
+		<form-bean name="listDocumentForm" type="com.intland.codebeamer.servlet.docs.ListDocumentForm" />
+
+		<form-bean name="lostPasswordForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="user" type="java.lang.String" initial="" />
+			<form-property name="email" type="java.lang.String" initial="" />
+		</form-bean>
+
+		<form-bean name="reindexForm" type="com.intland.codebeamer.struts.DynaTrimValidatorForm" />
+	</form-beans>
+
+
+	<!-- ========== Global Forward Definitions ============================== -->
+	<global-forwards>
+		<forward name="unbound" path="/" redirect="true" />
+		<forward name="start" path="/" redirect="true" />
+		<forward name="failure" path="forward.example.failure.page"/>
+		<forward name="login" path="/login.spr" redirect="false" />
+		<forward name="permissionDenied" path="/permissionDenied.do" redirect="false" />
+		<forward name="workspace" path="/user" redirect="true" />
+		<forward name="low_licenses" path="/low_licenses.do" />
+		<forward name="about" path="/about.do" redirect="true" />
+	</global-forwards>
+
+
+	<!-- ========== Action Mapping Definitions ============================== -->
+	<action-mappings type="com.intland.codebeamer.struts.DynaActionMapping">
+
+	<!-- Application specific -->
+
+		<action path="/permissionDenied" forward="/admin/permissionDenied.jsp" />
+
+		<!-- create unknown action for missing struts action https://wiki.apache.org/struts/StrutsXssVulnerability -->
+		<action path="/unknown" forward="/admin/permissionDenied.jsp" unknown="true" />
+
+		<action path="/help/wiki" forward="/help/wikiDocument.jsp?file=WikiHelp.wki" />
+
+		<action path="/help/search" forward="/help/wikiDocument.jsp?file=search.wki" />
+
+		<action path="/lostPassword"
+			type="com.intland.codebeamer.servlet.LostPasswordAction"
+			name="lostPasswordForm"
+			scope="request"
+			validate="false">
+			<forward name="populate" path="/admin/lostPassword.jsp" redirect="false" />
+			<forward name="failure" path="/admin/lostPassword.jsp" redirect="false" />
+			<forward name="success" path="/admin/passwordSent.jsp" redirect="true" />
+			<forward name="cancel" path="/login.spr" redirect="true" />
+		</action>
+
+		<action path="/user_sessions" forward="/workspace/sessions.jsp" />
+
+		<action path="/low_licenses" forward="/admin/lowLicenses.jsp" />
+
+		<!-- User Work space -->
+		<action path="/about" forward="/about" />
+
+		<!-- User data -->
+		<action path="/userdata" forward="/userdata.spr" />
+
+		<!-- Who is user's -->
+		<action path="/whois" type="com.intland.codebeamer.servlet.search.WhoisAction">
+			<forward name="success" path="/workspace/whois.jsp" redirect="false" />
+		</action>
+
+		<action path="/history" forward="/workspace/history.jsp" />
+
+		<!-- Modify User data -->
+		<action path="/invalidateUserSessions"
+				type="com.intland.codebeamer.security.InvalidateUserSessionsAction"
+				name="userSessionsForm"
+				scope="request">
+			<forward name="success" redirect="true" path="/user" />
+		</action>
+
+		<action path="/sentMailToUser"
+			forward="/workspace/sentEmail.jsp" />
+			
+		<action path="/proj/search" forward="/search/global.jsp" />
+
+		<action path="/proj/members/trendsChart"
+				type="com.intland.codebeamer.struts.NoOpAction"
+				validate="true"
+				name="projectChartDateSelectorForm"
+				scope="session"
+				input="/admin/project/membersTrends.jsp"
+				forward="/admin/project/membersTrends.jsp" />
+
+		<action path="/proj/members/trends"
+				forward="/admin/project/membersTrends.jsp">
+		</action>
+
+		<!-- CMDB -->
+		<action path="/proj/cmdb/listCategories"
+				type="com.intland.codebeamer.servlet.docs.ListProjectDocsAction"
+				name="listDocumentForm"
+				input="/cmdb/main.jsp"
+				validate="false"
+				scope="session">
+			<forward name="success" path="/cmdb/main.jsp" />
+		</action>
+
+		<action path="/proj/cmdb"
+				forward="/proj/cmdb/listCategories.do?ACTIVE_TAB=CMDB">
+		</action>
+
+
+		<!-- Browse Category -->
+		<action path="/proj/cmdb/browseCategory"
+				type="com.intland.codebeamer.servlet.bugs.BrowseTrackerAction"
+				name="trackerBrowseForm"
+				scope="session"
+				>
+			<forward name="success" path="/bugs/tracker/browseTracker.jsp" />
+			<forward name="successAndRedirect" path="/proj/cmdb/browseCategory.do" redirect="true" />
+		</action>
+
+		<!-- Browse All Categories -->
+		<action path="/proj/cmdb/browseAllCategories"
+				forward="cb.project.layout.cmdb.browseAllCategories">
+		</action>
+
+		<!-- Tracker -->
+		<action path="/proj/tracker"
+				type="com.intland.codebeamer.struts.CompatibilityForwarderAction">
+		</action>
+
+		<!-- Browse Tracker -->
+		<action path="/proj/tracker/browseTracker"
+				type="com.intland.codebeamer.servlet.bugs.BrowseTrackerAction"
+				name="trackerBrowseForm"
+				scope="session"
+				input="/bugs/tracker/browseTracker.jsp"
+				>
+			<forward name="success" path="/bugs/tracker/browseTracker.jsp" />
+			<forward name="successAndRedirect" path="/proj/tracker/browseTracker.do" redirect="true" />
+			<forward name="validationFailure" path="/404.jsp" redirect="true" />
+		</action>
+
+		<!-- Add Association -->
+		<action path="/proj/addAssociationDialog"
+				type="com.intland.codebeamer.navigation.AddAssociation"
+				name="associationForm"
+				scope="session"
+				validate="false"
+				input="/association/addUpdate.jsp">
+			<forward name="success" path="/association/addUpdate.jsp" />
+			<forward name="close" path="/menu/closePopup.jsp" />
+			<forward name="closeInline" path="/menu/closeInlinePopup.jsp" />
+		</action>
+
+		<!-- This action just checks the permission -->
+		<action path="/proj/tracker/addAssociation"
+				type="com.intland.codebeamer.navigation.AddAssociation"
+				name="associationForm"
+				scope="session"
+				validate="false"
+				>
+			<forward name="success" path="/association/addUpdate.jsp" />
+		</action>
+
+		<!-- Add Association End -->
+
+		<action path="/proj/tracker/deleteAssociation"
+				type="com.intland.codebeamer.servlet.bugs.DeleteObject">
+		</action>
+
+		<action path="/proj/tracker/deleteAttachment"
+				type="com.intland.codebeamer.servlet.bugs.DeleteObject">
+		</action>
+
+
+		<!-- This action just checks the permission -->
+		<action path="/proj/tracker/listComments"
+				forward="/bugs/listComments.jsp">
+		</action>
+
+
+		<!-- List All Open Items -->
+		<action path="/proj/tracker/listAllOpenItems"
+				forward="cb.project.layout.tracker.listallopen">
+		</action>
+
+		<action path="/proj/report/ganttChart"
+				name="ganttChartForm"
+				input="/report/ganttChart.jsp"
+				validate="true"
+				scope="session"
+				forward="/report/ganttChart.jsp">
+		</action>
+
+		<!-- End Of Tracker -->
+
+		<!-- Reports -->
+		<action path="/proj/doc/listReports"
+				type="com.intland.codebeamer.servlet.docs.ListProjectDocsAction"
+				name="listDocumentForm"
+				input="/docs/list.jsp"
+				validate="false"
+				scope="session">
+			<forward name="success" path="/report/main.jsp" />
+		</action>
+
+		<action path="/proj/report"
+				forward="/proj/doc/listReports.do?ACTIVE_TAB=report">
+		</action>
+
+		<action path="/proj/report/editReportFilter"
+			forward="/report/editReportFilters.jsp" />
+
+		<action path="/proj/report/new"
+				name="addUpdateTrackerReportForm"
+				scope="session"
+				validate="false"
+				forward="/report/selectReportType.jsp">
+		</action>
+
+		<!-- Step 1: Select Report type -->
+		<action path="/proj/report/selectReportType"
+				type="com.intland.codebeamer.servlet.report.ReportStepAction"
+				name="addUpdateTrackerReportForm"
+				scope="session">
+			<forward name="next" path="/report/selectProjects.jsp" />
+			<forward name="cancel" path="/proj/report.do" redirect="true" />
+		</action>
+
+		<!-- Step 2: Select the Projects -->
+		<action path="/proj/report/selectProjects"
+				type="com.intland.codebeamer.servlet.report.ReportStepAction"
+				name="addUpdateTrackerReportForm"
+				scope="session"
+				validate="true"
+				input="/report/selectProjects.jsp">
+			<forward name="filter" path="/proj/report/filterProjects.do" />
+			<forward name="previous" path="/report/selectReportType.jsp" />
+			<forward name="next" path="/report/selectTrackers.jsp" />
+			<forward name="success" path="/report/selectProjects.jsp" />
+			<forward name="cancel" path="/proj/report.do" redirect="true" />
+		</action>
+
+		<action path="/proj/report/filterProjects"
+				type="com.intland.codebeamer.servlet.report.ReportStepAction"
+				name="addUpdateTrackerReportForm"
+				scope="session"
+				validate="false"
+				input="/report/selectProjects.jsp">
+			<forward name="success" path="/report/selectProjects.jsp" />
+			<forward name="cancel" redirect="true" path="/proj/report.do" />
+		</action>
+
+		<!-- Step 3: Select the Trackers -->
+		<action path="/proj/report/selectTrackers"
+				type="com.intland.codebeamer.servlet.report.ReportStepAction"
+				name="addUpdateTrackerReportForm"
+				scope="session"
+				validate="true"
+				input="/report/selectTrackers.jsp">
+			<forward name="previous" path="/report/selectProjects.jsp" />
+			<forward name="next" path="/report/addUpdDelReport.jsp" />
+			<forward name="success" path="/report/selectTrackers.jsp" />
+			<forward name="cancel" redirect="true" path="/proj/report.do" />
+		</action>
+
+		<!-- Step 4: Define a name, definition, etc. -->
+		<action path="/proj/report/addUpdateReport"
+				type="com.intland.codebeamer.servlet.report.ReportStepAction"
+				name="addUpdateTrackerReportForm"
+				scope="session"
+				validate="true"
+				input="/report/addUpdDelReport.jsp">
+			<forward name="previous" path="/report/selectTrackers.jsp" />
+			<forward name="next" path="/proj/report/editReportFilter.do" />
+			<forward name="cancel" redirect="true" path="/proj/report.do" />
+		</action>
+
+		<!-- Step 5: Define a columns, filter, and order by stuff  -->
+		<action path="/proj/report/editReportFilters"
+				type="com.intland.codebeamer.servlet.report.AddUpdateTrackerReportAction"
+				name="addUpdateTrackerReportForm"
+				scope="session"
+				validate="true"
+				input="/report/addUpdDelReport.jsp">
+			<forward name="previous" path="/report/addUpdDelReport.jsp" />
+			<forward name="success" redirect="true" path="/proj/report.do" />
+			<forward name="execute" redirect="true" path="/proj/report/execute.do" />
+		</action>
+
+		<action path="/proj/report/edit"
+				name="addUpdateTrackerReportForm"
+				scope="session"
+				validate="false"
+				forward="/report/selectReportType.jsp">
+		</action>
+
+		<action path="/proj/report/execute"
+				type="com.intland.codebeamer.servlet.report.ExecuteReportAction" >
+				<forward name="success" path="/report/execute.jsp" />
+		</action>
+
+		<action path="/proj/report/export"
+				forward="/report/export.jsp">
+		</action>
+
+		<action path="/proj/report/exportWiki"
+				forward="/report/exportWiki.jsp">
+		</action>
+		<!-- Reports End -->
+
+		<!-- Chat is not available any more -->
+		<action path="/proj/chat" 				type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/chat/addNewChat" 	type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/chat/addChat" 		type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/chat/customize" 	type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/chat/inviteMembersDialog" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/chat/invitationTextDialog" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/chat/inviteMembers" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/chat/interact" 		type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/chat/submitMessage" type="com.intland.codebeamer.struts.NoOpAction" />
+		<!-- Chat End -->
+
+		<!-- Forum is not available any longer -->
+		<action path="/proj/forum" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/forum/watchThread" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/forum/browseForum" type="com.intland.codebeamer.struts.NoOpAction"/>
+		<action path="/proj/forum/viewMessage" type="com.intland.codebeamer.struts.NoOpAction"/>
+
+		<!-- Source Code -->
+		<action path="/proj/viewSource" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/sources/listFiles" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/sources/xref" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/sources/sccFileLog" type="com.intland.codebeamer.struts.NoOpAction" />
+		<!-- Source Code End -->
+
+		<!-- Project Documents -->
+
+		<!-- list project documents  -->
+		<action path="/proj/doc/listDocuments"
+				type="com.intland.codebeamer.servlet.docs.ListProjectDocsAction"
+				name="listDocumentForm"
+				input="/docs/list.jsp"
+				validate="false"
+				scope="session">
+			<forward name="success" path="/docs/list.jsp" />
+		</action>
+
+		<action path="/proj/doc"
+				forward="/proj/doc/listDocuments.do">
+		</action>
+
+		<!-- Document Details -->
+		<action path="/proj/doc/details"
+				forward="/proj/doc/details.spr"
+				>
+		</action>
+
+		<!-- Document Details -->
+		<action path="/proj/doc/history"
+				forward="/proj/doc/details.spr"
+				>
+		</action>
+
+		<!-- Restore Document from revision -->
+		<action path="/proj/doc/restoreRevision"
+				type="com.intland.codebeamer.servlet.docs.DocumentRestoreRevisionAction"
+				>
+			<forward name="success" path="/proj/doc/details.do" redirect="true" />
+		</action>
+
+		<action path="/proj/doc/editComment"
+				type="com.intland.codebeamer.servlet.docs.DocumentCommentCrudAction"
+				name="documentCommentForm"
+				scope="request">
+			<forward name="success" path="/proj/doc/details.do" />
+			<forward name="wikisuccess" path="/proj/wiki/displayWikiPageProperties.spr" redirect="true" />
+			<forward name="close" path="/proj/doc/details.do" />
+			<forward name="edit" path="/docs/editComments.jsp" />
+		</action>
+
+		<action path="/proj/doc/deleteComment"
+				type="com.intland.codebeamer.servlet.docs.DocumentCommentCrudAction"
+				name="documentCommentForm"
+				scope="request"
+				parameter="action">
+			<forward name="success" path="/proj/doc/details.do" />
+			<forward name="wikisuccess" path="/proj/wiki/displayWikiPageProperties.spr" redirect="true" />
+		</action>
+
+		<action path="/proj/doc/undelete"
+				type="com.intland.codebeamer.servlet.docs.DocumentUndeleteAction"
+				name="listDocumentForm"
+				scope="session">
+			<forward name="success" path="/proj/doc.do" redirect="true" />
+		</action>
+
+		<action path="/proj/wiki/displayHomePage" type="com.intland.codebeamer.struts.CompatibilityForwarderAction" />
+		<action path="/proj/wiki/displayPage" type="com.intland.codebeamer.struts.CompatibilityForwarderAction" />
+		<action path="/proj/summary" type="com.intland.codebeamer.struts.CompatibilityForwarderAction" />
+
+		<action path="/proj/doc/editWikiPageDialog"
+			name="editWikiPageForm"
+			scope="request"
+			type="com.intland.codebeamer.servlet.docs.EditWikiPageAction"
+			validate="true"
+			input="/docs/editWiki.jsp">
+			<forward name="success" path="/doc/" redirect="true" />
+			<forward name="cancel" path="/proj/doc.do" redirect="true" />
+			<forward name="close" path="/menu/closePopup.jsp" />
+		</action>
+
+		<action path="/proj/doc/addWikiPage"
+				name="editWikiPageForm"
+				scope="request"
+				type="com.intland.codebeamer.servlet.docs.EditWikiPageAction"
+				validate="false"
+				>
+			<forward name="editing" path="/docs/editWiki.jsp" />
+		</action>
+
+		<action path="/proj/doc/editWikiPage"
+				name="editWikiPageForm"
+				scope="request"
+				type="com.intland.codebeamer.servlet.docs.EditWikiPageAction"
+				validate="false"
+				input="/docs/editWiki.jsp"
+				>
+			<forward name="editing" path="/docs/editWiki.jsp" />
+		</action>
+
+		<action path="/proj/doc/displayWikiDocument"
+				forward="/docs/displayWiki.jsp">
+		</action>
+
+		<!-- action for delete, and forward to: modify attributes, management of access control and notification management  -->
+		<action path="/proj/doc/documentProperties"
+				type="com.intland.codebeamer.servlet.docs.BrowsingAction"
+				name="listDocumentForm"
+				scope="session"
+				input="/proj/doc.do">
+			<forward name="successDelete" path="/proj/doc.do" redirect="true" />
+			<forward name="failureDelete" path="/proj/doc.do" redirect="false" />
+
+			<forward name="successDeleteReport" path="/proj/report.do" redirect="true" />
+			<forward name="failureDeleteReport" path="/proj/report.do" redirect="false" />
+
+			<forward name="forwardAttributes" path="/proj/doc/prepareDocAttributes.do" redirect="true" />
+			<forward name="forwardPermissions" path="/proj/doc/permissions.spr" redirect="false" />
+			<forward name="forwardNotification" path="/proj/doc/notifications.spr" redirect="false" />
+			<forward name="forwardAddDocument" path="/proj/doc/upload.do" redirect="true" />
+
+			<forward name="actionNotFound" path="/proj/doc.do" redirect="true" />
+			<forward name="browse" path="/proj/doc.do" redirect="true" />
+		</action>
+
+		<!-- action deletes an association from a Document -->
+		<action path="/proj/doc/deleteAssociation"
+				type="com.intland.codebeamer.servlet.docs.DeleteDocAssociation"
+		>
+			<forward name="success" path="/proj/doc/details.do" redirect="true"></forward>
+		</action>
+
+		<!-- updates document attributes -->
+		<action path="/proj/doc/editAttributes"
+				type="com.intland.codebeamer.servlet.docs.UploadDocumentAction"
+				name="documentAttributesForm"
+				input="/docs/edit.jsp"
+				scope="request">
+			<forward name="success" path="/proj/doc.do" redirect="true" />
+			<forward name="details" path="/proj/doc/details.do" redirect="true" />
+		</action>
+
+		<action path="/proj/doc/upload"
+				forward="/docs/edit.jsp">
+		</action>
+
+		<action path="/proj/doc/edit"
+				forward="/docs/edit.jsp">
+		</action>
+
+		<!-- Begin of Wiki -->
+
+
+		<action path="/proj/wiki/editComment"
+				forward="/proj/doc/editComment.do">
+		</action>
+
+		<action path="/proj/wiki/deleteComment"
+				forward="/proj/doc/deleteComment.do">
+		</action>
+
+		<!-- action deletes an association from a WikiPage -->
+		<action path="/proj/wiki/deleteAssociation"
+				type="com.intland.codebeamer.servlet.docs.DeleteDocAssociation">
+			<forward name="success" path="/proj/wiki/displayWikiPageProperties.spr" redirect="true"></forward>
+		</action>
+
+		<!-- End of Wiki -->
+
+		<!-- Labels -->
+		<action path="/proj/label/openEntityLabelPopup"
+				type="com.intland.codebeamer.servlet.label.EntityLabelCrudAction"
+				name="entityLabelForm"
+				parameter="populate"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/label/entityLabelPopup.jsp" />
+		</action>
+
+		<action path="/proj/label/updateEntityLabel"
+				type="com.intland.codebeamer.servlet.label.EntityLabelCrudAction"
+				name="entityLabelForm"
+				parameter="update"
+				scope="request"
+				validate="false"
+				input="/label/entityLabelPopup.jsp">
+			<forward name="close" path="/menu/closeInlinePopup.jsp" />
+		</action>
+
+		<action path="/proj/label/displayLabeledContent"
+				type="com.intland.codebeamer.servlet.label.EntityLabelCrudAction"
+				name="entityLabelForm"
+				parameter="displayLabeledContent"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/label/labeledContent.jsp" />
+		</action>
+
+		<action path="/proj/label/showLabels"
+				type="com.intland.codebeamer.servlet.label.LabelCrudAction"
+				parameter="populate"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/label/labelList.jsp" />
+		</action>
+
+		<action path="/proj/label/editLabel"
+				type="com.intland.codebeamer.servlet.label.LabelCrudAction"
+				name="labelForm"
+				parameter="edit"
+				scope="session"
+				validate="false">
+			<forward name="success" path="/label/editLabel.jsp" />
+			<forward name="failure" path="/proj/label/showLabels.do" redirect="false" />
+		</action>
+
+		<action path="/proj/label/updateLabel"
+				type="com.intland.codebeamer.servlet.label.LabelCrudAction"
+				name="labelForm"
+				parameter="update"
+				scope="session"
+				input="/label/editLabel.jsp"
+				validate="true">
+			<forward name="success" path="/proj/label/showLabels.do" redirect="true" />
+			<forward name="confirm" path="/label/editLabel.jsp" />
+			<forward name="cancel" path="/proj/label/showLabels.do" redirect="true" />
+			<forward name="failure" path="/proj/label/showLabels.do" redirect="false" />
+		</action>
+
+		<action path="/proj/label/deleteLabel"
+				type="com.intland.codebeamer.servlet.label.LabelCrudAction"
+				parameter="delete"
+				scope="request"
+				validate="false">
+			<forward name="success" path="/proj/label/showLabels.do" redirect="true" />
+			<forward name="failure" path="/proj/label/showLabels.do" redirect="false" />
+		</action>
+		<!-- End of Labels -->
+
+
+		<!-- System Admin -->
+
+		<action path="/sysadmin"
+				forward="/sysadmin/main.jsp">
+		</action>
+
+		<!-- Config Logo and Slogan -->
+		<action path="/sysadmin/updateLogoAndSlogan"
+				type="com.intland.codebeamer.servlet.admin.LogoAndSloganAction"
+				validate="true"
+				name="logoAndSloganForm"
+				scope="request"
+				input="/sysadmin/configLogoAndSlogan.jsp">
+			<forward name="success" path="/sysadmin.do" redirect="true" />
+		</action>
+
+		<!-- This action just checks the permission -->
+		<action path="/sysadmin/configLogoAndSlogan"
+				forward="/sysadmin/configLogoAndSlogan.jsp">
+		</action>
+
+        <!-- This action just checks the permission -->
+		<action path="/sysadmin/documentsSummary"
+				forward="/sysadmin/documentsSummary.jsp">
+		</action>
+
+		<action path="/sysadmin/editProjectMountPoint"
+				type="com.intland.codebeamer.servlet.admin.SetProjectMountPointAction"
+				parameter="onNewForm">
+			<forward name="success" path="/sysadmin/projectMountPoint.jsp" />
+		</action>
+
+		<action path="/sysadmin/setProjectMountPoint"
+				type="com.intland.codebeamer.servlet.admin.SetProjectMountPointAction"
+				name="projectMountPointForm"
+				scope="request"
+				input="/sysadmin/projectMountPoint.jsp"
+				parameter="onSubmit">
+
+			<forward name="success" path="/sysadmin/documentsSummary.do" />
+			<forward name="cancel" path="/sysadmin/documentsSummary.do" />
+		</action>
+
+		<!-- Misc. -->
+		<action path="/sysadmin/miscAction"
+				type="com.intland.codebeamer.struts.NoOpAction"
+				name="miscellaneousForm"
+				scope="request"
+				validate="true"
+				input="/sysadmin/misc.jsp">
+			<forward name="success" path="/sysadmin.do" />
+		</action>
+
+		<!-- This action just checks the permission -->
+		<action path="/sysadmin/misc"
+				forward="/sysadmin/misc.jsp">
+		</action>
+
+
+		<!-- System Admin End -->
+
+		<action path="/help/wiki-plugins" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/registration" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/generateLicense" type="com.intland.codebeamer.struts.NoOpAction" />
+		<action path="/proj/forum/submitNew" type="com.intland.codebeamer.struts.NoOpAction" />
+	</action-mappings>
+
+	<message-resources parameter="ApplicationResources" null="false" factory="com.intland.codebeamer.struts.SpringMessageResourcesFactory"/>
+
+	<!--
+	Add multiple validator resource files by setting the pathnames property
+	with a comma delimitted list of resource files to load.
+	-->
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames"
+			value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+	</plug-in>
+</struts-config>

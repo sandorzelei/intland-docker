@@ -1,0 +1,25 @@
+#wikiBoxOpen(${command})
+    <table class="bestContentPlugin $!{cssClass}" style="$!{cssStyle}">
+		<thead>
+			#if(${title})
+				<tr><th colspan="2">${title}</th></tr>
+			#end
+           	<tr><th>${textFormatter.getMessage('document.label')}</th><th>${textFormatter.getMessage('rating.label')}</th></tr>
+        </thead>
+		<tbody>
+        #if (!${bestContent.empty})
+        	#foreach(${objectRatingStats} in ${bestContent})
+            	#trOpen()
+            		<td>#linkReferableDto(${objectRatingStats.referencedObject})</td>
+            		<td>
+            			#set($label = $textFormatter.getMessage('rating.tooltip.average', $numberFormat.format(${objectRatingStats.averageRating}), ${objectRatingStats.numberOfRatings}))
+            			${starRenderer.render(${objectRatingStats.averageRating}, $label)}
+            		</td>
+            	#trClose()
+        	#end
+        #else
+    		<tr><td colspan="2">${textFormatter.getMessage('rating.empty.label')}</td></tr>
+		#end
+		</tbody>
+    </table>
+#wikiBoxClose()

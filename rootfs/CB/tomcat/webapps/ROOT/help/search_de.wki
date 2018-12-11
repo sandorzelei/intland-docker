@@ -1,0 +1,109 @@
+!!Hilfe zur Suche
+CodeBeamer verwendet Apache Lucene zur Indizierung und Volltextsuche über folgende Objekte:
+* Benutzer,
+* Projekte,
+* Dokumente,
+* Kommentare und Anlagen zu Dokumenten,
+* Tracker,
+* Vorgänge,
+* Kommentare und Anlagen zu Vorgängen,
+* Foreneinträge,
+* Anlagen zu Foreneinträgen,
+* Quellcode Änderungen,
+* Schlagworte.
+\\
+Folgende Text-Dokumente und Anlagen können indiziert und gesucht werden: MS-Word, MS-Powerpoint, RTF, PDF, HTML, Wiki und Textdateien.\\
+\\
+Sie können eingrenzen, nach welcher Art von Objekten gesucht werden soll.\\
+Sie können innerhalb eines einzelnen Projektes oder über mehrere Projekte hinweg suchen.\\
+
+!!Such Syntax
+
+!Bool'sche Operatoren
+Bool'sche Operatoren ermöglichen die Kombination mehrere Suchkriterien in einer Suchanfrage. CodeBeamer unterstützt AND, OR, NOT, "+" und "-" (Operatoren müssen GROSS geschrieben werden).
+
+!OR
+Der binäre Operator OR (alternativ ||) ist die ODER-Verknüpfung zweier Kriterien. Ein Dokument wird gefunden, sobald eines der Kriterien zutrifft.\\
+z.B. Zur Suche nach Dokumenten, die den Begriff "Hund" oder "Katze" enthalten, verwenden sie folgende Abfrage:
+{{{
+Hund OR Katze}}}
+oder einfach
+{{{
+Hund Katze}}}
+denn wenn Sie mehrere Kriterien ohne explizite Verknüpfung angeben, dann wird standardmässig OR verwendet.
+
+!AND
+Der binäre Operator UND (alternativ &&) ist die UND-Verknüpfung zweier Kriterien. Ein Dokument wird nur gefunden, wenn beide Kriterien zutreffen.\\
+z.B. Zur Suche nach Dokumenten, die sowohl den Begriff "Hund" als auch "Katze" enthalten, verwenden sie folgende Abfrage:
+{{{
+Hund AND Katze}}}
+
+!NOT
+Der binäre Operator NOT (alternativ !) ist die ABER-NICHT-Verknüpfung zweier Kriterien. Ein Dokument wird nur gefunden, wenn das erste Kriterium zutrifft und das zweite nicht.\\
+z.B. Suche nach Dokumenten mit "jakarta apache" aber nicht "Apache CodeBeamer":
+{{{
+"jakarta apache" NOT "Apache CodeBeamer"}}}
+\\
+Der Operator NOT kann nicht zur Negation eines einzelnen Kriteriums verwendet werden, z.B.
+{{{
+NOT "jakarta apache"}}}
+wird nicht funktionieren!
+
+!+
+Der unäre Operator "+" markiert ein Such-Kriterien als Muss-Kriterium. Ein Dokument wird nur gefunden, wenn dieses Kriterium zutrifft, unabhängig von evtl. weiteren Kriterien.
+z.B. Suche nach Dokumenten mit den Begriffen "tomcat" oder "jakarta" aber nur falls gleichzeitig der Begriff "apache" vorhanden ist:
+{{{
++apache tomcat jakarta}}}
+
+!-
+Der unäre Operator "-" markiert ein Such-Kriterien als Ausschluss-Kriterium. Ein Dokument wird nicht gefunden, wenn dieses Kriterium zutrifft, unabhängig von evtl. weiteren Kriterien.
+z.B. Suche nach Dokumenten mit den Begriffen "tomcat" oder "jakarta" aber nur falls der Begriff "apache" nicht vorhanden ist:
+{{{
+tomcat jakarta -apache}}}
+
+!Gruppierung
+Sie können Kriterien und bool'sche Operatoren mit Klammern gruppieren. z.B.
+{{{
+(jakarta OR apache) AND website}}}
+
+
+!Stellvertreterzeichen
+In Suchkriterien kann das Zeichen \\
+    ? als Stellvertreter für ein einzelnes beliebiges Zeichen, und\\
+    * als Stellvertreter für eine beliebige Folge von Zeichen (auch eine leere Folge)\\
+verwendet werden.\\
+\\
+
+
+!Ähnlichkeitssuche
+CodeBeamer unterstützt auch die Suche nach Begriffen, die ähnlich dem Suchbegriff klingen (Fuzzy Suche nach Levenshtein).\\
+Verwenden Sie dazu das Zeichen "~" amd Ende eines Einzelwort-Suchbegriffs.\\
+z.B. Suchen nach {{raum~ }} sollte auch Dokumente mit ähnlich klingenden Begriffen finden, wie z.B. "Baum", "Traum", etc..
+
+!Reservierte Worte
+Folgende Worte und Zeichen haben eine spezielle Bedeutung bei der Suche: {{+ - && || ! ( ) { } [ ] ^ " ~ * ? : \}}\\
+Um die spezielle Bedeutung dieser Zeichen aufzuheben, stellen Sie das Zeichen \ davor.\\
+z.B. Suchen nach {{(1+1):2}} müssen Sie eingeben als
+{{{
+\(1\+1\)\:2}}}
+
+!Suchen anhand Eigentümer/Erzeuger
+Sie können nach Objekten anhand deren Eigentümer/Erzeuger suchen.\\
+Geben Sie dazu die Kriterien für den Eigentümer/Erzeuger in das entsprechende Feld ein. Das kann der Benutzername sein, oder aber auch die Firma, E-Mail-Adresse, Telefon-Nr., etc.
+
+
+!Suchen anhand des Angelegt/Erstellt Datums
+Sie können nach Objekten suchen, die innerhalb eines bestimmten Zeitraums angelegt/erzeugt worden sind.\\
+Wählen Sie dazu entweder einen vordefinierten Zeitraum aus, oder definieren Sie selbst
+* nach welchem Zeitpunkt die Objekte angelegt/erzeugt worden sein müssen,
+und/oder
+* vor welchem Zeitpunkt die Objekte angelegt/erzeugt worden sein müssen.
+
+
+!Suchen anhand des Datums der letzten Änderung
+Sie können nach Objekten suchen, die innerhalb eines bestimmten Zeitraums geändert worden sind.\\
+Wählen Sie dazu entweder einen vordefinierten Zeitraum aus, oder definieren Sie selbst
+* nach welchem Zeitpunkt die Objekte zuletzt geändert worden sein müssen,
+und/oder
+* vor welchem Zeitpunkt die Objekte zuletzt geändert worden sein müssen.
+

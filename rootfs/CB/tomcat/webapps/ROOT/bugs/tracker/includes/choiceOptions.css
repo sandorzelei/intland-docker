@@ -1,0 +1,113 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+table.displaytag th {
+	padding: 4px !important;
+}
+
+table.displaytag tr {
+	vertical-align: middle !important;
+}
+
+table.displaytag td {
+	vertical-align: middle !important;
+	padding: 4px !important;
+}
+
+table.displaytag td.property {
+	font-size: smaller;
+	color: gray;
+}
+
+.issueStatus {
+	text-transform:none !important;	/* show the status name as-is without converting to uppercase, because the case matters! */
+}
+
+/* removes all underlines from links */
+.colorPicker:hover,	.palette:hover * {
+	text-decoration: none !important;
+}
+
+.palette {
+	width: 132px;
+	padding: 4px 0 0 4px;
+	background: white;
+	z-index: 20;
+}
+
+.paletteElement {
+	display: block;
+	float:left;
+	width: 18px;
+	height: 18px;
+	margin: 0 4px 4px 0;
+}
+
+.paletteSelected {
+	background-image: url("../../../images/blackTick.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.colorPicker .yui-panel-container .ft {
+	display: none;
+}
+.colorPicker .yui-panel {
+	border-color: silver;
+}
+.colorPicker .yui-panel .bd {
+	padding: 0;
+}
+
+.paletteDefaultColor {
+	background-color: none;
+	width: 100%;
+}
+
+span.obsolete {
+	text-decoration: line-through !important;
+}
+
+td.overriddenFieldValue {
+	border-right-width: 3px;
+ 	border-right-style: solid;
+ 	border-right-color: red;
+}
+
+.highlight-on-hover {
+	display: inline-block;
+}
+
+tbody.choiceOptions.ui-sortable tr.choiceOption {
+	border-bottom: 1px solid #f5f5f5;
+}
+
+td.removeButtonData {
+    width: 20px;
+}
+
+.choice-options-dialog {
+	max-height: 600px;
+	overflow: auto;
+}
+.choice-options-dialog table {
+	width: 600px !important;
+}
+	
+.choice-options-dialog .options-loading {
+	background: url("../../../images/ajax_loading_horizontal_bar.gif") center no-repeat;
+	height: 44px;				
+}
+
+.choice-options-dialog span.choiceOptionName, .choice-options-dialog span.choiceOptionFlags {
+	white-space: normal;				
+}

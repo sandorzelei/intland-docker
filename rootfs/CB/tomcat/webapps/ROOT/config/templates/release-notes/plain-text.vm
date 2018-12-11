@@ -1,0 +1,20 @@
+${version.project.name} ${version.name} - Release Notes
+
+#foreach($tracker in $trackerItemsGrouped.keySet())
+${tracker.name}
+#set($trackerItems = $trackerItemsGrouped.get($tracker))
+#foreach($trackerItem in $trackerItems)
+* ${trackerItem.keyAndId} - ${trackerItem.name}
+#end
+#end
+
+#if($isKnownIssues)
+${textFormatter.getMessage('cmdb.version.knownIssues')}
+#foreach($tracker in $knownTrackerItemsGrouped.keySet())
+${tracker.name}
+#set($trackerItems = $knownTrackerItemsGrouped.get($tracker))
+#foreach($trackerItem in $trackerItems)
+* ${trackerItem.keyAndId} - ${trackerItem.name}
+#end
+#end
+#end

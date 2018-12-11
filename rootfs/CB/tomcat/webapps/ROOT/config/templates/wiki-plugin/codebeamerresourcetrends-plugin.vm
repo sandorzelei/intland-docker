@@ -1,0 +1,28 @@
+#wikiBoxOpen(${command})
+
+	## chart
+    #parse("includes/intervalSelect.vm")
+
+    #define($chartControls)
+		#renderIntervalSelect("${pluginId}" "codeBeamerResourceTrends_${pluginId}.updateChart();" "${command.period}" "daily")
+	#end
+    #wikiBoxTitle("$!{command.title}", "Resource Trends", ${chartControls})
+
+	<span id="chart_${pluginId}">
+		${chartSupport.chartMarkup}
+	</span>
+
+    <script type="text/javascript">
+    	var codeBeamerResourceTrends_${pluginId} = {
+    		updateChart: function() {
+    			var intervalUrlParams = getChartIntervalSelect_${pluginId}();
+
+    			var url = "${chartSupport.chartURL}";
+    			url += "&" + intervalUrlParams;
+
+    			chartRendererSupport.updateChart('${contextPath}', "chart_${pluginId}", url, ${command.width}, ${command.height});
+    		}
+    	}
+    </script>
+
+#wikiBoxClose()

@@ -1,0 +1,19 @@
+#parse("notification_email_header.vm")
+
+#define($footerText) 
+#trackerItemReason(${trackerItem})
+#end
+
+<div class="heading">
+#linkTrackerItem(${trackerItem})
+</div>
+
+#account(${originator})
+
+#partHeader("Integrating changes")
+#linkScmRepository(${trackerItem.sourceRepository}) / ${trackerItem.sourceBranch}</b> &rarr; #linkScmRepository(${trackerItem.targetRepository}) / ${trackerItem.targetBranch}
+
+#partHeader("${textFormatter.getMessage('issue.description.label')}") 
+#partStart() $textFormatter.format(${trackerItem.description}, ${trackerItem.descriptionFormat}, ${wikiContext}) #partEnd()
+
+#parse("notification_email_footer.vm")

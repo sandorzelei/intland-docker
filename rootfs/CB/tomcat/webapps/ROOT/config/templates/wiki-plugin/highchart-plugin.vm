@@ -1,0 +1,105 @@
+<div id="container-${chartId}" class="highchartbox"></div>
+
+<script type="text/javascript">
+
+	function calculateDuration(currentTime) {
+		var time = currentTime;
+		var hours = parseInt(time / 3600000);
+		var mins = parseInt((parseInt(time % 3600000)) / 60000);
+		return (hours < 10 ? '0' + hours : hours) + ':' + (mins < 10 ? '0' + mins : mins) + 'h';
+	}
+
+	function isDuration(json) {
+		var result = false;
+		// detected from tooltip
+		if (json.tooltip && json.tooltip.formatter && json.tooltip.formatter == 'duration') {
+			result = true;
+		}
+		return result;
+	}
+
+$(function () {
+	var json = ${chartJson};
+
+	// handle duration and use special format
+	var duration = isDuration(json);
+
+	if (duration) {
+		json.tooltip.formatter = function () {
+			return calculateDuration(this.y);
+		}
+		json.tooltip.pointFormat = null;
+		// handle duration value when gauge chart is rendered
+		if (json.chart && json.chart.type) {
+			var type = json.chart.type;
+			if (json.plotOptions[type] && json.plotOptions[type].dataLabels) {
+				json.plotOptions[type].dataLabels.formatter = function() {
+					return calculateDuration(this.y);
+				}
+				json.plotOptions[type].dataLabels.format = null;
+			}
+		}
+	}
+	if (json.yAxis && json.yAxis.length) {
+		var i = 0;
+		for (i = 0;i < json.yAxis.length; ++i) {
+			if (json.yAxis[i] && json.yAxis[i].labels && json.yAxis[i].labels.formatter && json.yAxis[i].labels.formatter == 'duration') {
+				json.yAxis[i].labels.formatter = function () {
+					return calculateDuration(this.value);
+				}
+				json.yAxis[i].labels.format = null;
+			}
+		}
+	}
+
+	if (json.chart && (json.chart.type == "bar" || json.chart.type == "column") && !duration) {
+		var type = json.chart.type;
+		var format = json.plotOptions[type].dataLabels.format;
+		var newPlotOptions = {};
+		newPlotOptions[type] = {
+			dataLabels: {
+				formatter: function () {
+					if(this.y > 0) {
+						return format ? Highcharts.format(format, {point: {y: this.y}}) : this.y;
+					}
+				},
+				format: null
+			}
+		}
+		json = $.extend(true, json, {
+			plotOptions: newPlotOptions
+		});
+	}
+
+	json = $.extend(json, {
+		lang: {
+			noData: i18n.message("chart.not.enough.data")
+		}
+	});
+
+	#if(!$width)
+		$('#container-${chartId}').css({"min-width": "400px"});
+	#end
+
+	// On certain screens the rendering of legends collapse.
+	if ($("body").hasClass("popupBody")) {
+	 	#if($width)
+		$('#container-${chartId}').width(${width});
+		#end
+
+		#if($height)
+		$('#container-${chartId}').height(${height});
+		#end
+
+		$(document).ready(function() {
+			window.setTimeout(function() {
+				$('#container-${chartId}').highcharts(json);
+			}, 100);
+		});
+	} else {
+		$('#container-${chartId}').highcharts(json);
+	}
+
+});
+
+</script>

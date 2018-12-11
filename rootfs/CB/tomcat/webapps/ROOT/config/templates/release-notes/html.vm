@@ -1,0 +1,28 @@
+<h2>${version.project.name} ${version.name} - Release Notes</h2>
+
+#foreach($tracker in $trackerItemsGrouped.keySet())
+<p>
+<h4>${tracker.name}</h4>
+#set($trackerItems = $trackerItemsGrouped.get($tracker))
+<ul>
+#foreach($trackerItem in $trackerItems)
+  <li>${trackerItem.keyAndId} &ndash; <a href="${cbBaseUrl}${trackerItem.urlLink}">$textFormatter.escape(${trackerItem.name})</a></li>
+#end
+</ul>
+</p>
+#end
+
+#if($isKnownIssues)
+<h2>${textFormatter.getMessage('cmdb.version.knownIssues')}</h2>
+#foreach($tracker in $knownTrackerItemsGrouped.keySet())
+<p>
+<h4>${tracker.name}</h4>
+#set($trackerItems = $knownTrackerItemsGrouped.get($tracker))
+<ul>
+#foreach($trackerItem in $trackerItems)
+  <li>${trackerItem.keyAndId} &ndash; <a href="${cbBaseUrl}${trackerItem.urlLink}">$textFormatter.escape(${trackerItem.name})</a></li>
+#end
+</ul>
+</p>
+#end
+#end

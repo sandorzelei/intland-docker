@@ -1,0 +1,51 @@
+#wikiBoxOpen(${command})
+    ## chart
+    #if($command.chart)
+    	#parse("includes/intervalSelect.vm")
+
+		#define($chartControls)
+			#renderIntervalSelect("${pluginId}" "artifactCountTrends_${pluginId}.updateChart();" "$!{command.period}" "$!{command.grouping}")
+		#end
+		#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("${command.type.displayName}.trend.label")}, ${chartControls})
+
+        <span id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </span>
+
+        <script type="text/javascript">
+        	var artifactCountTrends_${pluginId} = {
+        		updateChart: function() {
+        			var intervalUrlParams = getChartIntervalSelect_${pluginId}();
+
+        			var url = "${chartSupport.chartURL}";
+        			url += "&" + intervalUrlParams;
+
+        			chartRendererSupport.updateChart('${contextPath}', "chart_${pluginId}", url, ${command.width}, ${command.height});
+        		}
+        	}
+        </script>
+    #end
+
+    ## table
+    #if($command.table)
+    	#if(${command.chart} == false)
+    		#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("${command.type.displayName}.trend.label")})
+    	#end
+    	<table class="embedded">
+    		<thead>
+    			<tr>
+    				<th class="stretched"></th>
+    				<th class="number">#</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			#foreach($date in $data.keySet())
+    				#trOpen
+    					<th>$textFormatter.formatDate(${user}, ${date}, true)</th>
+    					<td class="number">${data.get($date)}</td>
+    				#trClose
+    			#end
+    		</tbody>
+    	</table>
+    #end
+#wikiBoxClose()

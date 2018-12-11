@@ -1,0 +1,208 @@
+@CHARSET "UTF-8";
+
+@imagePrefix: "../images/newskin";
+@gray1: #f5f5f5;
+@gray2: #d1d1d1;
+@gray3: #ababab;
+@gray4: #666666;
+@gray5: #454545;
+@gray6: #333333;
+@gray7: #1e1e1e;
+@gray8: #000000;
+
+@lightGray: @gray1;
+
+.train-icon {
+	width: 18px;
+	height: 18px;
+	background-size: cover;
+	position: relative;
+	top: 6px;
+	margin-right: 6px;
+}
+
+.release-train-icon {
+	background-image: url("@{imagePrefix}/action/agile/icon_train_white_20x20.png");
+}
+
+.reference-train-icon {
+	background-image: url("@{imagePrefix}/action/agile/icon_reference_20px.png");
+}
+
+.sprint-train-icon {
+	background-image: url("@{imagePrefix}/action/agile/icon_sprint_20px.png");
+}
+
+.gantt_row.reference-row,
+.gantt_row.odd.reference-row,
+.gantt_row.sprint-row,
+.gantt_row.odd.sprint-row {
+	background-color: white;
+}
+
+.gantt_grid_data .gantt_row.gantt_selected, .gantt_grid_data .gantt_row.odd.gantt_selected, .gantt_task_row.gantt_selected,
+.gridHoverStyle,.gridSelection,.timelineSelection, .gantt_task_row.gantt_selected,
+.gantt_grid_data .gantt_row.odd:hover,.gantt_grid_data .gantt_row:hover {
+	background-color: @gray1 !important;
+}
+
+.gantt_task_row.gantt_selected .gantt_task_cell {
+	border-right-color: #ebebeb !important;
+}
+
+.gantt_task_line.release-task {
+	border-radius: 0 !important;
+	border: none !important;
+}
+
+.gantt_task_line.release-task.release-scrum,
+.gantt_task_line.release-task.release-scrum .gantt_task_progress {
+	background-image: url("@{imagePrefix}/action/agile/progressbar_scrum_op25.png");
+}
+
+.gantt_task_line.release-task.release-kanban,
+.gantt_task_line.release-task.release-kanban .gantt_task_progress {
+	background-image: url("@{imagePrefix}/action/agile/progressbar_kanban_3_op25.png");
+}
+
+.gantt_task_line.release-task.release-waterfall,
+.gantt_task_line.release-task.release-waterfall .gantt_task_progress {
+	background-image: url("@{imagePrefix}/action/agile/progressbar_waterfall_op25.png");
+}
+
+.gantt_cal_light {
+	font-family: arial, helvetica, clean, sans-serif;
+	font-size: 1.1em;
+	padding: 0.2em 0.2em 1.5em 0.2em;
+	outline: 0;
+	border: 1px solid #dddddd;
+	background-color: white;
+	color: @gray6;
+	box-shadow: none;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.gantt_cal_ltitle {
+	font-family: arial, helvetica, clean, sans-serif;
+	font-weight: normal;
+	padding: .4em 1em 0.4em 1em;
+	cursor: move;
+	background: none;
+	background-color: #e5e4e2;
+	font-weight: bold;
+	border: 0px none;
+	color : #504a4b;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.gantt_cal_light_wide {
+	padding-right: 0.2em !important;
+	padding-left: 0.2em !important;
+}
+
+.gantt_btn_set {
+	padding: 4px 20px 4px 20px;
+	border: solid 1px #d1d1d1;
+	font-weight: bold;
+	color: @gray7 !important;
+	background-color: @lightGray !important;
+	min-height: 25px;
+	min-width: 80px;
+	cursor: pointer;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.gantt_btn_set:hover {
+	border-color: @gray3;
+}
+
+.gantt_cal_light .gantt_btn_set {
+	margin: 1.1em 0.4em 1.3em 0.4em;
+}
+
+.gantt_save_btn {
+	display: none;
+}
+
+.gantt_btn_set.gantt_save_btn_set {
+	background-image: url("@{imagePrefix}/action/bg-button-xs.png") !important;
+	background-repeat: repeat-x;
+	background-color: @lightGray !important;
+	margin-left: 2.4em;
+	color: @gray7 !important;
+	text-shadow: none;
+}
+
+.gantt_cancel_btn {
+	display: none;
+}
+
+.gantt_btn_set.gantt_cancel_btn_set {
+	background-image: url("@{imagePrefix}/action/bg-button-xs.png") !important;
+	background-repeat: repeat-x;
+	background-color: @lightGray !important;
+	color: @gray7 !important;
+}
+
+.gantt_btn_set div {
+	float: none;
+	text-align: center;
+}
+
+.information.ganttInformationBar, .warning.ganttInformationBar {
+	margin: 0px 0px 5px 0px;
+}
+
+.ui-datepicker {
+	z-index: 10003 !important;
+}
+
+.startDateInput, .endDateInput {
+	width: 150px;
+}
+
+.startDateInput {
+	margin-left: 10px;
+}
+
+.connectMark {
+	margin-left: 40px;
+	margin-right: 40px;
+}
+
+.gantt_cal_larea {
+	padding-bottom: 5px;
+}
+
+.missingDateLabel {
+	color: #991B1E;
+}
+
+.renderingModeLinkContainer a.renderingMode {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.ui-widget-overlay {
+  	z-index: 10004 !important;
+}
+
+.missingDateWarningUl {
+  	list-style-type: none;
+  	padding: 0;
+  	margin: 0.5em 0;
+  	li {
+	  	display: inline-block;
+	 	margin-right: 1em;
+	}
+}
+
+.xdsoft_datetimepicker {
+  	z-index: 10001;
+}

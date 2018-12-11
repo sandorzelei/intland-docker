@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	 By default empty Spring context definition allows customer customizations. All customizations should go to this context.
+	 When upgrading to a new CodeBeamer release, this file should be backed up, and restored, and then if necessary adjusted to be compatible with the new release.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.2.xsd
+						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd"
+	default-lazy-init="true">
+
+	<!-- With these UserSessionLocaleController settings, choosing a language via the language selector will make the selection permanent by also updating the language/country in the user's account
+	<bean id="localeResolver" class="com.intland.codebeamer.controller.support.UserSessionLocaleController">
+		<property name="messageSource" 			 ref="messageSource" />
+		<property name="userDao" 	   			 ref="userDao" />
+		<property name="updatingLocaleInAccount" value="true" />
+	</bean>
+	-->
+
+	<!-- Sample for replacing a bean in springdispatcher.xml: overrides the top-right menu, and adds the "My Starred" link there -->
+	<!-- renders the top-right menu -->
+	<!--
+	<bean id="topMenuRenderer" class="com.intland.codebeamer.ui.view.TopMenuRenderer">
+		<property name="styleClass" value="mainmenu" />
+		<property name="actionItems">
+			<list>
+				<bean class="com.intland.codebeamer.ui.view.TopMenuActionItem">
+					<property name="label" value="My Starred"/>
+					<property name="url" value="/proj/label/displayLabeledContent.do?tag=Starred" />
+					<property name="properties">
+						<map>
+							<entry key="permissions" value="#"/>
+						</map>
+					</property>
+					<property name="icon" value="/images/star-full.png"/>
+				</bean>
+
+				<bean class="com.intland.codebeamer.ui.view.TopMenuActionItem">
+					<property name="label" value="History"/>
+					<property name="url" value="/history.do"/>
+					<property name="openInPopup" value="true"/>
+					<property name="properties">
+						<map>
+							<entry key="permissions" value="#"/>
+						</map>
+					</property>
+				</bean>
+
+				<bean class="com.intland.codebeamer.ui.view.TopMenuActionItem">
+					<property name="useRequestUriAsLoginTarget" value="true"/>
+					<property name="label" value="Login" />
+					<property name="url" value="/login.spr" />
+					<property name="properties">
+						<map>
+							<entry key="permissions" value="~"/>
+						</map>
+					</property>
+				</bean>
+
+				<bean class="com.intland.codebeamer.ui.view.TopMenuActionItem">
+					<property name="useRequestUriAsLoginTarget" value="true"/>
+					<property name="label" value="Logout"/>
+					<property name="url" value="/logout.spr"/>
+					<property name="properties">
+						<map>
+							<entry key="permissions" value="#"/>
+						</map>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	-->
+
+<!--
+	<bean id="userRegistrationArchiverListener" class="com.intland.codebeamer.event.impl.UserRegistrationArchiverListener">
+		<property name="submitterId" value="3"/>
+		<property name="archiveTrackerId" value="1823"/>
+		<property name="removeSubmitterNotification" value="true"/>
+	</bean>
+-->
+
+<!--The special workflow action, to attach ZIP of changed sources to the issue
+	<bean id="scmChangeFileZipper" class="com.intland.codebeamer.event.impl.ScmChangeFileZipper" />
+-->
+
+
+<!-- Begin of OAuth2/OpenId Connect configuration (see https://github.com/mitreid-connect/OpenID-Connect-Java-Spring-Server/wiki/Client-configuration) -->
+
+	<!-- You only have to define you own OAuth2/OpenId Connect issuer/provider, if you are not using the default (https://accounts.google.com)
+	<bean id="openIdConnectIssuerService" class="org.mitre.openid.connect.client.service.impl.StaticSingleIssuerService" >
+		<property name="issuer" value="https://accounts.google.com" />
+	</bean>
+	-->
+
+	<!-- You only have to provide static configurations for issuers, that do not support server information discovery via issuer/.well-known/openid-configuration
+	<bean id="openIdConnectIssuerConfigurationService" class="org.mitre.openid.connect.client.service.impl.StaticServerConfigurationService" >
+		<property name="servers">
+			<map>
+				<entry key="https://accounts.google.com">
+					<bean class="org.mitre.openid.connect.config.ServerConfiguration">
+						<property name="issuer" 					value="https://accounts.google.com" />
+						<property name="authorizationEndpointUri"	value="https://accounts.google.com/o/oauth2/v2/auth" />
+						<property name="tokenEndpointUri"			value="https://oauth2.googleapis.com/token" />
+						<property name="revocationEndpointUri"		value="https://oauth2.googleapis.com/revoke"/>
+						<property name="userInfoUri"				value="https://openidconnect.googleapis.com/v1/userinfo" />
+						<property name="jwksUri"					value="https://www.googleapis.com/oauth2/v3/certs" />
+						<property name="introspectionEndpointUri"	value="https://www.googleapis.com/oauth2/v3/tokeninfo" />
+ 						<property name="endSessionEndpoint"			value="" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	-->
+
+	<!-- You only have to provide an OpenId Connect request options service, if you need to send custom options
+	<bean id="openIdConnectAuthRequestOptionsService" class="org.mitre.openid.connect.client.service.impl.StaticAuthRequestOptionsService" >
+		<property name="options">
+			<map>
+				<entry key="acr_values" value="my-special-acr-values" />
+			</map>
+		</property>
+	</bean>
+	-->
+
+	<!-- You must register your codeBeamer instance at your OAuth2/OpenId Connect issuer/provider, e.g. via the Google Developer Console, and add this configuration here
+	<bean id="openIdConnectClientConfigurationService" class="org.mitre.openid.connect.client.service.impl.StaticClientConfigurationService" >
+		<property name="clients">
+			<map>
+		        <entry key="https://accounts.google.com">
+					<bean class="org.mitre.oauth2.model.RegisteredClient">
+						<property name="clientName"   value="my-google-client-name" />
+						<property name="clientId"     value="my-google-client-id" />
+						<property name="clientSecret" value="my-google-client-secret" />
+						<property name="scope">
+							<set value-type="java.lang.String">
+								<value>openid</value>
+								<value>profile</value>
+								<value>email</value>
+							</set>
+						</property>
+						<property name="redirectUris">
+							<set value-type="java.lang.String">
+								<value>https://my-cb-host-port/cb/login.spr</value>
+							</set>
+						</property>
+						<property name="tokenEndpointAuthMethod" value="SECRET_BASIC" />
+						<property name="allowIntrospection" value="true" />
+					</bean>
+				</entry>
+			</map>
+  		</property>
+	</bean>
+	-->
+
+	<!-- This tells codeBeamer to actually use OAuth2/OpenId Connect authentication
+	<bean id="cbRealm" class="com.intland.codebeamer.security.realm.RealmProxy" primary="true">
+		<property name="delegateRealm" ref="openIdConnectRealm" />
+	</bean>
+	-->
+
+<!-- End of OAuth2/OpenId Connect configuration -->
+
+</beans>

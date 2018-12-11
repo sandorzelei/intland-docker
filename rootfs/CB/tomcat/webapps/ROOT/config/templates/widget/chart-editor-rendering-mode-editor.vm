@@ -1,0 +1,18 @@
+<div class="form-field">
+	<label>${label}</label>
+	<div class="chartSelector">
+		#foreach ($chartImage in $chartImages)
+			<img class="chartImage #if($chartImage.selected) activeChart #end" data-chart-editor-rendering-mode="${chartImage.mode.getName()}"
+				data-group-support="$chartImage.supportedGroups" data-group-by-date-support="$chartImage.supportsDateGroups" src="${contextPath}${chartImage.imageUrl}"
+				title="$chartImage.title">
+		#end
+	</div>
+
+	<input type="hidden" name="params[chartEditorRenderingMode]" value="${chartEditorRenderingMode}"></input>
+
+	<script type="text/javascript" src="${chartEditorRenderingModeJsUrl}"></script>
+
+	<script type="text/javascript">
+		codebeamer.dashboard.chartSelector.init("${getEditorUrl}", "${dashboardId}");
+	</script>
+</div>

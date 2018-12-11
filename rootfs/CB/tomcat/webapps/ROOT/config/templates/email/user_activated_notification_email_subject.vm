@@ -1,0 +1,1 @@
+${textFormatter.getMessage('user.activated.subject')} [#${user.id}] ${user.name} #if("$!{cbHost}" != "") ${textFormatter.getMessage('account.new.account.located.on', "$!{cbHost}")} #end

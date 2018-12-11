@@ -1,0 +1,2 @@
+#set($toptext = "${textFormatter.getMessage('document.notification.updated.title')}:")
+#parse("artifact_notification_email_body.vm")

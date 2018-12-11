@@ -1,0 +1,365 @@
+/*
+	css specific to versionStats page, works together with versionsView.css
+*/
+
+.newskin div.wikichartbox {
+	margin: 0 0 20px 0;
+}
+.newskin div.wikichartbox h4 {
+	font-size: 16px;
+	border-bottom: 1px solid #E5E5E5 !important;
+}
+.newskin div.wikichartbox .subtext {
+	color: #5f5f5f;
+}
+
+/* versionStatsBox */
+
+#versionStatsBox {
+	min-width: 25em;
+	padding: 0;
+	white-space: nowrap;
+}
+
+#versionStatsBox td,
+#versionStatsBox span,
+#versionStatsBox a {
+	font-size: 11px;
+	vertical-align: middle;
+}
+
+#versionStatsBox .wikitable {
+	margin: 5px 0;
+}
+
+#versionStatsBox .photoBox {
+	width: 16px;
+	height: 16px;
+}
+
+#versionStatsBox > table {
+	border-collapse: collapse;
+}
+
+#versionStatsBox tr:hover {
+	background-color: transparent;
+}
+
+#versionStatsBox td {
+	padding: 8px 5px;
+	text-align: center;
+	color: #2b2b2b;
+	border: solid 1px #e2e2e2;
+	background: #f5f5f5 url("../../../images/newskin/action/bg-button-xs.png") repeat-x;
+    cursor: pointer;
+}
+
+#versionStatsBox tr.totals td {
+	cursor: default;
+}
+
+#versionStatsBox td.data-row:hover {
+    background: #ececec none;
+}
+
+#versionStatsBox td img {
+	margin-left: 0;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+
+#versionStatsBox td > a {
+	color: #2b2b2b;
+}
+
+#versionStatsBox td.firstColumn {
+	text-align: left;
+	padding-left: 10px;
+}
+
+#versionStatsBox tr.rowWithImage td.firstColumn {
+	padding-left: 5px;
+}
+
+#versionStatsBox td a:hover {
+	text-decoration: none;
+}
+
+#versionStatsBox td.zero {
+	color: #e2e2e2;
+	cursor: default;
+}
+
+#versionStatsBox table td.selected {
+	background: #525252 url("../../../images/newskin/action/bg-button-pushed-dark.png");
+}
+
+#versionStatsBox table td.selected,
+#versionStatsBox table td.selected a {
+	color: white;
+}
+
+#versionStatsBox .separator th {
+	padding-top: 10px;
+}
+
+#versionStatsBox tr.priorityRow td {
+	padding-bottom: 7px
+}
+
+#versionStatsBox tr.assigneeTable td {
+	padding-top: 6px;
+	padding-bottom: 5px;
+}
+
+#versionStatsBox tr.assigneeTable td,
+#versionStatsBox tr.assigneeTable img {
+	vertical-align: middle;
+}
+
+#versionStatsBox tr td.firstColumn .state-indicator {
+	width: 12px;
+	height: 12px;
+	margin: 0 5px;
+	padding: 0;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#versionStatsBox tr td.firstColumn .state-indicator-box {
+	width: 12px;
+	height: 12px;
+	margin: -2.5px 5px -2.5px 5px;
+	padding: 2.5px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#versionStatsBox tr.collapsed.selected span.indenter a {
+  background-image: url(../../../js/jquery/jquery-treetable/images/expand.png);
+}
+
+#versionStatsBox tr.collapsed.selected td.selected span.indenter a {
+  background-image: url(../../../js/jquery/jquery-treetable/images/expand-light.png);
+}
+
+#versionStatsBox tr.expanded.selected span.indenter a {
+  background-image: url(../../../js/jquery/jquery-treetable/images/collapse.png);
+}
+
+#versionStatsBox tr.expanded.selected td.selected span.indenter a {
+  background-image: url(../../../js/jquery/jquery-treetable/images/collapse-light.png);
+}
+
+#versionStatsBox tr.data-row:hover td.firstColumn .state-indicator {
+	background: url("../../../images/newskin/filter_list/icon_checkmark.png") repeat-x left center;
+}
+
+#versionStatsBox tr.data-row:hover td.firstColumn .state-indicator-box,
+#versionStatsBox tr.data-row td.firstColumn.selected .state-indicator-box {
+	background-image: url("../../../images/newskin/filter_list/icon_checkmark_white.png");
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#versionStatsBox tr.data-row td.firstColumn .indenter:hover + .state-indicator-box {
+	background-image: none;
+}
+
+#versionStatsBox tr.data-row td.firstColumn.selected .indenter:hover + .state-indicator-box {
+	background-image: url("../../../images/newskin/filter_list/icon_checkmark_white.png");
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#versionStatsBox tr.selected:hover td.firstColumn.selected .state-indicator,
+#versionStatsBox tr.selected:hover td.firstColumn.selected .state-indicator-box {
+	background-image: url("../../../images/newskin/filter_list/icon_x.png");
+}
+
+#versionStatsBox .storyPointsIcon {
+	background-image: url("../../../images/newskin/action/icon_sp_fff.png");
+}
+
+#versionStatsBox .openIssueCell,
+#versionStatsBox .closedIssueCell {
+	min-width: 100px !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+#versionStatsBox .issueCountContainer,
+#versionStatsBox .storyPointsContainer {
+	display: inline-block;
+}
+
+#versionStatsBox .issueCountContainer {
+	text-align: right;
+	width: 45%;
+}
+
+#versionStatsBox .storyPointsContainer {
+	text-align: left;
+	width: 50%;
+	padding-left: 5%;
+}
+
+/* end of versionStatsBox */
+
+.statsLoading {
+	background-color: white;
+	border: solid 1px #e2e2e2;
+	padding: 10px 20px;
+	position: absolute;
+}
+.statsLoading img {
+	margin: 0 5px;
+}
+
+body div.released {
+	display: block;
+}
+
+.issuelist tbody tr.dnd-initialized td.issueHandle:not(.disabled) {
+	cursor: move;
+}
+
+td.storyPoints {
+	white-space: nowrap;
+}
+
+#versionStatsBox .nameWithTeamContainer {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+#versionStatsBox .accordion {
+	border-top: 1px solid #e2e2e2;
+}
+
+#versionStatsBox .accordion-header {
+	border-left: 1px solid #e2e2e2;
+	border-right: 1px solid #e2e2e2;
+	border-bottom: 1px solid #e2e2e2;
+}
+
+#versionStatsBox .accordion table {
+	width: 100%;
+}
+
+#versionStatsBox .accordion .accordion-content {
+	padding: 0px !important;
+}
+
+#versionStatsBox .accordion table .openIssueCell,
+#versionStatsBox .accordion table .closedIssueCell {
+	width: 100px !important;
+}
+
+#versionStatsBox .odd td {
+	font-weight: normal;
+	padding: 5px;
+	background: none;
+	text-align: center;
+	color: #2b2b2b;
+	border-top: none;
+}
+
+.actionBar.version-stats-actions > a {
+	margin-right: 15px;
+}
+
+.pane.ui-layout-north .wikiContent {
+	display: block;
+}
+
+.container.ui-layout-container .ui-layout-toggler {
+	display: none;
+}
+
+.container.ui-layout-container .ui-layout-toggler-open-hover {
+	display: none !important;
+}
+
+.container div.contentWithMargins {
+	padding-left: 15px !important;
+	padding-right: 15px !important;
+	margin-bottom: 15px !important;
+	margin-top: 5px !important;
+}
+
+.container .ui-layout-resizer {
+	width: 100% !important;
+	left: 0px !important;
+}
+
+.ganttChartLoadingIndicator {
+	padding: 10px;
+}
+
+.loading {
+	padding: 5px;
+}
+
+.noIssuesNotification {
+	padding: 20px;
+	margin-bottom: 20px;
+	border-top: 1px solid #e2e2e2;
+	border-right: 1px solid #e2e2e2;
+	border-left: 1px solid #e2e2e2;
+	border-bottom: 1px solid #e2e2e2;
+}
+
+.newskin .versionStatBurnDown {
+	border: 1px solid #f5f5f5;
+	margin-bottom: 20px;
+	/* Prevent "jumping" when loading the burndown chart.*/
+	width: 445px;
+}
+
+.newskin .versionStatBurnDown .wikiContent {
+	display: block;
+}
+
+.newskin .versionStatBurnDown .wikichartbox {
+	margin: 0px;
+	border: 0px;
+}
+
+.newskin .settingsButton {
+	position: relative;
+	float: right;
+	top: 5px;
+	right: 5px;
+	cursor: pointer;
+}
+
+body {
+	overflow: hidden;
+}
+
+.releaseDashboard .ui-layout-center {
+	border: 0 !important;
+	overflow-y: scroll !important;
+}
+
+.releaseDashboard .ui-layout-center.noScroll {
+	overflow-y: auto !important;
+}
+
+.ganttChartInlineLoadingIndicator {
+	display: inline-block;
+	height: 1em;
+	margin-left: 5px;
+	vertical-align: top;
+}
+
+
+.default-state {
+	pointer-events: auto;
+}
+
+.progress-state {
+	pointer-events: none;
+}

@@ -1,0 +1,40 @@
+#if ($projectSelector)
+	${projectSelector}
+#end
+
+<div class="form-field">
+	<label for="${fieldName}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+	<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end multiple="multiple">
+		#foreach ($selectOption in $selectOptions)
+			<option value="$selectOption.id"  #if ($selectOption.selected) selected="selected" #end>$selectOption.value</option>
+		#end
+	</select>
+
+	#if (${selectOptionsEditorJsUrl})
+		<script type="text/javascript" src="${selectOptionsEditorJsUrl}"></script>
+	#end
+
+	<script type="text/javascript">
+		jQuery(function($) {
+			#if ($isMultipleChoiceAllowed)
+				codebeamer.dashboard.multiSelect.init("${selectorId}", "${eventName}");
+			#else
+				codebeamer.dashboard.multiSelect.initSingleSelect("${selectorId}", "${eventName}");
+			#end
+
+			#if (${selectOptionsEditorJsUrl})
+
+			codebeamer.dashboard.multiSelect.attachEventListener("projectSelector:project:changed", function(projectIds) {
+				#if (${hasExtraValue})
+					codebeamer.dashboard.selectOptionEditor.getSelectOptions(projectIds, "${getSelectOptions}", "${selectorId}", "${extraValue}");
+				#else
+					codebeamer.dashboard.selectOptionEditor.getSelectOptions(projectIds, "${getSelectOptions}", "${selectorId}");
+				#end
+			});
+
+			#end
+		});
+	</script>
+
+</div>

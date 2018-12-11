@@ -1,0 +1,93 @@
+<%@ page import="java.util.Enumeration"%>
+<%@ page import="com.intland.codebeamer.Config"%>
+
+<%
+	final String project = request.getParameter("project");
+	String projectTitle = project;
+	if (projectTitle.endsWith("_"))
+	{
+		projectTitle = projectTitle.substring(0, projectTitle.length() - 1);
+	}
+
+	String editCmd = request.getParameter("edit");
+	if (editCmd == null)
+	{
+		editCmd = "";
+	}
+	if (Config.isPlugin())
+	{
+		response.setContentType("application/x-java-jnlp-file");
+		String codebase = HttpUtils.getRequestURL(request).toString();
+		int off = codebase.lastIndexOf('/');
+		codebase = codebase.substring(0, off + 1);
+%>
+<?xml version="1.0" encoding="utf-8"?>
+	<jnlp
+        spec="1.0+"
+        codebase="<%=codebase%>">
+	<information>
+          <title>Source Explorer</title>
+          <vendor>Intland GmbH</vendor>
+          <homepage href="http://www.intland.com"/>
+          <description>Source Explorer Plugin</description>
+          <description kind="short">Source Explorer Plugin</description>
+          <icon href="SE64x64.gif"/>
+          <offline-allowed/>
+        </information>
+        <resources>
+          <j2se version="1.3" />
+          <jar href="ise.jar"/>
+          <jar href="log4j.jar"/>
+          <jar href="sql.jar"/>
+          <jar href="gnu-regexp.jar"/>
+        </resources>
+		<application-desc main-class="se.java.gui.GUI_ISE">
+			<argument>-codebase</argument>
+			<argument><%=codebase%></argument>
+<%
+		for (Enumeration e = request.getParameterNames(); e.hasMoreElements();)
+		{
+			String key = (String)e.nextElement();
+			String value = request.getParameter(key);
+
+			System.err.println("\t<argument>-" + key + "</argument>");
+			System.err.println("\t<argument>" + value + "</argument>");
+			out.println("\t<argument>-" + key + "</argument>");
+			out.println("\t<argument>" + value + "</argument>");
+		}
+%>
+		</application-desc>
+</jnlp>
+<%
+		return;
+	}
+%>
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>
+<%=projectTitle%> - Intland Source Explorer
+</TITLE>
+<LINK REL="stylesheet" TYPE="text/css" HREF="<%=request.getContextPath()%>/stylesheet.css" TITLE="Style">
+</HEAD>
+<BODY TOPMARGIN=0 LEFTMARGIN=0 RIGHTMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0>
+<jsp:plugin type="applet"
+	code="se/java/gui/GUI_ISE_applet"
+	archive="ise.jar,javachart.jar,log4j.jar,sql.jar,gnu-regexp.jar,jnlp.jar"
+	hspace="0"
+	vspace="0"
+	jreversion="1.3"
+	iepluginurl="http://java.sun.com/products/plugin/1.3.1/jinstall-131-win32.cab#Version=1,3,1,0"
+	nspluginurl="http://java.sun.com/products/plugin/1.3.1/plugin-install.html"
+	width="100%" height="100%">
+	<jsp:params>
+		<jsp:param name="NEW_FRAME" value="0" />
+		<jsp:param name="TRACE_LEVEL" value="0" />
+		<jsp:param name="logPort" value="12752" />
+		<jsp:param name="project" value="<%=project%>" />
+		<jsp:param name="edit" value="<%=editCmd%>" />
+	</jsp:params>
+</jsp:plugin>
+</BODY>
+</HTML>

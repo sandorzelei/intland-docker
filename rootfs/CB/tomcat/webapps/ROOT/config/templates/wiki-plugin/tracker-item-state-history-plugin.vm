@@ -1,0 +1,43 @@
+#if(${showHeader})
+	<p>State Change History for #linkTrackerItem($item):#br()</p>
+#end
+
+<div class="tracker-item-state-history-plugin">
+	#foreach($state in $history)
+		#set($first = ($velocityCount == 1))
+		#set($last = ($velocityCount == $history.size()))
+		#set($editTransition = ($state.transition.name == 'Edit'))
+
+		<div class="transition-cont">
+			<div class="transition#if($last) end#end">
+				<table>
+					<tr>
+						<td class="#if($editTransition)edit#else status#end"#if($editTransition) rowspan="2"#end>
+							#if(${state.transition.toStatus.name})
+								#set($stateLabel = ${textFormatter.getMessageWithDefault("tracker.choice.${state.transition.toStatus.name}.label", ${state.transition.toStatus.name})})
+							#else
+								#set($stateLabel = "--")
+							#end
+							<a href="$versionUrlBuilder.buildVersionUrlForTrackerItemRevisionDto($cbBaseUrl, $state)">#bold($stateLabel)</a>
+						</td>
+						<td class="status smallLabel">
+							<small>$textFormatter.formatDate(${user}, ${state.submittedAt}, false)</small>
+						</td>
+					</tr>
+					<tr>
+						#if(!$editTransition)
+							<td class="trans #if(${state.transition.deleted})deleted#end">
+								#bold(${textFormatter.getMessageWithDefault("tracker.transition.${state.transition.name}.label", ${state.transition.name})})
+							</td>
+						#end
+						<td class="trans smallLabel">
+							<small>$textFormatter.getMessageWithDefault("artifact.approval.workflow.createdBy.label", "by") $textFormatter.escape($!{state.submitter.name})</small>
+						</td>
+					</tr>
+				</table>
+			</div>#if(!$last)<div class="transition-arrow"></div>#end
+		</div>
+
+	#end
+	<div style="clear:both;"></div>
+</div>

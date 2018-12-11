@@ -1,0 +1,9 @@
+#wikiBoxOpen(${command})
+
+	#wikiBoxTitle("$!{command.title}", "", "")
+
+	<span>
+		<img src="${imageURL}" title="${imageTitle}">
+	</span>
+
+#wikiBoxClose()

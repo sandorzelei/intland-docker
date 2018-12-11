@@ -1,0 +1,103 @@
+/**
+ * Common less.css constants and mixins can go here for sharing them between the different css files
+ */
+// prefix for the images
+@imagePrefix: "../images/newskin";
+
+// the gray palette from lightest to the darkest
+@gray1: #f5f5f5;
+@gray2: #d1d1d1;
+@gray3: #ababab;
+@gray4: #666666;
+@gray5: #454545;
+@gray6: #333333;
+@gray7: #1e1e1e;
+@gray8: #000000;
+
+// colors
+@darkRedColor: #b31317;
+@darkGreenColor: #00a85d;
+@lightGray: @gray1;
+@blueLinkColor: #0093b8;
+@cyan: #3d998d;
+@darkGreen: #00a85d;
+@red: #b31317;
+@yellow: #ffab46;
+
+// colors
+@blueText: #1e9ebf;
+@borderColor: @gray3;
+@darkGrayFont: @gray7;
+@lightGrayFont: @gray4;
+@headerLinkHover: @gray5;
+@breadcrumbLinkColor: #ffffff;
+
+@headerPaneBackgroundColor: @gray1;
+@toolbarBackgroundColor: @gray5;
+@toolbarBranchGradientColor: #187a6d;
+@toolbarBaselineGradientColor: #0093B8;
+@orange: #d8923a;
+@diffAddedColor: #008248;
+@diffRemovedColor: @red;
+@verifiedColor: @yellow;
+
+.fontMixin (@color: @lightGrayFont, @fontSize: 13px, @fontFamily: 'arial') {
+	font-family: @fontFamily;
+	font-size: @fontSize;
+	color: @color;
+}
+
+.box-shadowMixin(@arguments) {
+  -moz-box-shadow: @arguments;
+  -ms-box-shadow: @arguments;
+  -o-box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+/* see: http://www.css3.info/preview/box-shadow/ */
+.inplaceEditableHighlightMixin {
+	border-left: 5px solid @blueLinkColor;
+}
+
+.inplaceEditableIconMixin {
+	background-image: url("@{imagePrefix}/action/edit-blue-m.png");
+	background-position: top right;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+/* turn on border-box model, see: http://css-tricks.com/box-sizing/ */
+.border-box-sizing {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.shadowForMenusAndTooltipsMixin {
+	border: solid 1px @borderColor;
+	/* using css3 box-shadow on browsers that support it */
+	.box-shadowMixin(2px 2px 2px rgba(0, 0, 0, 0.1));
+}
+
+.bidirectionalSuspectArrowsMixin {
+	display: inline-block;
+	height: 16px;
+	margin-left: 0;
+	vertical-align: top;
+	width: 15px;
+	
+	&.arrow-up {
+		background-image: url("../../../images/newskin/item/arrow-up-grey.png");
+		&.active {
+			background-image: url("../../../images/newskin/item/arrow-up-red.png");
+		}
+	}
+	&.arrow-down {
+		background-image: url("../../../images/newskin/item/arrow-down-grey.png");
+		&.active {
+			background-image: url("../../../images/newskin/item/arrow-down-red.png");
+		} 				
+	}
+}

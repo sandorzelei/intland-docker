@@ -1,0 +1,105 @@
+!!Search Help
+CodeBeamer provides role-based searching and indexing. The search engine spans all assets including User accounts, Trackers, Tracker attachments, documents, Project metadata, Forums, Forum attachments, and Source commit text.\\
+The search scope can be at the single project or multi-project level.
+Full text search is provided on different data formats including MS-Word, RTF, PDF, HTML, Wiki and text documents. CodeBeamer uses the Lucene search engine for searching and indexing.
+
+!!Search Syntax
+
+!Boolean Operators
+Boolean operators allow terms to be combined through logic operators. CodeBeamer search supports AND, "+", OR, NOT and "-" as Boolean operators (Note: Boolean operators must be ALL CAPS).
+
+!OR
+The OR operator links two terms and finds a matching document if either of the terms exist in the document. This is equivalent to an union using sets. The symbol || can be used in place of the word OR.
+\\To search for documents that contain either "jakarta apache" or just "jakarta", enter the query in the "Search for" field of the search form and click GO:
+{{{"jakarta apache" jakarta}}}
+or
+{{{"jakarta apache" OR jakarta}}}
+
+!AND
+The AND operator matches documents where both terms exist anywhere in the text of a single document. This is equivalent to an intersection using sets. The symbol && can be used in place of the operator AND.
+\\To search for documents that contain "jakarta apache" and "Apache CodeBeamer", enter the query in the "Search for" field of the search form and click GO:
+{{{"jakarta apache" AND "Apache CodeBeamer}}}
+
+!+
+The "+" or required operator requires that the term after the "+" symbol exists somewhere in the document.
+\\To search for documents that must contain "jakarta" and may contain "CodeBeamer" enter the query in the "Search for" field of the search form and click GO:
+{{{+jakarta OR CodeBeamer}}}
+
+!NOT
+The NOT operator excludes documents that contain the term after NOT. This is equivalent to a difference using sets. The symbol "!" can be used in place of the word NOT. To search for documents that contain "jakarta apache" but not "Apache CodeBeamer", use the query:
+
+{{{"jakarta apache" NOT "Apache CodeBeamer"}}}
+
+The NOT operator cannot be used with just one term. For example, the following search will return no results:
+{{{NOT "jakarta apache"}}}
+
+!-
+The "-" or prohibit operator excludes documents that contain the term after the - symbol. To search for documents that contain "jakarta apache" but not "Apache CodeBeamer" enter the query in the "Search for" field of the search form and click GO:
+{{{"jakarta apache" -"Apache CodeBeamer"}}}
+
+!Grouping
+CodeBeamer supports using parentheses to group clauses to form sub queries. This can be very useful if you want to control the boolean logic for a query.
+\\To search for either "jakarta" or "apache" and "website" use the query:
+{{{(jakarta OR apache) AND website}}}
+This eliminates confusion and makes sure that the term website must exist and either the term jakarta or apache may exist.
+
+
+!Wildcard Searches
+CodeBeamer supports single and multiple character wildcard searches.
+\\To perform a single character wildcard search, use the "?" symbol.
+\\To perform a multiple character wildcard search, use the "*" symbol.
+The single character wildcard search looks for terms that match the search expression, with one single character replaced. For example, to search for "text" or "test" you can use the enter the query in the "Search for" field of the search form and click GO:
+
+{{{te?t}}}
+
+Multiple character wildcard searches looks for 0 or more characters. For example, to search for test, tests or tester, you can use the search:
+{{{test*}}}
+
+You can also use the wildcard searches in the middle of a term.
+{{{te*t}}}
+
+
+!Fuzzy Searches
+CodeBeamer supports fuzzy searches based on the Levenshtein Distance, or Edit Distance algorithm. To do a fuzzy search use the tilde, "~", symbol at the end of a Single word Term. \\For example to search a term which spells similar to "roam" use the fuzzy search:
+{{{roam~ }}}
+This search will find terms like foam and roams.
+
+Note: Fuzzy search works only if the ''Allow query syntax'' and the ''Find approximate matches'' checkboxes are checked
+
+!Escaping Special Characters
+CodeBeamer search supports escaping special characters that are part of the query syntax. The current list special characters are
+{{{+ - && || ! ( ) { } [ ] ^ " ~ * ? : \}}}
+To escape these character use the \ before the character. For example to search for (1+1):2 use the query:
+;:\(1\+1\)\:2
+
+!Search for artifacts by Owner/Submitter
+Optionally you can enter a CodeBeamer user name, account name in the "Owner/Submitter" field if you want to find artifacts created by a particular user.
+To search for issues submitted by the account "j.wilson" you can enter in the "Owner/Submitter" field of the search form:
+
+{{{j.wilson}}}
+
+You can also use the account's real user name or other account data such as Company, Phone and others for searching.
+To search for issues submitted by the Company "Intland" you can enter the "Owner/Submitter" field of the search form:
+{{{Intland}}}
+
+!Search for artifacts by Creation / Modification Date
+Dates and intervals can be used to search when artifacts were created or modified. By entering in the "After" and "Before" fields of the search form, you can easily find all documents or tracker items which were uploaded  onto the server at a specific interval of time.
+\\To find all artifacts which were uploaded  to the server between 2005-05-04 and 2005-05-30, enter the values and click GO
+{{{
+Created / After: 2005-05-04
+Created / Before: 2005-05-30
+}}}
+To find all artifacts which were modified on the server between 2005-05-04 and 2005-05-30, enter the values and click GO
+{{{
+Modified / After: 2005-05-04
+Modified / Before: 2005-05-30
+}}}
+To find all artifacts which were modified by the account j.wilson on the server between 2005-05-04 and 2005-05-30, enter the values and click GO
+{{{Modified / After: 2005-05-04
+Modified / Before : 2005-05-30
+Owner/Submitter: j.wilson
+}}}
+!Search for Source symbols and files
+Search for Source symbols and files supports only simple pattern matching and the features described above cannot be used. For example to search for source code symbols "open", enter the values and click GO
+{{{Search for: open}}}
+This search will find source symbols like OpenDir and openFile.

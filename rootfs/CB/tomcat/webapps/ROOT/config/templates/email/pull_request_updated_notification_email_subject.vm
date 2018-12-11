@@ -1,0 +1,11 @@
+#set($trackerItemType = $textFormatter.getMessageWithDefault("tracker.type.${trackerItem.typeName}", ${trackerItem.typeName}))
+#if(${isStatusChange})
+	#if(${trackerItem.status.name})
+		#set($trackerItemStatus = $textFormatter.getMessageWithDefault("tracker.choice.${trackerItem.status.name}.label", ${trackerItem.status.name}))
+	#else
+  		#set($trackerItemStatus = $textFormatter.getMessageWithDefault("tracker.transition.unset.status", "Unset"))
+	#end
+	#showProjectNameInSubjects("${textFormatter.getMessage('pullRequest.transition.subject', ${trackerItemStatus})} ${trackerItem}")
+#else
+	#showProjectNameInSubjects("${textFormatter.getMessage('issue.updated.subject', $!{trackerItemType})} ${trackerItem}")
+#end

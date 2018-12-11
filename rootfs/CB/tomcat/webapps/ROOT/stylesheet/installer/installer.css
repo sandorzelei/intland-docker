@@ -1,0 +1,545 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+body {
+	font-family: 'arial';
+	font-size: 13px;
+	background-color: #d1d1d1;
+}
+
+h3 {
+	margin: 15px;
+}
+
+div.info {
+	margin: 15px;
+}
+
+div.summary-info {
+	margin: 30px 15px 5px 15px;
+}
+
+div.center {
+	text-align: center;
+}
+
+div.separatorText {
+	margin-bottom: 10px;
+	margin-top: 15px;
+}
+
+.form-container {
+	width: 60%;
+	position: relative;
+	left: 20%;
+	height: 90%;
+	top: 5%;
+	background-color: white;
+	overflow-x: hidden;
+	/* shadow and border */
+	border: 1px solid #ababab !important;
+	box-shadow: 2px 3px 1em #ababab;
+	-webkit-box-shadow: 2px 3px 1em #ababab;
+	-moz-box-shadow: 2px 3px 1em #ababab;
+}
+
+.form-container form {
+	padding: 0 0 48px 0;
+	margin: 0;
+}
+
+.form-fields {
+	margin: 15px;
+}
+
+.actionMenubar {
+	width: 100%;
+	background-color: #454545;
+	height: 35px;
+	color: white;
+	font-size: 18px;
+	padding: 5px;
+}
+
+.actionMenuBar span {
+	position: relative;
+	top: 7px;
+	float: left;
+}
+
+div.installation-steps {
+	padding: 10px 15px;
+	border-bottom: 1px solid #d1d1d1;
+}
+
+div.installation-steps span {
+	margin-right: 15px;
+	color: #ababab;
+}
+
+div.installation-steps span.current {
+	color: #454545;
+	font-weight: bold;
+}
+
+div.step-info {
+	border-bottom: 1px solid #d1d1d1;
+	padding: 5px 15px;
+	line-height: 25px;
+}
+
+div.step-info .step-title {
+	font-size: 15px;
+}
+
+div.step-info .step-name {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+div.step-info .step-icon {
+	width: 64px;
+	height: 50px;
+	background-repeat: no-repeat;
+	float: right;
+	margin-right: 10px;
+	position: relative;
+	top: -50px;
+}
+
+div.step-info .step-icon.welcome {
+
+}
+
+div.step-info .step-icon.database {
+	background-image:
+		url("../../images/newskin/installer/icon_database.png");
+}
+
+div.step-info .step-icon.admin {
+	background-image: url("../../images/newskin/installer/icon_admin.png");
+}
+
+div.step-info .step-icon.done {
+	background-image: url("../../images/newskin/installer/icon_done.png");
+}
+
+div.step-info .step-icon.license {
+	 background-image: url("../../images/newskin/installer/icon_license.png");
+}
+
+div.step-info .step-icon.instance {
+	background-image: url("../../images/newskin/installer/icon_license.png");
+}
+
+div.step-info .step-icon.mail {
+	background-image: url("../../images/newskin/installer/icon_mail.png");
+}
+
+div.footer {
+	border-top: 1px solid #d1d1d1;
+	width: 100%;
+	margin-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+	bottom: 0px;
+	position: absolute;
+	background-color: white;
+	display: block;
+}
+
+div.footer input {
+	padding: 15px;
+}
+
+div.footer .next-button {
+	float: right;
+	margin-right: 40px;
+	background-repeat: no-repeat;
+	background-position: right;
+	padding-right: 13px;
+	background-image: url("../../images/newskin/installer/next.png");
+}
+
+div.footer .agree-button {
+	float: right;
+	padding-top: 11px;
+	height: 40px;
+}
+
+div.footer .skip-button {
+	float: right;
+}
+
+div.footer .prev-button {
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 13px;
+	background-image: url("../../images/newskin/installer/prev.png");
+	float: left;
+	padding-top: 16px;
+}
+
+.link-button {
+	background-color: transparent;
+	border: 0px;
+	cursor: pointer;
+	color: #0093b8;
+	font-weight: bold;
+}
+
+.button {
+	padding: 2px 20px !important;
+	margin-right: 10px;
+	margin-left: 5px;
+	border: 1px solid #d1d1d1;
+	border: solid 1px #d1d1d1;
+	font-size: 13px !important;
+	font-weight: bold;
+	color: #1e1e1e !important;
+	background-color: #f5f5f5 !important;
+	min-height: 25px;
+	min-width: 80px;
+	cursor: pointer;
+}
+
+a {
+	cursor: pointer;
+	color: #0093b8;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+div.form-fields .field {
+	padding: 5px 0px;
+}
+
+div.form-fields .field input[readonly], div.form-fields .field textarea[readonly],
+	div.form-fields .field select[disabled] {
+	background-color: #f7f7f7;
+}
+
+div.form-fields .field label {
+	width: 30%;
+	display: inline-block;
+	font-weight: bold;
+	vertical-align: top;
+	padding-right: 1em;
+}
+
+div.form-fields .field label.secondary {
+	width: auto;
+	display: inline-block;
+	font-weight: normal;
+}
+
+div.form-fields .field label span {
+	font-weight: normal;
+	display: block;
+}
+
+div.form-fields .field input[type=text], div.form-fields .field textarea,
+	div.form-fields .field select {
+	border: 1px solid #d1d1d1;
+	width: 50%;
+	margin: 0 !important;
+}
+
+div.form-fields .field select {
+	position: relative;
+	left: -4px;
+}
+
+div.form-fields .field input[type=password] {
+	border: 1px solid #d1d1d1;
+}
+
+div.form-fields .field textarea {
+	height: 150px;
+	resize: none;
+}
+
+div.form-fields .field .error {
+	border: 1px solid #e57579 !important;
+	box-shadow: 1px 1px 10px 2px #ffb5b8;
+	-webkit-box-shadow: 1px 1px 10px 2px #ffb5b8;
+	-moz-box-shadow: 1px 1px 10px 2px #ffb5b8;
+}
+
+div.form-fields fieldset {
+	padding: 0px;
+	border: 0px;
+}
+
+div.form-fields .radio-group input {
+	margin-left: 0px;
+	margin-right: 10px;
+}
+
+.header-icon {
+	background-image: url("../../images/newskin/installer/cb_icon.png");
+	width: 27px;
+	height: 26px;
+	display: inline-block;
+	margin-right: 6px;
+	margin-left: 5px;
+	position: relative;
+	top: 5px;
+	float: left;
+}
+
+.error .form-errors {
+	display: block;
+	padding-top: 10px;
+	padding-right: 15px;
+}
+
+.connection-test-result {
+	padding: 15px 5px;
+	color: #00a85d;
+	font-weight: bold;
+}
+
+#mask {
+	position: fixed !important;
+	position: absolute; /* IE8-9 */
+	width: 100%;
+	height: 100%;
+	-moz-opacity: 0.5;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	background-color: black;
+	top: 0;
+	left: 0;
+	z-index: 1000 !important;
+}
+
+div.busy-sign {
+	background-image: url("../../js/yui/assets/skins/sam/ajax-loader.gif");
+	background-repeat: no-repeat;
+	background-color: white;
+	width: 120px;
+	height: 50px;
+	position: absolute;
+	top: 45%;
+	left: 45%;
+	background-position: center;
+	z-index: 1500;
+}
+
+div.busy-sign-text {
+	background-image: url("../../js/yui/assets/skins/sam/ajax-loader.gif");
+	background-repeat: no-repeat;
+	background-color: white;
+	padding: 50px 20px 20px 20px;
+	width: 30%;
+	position: absolute;
+	top: 40%;
+	left: 35%;
+	background-position: center 20px;
+	z-index: 1500;
+	text-align: center;
+}
+
+div.overlay {
+	background: white;
+	position: absolute;
+	width: 30%;
+	top: 40%;
+	left: 35%;
+	z-index: 1500;
+	/* shadow and border */
+	border: 1px solid #454545 !important;
+	box-shadow: 2px 3px 1em #454545;
+	-webkit-box-shadow: 2px 3px 1em #454545;
+	-moz-box-shadow: 2px 3px 1em #454545;
+}
+
+div.overlay .overlayMessage {
+	padding: 24px;
+}
+
+div.overlay .success {
+	background: url("../../images/newskin/message/notification-l.png")
+		no-repeat 10px center;
+	padding-left: 45px;
+	/*color: #098C00;*/
+}
+
+div.overlay .error {
+	background: url("../../images/newskin/message/warning-l.png") no-repeat
+		10px center;
+	padding-left: 45px;
+	/*color: #8c0514;*/
+}
+
+div.overlay .confirm {
+	background: url("../../images/newskin/message/confirmation-l.png")
+		no-repeat 10px center;
+	padding-left: 45px;
+}
+
+div.overlay .buttons {
+	padding: 10px;
+	border-top: 1px solid #d1d1d1;
+	text-align: center;
+}
+
+#springBindingErrors {
+	display: none;
+}
+
+div.decisionRadioGroup {
+    margin-bottom: 20px;
+}
+
+div.decisionRadio {
+	padding: 0.5em;
+	margin-left: 1em;
+	font-weight: bold;
+}
+
+div.decisionRadio input {
+	position: relative;
+	top: 2px;
+	margin-right: 0.5em;
+}
+
+div.notificationText {
+	margin-bottom: 1em;
+	background: #ccf4ff
+		url("../../images/newskin/message/information-l.png") no-repeat 10px
+		center;
+	padding: 1em 0.5em 1em 45px;
+	border: 1px solid #0093b8;
+	margin: 15px;
+}
+
+div.warningText {
+	margin-bottom: 1em;
+	background: #fff7eb
+		url("../../images/newskin/message/warning-l.png") no-repeat 10px
+		center;
+	padding: 1em 0.5em 1em 45px;
+	border: 1px solid #ffab46;
+	margin: 15px;
+}
+
+#saveLicenseNotification {
+	display: none;
+}
+
+#existingInstanceInfo {
+	display: none;
+	margin: 0.5em 0.5em 1em 3.5em;
+}
+
+table.summary {
+	margin: 5px 15px 15px 25px;
+}
+
+table.summary td {
+	font-size: 13px;
+	padding: 0.3em;
+	vertical-align: top;
+}
+
+.db-fieldset {
+	margin-top: 0px;
+}
+
+.db-info {
+	display: inline;
+	vertical-align: top;
+}
+
+.db-info a{
+	vertical-align: top;
+}
+
+.db-label {
+	width: 200px;
+	cursor: pointer;
+}
+
+.db-radio {
+	vertical-align: baseline;
+	margin-top: 0px;
+	height: 16px;
+	cursor: pointer;
+}
+
+.db-label-fixed {
+	width: 60px !important;
+}
+
+.db-type-label {
+	margin-bottom: -20px;
+}
+
+div.la-body {
+	width: 100%;
+}
+
+pre.la-body-text {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+div.footer .next-button.next-button-disabled {
+	color: #ababab;
+}
+
+#oracleAdminCheckbox {
+	margin-left: 0px;
+}
+
+#useCustomSchemaCredentials {
+	margin-left: 0px;
+}
+
+div.howToLink {
+	margin-bottom: 1em;
+	background: transparent
+		url("../../images/newskin/action/help.png") no-repeat 10px
+		center;
+	padding: 1em 0.5em 1em 35px;
+	border: 0px solid #0093b8;
+	margin: 5px 15px 5px 0px;
+}
+
+input[type=text]:-webkit-autofill,
+input[type=text]:-webkit-autofill:hover,
+input[type=text]:-webkit-autofill:focus,
+input[type=text]:-webkit-autofill:active {
+	-webkit-box-shadow:0 0 0 50px white inset;
+}
+
+input.noPrefill:-webkit-autofill,
+input.noPrefill:-webkit-autofill:hover,
+input.noPrefill:-webkit-autofill:focus,
+input.noPrefill:-webkit-autofill:active {
+	-webkit-box-shadow:0 0 0 50px white inset;
+}
+
+#agree {
+	position: relative;
+	top: 2px;
+}
+
+@-moz-document url-prefix() {
+	div.footer .agree-button {
+		padding-top: 13px;
+	}
+}

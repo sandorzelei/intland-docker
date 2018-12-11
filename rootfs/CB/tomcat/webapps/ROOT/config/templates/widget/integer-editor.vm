@@ -1,0 +1,4 @@
+<div class="form-field">
+	<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+	<input id="${selectorId}" name="params[${fieldName}]" type="text" value="${value}"></textarea>
+</div>

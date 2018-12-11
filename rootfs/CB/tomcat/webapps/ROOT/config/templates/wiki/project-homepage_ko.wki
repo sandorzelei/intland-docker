@@ -1,0 +1,22 @@
+%%ad
+__Free Download__\\
+Want to try [codeBeamer|http://www.intland.com/products/codebeamer/overview/] on your own server? [Download|https://intland.com/products/download.html#download] it for free and install it in minutes.\\
+Questions? [Contact us|http://www.intland.com/company/contact/].
+%%
+
+%%information
+여기는 ''${project.name}''프로젝트 wiki _홈페이지 입니다. 모든 회원들이 볼 수 있습니다.\\
+사용자 정의를 위해 ''Edit''을 클릭해주세요. 여기에 당신이 할 수 있는 몇가지들이 있습니다:
+* 이 블럭을 없애주세요
+* 환영 메세지를 추가해(넣어)주세요
+* 프로젝트의 목표, 디자인(설계), 스케줄 또는 프로젝트와 관련된 어떤 종류의 정보든 적어주세요
+* 프로젝트 자원, 프로젝트 사진 또는 관련 모든 컨텐츠에 대한 링크를 추가합니다.
+* 최근 생산된 이슈들, 최근 업데이트된 문서 및 자세한 내용을 보여주기 위해 wiki 플러그인을 추가합니다.
+* 엑셀 스프레드시트, Google 맵 또는 RSS 피트를 엠베드하세요.
+%%
+
+[{Table style='width:100%; border:none; border-spacing:0;' dataStyle='vertical-align:top; padding-right:20px; border:none;'
+
+|(width:60%;) [{ActivityStream}] | #if(${licenseCode.isEnabled("trackers")}) [{IssueCountTrends}] \\ #end #if(${licenseCode.isEnabled("documents")}) [{ArtifactCountTrends}] \\ #end #if(${licenseCode.isEnabled("scm")}) [{CommitTrends period='last 10 days'}] \\ #end  |(width:30%;) [{ProjectInfo description='true'}] \\ [{Members}]
+
+}]

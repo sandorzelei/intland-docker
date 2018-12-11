@@ -1,0 +1,420 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+/*
+  css for addUpdateTask.jsp
+ */
+.fieldsTable {
+ 	border-collapse: collapse;
+ 	border-bottom: solid 1px silver;
+}
+
+.IE6or7 .fieldsTable {
+	border: solid 1px silver;
+}
+.IE6or7 .fieldsTable .dataCell {
+	border-right: none;
+}
+
+.fieldsTable .dataCell {
+	border-right: solid 1px silver;
+	border-top: solid 1px silver;
+	border-bottom: none !important;
+	border-left: none !important;
+}
+
+.expandWikiTextAreaWH {
+	border: none !important;
+	width: 98%;
+	/*	TODO: the wysiwyg editor does not look nice with these
+	width: 100%;
+	height: 100%;
+	*/
+}
+
+.fieldsTable .dataCell {
+	padding: 3px;
+	vertical-align: top;
+}
+.fieldsTable .labelCell {
+	vertical-align: middle;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+body.IE6or7 .tableCellCounter_finishRow {
+	border-top: solid 1px silver !important;
+}
+
+/**
+ * Local css elements below:
+ */
+.blockSeparator {
+	border-left: none !important;
+	border-right: none !important;
+}
+.blockSeparator div {
+	height: 6px;
+	width: 100%;
+}
+
+body.IE6or7 .blockSeparator div {
+	border-top:solid 1px silver;
+	border-bottom: solid 1px silver;
+}
+
+body.IE8  #wiki .ditch-tab-pane-wrap {
+	border-right: 1px solid silver !important;
+}
+
+#wiki .ditch-tab-pane-wrap {
+	border-bottom: none !important;
+	border-left: none !important;
+	border-right: none !important;
+}
+
+.actionBar .button {
+	margin-left: 1em;
+}
+
+#trackerLabel {
+	text-align: left;
+	vertical-align: middle;
+	border-left: solid 1px #FFF;
+	border-right: solid 1px #FFF;
+	/*
+	border-bottom: solid 1px gray;
+	*/
+}
+
+body.IE6or7 .fieldsTable #summaryCell {
+	border-bottom: solid 1px silver !important;
+}
+#summaryCell {
+	padding: 0;
+}
+body.IE6or7 #descriptionCell {
+	border-right: solid 1px silver !important;
+}
+
+.formatSelector {
+	margin-bottom: 6px;
+}
+
+.newskin .ditch-tab-pane .actionBar, .newskin .contentWithMargins .actionBar {
+    margin: 0;
+}
+
+#testStepsOfTestCase {
+	overflow-y:auto !important;
+}
+
+table.embeddedFieldTable {
+	border: none;
+}
+
+.embeddedFieldTable tr.head {
+	border-style: none !important;
+}
+
+.embeddedFieldTable td:hover {
+	background-color: #F5F5F5 !important;
+}
+
+.embeddedFieldTable th.embeddedTableHeader {
+	padding: 0.2em !important;
+	color: black !important;
+	border-bottom: 1px solid #d1d1d1;
+	border-right: none;
+	background: white;
+}
+
+.embeddedFieldTable td.embeddedTableCell {
+	padding: 0.2em !important;
+	background-color: white;
+	border-top: 1px solid #f5f5f5;
+	border-right: none;
+}
+
+.embeddedFieldTable th.date, .embeddedFieldTable td.date  {
+	white-space: nowrap;
+	text-align: right;
+}
+
+.embeddedFieldTable td.date .menuArrowDown {
+	position: relative;
+	top: -3px;
+}
+
+.embeddedFieldTable th.number, .embeddedFieldTable td.number  {
+	white-space: nowrap;
+	text-align: right;
+}
+
+.embeddedFieldTable th.text, .embeddedFieldTable td.text  {
+	white-space: nowrap;
+	text-align: left;
+}
+
+.emptyEmbeddedTable {
+	font-weight: normal;
+}
+
+.fieldsTable.initializing {
+	visibility: hidden;
+}
+
+.fieldsTable.initializing .deleteButton {
+	visibility: hidden !important;
+}
+
+#summaryField #summary {
+	width: 100% !important;
+}
+
+.newskin .fieldsTable {
+	margin-top: 0;
+}
+
+.newskin .fieldsTable .fieldLabel.optional,
+.newskin .fieldsTable .fieldLabel.mandatory {
+	padding: 0;
+}
+
+.layoutControl ul {
+	width: auto;
+	list-style-type: none;
+	border-bottom: 1px solid #aaa;
+}
+
+.newskin #summaryCell {
+	width: auto;
+	top: 0;
+	padding-bottom: 0;
+}
+
+#descriptionField {
+	position: relative; /* needed to be able to position wiki format selector to the bottom of this */
+}
+
+#comments {
+	margin-bottom: 15px !important;
+}
+
+#descriptionField.fieldInputControl .fieldLabel,
+#comments.fieldInputControl .fieldLabel {
+	height: auto !important;
+	line-height: 1em !important;
+	white-space: normal;
+}
+
+.newskin .fieldLabel,
+.newskin .fieldValue {
+	vertical-align: middle;
+}
+
+.newskin .fieldValue,
+.newskin .fieldValue.mandatory,
+.newskin .fieldValue.optional,
+.newskin #summaryCell {
+	text-align: left;
+	padding: 2px 13px 2px 6px;
+}
+
+.newskin .fieldLabel,
+.newskin .fieldLabel.mandatory,
+.newskin .fieldLabel.optional {
+	text-align: right;
+	padding-right: 5px;
+	white-space: normal;
+}
+
+.newskin .fieldLabel a {
+	text-decoration: none;
+}
+.newskin .fieldLabel a:hover {
+	text-decoration: underline;
+}
+
+.newskin .staticLayout .fieldLabel {
+	max-width: none;
+}
+
+.newskin .fieldsTable .chooseReferences {
+	width: 100%;
+	display: inline-table;
+	margin: 0;
+}
+
+.newskin .fieldsTable .fieldValue > * {
+	margin: 0;
+}
+
+.newskin .fieldsTable .fieldValue .calendarAnchorLink {
+	margin-left: -25px;
+}
+
+.switch a {
+	cursor: pointer;
+}
+
+#trackerLabel {
+	min-height: 28px;
+	line-height: 28px;
+	overflow: hidden;
+	padding: 0;
+}
+
+.newskin.popupBody .ditch-tab-skin-cb-box {
+	padding: 0;
+}
+
+.fieldInputControl .fieldLabel .labelContentWrapper {
+	display: table;
+	width: 100%;
+}
+
+.fieldInputControl .fieldLabel .labelContent {
+	display: table-cell;
+	vertical-align:middle;
+}
+
+.fieldLabel .labelContent a:hover {
+	text-decoration: underline;
+}
+
+.fieldsTable .fieldValue textarea.inputText {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.dynamicLayout,
+.dynamicLayout.straightDown.fullWidth,
+.staticLayout {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.dynamicLayout.straightDown {
+	width: 40%;
+}
+
+.dynamicLayout.straightDown col.fieldLabel {
+	width: 25%;
+}
+
+.dynamicLayout.straightDown col.fieldValue {
+	width: 75%;
+}
+
+.dynamicLayout td.fieldLabel {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+.dynamicLayout td.fieldLabel .labelText{
+	width: 100%;
+}
+
+.dynamicLayout.straightDown.fullWidth col.fieldLabel {
+	width: 40%;
+}
+
+.dynamicLayout.straightDown.fullWidth col.fieldValue {
+	width: 60%;
+}
+
+.dynamicLayout > td,
+.staticLayout > td {
+	min-width: 100px;
+}
+
+col.fieldLabel {
+	width: 10%;
+}
+
+col.fieldValue {
+	width: auto;
+}
+
+.formatSelectorContainer {
+	padding-top: 1em;
+	font-weight: normal;
+}
+
+.formatSelector {
+	margin: 0;
+	white-space: normal;
+	text-align: right;
+}
+
+.newskin .mandatory:after {
+	content: none;
+}
+
+#wiki tr {
+	padding-bottom: 0;
+}
+
+.issueCommentBox {
+	padding: 1px;
+	width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body.IE .issueCommentBox,
+body.Chrome .issueCommentBox {
+	padding: 6px; /* in FF, padding alters the native textarea resizer position */
+}
+
+.newskin .fieldsTable .dataCell {
+	min-width: 0;
+	width: auto; /* important, all fields view will get misaligned without this override */
+}
+
+.newskin .fieldsTable .embeddedFieldTable,
+.newskin .fieldsTable .embeddedFieldTable tr,
+.newskin .fieldsTable .embeddedFieldTable th,
+.newskin .fieldsTable .embeddedFieldTable td {
+	white-space: normal;
+}
+
+.newskin .expandWikiTextArea,
+.newskin .expandWikiTextAreaWH {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.newskin .expandWikiTextArea,
+.newskin .expandWikiTextAreaWH {
+	outline: 0;
+	width: 100% !important;
+}
+
+tbody.embeddedTable td.embeddedTableCell .yuimenubaritemlabel {
+	float: right;
+}
+
+label.emptyEmbeddedTable .addRowLink {
+	cursor: pointer;
+	padding-left: 8px;
+}
+
+.colorPicker .yui-panel-container {
+	z-index: 20 !important; /* would otherwise run behind description WYSIWYG field */
+}
+
+.qq-upload-icon {
+	color: transparent;
+}

@@ -1,0 +1,28 @@
+#if ($emptyMessage)
+	<div style="padding:5px;">
+		${textFormatter.getMessage(${emptyMessage})}
+	</div>
+#else
+	#parse("includes/defaultAjaxChartPluginTemplate.vm")
+
+	#define ($tableMarkup)
+    	<table class="embedded">
+    		<thead>
+    			<tr>
+    				<th class="stretched"></th>
+    				<th class="number">${textFormatter.getMessage('scm.commits.title')}</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+        		#foreach($date in ${data.keySet()})
+        			#trOpenWithLastRow(${data.keySet()})
+        				#set($commitsCount = $data.get($date))
+        				<th>${textFormatter.formatDate($user, $date, true)}</th>
+        				<td class="number">${commitsCount}</td>
+        			#trClose
+        		#end
+    		</tbody>
+    	</table>
+	#end
+	#renderAjaxRefreshingPluginWithChartAndTable("commitTrends", "${textFormatter.getMessage('scm.commit.trend.label')}", "${tableMarkup}")
+#end

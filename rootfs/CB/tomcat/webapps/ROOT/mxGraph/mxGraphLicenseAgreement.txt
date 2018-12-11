@@ -1,0 +1,46 @@
+
+Zsolt Kopany
+5:03 PM (19 hours ago)
+to sales@jgraph.com
+
+Dear Madam/Sir,
+
+We would like to integrate "mxgraph" into our commercial application called "codeBeamer" (https://intland.com/application-lifecycle-management/).
+
+Evaluators and customers can download and install our product on their (one or more) computers.
+
+We would like to ship "mxgraph" with our product thus the customers don't have to install "mxgraph" additionally.
+
+What are the conditions? The license description under the URL below is not clear for us:
+
+https://www.jgraph.com/Licenses/JGraph_Software_Licence.pdf
+
+Best regards,
+
+Zsolt Koppany
+CTO
+Intland Software
+Sigmaringer Strasse 107
+D-70567 Stuttgart, Germany
+
+Phone +49 711 2195 4211
+mailto: zsolt.koppany@intland.com
+http://www.intland.com
+
+------------------------------------------------
+Intland Software GmbH, Amtsgericht Stuttgart HRB 19479
+Geschaftsfuhrer: Janos Koppany, Zsolt Koppany
+
+
+------------------------------------------------
+
+From: David Benson - JGraph Support <support@jgraph.com>
+Subject: Re: Using mxgraph in commercial application
+Date: 17 January 2017 at 21:58:28 GMT+1
+To: Zsolt Kopany <zsolt.koppany@intland.com>
+
+mxGraph is licensed under the Apache 2.0 license as detailed at https://github.com/jgraph/mxgraph. The license linked below is no longer used.
+
+Thanks,
+
+David

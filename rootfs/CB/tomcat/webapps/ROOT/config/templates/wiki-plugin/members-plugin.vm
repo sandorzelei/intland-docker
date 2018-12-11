@@ -1,0 +1,43 @@
+
+#macro(userLink $user)
+	<a href="${cbBaseUrl}${user.urlLink}">#esc(${user.name})</a>
+#end
+
+#define($membersLink)
+	#set($membersText = "${numMembers} members in total")
+	#if($hasPermissionToViewMembers)
+		<a href="${cbBaseUrl}/proj/members.spr?proj_id=${project.id}">${membersText}</a>
+	#else
+		${membersText}
+	#end
+#*
+	#if (${numMembersViaGroups} > 0)
+		&nbsp;<small>${textFormatter.getMessage('project.members.indirect', ${numMembersViaGroups})}</small>
+	#end
+*#
+#end
+
+#define($title)
+	#if(!$isCurrentProject)${project.name} #end
+	${textFormatter.getMessage('project.members.title')}
+#end
+
+<div class="newskin">
+#wikiBoxOpen(${command}, "membersPlugin")
+	#wikiBoxTitleNoEscape("$!{title}")
+	<label>${textFormatter.getMessage('project.admins.label')}</label>
+	#set($numColumns = 1)
+	#set($counter = 0)
+	#foreach ($admin in $admins)
+		<div class="memberBlock" title="${admin.name}">
+			$userPhotoTool.render(${admin}, true)#userLink(${admin})
+		</div>
+		#set($counter = $counter +1)
+		#if ($counter == $numColumns)
+			#set($counter = 0)
+			<div class="memberSeparator"></div>
+		#end
+	#end
+    <div class="membersLink">${membersLink}</div>
+#wikiBoxClose()
+</div>

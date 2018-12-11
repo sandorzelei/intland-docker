@@ -1,0 +1,24 @@
+%%information
+__Sie finden weiterführende Informationen zu CodeBeamer im unserem [codeBeamer Knowledge Base|https://codebeamer.com/cb/project/CB] Wiki.__
+%%
+
+%%ad
+__Kostenlose Evaluierung__\\
+Wollen Sie die neueste Version von [codeBeamer|http://www.intland.com/products/codebeamer/overview/] in Ihrer eigenen Umgebung evaluieren?\\
+Dann laden Sie einfach die [neueste Version|http://www.intland.com/products/downloads/?redirect_to=/products/downloads-logged-in/] kostenlos herunter und setzen Sie innerhalb von Minuten Ihre eigene Instanz auf.\\
+Falls Sie Fragen dazu haben? [Kontaktieren Sie uns|http://www.intland.com/company/contact/].
+%%
+
+%%information
+Diese __Startseite des Projekts ''${project.name}''__ ist die zentrale Informationsquelle für alle Projektmitglieder. Sie können den Inhalt über ''Bearbeiten'' völlig individuell gestalten:
+* Ersetzen Sie diese allgemeine Einleitung durch eine eigene Grussbotschaft an die Projektmitglieder.
+* Beschreiben Sie Ziele und Richtlinien für das Projekt, sowie, falls vorhanden, den Zeitplan.
+* Legen Sie Verweise auf externe projekt-relevante Dokumente und Resourcen an.
+* Betten Sie wichtige Informationen (z.B. über zuletzt bearbeitete Vorgänge und Dokumente) per Wiki Plugins or RSS Feeds ein.
+%%
+
+[{Table style='width:100%; border:none; border-spacing:0;' dataStyle='vertical-align:top; padding-right:20px; border:none;'
+
+|(width:60%;) [{ReleaseActivityTrends}] \\ [{ActivityStream}] | #if(${licenseCode.isEnabled("trackers")}) [{IssueCountTrends}] #end \\ [{ProjectActivityTrends period='Last 30 days' grouping='Daily'}] \\ [{Members}]
+
+}]

@@ -1,0 +1,43 @@
+##$Id$
+## Note: can not put macros here, due to limitations of #parse() of velocity, because first #parse() won't make the macro usable
+
+<script type="text/javascript">
+<!--
+/**
+ * Find the parent form of an html element
+ */
+function findParentForm(elem) {
+	var node = elem;
+	while (node && node.tagName!="FORM") {
+		node = node.parentNode;
+	}
+	return node;
+}
+
+/**
+ * Create a new issue on the selected project, or any project/tracker available for the user.
+ * @param ahref The <a href="" /> tag clicked on
+ * @param projectSelectControlName The name of the select control contains the projects
+ */
+function createNewIssue(ahref, projectSelectControlName) {
+	var form = findParentForm(ahref);
+	var projectsList = form[projectSelectControlName];
+	var url = contextPath + "/createIssue.spr?allowSwitchingTrackerType=false&allowCategoryTrackers=false";
+
+	var idx = projectsList.selectedIndex;
+	if (idx == 0) {
+		url += "&showOnlyCurrentProjectsTracker=false";
+	} else {
+		var option = projectsList[idx];
+		if (!confirm("Do you want to create a new issue in project '" + option.text +"' ?")) {
+			return;
+		}
+		var value = option.value;
+		// the value of select-box is NOT the project-id, so get it from projectIDsM[] array...
+		var projectId = projectIDsM[value];
+		url += "&showOnlyCurrentProjectsTracker=true&proj_id=" + projectId;
+	}
+	document.location.href = url;
+}
+// -->
+</script>

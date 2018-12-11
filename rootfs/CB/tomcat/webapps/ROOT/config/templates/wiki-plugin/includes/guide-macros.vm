@@ -1,0 +1,52 @@
+#set($adviceIconUrl = "${request.contextPath}/images/newskin/action/help-s.png")
+
+## renders a mark that reflects if a step is completed, outstanding or disabled
+#macro(stepSign $enabled $completed)
+	#set($iconPath = "${request.contextPath}/images/newskin/message")
+	#if($enabled)
+		#if($completed)
+			<img src="${iconPath}/guide-check.png">
+		#else
+			<img src="${iconPath}/guide-outstanding.png">
+		#end
+	#else
+		<img src="${iconPath}/guide-disabled.png">
+	#end
+#end
+
+## renders a link that represents the main entry point of the step
+#macro(stepLink $href $text $enabled)
+	#if($enabled)
+		<a href="$href">$text</a>
+	#else
+		<span class="disabled">$text</span>
+	#end
+#end
+
+#macro(stepLinkAndDescription $url $linkcode $enabled)
+#if("$!{enabled}" == "")
+	#set($enabled = true)
+#end
+<td class="step">
+	#set($text = ${textFormatter.getMessage(${linkcode})})
+	#stepLink("${request.contextPath}${url}" "${text}" $enabled)
+	<br><small>#i18n("${linkcode}.description")</small>
+</td>
+#end
+
+#macro(stepAdvice $textCode $items $satisfiedUrl $enabled)
+#set($isStepSatisified = (${items.allItems} > 0))
+#if("$!{enabled}" == "")
+	#set($enabled = true)
+#end
+<td class="advice">
+	<small>
+		#if($isStepSatisified)
+			<a href="${request.contextPath}${satisfiedUrl}">#i18n("${textCode}.satisfied", ${items.allItems})</a>&nbsp;#i18n("${textCode}.defined")
+		#else
+			<img src="$adviceIconUrl">
+			#if($enabled) #i18n("${textCode}.advice") #else #i18n("${textCode}.advice.prerequisite") #end
+		#end
+	</small>
+</td>
+#end

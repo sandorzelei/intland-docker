@@ -1,0 +1,731 @@
+/**
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+.actionBar a {
+  margin-right: 1.5em;
+}
+
+.context-menu-item.context-menu-icon {
+	background-repeat: no-repeat;
+	&.context-menu-disabled {
+		color: black !important;
+		opacity: 0.4;
+	}
+}
+
+.context-menu-item.context-menu-icon-star {
+	background-image: url('../images/newskin/action/star-active-12x12.png');
+	background-position: left 5px top 5px;
+}
+
+.context-menu-item.context-menu-icon-unstar {
+	background-image: url('../images/newskin/action/star-inactive-12x12.png');
+	background-position: left 5px top 5px;
+}
+
+.context-menu-item.context-menu-icon-removeColumn {
+	background-image: url('../images/newskin/action/query_context_delete.png');
+	background-position: left 5px top 5px;
+}
+
+.context-menu-item.context-menu-icon-summarize {
+	background-image: url('../images/newskin/action/query_context_summarize.png');
+	background-position: left 5px top 5px;
+}
+
+.context-menu-item.context-menu-icon-left {
+	background-image: url('../images/newskin/action/query_context_left.png');
+	background-position: left 5px top 5px;
+}
+
+.context-menu-item.context-menu-icon-right {
+	background-image: url('../images/newskin/action/query_context_right.png');
+	background-position: left 5px top 5px;
+}
+
+.myQueriesAccordion {
+  display: none;
+}
+
+#queriesAccordion {
+
+  h3 {
+	margin: 0;
+	padding: 0 0 1em 0;
+	font-size: 14px;
+	color: #454545;
+  }
+
+  ul.queryList {
+
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+
+	li {
+	  padding: 0;
+	  .image {
+		display: inline-block;
+		margin-right: 0.5em;
+		position: relative;
+		top: 2px;
+	  }
+	  .text {
+		cursor: pointer;
+		display: inline-block;
+		color: #0093b8;
+		padding: 0.5em 0;
+		&:hover {
+		  text-decoration: underline;
+		}
+	  }
+	}
+
+	&.starredQueries li {
+	  display: inline-block;
+	  width: 250px;
+	  .image {
+		top: 1px;
+		margin-right: 0.3em;
+	  }
+	}
+
+  }
+
+  .queryListTable {
+	width: 100%;
+	td {
+	  padding: 1em;
+	  vertical-align: top;
+	  &.predefinedColumn {
+		width: 250px;
+		border-right: 1px solid #e2e2e2;
+	  }
+	  &.starredColumn {
+		padding-left: 2em;
+	  }
+	}
+  }
+
+}
+
+#queriesPageContent {
+  .queryContainer {
+	.header {
+	  width: 100%;
+	  background-color: #f5f5f5;
+
+	  .headerTop {
+		padding: 1em;
+
+		.title {
+		  display: inline-block;
+		  .name {
+			font-size: 16px;
+			font-weight: bold;
+			display: inline-block;
+			margin-right: 0.3em;
+		  }
+		  .buttons {
+			display: inline-block;
+			margin: 0 0.4em 0 1em;
+		  }
+		  .settings {
+			display: inline-block;
+			width: 23px;
+			height: 16px;
+			position: relative;
+			top: 2px;
+			cursor: pointer;
+			background: url("../images/newskin/queries/icon_settings.png") no-repeat;
+		  }
+		}
+
+		.controls {
+		  display: inline-block;
+		  float: right;
+		  color: #858585;
+		  padding-right: 20px;
+		  text-align: right;
+		  cursor: pointer;
+		  &:hover {
+			text-decoration: underline;
+		  }
+		}
+
+		.share {
+		  background: url("../images/newskin/queries/icon_share.png") no-repeat right -2px;
+		  margin-right: 2em;
+		}
+
+		.export {
+		  background: url("../images/newskin/queries/icon_export.png") no-repeat right top;
+		}
+	  }
+
+	}
+  }
+}
+
+#queryResultTable {
+	.pagebanner {
+		line-height: 8px;
+	}
+
+	.textSummaryData>img {
+		vertical-align:middle;
+	}
+
+	.tableIcon {
+		position: relative;
+		top: -5px;
+	}
+}
+
+#tab1, #tab2 {
+	height: 510px;
+}
+
+.exportKind {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.exportExplanation {
+   margin: 0 20px 20px 25px;
+}
+
+.templateSelection {
+	display: none;
+	margin-left: 20px;
+	float: left;
+
+	.multiselect-container {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.upload-container {
+		display: inline-block;
+		vertical-align: text-top;
+		position: relative;
+		top: -15px;
+		width: 270px;
+	}
+
+	.qq-upload-list {
+		width: 350px;
+		padding-top: 15px;
+		margin-left: -10px;
+	}
+}
+
+.relationItems.ident {
+    margin-left:19px;
+}
+
+.fieldHeader {
+	color: #858585;
+	display: block;
+	margin: 0;
+	padding: 7px 10px 7px 10px;
+	border-bottom: 1px solid #e2e2e2;
+	font-family: 'Arial', sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.fieldContent {
+    height: 100%;
+    overflow-y: scroll;
+    .fieldSelector {
+    	margin-top: 5px;
+    	padding-left: 5px;
+    }
+
+    .fieldsTitle {
+    	padding-left: 10px;
+    }
+}
+
+li.listedField {
+	margin: 0.3em;
+	border: solid 1px #e2e2e2;
+	background-color: white;
+	list-style-type: none;
+
+	table {
+	  width: 100%;
+	  height: 15px;
+	}
+
+	.handle {
+	  width: 7px;
+	  min-height: 15px;
+	}
+
+	.draggable {
+	  background: #5f5f5f url("../images/newskin/action/agile/dragndrop_grip_flat.png") 3px center no-repeat;
+	  cursor: move;
+	}
+
+	.name {
+	  padding: 0.4em;
+	  font-size: 14px;
+	  font-weight: bold;
+	  .count {
+		display: block;
+		.storyPointsLabel {
+		  cursor: pointer;
+		  margin-left: 0;
+		  margin-top: 5px;
+		}
+	  }
+	  .roleName {
+		display: block;
+		overflow: hidden;
+	  }
+	}
+}
+#trackerItems {
+	.drop-marker {
+		position: absolute;
+		display: block;
+		background-color: darken(#ccffe8, 20%) !important;
+		height: 100px;
+		width: 10px;
+		z-index: 999;
+		opacity: 0.6;
+		top: 0;
+	}
+}
+
+// Query widget
+
+.queryWidget {
+
+	.queryWidgetHeader {
+		padding: 6px;
+		font-weight: bold;
+	}
+
+	.buttonContainer {
+		padding: 6px;
+		.advancedLink {
+			margin-left: 1em;
+		}
+	}
+
+}
+
+.ui-multiselect-menu.queryConditionSelector {
+  background: white;
+  border: 1px solid #ababab;
+  padding: 0;
+
+  div.showHiddenCheckBox {
+	padding: 0.3em;
+	font-size: 13px;
+	margin: 0;
+  }
+
+  .ui-widget-header {
+	padding: 0;
+	background: none;
+	border-top: hidden;
+	border-right: hidden;
+	border-left: hidden;
+	border-bottom: 1px solid #d1d1d1;
+	margin: 0;
+  }
+  .ui-multiselect-filter {
+	padding: 0.3em;
+	float: none;
+	input {
+	  width: 100%;
+	  margin: 0;
+	}
+  }
+  .ui-multiselect-optgroup a {
+	border-bottom: 1px solid #d1d1d1;
+  }
+	&.filterSelector {
+		.clearAllButton {
+			color: #0093b8;
+			float: right;
+			padding: 8px;
+		}
+		.ui-multiselect-checkboxes {
+			.ui-multiselect-optgroup, .ui-multiselect-optgroup a {
+				cursor: default !important;
+			}
+			li {
+				padding-left: 10px;
+			}
+			li:hover {
+				background-color: #eeeeee !important;
+			}
+			label {
+				cursor: pointer;
+				input {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+#west #headerDiv {
+	height: 20px !important;
+
+	.treeFilterBox {
+		position: relative;
+		top: -1px;
+	}
+}
+
+.duringDragHelper {
+	z-index: 1000;
+
+    a {
+    	background-color: #0093b8;
+    	color: white !important;
+    	line-height: 16px;
+    	height: 16px;
+    	border-radius: 2px;
+    	white-space: nowrap;
+    	padding: 1px 4px 1px 4px;
+    	font-size: 13px;
+    	font-weight: normal;
+
+    	.jstree-icon {
+    		display: none;
+    	}
+    }
+}
+
+th.duringDragHelper {
+	background-color: #0093b8;
+	width: auto;
+	color: white !important;
+    line-height: 16px;
+    height: 16px;
+    border-radius: 2px;
+    white-space: nowrap;
+    padding: 1px 4px 1px 4px;
+    font-size: 13px;
+    font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#trackerItems th {
+
+	cursor: pointer;
+
+	&.highlighted {
+		background-color: #ccffe8;
+	}
+
+	&.dropHover {
+		background-color: darken(#ccffe8, 10%) !important;
+	}
+
+	.tracker-context-menu {
+		visibility: hidden;
+		position: relative;
+		top: 2px;
+		padding: 0 3px;
+	  	&.activeMenu {
+			visibility: visible;
+	  	}
+	}
+  	.removeColumn {
+	  	visibility: hidden;
+	  	display: inline-block;
+	  	width: 12px;
+	  	height: 12px;
+		background: url("../images/newskin/action/delete-grey-12x12.png") center no-repeat;
+		position: relative;
+		top: 1px;
+	}
+  	&:hover {
+		.tracker-context-menu {
+			visibility: visible;
+		}
+	  	.removeColumn {
+			visibility: visible;
+		}
+	}
+}
+
+#aggregateFunctionDialog, #fieldFormatDialog {
+	padding: 0;
+
+	table {
+		wigth: 100%;
+	}
+
+	th {
+		padding-top: 10px;
+		background-color: white;
+		color: black;
+		border-bottom: 1px solid #E5E5E5;
+	}
+
+	td {
+		padding-top: 10px;
+		text-align: center;
+	}
+}
+
+.ui-dialog-titlebar {
+	background-color: #454545 !important;
+	color: white !important;
+}
+
+.reportColorPicker .ui-dialog-titlebar {
+  background: none !important;
+  color: black !important;
+}
+
+#treePane ul.jstree-container {
+	padding-bottom: 2em;
+}
+
+.queryPageViewMode {
+
+	.queryWidget {
+		display:none;
+	}
+
+	#queryResultTable .tracker-context-menu,
+	#queryResultTable th .removeColumn {
+		display: none;
+	}
+
+	.queryDescription {
+		padding: 0.5em 0 0 0;
+    	color: #454545;
+	}
+
+}
+
+#pickerTab {
+  	tr.empty {
+	  	display: none;
+	}
+}
+
+.pickerTypeSelectorContainer {
+	display: inline-block;
+	position: relative;
+	top: -2px;
+}
+
+.pickerFilterContainer {
+	display: inline-block;
+    position: relative;
+    top: -3px;
+    margin-right: 1em;
+}
+
+button.optionSelector {
+	max-width: 450px;
+}
+
+.optionSelector {
+	.ui-multiselect-filter {
+		padding: 0 !important;
+		width: 50%;
+		input {
+			width: 100%;
+		}
+	}
+}
+
+#pickerTab {
+	.checkboxHeader {
+		width: 1%;
+	}
+	.itemUrlLink {
+		float: right;
+		color: #d1d1d1 !important;
+		font-weight: bold;
+	}
+
+	.itemUrlLink:hover {
+		text-decoration: none !important;
+		color: #0093b8 !important;
+	}
+}
+
+#unsavedWarning {
+	display: none;
+    background-position: 5px 0;
+    padding: 6px 20px 6px 35px;
+}
+.querySubscriptionForm {
+	table.formTableWithSpacing {
+		width: 95%;
+		.labelCell {
+			width: 10%;
+			vertical-align: top;
+		}
+	}
+	.frequency {
+		ul {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+			li {
+				display: inline-block;
+				margin-right: 2em;
+			}
+		}
+		input[type="radio"] {
+			position: relative;
+			top: 2px;
+		}
+	}
+	.frequencyOptions {
+		display: none;
+		margin-top: 0.5em;
+		padding: 0.5em;
+		background-color: #f5f5f5;
+		border: 1px solid #d1d1d1;
+		label {
+			display: inline-block;
+		}
+
+		.monthOption {
+			padding: 0.3em 0;
+			input[type="radio"] {
+				position: relative;
+				top: 2px;
+			}
+		}
+	}
+	ul.dayOfWeeks {
+		display: inline-block;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		li {
+			display: inline-block;
+			input[type="checkbox"] {
+				position: relative;
+				top: 2px;
+			}
+		}
+	}
+	.nameTr {
+		.labelCell {
+			vertical-align: middle !important;
+		}
+	}
+	.recipientsTr {
+		.labelCell {
+			vertical-align: top !important;
+		}
+		select {
+			width: 50%;
+			padding: 0.2em;
+		}
+	}
+  	.emptySubscriptionTr {
+		input {
+		  	position: relative;
+		  	top: 2px;
+		}
+	  	td {
+			padding-bottom: 2em;
+	  	}
+  	}
+  	.roleWarning {
+	  	padding: 0 !important;
+		vertical-align: top !important;
+  	}
+	#subscriptionName {
+		width: 390px;
+	}
+  	#thresholdNumber {
+	  	width: 30px;
+	  	position: relative;
+	  	top: -1px;
+	}
+}
+
+.manageSubscriptionTable {
+
+	tr.disabled td {
+		color: #d1d1d1;
+	}
+
+	.removeButton {
+		background: url("../images/newskin/action/delete-grey-12x12.png") no-repeat;
+		cursor: pointer;
+		display: inline-block;
+		width: 12px;
+		height: 12px;
+		margin: 0 3px;
+		position: relative;
+		top: 1px;
+  	}
+
+  	td.name {
+		font-weight: bold;
+  	}
+
+  	td.controls {
+	  	white-space: nowrap;
+	}
+}
+
+#middleHeaderDiv {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	min-height: 20px;
+}
+
+#newSubscription {
+	background: url("../images/newskin/actionIcons/small/icon_add_blue.png") no-repeat;
+	display: inline-block;
+	padding-left: 14px;
+}
+
+#editSubscription, #manageSubscriptions {
+	background: url("../images/newskin/actionIcons/small/icon_edit_blue.png") no-repeat;
+	display: inline-block;
+	padding-left: 14px;
+}
+
+#rightPane {
+	overflow-y: scroll !important;
+}
+
+.reportPickerFilterArea {
+	float: right;
+	position: relative;
+	top: 3px;
+}
+
+
+/* Tooltip styling. */
+
+.queryContainer [data-hover-tooltip].tooltip-marker {
+	vertical-align: middle;
+}

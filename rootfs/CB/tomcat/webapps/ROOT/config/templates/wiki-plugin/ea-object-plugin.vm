@@ -1,0 +1,5 @@
+#wikiBoxOpen(${command})
+
+	<span>${notes}</span>
+
+#wikiBoxClose()

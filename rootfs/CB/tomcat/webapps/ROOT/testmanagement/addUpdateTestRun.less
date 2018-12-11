@@ -1,0 +1,72 @@
+.actionBar .button {
+	margin-left: 1em;
+}
+
+.testCasesTableContainer {
+	width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+#testCasesTable {
+	margin: 10px 0 20px 0;
+}
+
+.testRunParameters .subtext.note {
+	margin: 0.5em 0 0.5em 5px;
+}
+
+.force-bold{
+	font-weight: bold !important;
+}
+
+/* hide test-run's properties when restarting with a new copy of TestRun */
+body.restartOnCopy .testRunEditorWhenRestarting {
+	.fieldsTable,
+	.testRunParameters,
+	.layoutControl {
+		display: none;
+	}
+}
+
+.testRunOptions {
+	margin-top: -10px;
+
+	ul {
+		list-style-type: none;
+	}
+	h4 {
+		margin-bottom: 5px;
+	}
+	label {
+		display:block;
+		margin-left: 20px;
+	}
+}
+
+label.disabledOption {
+	color: gray;
+}
+
+ul#restartOptions {
+	list-style: none;
+
+	label {
+		line-height: 12px;
+		font-size: 12px;
+		margin-top: 5px;
+
+		a {
+			font-size: 12px;
+		}
+	}
+
+	input {
+		vertical-align: text-bottom;
+	}
+}
+
+table.testRunManagedFields {
+	width: auto !important;
+	margin-left: 20px !important;
+}

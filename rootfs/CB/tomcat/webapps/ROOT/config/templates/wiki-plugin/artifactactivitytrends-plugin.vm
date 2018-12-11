@@ -1,0 +1,76 @@
+#wikiBoxOpen(${command})
+    ## chart
+    #if($command.chart)
+    	#parse("includes/intervalSelect.vm")
+
+    	#define($chartControls)
+    		#if($renderIntervalSelectors)
+	            <select id="chartActivitySelect_${pluginId}" onchange="artifactActivityTrends_${pluginId}.updateChart();" #if(!${renderIntervalSelectors})disabled#end>
+	            	<option value="READ"
+	            		#if(${command.activity} == "READ")
+	            		 selected="selected"
+	            		#end
+	            	>${textFormatter.getMessage('document.activity.reads')}</option>
+	            	<option value="UPDATE"
+	            		#if(${command.activity} == "UPDATE")
+	            		 selected="selected"
+	            		#end
+	            	>${textFormatter.getMessage('document.activity.updates')}</option>
+	            </select>
+            #else
+				<span>${command.activity} - </span>
+			#end
+
+    		#renderIntervalSelect("${pluginId}" "artifactActivityTrends_${pluginId}.updateChart();" "$!{command.period}" "$!{command.grouping}" )
+    	#end
+
+		#wikiBoxTitle("$!{command.title}", "${textFormatter.getMessage('document.activity.label')}", ${chartControls})
+
+		<span id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </span>
+
+        <script type="text/javascript">
+        	var artifactActivityTrends_${pluginId} = {
+        		updateChart: function() {
+        			var intervalUrlParams = getChartIntervalSelect_${pluginId}();
+
+        			var chartActivitySelect = document.getElementById("chartActivitySelect_${pluginId}");
+
+        			var url = "${chartSupport.chartURL}";
+        			url += "&" + intervalUrlParams;
+        			url += "&activity=" + chartActivitySelect.value;
+
+        			chartRendererSupport.updateChart('${contextPath}', "chart_${pluginId}", url, ${command.width}, ${command.height});
+        		}
+        	}
+        </script>
+    #end
+
+    ## table
+    #if($command.table)
+    	#if(${command.chart} == false)
+    		#wikiBoxTitle("$!{command.title}", "${textFormatter.getMessage('document.activity.label')}")
+    	#end
+    	<table class="embedded">
+    		<thead>
+    			<tr>
+    				<th class="stretched"></th>
+    				#foreach($artifact in $data.identifiables)
+    					<th class="number">#linkArtifact(${artifact})</th>
+    				#end
+    			</tr>
+    		</thead>
+    		<tbody>
+    			#foreach($date in $data.dates)
+    				#trOpenWithLastRow($data.dates)
+    					<th>$textFormatter.formatDate(${user}, ${date}, true)</th>
+    					#foreach($artifact in $data.identifiables)
+    						<td class="number">${data.get($date, $artifact)}</td>
+    					#end
+    				#trClose()
+    			#end
+    		</tbody>
+    	</table>
+    #end
+#wikiBoxClose()

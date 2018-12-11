@@ -1,0 +1,44 @@
+#parse("notification_email_header.vm")
+
+#define($footerText) 
+#trackerItemReason(${trackerItem})
+#end
+
+<div class="heading">
+${textFormatter.getMessage('issue.updated.title')} #linkTrackerItem(${trackerItem})
+</div>
+
+#account(${originator})
+
+#partHeader("Integrating changes")
+#linkScmRepository(${trackerItem.sourceRepository}) / ${trackerItem.sourceBranch}</b> &rarr; #linkScmRepository(${trackerItem.targetRepository}) / ${trackerItem.targetBranch}
+
+#if ($modificationComment)
+	#partHeader("${textFormatter.getMessage('issue.updated.comment')}") $textFormatter.format(${modificationComment}, ${modificationCommentFormat}, ${wikiContext})
+#end
+
+#partHeader("${textFormatter.getMessage('issue.updated.modifications')}")
+
+#tableOpen()
+
+##trTitle("${textFormatter.getMessage('issue.updated.modifications')}" "tracker")
+
+<thead>
+#trOpen()
+	#thField("${textFormatter.getMessage('issue.history.field.label')}")
+	#thField("${textFormatter.getMessage('issue.history.newValue.label')}")
+	#thField("${textFormatter.getMessage('issue.history.oldValue.label')}")
+#trClose()
+</thead>
+
+#foreach( $modification in $modifiedProperties.get( $recipient.id ) )
+	#trOpen()
+		#tdField($modification.FieldName)
+		#tdText($modification.NewValue)
+		#tdText($modification.OldValue)
+	#trClose()
+#end
+
+#tableClose()
+
+#parse("notification_email_footer.vm")

@@ -1,0 +1,40 @@
+<div class="form-field">
+	<div id="query-column-order-${selectorId}" data-order="${value}">
+		<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+		<div class="queryColumOrderContainer">
+			<div class="table">
+				<div class="row">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="${queryColumnOrderEditorJsUrl}"></script>
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			codebeamer.dashboard.queryColumnOrderEditor.init("${selectorId}", "${fieldName}");
+
+			codebeamer.dashboard.multiSelect.attachEventListener("queryColumnsSelector:columns:loaded", function(value, defaultColumns) {
+				codebeamer.dashboard.queryColumnOrderEditor.onColumsLoaded(value, defaultColumns);
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("queryColumnsSelector:columns:changed", function(values) {
+				codebeamer.dashboard.queryColumnOrderEditor.onColumnsChanged(values);
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:advancedQuery:changed", function(value) {
+				$("#query-column-order-${selectorId}").hide();
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:changed", function(value) {
+				$("#query-column-order-${selectorId}").show();
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:cleared", function(value) {
+				codebeamer.dashboard.queryColumnOrderEditor.clear("${selectorId}");
+			});
+		});
+	</script>
+
+</div>

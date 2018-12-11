@@ -1,0 +1,3 @@
+## $Revision$ $Date$
+
+${description} #if (${success}) Completed #else Failed#end for Repository [#${repository.id}] ${repository.name}

@@ -1,0 +1,26 @@
+#parse("notification_email_header.vm")
+
+#if( ${project.joinWithApproval} )
+<div class="heading">
+${textFormatter.getMessage('project.member.join.requested.title')}: [#${project.id}] #linkProject(${project})
+</div>
+
+<a href="${cbBaseUrl}/proj/members.spr?proj_id=${project.id}&status_id=1&layout=list">$textFormatter.escape(${textFormatter.getMessage('project.member.approval.label')})</a>
+#br()
+#else
+<div class="heading">
+${textFormatter.getMessage('project.member.joined.title')}: [#${project.id}] #linkProject(${project})
+</div>
+
+#end
+
+#partHeader("${textFormatter.getMessage('user.account.label')}")
+
+#parse("user_data_notification_email_body.vm")
+
+#if( ${comment} )
+	#partHeader("${textFormatter.getMessage('project.member.join.comment.label')}")
+	#partStart() ${comment} #partEnd()
+#end
+
+#parse("notification_email_footer.vm")

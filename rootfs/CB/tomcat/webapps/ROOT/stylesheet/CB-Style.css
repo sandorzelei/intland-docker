@@ -1,0 +1,3696 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+@import "lib.css";
+
+body {
+	background-color: #FFF;
+	font-family: 'arial', 'helvetica', 'verdana', sans-serif;
+	font-size: 13px;
+}
+/*
+	fixes that IE8 does not display chinese/korean characters, see: http://stackoverflow.com/questions/3867678/how-can-i-make-chinese-characters-show-in-ie8-without-forcing-compatibility-mode
+ */
+body.IE8 {
+	font-family: 'arial', Arial Unicode MS,  'helvetica', 'verdana', sans-serif;
+}
+
+.popupBody {
+	padding: 10px;
+}
+
+/* Custom style when the popup appears inside an overlay (inlinedPopup) */
+body.insideInlinedPopup {
+	padding-top: 0;
+	width: 100%;
+}
+
+form {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+input {
+	font-size: 13px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	margin: 0 3px;
+}
+
+select {
+	font-size: 13px;
+}
+
+a {
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a, a:hover, a:visited, a:focus {
+	outline: none;
+}
+
+img {
+	border: none;
+}
+
+.fixSelectWidthWithIcon {
+	width: 134px;
+}
+
+.fixSelectWidth {
+	width: 150px;
+}
+
+.dynamicSelectWidth {
+	width: 80%;
+}
+
+.fixWideSelectWidth {
+	width: 300px;
+}
+
+.fixMiddleSelectWidth {
+	width: 220px;
+}
+
+.expandText {
+	width: 98%;
+}
+
+/**
+ * Deprecated, use expandTextAreaFullWidth instead !
+ */
+.expandTextArea {
+	width: 98%;
+}
+
+/**
+ * Use to expand a textarea to full width
+ */
+.expandTextAreaFullWidth {
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.expandTextAreaWH {
+	width: 100%;
+	height: 99%;
+}
+
+.inputText {
+}
+
+textarea {
+	font-size: 13px;
+}
+
+td, ul, ol, li {
+	font-weight: normal;
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+}
+
+th:not(.mx-graph) {
+	background-color: #AAAAAA;
+	font-weight: bold;
+	font-size: 13px;
+	color: white;
+	vertical-align: middle;
+	line-height: 120%;
+}
+
+tr.head {
+	background: #AAAAAA;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+/*
+tr.head th,
+tr.head td {
+	padding: 5px;
+}
+*/
+
+.contentArea tr.head a {
+	color: white;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+tr.odd {
+	background: #FFF;
+}
+
+tr.even {
+	background: #FAFAFA;
+}
+
+/*
+	The rows which are checked, styles applied by TableHiglighter.js
+ */
+.tableRowSelected_odd {
+	background: #f1f1c0 !important;
+}
+.tableRowSelected_even {
+	background: #e1e1b6 !important;
+}
+.tableRowSelected_odd td, .tableRowSelected_odd a {
+	font-weight: bold !important;
+	/*color: blue !important;*/
+}
+.tableRowSelected_even td, .tableRowSelected_even a{
+	font-weight: bold !important;
+	/*color: blue !important;*/
+}
+
+.tableRowSelected_odd:hover, .tableRowSelected_even:hover {
+	background: #f1f1a0 !important;
+}
+
+pre {
+	font-family: 'courier new', 'courier', monospace;
+	font-size: 13px;
+
+	overflow:auto;
+
+	/*
+		allow some wrapping in <pre>-s if necessary:
+		http://myy.helia.fi/~karte/pre-wrap-css3-mozilla-opera-ie.html
+	 */
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+/**
+ * Fix the line-height from the YUI's fonts.css
+ */
+pre,code,kbd,samp,tt {
+	line-height: normal !important;
+}
+
+input.inconsistent {
+	background-color: red;
+}
+
+.graysmall {
+	font-weight: bold;
+	font-size: 13px;
+	color: #666666;
+	text-decoration: none;
+}
+
+.match {
+	background-color: #ffd633;
+}
+
+.warningtext {
+	font-weight: bold;
+	font-size: 10pt;
+	color: #B31317;
+	text-decoration: none;
+}
+
+.subtext, .subtext a, .subtext li {
+	font-size: 8pt;
+	color: #777;
+}
+
+.subtext a {
+	color: #55C !important;
+}
+
+.subtext span.separator {
+	margin: 0 3px;
+	color:#BBB;
+}
+
+.explanation {
+	font-size: 8pt;
+	color: #777;
+}
+
+.explanation a {
+	font-size: 8pt;
+}
+
+#componentsToCopy .explanation {
+	margin: 0.5em 0 1em 2.5em;
+}
+
+.hint {
+	background: @gray1;
+	border: 1px solid #E5E5E5;
+	font-size: 8pt;
+	padding: 5px;
+}
+
+a.sortedby {
+	color: white;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+a.sortedby:hover {
+	color: white;
+	font-size: 13px;
+}
+
+a.notsortedby,
+a.notsortedby:hover {
+	color: white;
+	font-size: 13px;
+
+	background-image: url("../images/displaytag/arrow_off_white.gif");
+	background-repeat: no-repeat;
+	background-position: top right;
+	padding-right: 12px;
+}
+
+/* - Boxes ----------------------------------------------------------------- */
+
+.boxtext {
+	font-size: 10pt;
+	color: black;
+}
+
+/* default headline bullet style */
+img.bullet {
+	background-image: url("../images/red_arrow.gif");
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+
+.tableItem {
+	font-weight: normal;
+	font-size: 13px;
+	color: #000000;
+	text-align: left;
+	line-height: 16px;
+	background-color: @gray1;
+
+	padding: 2px 20px 2px 5px !important;
+}
+
+.optional, .mandatory {
+	font-weight: normal;
+	font-size: 13px;
+	color: #000000;
+	text-align: right;
+	line-height: 16px;
+	background-color: #CCCCCC;	/* same as wysiwyg editor's gray */
+
+	white-space: nowrap;
+	padding: 2px 0.5em;
+}
+
+.commentListFileItem {
+	vertical-align: middle;
+	font-weight: normal;
+	font-size: 13px;
+	text-align: right;
+	line-height: 16px;
+	background-color: #DDDDDD;
+	white-space: nowrap;
+	padding: 2px 0.5em;
+}
+
+.commentListFileItem img {
+	vertical-align: middle;
+}
+
+
+.contentArea .optional a,
+.contentArea .mandatory a {
+	color: black;
+	text-decoration: underline;
+}
+
+/* add some space around when optional..etc.. is not on a table cell, but on a span */
+span.optional, span.mandatory {
+	padding:5px;
+}
+
+.mandatory {
+	border-right: solid 4px #cc0000;
+}
+
+/**
+ * use for the cells with labels in the tables used for form layout
+ */
+td.labelcell {
+	padding: 2px 5px;
+	white-space: nowrap;
+	vertical-align: top;
+}
+
+td.colseparator {
+	width: 0;
+	white-space: nowrap;
+	border-right: 1px solid silver;
+}
+
+.toolheadline {
+	background-color: #33668f;
+}
+
+.toolheadsubline {
+	background-color: #cccccc;
+}
+
+.titlenormal {
+	font-weight: bold;
+	color: black;
+	text-decoration: none;
+}
+
+.title-subtext {
+	color: #AAA;
+	font-size: 8pt;
+	font-weight: normal;
+}
+
+/*
+	.mainmenu, .languageChooser * {
+	}
+*/
+
+/*
+The menu appears on the top right, and contains stuff like the logged in user, history, and quick search
+ */
+/*
+	.toprightmenu {
+	}
+*/
+
+/*
+	#userInfo {
+	}
+*/
+
+.mainmenu a:hover {
+	text-decoration: none;
+	color: #000;
+}
+
+.submenu {
+	font-weight: normal;
+	font-size: 13px;
+	color: #ffffff;
+	text-decoration: none;
+	background-color: #003366;
+}
+
+.submenu a:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+/* Header customization End */
+
+/* Toolbar (Main Tabs) Look & Feel */
+.toolbar {
+	overflow-x:auto;
+
+	.help {
+		width: 16px;
+		text-align: right;
+		padding: 0 10px 0 0;
+	}
+}
+
+/* Toolbar Look & Feel End */
+
+/*
+	Top menubar, where the breadcumb is
+ */
+.topmenubar {
+	margin: 0 20px 7px 20px;
+	font-size: 8pt;
+	font-weight: normal;
+	text-decoration: none;
+	color: white;
+}
+
+/*
+	Content-area, everything below the topmenubar
+ */
+.contentArea {
+	margin: 0 10px 0 10px;
+}
+.popupBody .contentArea {
+	margin: 0px;
+}
+
+.contentArea a {
+	color: #11C;
+	text-decoration: none;
+}
+
+.contentArea a:hover {
+	text-decoration: underline;
+}
+
+.menubar_summary {
+	color: black;
+	background-color: #cccc99;
+}
+
+/* Doc Style */
+
+.nonEditableItem {
+	cursor: crosshair;
+}
+
+/* End of Doc Style */
+
+/* xDoc Style */
+.toolbar_xdocs_selected {
+	font-weight: bold;
+	font-size: 10pt;
+	color: white;
+	text-decoration: none;
+	background-color: #007fb0;
+}
+
+.toolbar_xdocs_selected a:hover {
+	color: white;
+}
+
+.menubar_xdocs {
+	color: white;
+	background-color: #007fb0;
+}
+
+.menubar_xdocs a, .menubar_xdocs a:hover {
+	color: white;
+}
+
+/* End of xDoc Style */
+
+/* Labels */
+
+.labellist {
+	background: @gray1;
+	border: 1px solid #E5E5E5;
+	padding: 5px;
+	font-size: 8pt;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.labellist a {
+	font-size: 8pt;
+}
+
+/* Approvals */
+
+#revisionMessage {
+	background: #FFF0AA url(../images/approve.gif) no-repeat 5px 5px;
+	border: 1px solid #FFEC9F;
+	padding: 6px 6px 6px 26px;
+	font-size: 8pt;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#artifactApprovalList {
+	background: @gray1;
+	border: 1px solid #E5E5E5;
+	padding: 5px;
+	font-size: 8pt;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.currentStep, .approvedStep, .rejectedStep, .futureStep {
+	padding: 1px 5px;
+	white-space: nowrap;
+}
+
+.currentStep {
+	font-weight: bold;
+	background: #FFEC9F;
+}
+
+.approvedStep {
+	color: #FFF;
+	background: #009900;
+}
+
+.rejectedStep {
+	color: #FFF;
+	background: #AA0000;
+}
+
+#artifactApprovalList #approveArtifactForm {
+	margin-top: 15px;
+	padding: 10px;
+	background: #FFF;
+}
+
+.approvableArtifact {
+	background: #FFF0AA;
+	margin-left: 5px;
+	padding: 0 2px 0 2px;
+}
+
+
+.scctask {
+	font-weight: bold;
+	font-size: 10pt;
+	color: red;
+	text-decoration: none;
+}
+
+/* Working Set selector */
+.workingset select {
+	width: 160px;
+}
+/* End Working Set selector */
+
+.closedItem {
+	font-size: 13px;
+	text-decoration: line-through !important;
+}
+
+.closedItem a:hover {
+	text-decoration: line-through !important;
+}
+
+.notStarted {
+	color: #009999;
+}
+
+.due {
+	color: gray;
+	text-decoration: line-through;
+}
+
+a.due {
+	text-decoration: line-through underline;
+}
+
+.pending {
+	font-style: normal;
+	background-color: #808080;
+	color: #ffffff;
+}
+
+.loggedinuser {
+	font-style: italic;
+}
+
+.loggedoffuser {
+	font-style: normal;
+}
+
+.documentinuse {
+	font-style: italic;
+}
+
+/**
+	row color for odd and then even lines of deleted documents
+	Note: there is NO SPACE between the .odd and .documentdeleted, to select only when both classes are present!!!
+	i.e. class="odd documentdeleted"
+	*/
+.documentdeleted-odd td, .documentdeleted-odd td a {
+	background-color: #EAEAEA;
+	color: gray;
+}
+
+.documentdeleted-even td,.documentdeleted-even td a {
+	background-color: #E1E1E1;
+	color: gray;
+}
+
+.documentdeleted-odd td.colseparator, .documentdeleted-even td.colseparator {
+	background-color: white;
+}
+
+.disableduser {
+	font-style: normal;
+	color: gray;
+	text-decoration: line-through !important;
+}
+
+.wikiPageContent {
+	vertical-align: top;
+	/*overflow:auto;*/
+}
+
+.dateData {
+	white-space: nowrap;
+	text-align: right;
+	padding: 0 4px 0 4px;
+}
+
+.numberData  {
+	white-space: nowrap;
+	text-align: right;
+	padding: 0 4px 0 4px;
+}
+
+.textData {
+	white-space: nowrap;
+	text-align: left;
+	padding: 0 4px 0 4px;
+}
+
+.textCenterData {
+	white-space: nowrap;
+	text-align: center;
+
+	padding: 0 4px 0 4px;
+}
+
+.textCenterDataWrap {
+	white-space: normal;
+	text-align: center;
+
+	padding: 0 4px 0 4px;
+}
+
+.textSummaryData {
+	text-align: left;
+	padding: 0 4px 0 4px;
+}
+
+.smallerText {
+	font-size: 8pt;
+}
+
+/* This item affects the width of tracker summary fields. */
+.summaryMinWidth {
+	text-align: left;
+	min-width: 350px;
+}
+
+.textDataWrap {
+	text-align: left;
+	padding: 0 4px 0 4px;
+}
+
+.rawData {
+	white-space: nowrap;
+	text-align: left;
+	padding: 0 0 0 0;
+}
+
+.keyNameTextData {
+	white-space: nowrap;
+	text-align: left;
+	padding: 0 0 0 4px;
+}
+
+.keyIdTextData {
+	white-space: nowrap;
+	text-align: right;
+	padding: 0 0 0 4px;
+}
+
+.empty TD {
+	white-space: nowrap;
+	text-align: left;
+	padding: 0 4px 0 4px;
+}
+
+/* - DisplayTag tables - */
+
+table.displaytag .expandTable {
+	width: 98%;
+}
+
+table.displaytag, .fullExpandTable {
+	width: 100%;
+}
+
+table.displaytag th:not(.mx-graph):not(.diff):not(.diff-deleted):not(.diff-added),
+table.displaytag td:not(.mx-graph):not(.diff):not(.diff-deleted):not(.diff-added) {
+	padding: 5px;
+	font-size: 13px;
+}
+
+/**
+ * The gray vertical separator between columns
+ */
+table.displaytag td.columnSeparator,
+table td.columnSeparator,
+table th.columnSeparator {
+	border-right: solid 1px silver;
+}
+
+/* mark minimum width columns with that */
+table.displaytag td.action-column-minwidth,
+table.displaytag td.column-minwidth,
+table.displaytag td.checkbox-column-minwidth,
+table.displaytag th.action-column-minwidth,
+table.displaytag th.column-minwidth,
+table.displaytag th.checkbox-column-minwidth {
+	width: 0.1%;
+	padding-left: 2px;
+	padding-right: 2px;
+	text-align: left;
+	white-space: nowrap;
+}
+
+/* on IE the 0.1% does not work because it rounds, must use 1% at least */
+.IE table.displaytag td.action-column-minwidth,
+.IE table.displaytag td.column-minwidth,
+.IE table.displaytag td.checkbox-column-minwidth,
+.IE table.displaytag th.action-column-minwidth,
+.IE table.displaytag th.column-minwidth,
+.IE table.displaytag th.checkbox-column-minwidth {
+	width: 1%;
+}
+
+table.displaytag th:not(.mx-graph) {
+	background-color: #AAA;
+	color: white;
+	background-repeat: no-repeat;
+	font-weight: normal;
+	white-space: nowrap;
+	vertical-align: top;
+	text-align: left;
+}
+
+table.displaytag thead th a, table.displaytag thead th a:visited {
+	color: white;
+}
+
+table.displaytag thead th a:hover {
+	text-decoration: underline;
+	color: white;
+}
+
+table.displaytag th.sortable a {
+	background-image: url(../images/displaytag/arrow_off_white.png);
+}
+
+table.displaytag th.order1 a {
+	background-image: url(../images/displaytag/arrow_down_white.png);
+}
+
+table.displaytag th.order2 a {
+	background-image: url(../images/displaytag/arrow_up_white.png);
+}
+
+table.displaytag th.sorted {
+	font-weight: bold;
+}
+
+table.displaytag th.sorted a, th.sortable a {
+	background-position: right;
+	background-repeat: no-repeat;
+	display: block;
+	padding-right: 10px;
+}
+
+table.displaytag {
+	border: 1px solid silver; /* Draw a box around the table. */
+	border-collapse: collapse;
+	margin: 0;
+	padding: 0;
+}
+
+table.displaytag tr:not(.mx-graph):not(.diff):not(.diff-deleted):not(.diff-added) {
+	vertical-align: top;
+}
+
+table.displaytag tr.even {
+	background: @gray1;
+}
+
+table.displaytag tr.odd {
+	background: #FFF;
+}
+
+/* slightly yellow line when mouse is hovering over a row, sorry this does not work in IE :-( */
+table.displaytag tr.even:hover, table.displaytag tr.odd:hover, table tr.even:hover, table tr.odd:hover {
+	background: #ffffcc;
+}
+
+/* context action menus appear only for "hover" rows */
+table.displaytag tr.even img.menuArrowDown, table.displaytag tr.odd img.menuArrowDown, table tr.even img.menuArrowDown, table tr.odd img.menuArrowDown {
+	visibility: hidden;
+}
+
+table.displaytag tr.even:hover img.menuArrowDown, table.displaytag tr.odd:hover img.menuArrowDown, table tr.even:hover img.menuArrowDown, table tr.odd:hover img.menuArrowDown {
+	visibility: visible;
+	background-color: yellow;
+}
+
+table.displaytag td.actionIcon {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+table .expand {
+	width: 99%;
+}
+
+div.pagebanner, div.pagelinks {
+	padding: 5px 0;
+}
+
+div.pagelinks span.nextprev, div.pagelinks a, div.pagelinks strong, div.pagebanner a {
+	border: 1px solid #CCC;
+	padding: 1px 3px 1px 3px;
+	text-decoration: none;
+	white-space: nowrap;
+	margin-right: 3px;
+}
+
+div.pagelinks span.nextprev {
+	color: #AAA;
+}
+
+div.pagelinks strong {
+	background: #CCC;
+	color: #FFF;
+}
+
+div.pagelinks a:hover {
+	background: #F0F0F0;
+	color: #000;
+}
+
+div.exportlinks {
+	background-color: white;
+	border: 0 dotted #999;
+	padding: 2px 4px 2px 4px;
+	margin: 0;
+
+	font-size: 8pt;
+}
+
+.notSelectable {
+	font-weight: normal;
+	font-style: normal;
+	color: gray;
+}
+
+.invisible {
+	display: none !important;
+}
+
+/* DitchnetTab Custom Skin (based on default skin) */
+.ditch-tab-skin-cb .ditchnet-tab-container {
+	margin: 10px;
+}
+
+.ditch-tab-skin-cb .ditch-tab-wrap {
+	position: relative;
+	z-index: 9;
+	height: 25px;
+	background: transparent url(../images/cb_tab_bg_tabs.gif) 100% 0 repeat;
+	padding: 0 0 0 5px;
+}
+
+.ditch-tab-skin-cb .ditch-tab {
+	position: relative;
+	float: left;
+	padding: 5px 20px;
+	margin: 0 1px -1px 1px;
+	text-align: center;
+	cursor: pointer;
+	height: 15px;
+}
+
+.ditch-tabs-right-aligned {
+	float: right;
+	padding: 5px 0px 5px 20px;
+	margin: 0 5px -1px 5px;
+	height: 15px;
+	white-space: nowrap;
+}
+
+.wysiwyg-with-upload .ditch-tabs-right-aligned {
+	padding-right: 2px;
+	min-width: 275px;
+}
+
+.smallLink {
+	font-size: 80%;
+}
+
+.smallLink a {
+	cursor: pointer !important;
+}
+
+.formatSelector {
+	float: left;
+	margin: 3px 20px 1px 20px;
+	white-space: nowrap;
+}
+
+/**
+ * When the upload widget is inside the ditch-tabs' tab line
+ */
+.ditch-tabs-right-aligned .qq-uploader {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.ditch-tabs-right-aligned .qq-upload-button {
+	padding-top: 0;
+	padding-bottom: 0;
+	width: 13em;
+	cursor: pointer;
+}
+
+.ditch-tab-skin-cb .ditch-tab-bg-left {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 10px;
+	height: 25px;
+}
+
+.ditch-tab-skin-cb .ditch-tab-bg-left {
+	height: 25px;
+}
+
+.ditch-tab-skin-cb .ditch-unfocused {
+	color: #999;
+	border-bottom: 1px solid silver;
+	background: transparent url(../images/cb_tab_bg_right.gif) 100% 0 no-repeat;
+}
+
+.ditch-tab-skin-cb .ditch-focused {
+	border-bottom: 1px solid white;
+	background: transparent url(../images/cb_tab_bg_focus_right.gif) 100% 0 no-repeat;
+	font-weight: bold;
+}
+
+.ditch-tab-skin-cb .ditch-unfocused .ditch-tab-bg-left {
+	background: transparent url(../images/cb_tab_bg_left.gif) 0 0 no-repeat;
+}
+
+.ditch-tab-skin-cb .ditch-focused .ditch-tab-bg-left {
+	background: transparent url(../images/cb_tab_bg_focus_left.gif) 0 0 no-repeat;
+}
+
+.ditch-tab-skin-cb .ditch-tab a:link,.ditch-tab-skin-cb .ditch-tab a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+.ditch-tab-skin-cb .ditch-tab-wrap .ditch-unfocused a:link,.ditch-tab-skin-cb .ditch-tab-wrap .ditch-unfocused a:visited {
+	color: black;
+}
+
+.ditch-tab-skin-cb .ditch-tab-pane-wrap {
+	position: relative;
+	z-index: 9;
+	border: 1px solid silver;
+	padding: 8px;
+}
+
+#rightPanels .ditch-tab-pane-wrap {
+	border: 0px;
+	border-top: 1px solid silver;
+}
+
+.ditch-tab-skin-cb .ditch-tab-pane {
+}
+
+.ditch-tab-skin-cb br.ditch-clear {
+	clear: both;
+}
+
+/* DitchnetTab Custom Skin "cb-box" */
+.ditch-tab-skin-cb-box .ditchnet-tab-container {
+	margin: 10px;
+}
+
+.ditch-tab-skin-cb-box .ditch-tab-wrap {
+	position: relative;
+	background-color: transparent;
+	padding: 0;
+	height: auto;
+}
+
+.ditch-tab-skin-cb-box .ditch-tab {
+	position: relative;
+	float: left;
+	padding: 5px 20px;
+	margin: 0 0 0 0;
+	text-align: center;
+	cursor: pointer;
+}
+
+.ditch-tab-skin-cb-box .ditch-unfocused {
+	border-top: 1px solid #C0C0C0;
+	border-bottom: 1px solid #778A98;
+	color: #999;
+	background: transparent url(../images/cb_box_tab_bg_unfocus_right.gif) 100% 0 no-repeat;
+}
+
+.ditch-tab-skin-cb-box .ditch-tab-last {
+	border-right: 1px solid #C0C0C0;
+}
+
+.ditch-tab-skin-cb-box .ditch-tab-first {
+	border-left: 1px solid #C0C0C0;
+}
+
+.ditch-tab-skin-cb-box .ditch-focused {
+	z-index: 11;
+	border-top: 1px solid #778A98;
+	border-right: 1px solid #778A98;
+	border-bottom: 1px solid white;
+	border-left: 1px solid #778A98;
+	background: transparent url(../images/cb_box_tab_bg_focus_right.gif) 100% 0 no-repeat;
+	font-weight: bold;
+}
+
+.ditch-tab-skin-cb-box .ditch-unfocused .ditch-tab-bg-left {
+	position: absolute;
+	top: 0.5em;
+	left: -1px;
+	border-left: 1px solid #C0C0C0;
+	height: 1.3em;
+}
+
+.ditch-tab-skin-cb-box .ditch-tab-first .ditch-tab-bg-left {
+	border-left: 0;
+}
+
+.ditch-tab-skin-cb-box .ditch-focused .ditch-tab-bg-left {
+}
+
+.ditch-tab-skin-cb-box .ditch-tab a {
+	hidefocus: true;
+	-moz-outline-style: none;
+}
+
+/**
+ * Modify this to change an appearance of all active tabs.
+ * Related class in wiki.css: .tabmenu .activetab
+ */
+.ditch-tab-skin-cb-box .ditch-tab, .ditch-tab-skin-cb-box .ditch-tab a:link,.ditch-tab-skin-cb-box .ditch-tab a:visited {
+	color: #777777;
+	text-decoration: none;
+}
+
+/**
+ * Modify this to change an appearance of all NOT active tabs.
+ * Related class in wiki.css: .tabmenu span a
+ */
+.ditch-tab-skin-cb-box .ditch-tab-wrap .ditch-unfocused a:link,.ditch-tab-skin-cb-box .ditch-tab-wrap .ditch-unfocused a:visited {
+	color: #777777;
+}
+
+.ditch-tab-skin-cb-box .ditch-tab-pane-wrap {
+	position: relative;
+	top: -1px;
+	z-index: 9;
+	border: 1px solid #778A98;
+	padding: 8px;
+}
+
+.ditch-tab-skin-cb-box .ditch-tab-pane {
+}
+
+.ditch-tab-skin-cb-box br.ditch-clear {
+	clear: both;
+}
+
+/* - Wiki ------------------------------------------------------------------ */
+
+blockquote {
+	margin: 1em 0.5em 1em 2em;
+	padding-left: 15px;
+	border-left: 2px solid #ccc;
+}
+
+span.wiki-warning {
+	background: #FFFFAA;
+}
+
+span.wiki-error {
+	background: #FFDDDD;
+}
+
+table.diff {
+	border: 1px solid silver;
+	margin: 0;
+	padding: 0;
+}
+
+table.diff td {
+	font-family: monospace;
+	white-space: nowrap;
+	/*background-color: #EEEEEE; */
+}
+
+table.diff td.diff-annotation {
+	font-size: smaller;
+	color: #888888;
+	background-color: #FFFFFF;
+}
+
+.diff-added, table.diff td.diff-added {
+	background-color: #ccffe8;
+	border-left: 1px solid #ccffe8;
+	border-right: 1px solid #ccffe8;
+}
+
+.diff-deleted, table.diff td.diff-deleted {
+	background-color: #ffe8e9;
+	border-left: 1px solid #ffe8e9;
+	border-right: 1px solid #ffe8e9;
+}
+
+.diff-added-inline {
+	background-color: #93f5c9;
+}
+
+.diff-deleted-inline {
+	background-color: #ffb5b8;
+}
+
+.diff-selected {
+	border-left: solid 3px blue !important;
+}
+
+.diff-unchanged {
+	background-color: #fff;
+}
+
+.diff-binary {
+	color: #888888;
+	text-decoration: bold;
+}
+
+/* - Change-set lists ------------------------------------------------------ */
+
+pre.commitmessage {
+	/* even if it's preformatted, no reason to use monospace font */
+	margin-top:2px;
+	margin-bottom: 2px;
+}
+
+ul.changeset {
+	margin: 0;
+	padding: 0 0 0 20px;
+	list-style: none;
+}
+
+ul.changeset li.changeset {
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+}
+
+ul.changeset li.changeset, ul.changeset li.changeset a {
+	font-size: 8pt;
+}
+
+.changeset span.added {
+	color: #44CC44;
+}
+
+.changeset span.deleted {
+	color: #CC4444;
+}
+
+.changeset span.modified {
+	color: #888888;
+}
+
+.changeset.integrated {
+	background: #339933;
+}
+
+/* - Spring forms ---------------------------------------------------------- */
+
+div.invalidfield {
+	margin-top: 4px;
+}
+
+#inboxForm .expandText div.invalidfield2 {
+    display: inline-block;
+}
+
+span.invalidfield, div.invalidfield2, p.invalidfield2 {
+	padding: 2px 4px;
+	background: pink;
+	color: #F00 !important;
+	font-size: 8pt;
+	font-weight: bold;
+}
+
+/* - Layout elements ------------------------------------------------------- */
+
+table#header {
+	background: #FFF top repeat-x;
+}
+
+table#header .logo {
+	margin-left: 5px;
+}
+
+#left-panel {
+	border: solid 1px silver;
+	width: 20%;
+}
+
+#middle-panel {
+	background: #FFF;
+	width: 100%;
+	padding-left: 10px;
+}
+
+#right-panel {
+	background: #FFF;
+	border-left: 1px solid #CCC;
+}
+
+/* style for parts will not appear in printing */
+.noPrint {
+}
+
+/* style for parts only appear in printing */
+.onlyInPrint {
+	display: none;
+}
+
+/* ----- common style elements for action menu and action links and others ---- */
+
+/**
+	style for the action menu contains buttons, just above the tables
+	10 pixel space after
+ */
+.actionBar {
+	margin: 0 0 10px 0;
+	padding: 5px 10px;
+}
+
+/*
+	Put the same gray backround on actionMenuBar and actionBar
+ */
+.actionBar {
+	background-image: url("../images/newstyle/header_elements/bg_hrepeat_toolbars.gif");
+	background-repeat: repeat;
+	background-color: #a8acb6;
+	border: none;
+	color: white;
+}
+
+/* font color in actionMenuBar & actionBar/ desciptionbox is white */
+.actionMenuBar span,
+.actionBar span,
+.actionMenuBar yuimenubar,
+.actionMenuBar a
+.actionBar a {
+	color: white
+}
+
+.contentArea .actionMenuBar a,
+.contentArea .actionBar a {
+	color: white;
+	text-decoration: underline;
+}
+
+/* action icons */
+.actionMenuBar img.tableIcon,
+.actionBar img.tableIcon {
+	height: auto !important;
+	width: auto !important;
+}
+
+/**
+ * Info box between the actionMenuBar and actionBar
+ */
+.descriptionBox {
+	background-color: white;
+	color: black;
+	border: solid 1px #E5E5E5;
+
+	margin: 0 0 10px 0;/*5px 5px 5px 5px;*/
+	padding: 5px;
+}
+
+/**
+ *	inputs in action menu
+ */
+.actionButton, .actionbar input {
+	margin-right: 8px; /* space between action buttons */
+}
+
+/*
+	links in action menu, or in description box
+ */
+.actionLink, .actionMenuBar a, .actionBar a {
+	color: white;
+	font-weight: bold;
+}
+
+.actionLink {
+	margin-right: 15px; /* space between action buttons */
+}
+
+.actionBar .yuimenubar {
+	margin-right: 15px; /* space between action buttons */
+}
+
+/**
+ * combo-box with actions inside in the action menu {
+ */
+.actionComboBox {
+	border-color: silver;
+	margin-right: 15px; /* space between action buttons */
+}
+
+/**
+ * Action elements as options inside actionCombo
+ */
+.actionComboBoxOption {
+	margin-left: 10px;
+}
+
+/*
+ * More important and less important information in action menubar.
+ */
+.actionBar .high, .actionBar .high a {
+	color: #000;
+	font-size: 13px;
+}
+
+.actionBar .high {
+	background-color: yellow;
+	padding:0 3px 0 3px;
+}
+
+/* ----- END OF common style elements for action menu and action links and others ---- */
+
+img.tableIcon {
+	margin-right: 2px;
+	border: none;
+}
+
+/*
+ * CB specific style for wiki tables
+ */
+table.CBwikiTable {
+	border:1px solid silver;
+	border-collapse: collapse;
+}
+
+table.CBwikiTable th {
+	background-color: #AAAAAA;
+}
+
+table.CBwikiTable tr th
+, table.CBwikiTable tr th a {
+	font-weight: normal;
+	font-size: 13px;
+	color: white !important;
+	vertical-align: middle;
+	line-height: 100%;
+	padding: 2px;
+}
+
+table.CBwikiTable tr td,
+table.CBwikiTable tr th {
+	border-collapse: collapse;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+table.CBwikiTable tr.even td	{
+	background: #FFF none repeat scroll 0%;
+}
+
+table.CBwikiTable tr.odd td	{
+	background: @gray1 none repeat scroll 0%;
+}
+
+table.CBwikiTable td.colseparator {
+	background-color: #CCCC99;
+	width: 1px;
+	white-space: nowrap;
+}
+
+/*
+ * Style for down arrow next to popup menus
+ */
+.menuArrowDown {
+	margin: 5px 3px 0 3px; /* a bit space around */
+
+	/* sprite for ../images/newstyle/header_elements/maintab_arrow_gray.gif */
+	background-image: url("../images/sprite-arrows.gif");
+	background-position: -0 -0 ;
+	width: 5px; height:5px;
+
+	background-repeat: no-repeat;
+}
+
+/* a bit less right margin when inside the menu */
+.tab .menuArrowDown {
+	margin-right: -2px;
+}
+
+/* Use the white arrow for selected tabs, and in actionMenuBar */
+/*.currentTabCenter .menuArrowDown,*/ .actionMenuBar .menuArrowDown, .actionBar .menuArrowDown {
+	/* sprite for ../images/newstyle/header_elements/maintab_arrow_white.gif */
+	background-image: url("../images/sprite-arrows.gif");
+	background-position: -10px -0 ;
+	width: 5px; height:5px;
+}
+/* use black arrow for selected rows, as it is not visible otherwise */
+.tableRowSelected_odd .menuArrowDown,
+.tableRowSelected_even .menuArrowDown,
+.displaytag .menuArrowDown,
+.CBwikiTable .menuArrowDown,
+div.wikichartbox table .menuArrowDown,
+.biggerMenuArrow .menuArrowDown{
+	/* sprite for ../images/newstyle/header_elements/maintab_arrow_black.gif */
+	background-image: url("../images/sprite-arrows.gif");
+	/* the original black arrow's background position: */
+	/*
+	background-position: -20px -0 ;
+	width: 5px; height:5px;
+	*/
+	/* making the arrow-down bit larger and bordered, so it is easier to spot and click on*/
+	border: solid 1px #CCCCCC;
+	width: 11px;
+	height: 10px;
+	background-position: -17px 2px;
+	margin: 2px 0 0 0;
+	padding: 0;
+	margin: 1px;
+}
+
+/**
+ * Button for popups.
+ */
+.popupButton {
+	display: block;
+
+	border: 1px solid #CCC;
+	text-decoration: none;
+
+	margin: 2px 2px;
+	padding: 0 4px;
+	background-position: center;
+	background-image: url("../images/Editor.gif");
+	background-repeat: no-repeat;
+	background-color: buttonface;
+}
+
+.popupButton:hover {
+	border-color: #999;
+	text-decoration: none;
+}
+
+.popup, .popup .ui-widget-content, .popup .ui-dialog-buttonpane, .popup .ui-dialog-buttonset {
+	background-color: white !important;
+}
+
+.popup .ui-dialog-titlebar {
+	padding: 4px 1em 4px 1em;
+	font-size: 13px;
+	background: none;
+	background-color: #E5E4E2;
+	border: 0px none;
+	color : #504A4B;
+}
+
+.popup .ui-widget-content {
+	font-size: 13px;
+	padding: 0px;
+}
+
+.popup .ui-widget-content a {
+	font-size: 13px;
+	color: rgb(0, 147, 184);
+	text-decoration: none;
+}
+
+.popup .ui-dialog-buttonset  {
+	padding: 4px 2em 4px 2em;
+	float: None !important;
+}
+
+.overlay .ui-dialog-titlebar, .inline .ui-dialog-titlebar {
+	display: None !important;
+}
+
+.overlay {
+	background: transparent !important;
+}
+
+button.ui-multiselect span {
+	color: black !important;
+	font-size: 13px;
+	font-weight: normal;
+	white-space: wrap !important;
+}
+
+.ui-multiselect-optgroup a {
+	text-align: left !important;
+}
+
+/*
+ * Label tab style
+ */
+
+/* Checkbox column in tables (displaytag) using minimum width */
+.checkbox-column-minwidth, .column-minwidth {
+	text-align: left;
+	width: 1%;
+	white-space: nowrap;
+}
+
+.status-icon-minwidth {
+	width: 1%;
+	padding: 0 0 0 4px;
+	white-space: nowrap;
+}
+
+.action-column-minwidth {
+	width: 0.1%;
+	white-space: nowrap;
+}
+
+.IE .action-column-minwidth {
+	width: 1%;
+}
+
+/*
+ * Style elements for helpLink.tag
+ */
+.helpLink {
+	margin: 0 5px;
+
+	img {
+		vertical-align: text-bottom;
+	}
+}
+.helpLink, .helpLink *, .helpLink:hover, .helpLink *:hover {
+	text-decoration:none !important;
+}
+
+
+/*
+ * Style for divs around boxes where scrollbars can appear if the content is too wide
+ * It does not look good, disabled now...
+ */
+.scrollable {
+/*	overflow: auto; overflow-x: auto;  */
+}
+
+/* class used to wrap invisible images, but the images will pre preloaded */
+.prefetchImages {
+	display: none;
+	position: absolute;
+	top: -2000px;
+	left: -2000px;
+}
+
+/* entity subscribed icons' classes (notification) */
+.img_entity_subscribed {
+	/* sprite for	background: url(../images/entity_subscribed.gif) no-repeat; */
+	background-image: url(../images/sprite-subscribe.gif);
+	background-position: -0 -0 ;
+	width: 16px; height:16px;
+
+	cursor:pointer;
+	cursor:hand; /* IE6*/
+}
+.img_entity_notsubscribed {
+	/* sprite for background: url(../images/entity_notsubscribed.gif) no-repeat; */
+	background-image: url(../images/sprite-subscribe.gif);
+	background-position: -21px -0 ;
+	width: 16px; height:16px;
+
+	cursor:pointer;
+	cursor:hand; /* IE6*/
+}
+.img_entity_subscribednoteditable {
+	/* sprite for background: url(../images/entity_subscribednoneditable.gif) no-repeat; */
+	background-image: url(../images/sprite-subscribe.gif);
+	background-position: -42px -0 ;
+	width: 16px; height:16px;
+
+	cursor: default;
+}
+.img_entity_notsubscribednoteditable {
+	/* sprite for background: url(../images/entity_notsubscribednoneditable.gif) no-repeat;*/
+	background-image: url(../images/sprite-subscribe.gif);
+	background-position: -63px -0 ;
+	width: 16px; height:16px;
+
+	cursor:default;
+}
+/* fixing mis-alignment of the notification icon, caused by that the letter is not centered vertically */
+.img_entity_subscribed,
+.img_entity_notsubscribed,
+.img_entity_subscribednoteditable,
+.img_entity_notsubscribednoteditable {
+	margin-top: 1px;
+	vertical-align: top;
+}
+
+/* Sprite for priotities */
+/* priority_1.gif*/
+.sprite-priority-1-gif {
+	background-image: url(../images/sprite-priorities.gif);
+	background-position: -0 -0 ;
+	width: 16px; height:16px;
+}
+/* priority_2.gif*/
+.sprite-priority-2-gif {
+	background-image: url(../images/sprite-priorities.gif);
+	background-position: -21px -0 ;
+	width: 16px; height:16px;
+}
+/* priority_3.gif*/
+.sprite-priority-3-gif {
+	background-image: url(../images/sprite-priorities.gif);
+	background-position: -42px -0 ;
+	width: 16px; height:16px;
+}
+/* priority_4.gif*/
+.sprite-priority-4-gif {
+	background-image: url(../images/sprite-priorities.gif);
+	background-position: -63px -0 ;
+	width: 16px; height:16px;
+}
+/* priority_5.gif*/
+.sprite-priority-5-gif {
+	background-image: url(../images/sprite-priorities.gif);
+	background-position: -84px -0 ;
+	width: 16px; height:16px;
+}
+
+/**
+ * style for chooseReferences (dynamic choice popup) container (chooseReferences.tag)
+ */
+.chooseReferences {
+	margin: 2px;
+	padding: 1px;
+	border: solid 1px gray;
+	vertical-align: middle;
+	background-color: #FFF;
+	cursor: pointer;
+}
+
+/**
+ * popup button inside the dynamic choices
+ */
+.chooseReferences .popupButton {
+	border: none;
+	background-color: transparent;
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	margin: 0;
+}
+
+/**
+ * Hide links inside the reference chooser/user-popup as they are not clickable
+ */
+.chooseReferences a, .chooseReferences a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+/**
+ * One dynamic choice reference rendered by renderReferences.tag
+ */
+.reference {
+	white-space: nowrap;
+}
+
+/**
+ * Disabled dynamic choice selector
+ */
+.chooseReferencesDisabled {
+	background-color: @gray1;
+	border-color: gray;
+	width: 100% !important;
+}
+
+.chooseReferencesDisabled * {
+	color:gray;
+}
+
+.chooseReferencesDisabled .popupButton {
+	background-image: url("../images/Editorgray.gif");
+}
+
+.chooseReferencesDisabled .reference-box {
+	min-height: 14px !important;
+	padding: 5px 15px 5px 5px;
+	margin-right: 5px;
+	background: url("../images/newskin/action/permission-alert.png") no-repeat right center;
+}
+
+/**
+	CSS classes for editing/filtering etc.. fields of an issue.
+	This expects: put "fieldsTable" class on the table contains the cells.
+					3 "fields" in a row (two table-cells for each),
+								the cells showing the labels for data has "labelCell" class
+								the editor cells has "dataCell" class.
+*/
+.fieldsTable {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing:0;
+}
+.fieldsTable tr {
+	border: solid 1px #CCCCCC;
+}
+
+.fieldsTable .tableCellCounter_finishRow {
+	border: solid 1px #CCCCCC;
+}
+
+.fieldsTable td {
+	vertical-align: top;
+}
+
+/* width calculated as: <%=(100.0/MAXCOLUMNS) *(0.25)%> */
+.fieldsTable .labelCell {
+	width: 8.333%;
+	border-bottom: solid 1px #FFF;
+	padding: 3px 2px 2px;
+	white-space: normal;
+	padding-left: 20px !important;
+}
+
+/* width: <%=(100.0/MAXCOLUMNS) *(0.75)%>%; */
+.fieldsTable .dataCell {
+	width: 25%;
+	border: solid 1px gray;
+	vertical-align: top;
+	min-width: 12em;
+}
+
+/* use this class for calendar cells with ui:calendarPopup */
+.fieldsTable .calendarCell{
+}
+
+.fieldsTable .dataCell .chooseReferences {
+	border: none;
+	margin-top: 2px;
+	margin-left: 0;
+	margin-right: 0;
+	width: auto;
+	height: auto;
+}
+
+.chooseReferences .yui-multibox .yui-ac-input {
+	margin-top:0;
+	padding-bottom: 1px;
+	height: auto;
+}
+
+/* border:0 trick will remove borders from input fields, but not from select-s on IE */
+.fieldsTable .dataCell input, .fieldsTable .dataCell select {
+	width: 100%;
+	padding: 2px 2px 2px 0;
+	border:0;
+	font-family: inherit;
+}
+.fieldsTable .dataCell input {
+	width: 95%;
+	margin: 2px 0 0 0;
+	padding-left: 4px;
+}
+
+
+/* align the small calendar icon to the right*/
+.fieldsTable .calendarAnchorLink {
+	position: relative;
+	top: 2px;
+	margin-right: 5px;
+}
+
+.calendarAnchorLink {
+	text-decoration: none !important;
+	cursor: pointer;
+	padding: 0;
+	position: relative;
+	top: 2px;
+	left: 3px;
+}
+
+.calendarAnchorLink:hover {
+	text-decoration: none !important;
+}
+
+/**
+ * Styles for issue statuses.
+ * Note: background-colors must match/choosen from the palette of colorPicker.tag!
+ * Note: when changing these colors change also the "issueStatusStyles" bean in the applicationContext.xml to match with this!
+ */
+.issueStatus, .testRunResultTablet, .scmIntegratedTablet, .baselineDiffTablet {
+	min-width: 83px;
+	display: inline-block;
+	height: auto;
+	white-space: nowrap;
+	text-align: center;
+	padding: 2px 5px;
+	font-size: 11px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: white;
+	background: #b31317;    /* redish (like new) */
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+.issueOverdue {
+	background: #b31317;	/* red */
+}
+
+.issueStatusNew {
+	background: #b31317;	/* red */
+}
+
+.issueStatusVerified {
+	background: #ffab46;	/* orangish */
+}
+
+.issueStatusResolved {
+	background: #00a85d;  /* green */
+}
+.issueStatusFinished {
+	background: #187a6d;    /* green */
+}
+
+.issueStatusClosed {
+	background: #187a6d;    /* green */
+	text-decoration: line-through !important;
+}
+.issueStatusObsolete {
+	text-decoration: line-through !important;
+}
+
+/**
+ * Test run results
+ */
+.testRunPassed {
+	background: #00a85d;    /* green */
+}
+
+.testRunPartly_passed, .testRunPartlypassed {
+	background: #00BF6A;    /* slightly lighter green than passed */
+}
+
+.testRunFailed {
+	background: #b31317;	/* red */
+}
+
+.testRunBlocked {
+	background: #777777;	/* grey */
+}
+
+.testRunNotrun {
+	background: #ffd9ab !important;
+}
+
+/* test with skipped parameter: partial run */
+.testRunPartial {
+	margin-left: 5px;
+	background: #ffd9ab;  /* orangish */
+	color: black;
+}
+
+/**
+ * Baseline diffs
+ */
+.baselineStatus {
+	white-space: nowrap;
+	text-align: left;
+	padding: 1px 3px;
+	font-size: 80%;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: white;
+	background: #b31317;    /* redish like "new" */
+}
+
+.baselineStatusAdded {
+	background: #00a85d;    /* green */
+}
+
+.baselineStatusRemoved {
+	background: #b31317;	/* red */
+}
+
+.baselineStatusModified {
+	background: #ffc038;    /* redish like "new" */
+	color: black;
+}
+
+.baselineStatusMoved {
+	background: #22aaff;	/* blue */
+}
+
+
+/**
+ * Forums
+ */
+table.highlight table.messageHeader {
+	background: #ffc038;
+}
+
+table.highlight td.messageBody {
+	background: #ffffcc;
+}
+
+/* Style applied on tree root, during the initial load of the tree */
+.tree-root-loading {
+	background: url(../images/folders/loading.gif) 0 -4px no-repeat; width:16px; height:22px;
+	padding-left: 18px;
+	white-space: nowrap;
+}
+
+/**
+ * Special box for showing debug information on pages. This is hidden in production.
+ */
+.debug {
+	display: none;
+}
+
+/**
+ * the DEVELOPMENTMODE css is added to body if we're in dev-mode
+ */
+body.DEVELOPMENTMODE .debug {
+	display: block;
+	border: solid 1px red;
+}
+
+/**
+ * fix dirty tree-node decoration for IE6/7 for yui 2.7.0
+ */
+.ygtvspacer {
+	text-decoration: none;
+	outline: none;
+}
+
+/**
+ * common YUI layout/layoutmanager look
+ */
+.yui-skin-cb .yui-layout-wrap {
+	border: solid 1px gray;
+}
+
+.yui-skin-cb .yui-resize-handle {
+	border-right: inset 2px gray ;
+}
+
+.yui-skin-cb .yui-layout-hd {
+	height:0;
+	padding:0;
+	margin:0;
+}
+
+/* User photos */
+.photoBox {
+	border-radius: 50%;
+}
+
+.smallPhoto {
+	height: 32px;
+	width: 32px;
+}
+
+.largePhoto {
+	height: 64px;
+	width: 64px;
+}
+
+.vcard {
+	width: 20em;
+	height: 5em;
+	padding: 0;
+	overflow: hidden;
+	white-space: normal;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+}
+
+.vcardMedium {
+	width: 30em;
+	height: 8em;
+	padding: 3px;
+	overflow: auto;
+	white-space: nowrap;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+}
+
+.vcardFull {
+	width: 30em;
+	height: 12em;
+	padding: 3px;
+	overflow: auto;
+	white-space: nowrap;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+}
+
+#userAndRoles .smallPhoto {
+	width: 1em;
+	height: 1em;
+}
+
+fieldset legend {
+	color: black;
+}
+
+/* - wiki plugins 2.0 ------------------------------------------------------ */
+
+div.ajaxplugin_loading {
+	position: relative;
+}
+
+div.wikichartbox {
+	border: 1px solid @gray1;
+	margin: 10px;
+}
+
+div.wikichartbox > div {
+	padding: 2px 5px;
+}
+
+/* title bar inside the wikis */
+.newskin .wikiContent .wikichartbox h4, .wikichartbox h4 {
+	font-size: 16px;
+	color: @gray7;
+	margin: 0 0 10px 0 !important;
+	padding: 0px 0px 7px 0px !important;
+	border-bottom: solid 1px @gray2;
+
+	a {
+		font-size: 16px;
+	}
+}
+
+.wikichartbox .chartControls {
+	float: right;
+	padding: 0;
+	margin: 0;
+	font-size: 9px;
+	margin-top: -8px;
+}
+
+.wikichartbox .chartControls>input,
+.wikichartbox .chartControls>button {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+@media (max-width: 1280px) {
+	.wikichartbox .chartControls {
+		float: none;
+		padding-top: 5px;
+	}
+}
+
+.wikichartbox .clearer {
+	clear: both;
+}
+
+div.wikichartbox span img { /* chart image */
+	margin: 5px;
+}
+
+div.wikichartbox table {
+	width: 100%;
+	padding: 0;
+	border-spacing: 0;
+}
+
+div.wikichartbox table.embedded {
+	border: none;
+	padding: 5px !important;
+	margin-top: 15px;
+}
+
+/* When both the chart and the table is displayed in a wiki chart */
+div.wikichartbox span + table.embedded {
+	margin-top: 15px;
+}
+
+div.wikichartbox table tr.even, body.IE6or7 div.wikichartbox table tr.even th {
+	background-color: #FFF;
+}
+
+div.wikichartbox table tr.odd, body.IE6or7 div.wikichartbox table tr.odd th {
+	background-color: @gray1;
+}
+
+body.IE6or7 div.wikichartbox table thead tr th {
+	color: #FFF;
+}
+
+body.IE6or7 div.wikichartbox table tbody tr th {
+	color: #000;
+}
+
+/* smaller right padding in the last column */
+div.wikichartbox table {
+	th, td {
+		padding: 5px;
+		font-size: 13px;
+		text-align: left;
+	}
+
+	th:last-child, td:last-child {
+		padding-right: 0;
+	}
+
+	thead th {
+		background-color: #AAA;
+		color: #FFF;
+		white-space: nowrap;
+	}
+}
+
+div.wikichartbox table.embedded {
+
+	> thead > tr > th {
+		background-color: transparent;
+		border-bottom: solid 1px @gray2;
+		padding-bottom: 10px;
+		text-align: center;
+	}
+
+	> tbody > tr {
+	 	 > th, > td {
+	 	 	padding: 10px 0;
+	 	 	border-bottom: solid 1px @gray1;
+	 	}
+	 	> td {
+	 		text-align: center;
+	 	}
+	 	&.lastRow {
+	 		> th, > td {
+	 			padding-bottom: 0;
+	 			border-bottom: none;
+	 		}
+	 	}
+	}
+}
+
+div.wikichartbox table thead th a {
+	color: #FFF;
+	text-decoration: underline;
+}
+
+div.wikichartbox table tfoot th {
+	background: #E0E0E0;
+	color: #777;
+}
+
+div.wikichartbox table tbody th {
+	background-color: inherit;
+	color: inherit;
+	font-weight: normal;
+	white-space: nowrap;
+}
+
+div.wikichartbox table td.separator {
+	border-bottom: 1px solid #CCC;
+}
+
+div.wikichartbox table td.vseparator {
+	border-right: 1px solid #CCC;
+}
+
+div.wikichartbox table .stretched {
+	width: 99%;
+}
+
+div.wikichartbox table .number, div.wikichartbox table .date {
+	text-align: right;
+	white-space: nowrap;
+}
+
+div.wikichartbox .excerpt {
+	margin: 2px 0;
+	word-wrap: break-word;
+	word-break: break-all;
+	word-break: break-word !important; /* for Chrome */
+}
+
+div.wikichartbox small {
+	color: #777;
+}
+
+div.wikichartbox table .status-icon-minwidth {
+	width: 1%;
+	padding: 5px 5px 0 5px !important;
+}
+
+div.wikichartbox table .status-icon-minwidth img {
+	margin: 0;
+}
+
+div.wikichartbox table .action-column-minwidth {
+	width: 0.1%;
+	padding: 0 !important;
+	white-space: nowrap;
+}
+
+div.wikichartbox table.guide {
+	td {
+		padding: 10px 20px 10px 5px;
+
+		&.iconic {
+			padding: 10px;
+			width: 1%;
+		}
+
+		&.step {
+			width: 60%;
+
+			a {
+				font-weight: bold;
+			}
+		}
+
+		&.advice {
+			img {
+				float: left;
+				margin-right: 0.5em;
+			}
+
+			small {
+			}
+		}
+	}
+
+	small {
+		font-size: 11px;
+	}
+}
+
+div.wikichartbox span.disabled {
+	font-weight: bold;
+	color: #777;
+}
+
+div.wikichartbox small.guide a {
+	color: #446699;
+}
+
+div.wikichartbox small.guide img {
+	vertical-align: text-bottom;
+	margin-right: 2px;
+}
+
+.IE div.wikichartbox table .action-column-minwidth {
+	width: 1%;
+}
+
+/* Add the "compact" to tds which should occupy minimum width */
+div.wikichartbox table td.compact {
+	width: 0.1%;
+	padding-right: 5px;
+}
+
+.IE div.wikichartbox table td.compact {
+	width: 1%;
+}
+
+div.wikichartbox td.indicator {
+	text-align: center;
+	padding: 1em;
+	border: none !important;
+}
+
+div.wikichartbox td.indicator em {
+	display: block;
+	font-size: 250%;
+	font-weight: bold;
+	font-style: normal;
+	color: @darkGreenColor;
+}
+
+div.wikichartbox td.indicator em.red {
+	color: @darkRedColor;
+}
+
+div.wikichartbox .miniprogressbar {
+	width: 100%;
+	border: 1px solid @gray2;
+}
+
+div.wikichartbox .miniprogressbar div {
+	padding: 8px 0;
+}
+
+div.wikichartbox .miniprogressbar .barLabel {
+	padding: 0;
+}
+
+div.wikichartbox .miniprogressbar label {
+	display: none;
+}
+
+img.wikichart {
+	padding: 5px;
+	border: 1px solid #AAA;
+}
+
+/* Favourite/ajax-tag widget */
+.favouriteWidget img, .ajaxTaggingWidget img{
+	background: url(../images/sprite-rating-stars.png) no-repeat 0 0px;
+	/* star-inactive.png*/
+	background-position: -0px -0px ;
+
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+
+	margin-right: 5px;
+}
+
+.ajaxTaggingWidget img {
+	background:url(../images/sprite-tags.png);
+	background-position: 0 0;
+}
+
+.favouriteWidget img {
+	background: url(../images/sprite-rating-stars.png) no-repeat 0 0px;
+}
+
+.ajaxTaggingWidget img.tagged, .favouriteWidget img.tagged {
+	/* star-active.png*/
+	background-position: -21px -0px ;
+}
+
+/* forumsModule */
+.forumsModule .messageHeader {
+	background: #CCCCCC;
+}
+
+.forumsModule .messageBody {
+	background: #F6F6F6;
+	vertical-align: top;
+}
+
+/* end of forumsModule */
+
+.buildsModule .STATUS_SUCCESSFUL,
+.buildsModule a:hover.STATUS_SUCCESSFUL {
+	color: white;
+	background-color: green;
+}
+
+.buildsModule .STATUS_FAILED,
+.buildsModule a:hover.STATUS_FAILED {
+	color:white;
+	background-color: red;
+}
+
+/* end of buildsModule */
+
+/* chatModule */
+.chatModule .messageHeader {
+	background: #CCCCCC;
+}
+
+.chatModule .messageBody {
+	background: #F6F6F6;
+}
+
+/* end of chatModule*/
+
+/* membersModule */
+.membersModule .userListWidth {
+	width: 350px;
+}
+
+/* end of membersModule */
+
+/**
+ * The form in the ActionMenuBar/ActionBar for filtering the content of the current page
+ */
+.filterForm {
+	font-size: 12px;
+}
+.filterForm * {
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+.filterForm input {
+	background-color: #FAFAFA;
+	color: black;
+	margin: 0;
+	vertical-align: middle;
+}
+
+/* crappy IE6 does not allow using a nice attribute selector*/
+.filterForm input.checkbox,
+.filterForm input.radio {
+	background-color: transparent;
+	border: none;
+}
+
+.filterForm input.button {
+}
+
+.filterForm select {
+	border: inset 1px silver;
+}
+
+.filterForm a {
+	font-weight: bold;
+}
+
+.actionMenuBar label,
+.actionBar label {
+	color: white;
+	font-weight: bold;
+	/*margin: 0px 0.5em 0px 0px;*/
+	margin: 0px 0.5em 0px 0px;
+	white-space: nowrap;
+}
+
+.actionMenuBar label select,
+.actionMenuBar label input,
+.actionBar label select,
+.actionBar label input {
+	margin: 0px 0.5em;
+}
+
+/* - simplistic switch control --------------------------------------------- */
+
+div.switch {
+	margin-left: 15px;
+	padding: 0;
+	border: 1px solid #AAA;
+	display: inline-block;
+}
+
+div.switch a {
+	color: #AAA;
+	padding: 4px 6px;
+	font-weight: bold;
+	text-decoration: none;
+	border-left: 1px solid #CCC;
+}
+
+div.switch a:first-child {
+	border-left: none;
+}
+
+div.switch a.active {
+	background: #EEE;
+	color: #000;
+}
+
+/* - Breadcrumbs ----------------------------------------------------------- */
+
+#breadcrumbs, .breadcrumbs {
+	margin: 0;
+}
+
+#breadcrumbs .breadcrumbs-separator, .breadcrumbs .breadcrumbs-separator{
+	padding: 0px 5px;
+}
+
+#breadcrumbs, #breadcrumbs a, .breadcrumbs, .breadcrumbs a {
+	font-size: 13px;
+	font-weight: bold;
+	background: transparent;
+}
+
+#breadcrumbs *, .breadcrumbs * {
+	white-space: normal;
+}
+
+#breadcrumbs-item-id {
+	margin-left: 1em;
+	color: @gray2;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+/**
+ * CSS fragment for simpleDropdownMenu.tag
+ */
+.yui-menu-button {
+	background-image: url("../images/newstyle/header_elements/maintab_arrow_white.gif");
+	background-repeat: no-repeat;
+	background-position: center right;
+	color: white;
+}
+.yui-menu-button button {
+	color: white;
+	font-weight: bold;
+	text-decoration: underline;
+	padding: 0px 8px;
+}
+.simpleDropdownMenu .yui-button {
+	vertical-align: middle; /* TODO: why ? ; it does not look nice otherwise on FF */
+}
+/**
+ * end of CSS fragment for simpleDropdownMenu.tag
+ */
+
+/**
+ * Inline yui menus
+ */
+.inlinemenuTrigger .menuArrowDown {
+	margin-left: 2px;
+}
+.inlinemenu {
+	position:absolute;
+	visibility: hidden;
+}
+
+/**
+ * css class added to an input box when it contains a hint text
+ */
+.inputboxWithHint {
+	color: gray !important;
+}
+
+/**
+ * CSS for ui:rightAlign.
+ */
+table.rightAlign {
+	empty-cells: hide;
+	border-collapse: collapse;
+	width: 100%;
+}
+/* note: not using ">" selector, because ie6/ie7 does not support it properly */
+table.rightAlign td.rightAlignCell {
+	padding:0;
+	white-space: nowrap;
+	height: 1%;	/* haslayout hack */
+}
+table.rightAlign td.rightAligned {
+	text-align:right;
+	width: 100%;
+}
+
+/**
+ * CSS for toggle link with right or down double-arrows
+ */
+.toggleLink {
+	background-image: url("../images/expand_icon_right.gif");
+	background-repeat: no-repeat;
+	background-position: center right;
+	padding-right: 16px;
+}
+.toggleLink:hover{
+	text-decoration: none !important;
+}
+.toggleLinkOpen {
+	background-image: url("../images/expand_icon_sprite.gif");
+}
+
+#inlinedPopupIframe {
+	border: none;
+	width: 100%;
+	height: 100%;
+}
+
+/* - pull requests --------------------------------------------------------- */
+
+.prPENDING {
+	background: #888800;
+}
+
+.prREVOKED {
+	background: #777777;
+}
+
+.prREJECTED {
+	background: #777777;
+}
+
+.prCOMPLETED {
+	background: #339933;
+}
+
+.pullRequestCOMPLETED {
+	background: #CCFFCC;
+	color: #339933
+}
+
+.pullRequestPENDING_AUTOMERGE {
+	background: #DDE7FF;
+	color: #446699;
+}
+
+.pullRequestPENDING_CONFLICTS {
+	background: #FFDDCC;
+	color: #AA2222;
+}
+
+.pullRequestPENDING_WAITING {
+	background: #FFFFBB;
+	color: #888800;
+}
+
+.pullRequestPENDING_REJECTED, .pullRequestPENDING_REVOKED {
+	background: #DDDDDD;
+	color: #777777;
+}
+
+/* - repository list --------------------------------------------------------- */
+
+div.commands {
+	background: #EEE;
+	padding: 10px 10px 0 10px;
+	margin-bottom: 2em;
+	border-bottom: 2px solid #CCC;
+}
+
+div.commands pre {
+	background: #000;
+	color: #EEE;
+	font: monospace;
+	padding: 3px 5px;
+}
+
+@repoBoxHeaderColor: @gray1;
+
+.repoBox {
+	border: 1px solid @gray2;
+	padding: 0;
+	vertical-align: top;
+	min-width: 50%;
+
+	.title {
+		font-weight: bold;
+		font-size: 16px;
+		padding: 7px 10px;
+		background: @repoBoxHeaderColor;
+	}
+
+	.header {
+		padding: 7px 10px;
+		font-size: 120%;
+		font-weight: bold;
+		border-bottom: 1px solid @gray2;
+	}
+
+	.changeset {
+		padding: 5px;
+
+		.details td {
+			vertical-align: top;
+		}
+
+		.submission {
+			padding-right: 10px;
+			border-right: 1px solid @gray2;
+		}
+
+		.revision {
+			padding-left: 10px;
+		}
+	}
+
+}
+
+.branchSelector {
+	width: 70%;
+}
+
+/* - in-place editing for pull requests and comments ----------------------- */
+.highlighted:hover,
+.highlighted:hover * {	/* without this the edit of wiki pages does get an nice blue background for everything on page*/
+	cursor: text;
+}
+
+/* fixing cursors inside highlighted */
+.highlighted {
+	a {
+		cursor: pointer !important;
+	}
+
+	select, select * {
+		cursor: default !important;
+	}
+}
+
+.highlighted:hover {
+  .inplaceEditableHighlightMixin;
+}
+
+/* css class replaces "highlighted" class when thing is being edited or alike... */
+.highlightDisabled {
+/*
+	.inplaceEditableIcon {
+		visibility: hidden;
+	}
+*/
+
+	&:hover {
+		/*outline: solid 1px red !important; */	/* use for debugging */
+	}
+}
+
+.IE6or7 .highlighted:hover {
+	margin: -5px !important;
+}
+
+.highlighted {
+	position: relative;
+}
+
+.inplaceEditableIcon {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 9999;
+	padding: 12px;
+
+	.inplaceEditableIconMixin;
+	background-position: 4px 4px;
+}
+
+/* wiki edit section is hidden, using .inplaceEditableIcon as an overlay in the top-right corner */
+.editsection {
+	visibility: hidden;
+}
+.IE6or7 .editsection {
+	visibility: visible;
+}
+
+.inplace-form {
+	display: none;
+}
+
+.edited .inplace-form {
+	display: block;
+}
+
+.edited input, .edited select {
+	margin-bottom: 0.5em;
+}
+
+.edited div.okcancel {
+	margin-top: 20px;
+}
+
+.edited div.okcancelRightAligned {
+	text-align: right;
+	padding-right: 5px;
+}
+
+.edited div.okcancel a,
+.okcancel a {
+	font-weight: normal !important;
+	margin-left: 15px;
+	color:#11C;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.edited div.okcancel button {
+	margin-right: 0px;
+	cursor: pointer;
+}
+
+.editorContainer span.okcancel a {
+	font-size: 8pt;
+	margin-left: 0.2em;
+	font-weight: bold;
+	border-bottom: 0px !important;
+}
+
+table#comment #commentrow {
+	background: #E5ECF9;
+	display: none;
+}
+
+table#comment .raw {
+	display: none;
+}
+
+/**
+ * mini horizontal progressbar like on the versions screen
+ * Use with this html fragment
+ * <div class="miniprogressbar">
+ *	  <div style="width: 69%;"></div>
+		<label>69%</label>
+	</div>
+ *
+ */
+.version .progressbar, .miniprogressbar {
+	width: 110px;
+	height: 1em;
+	border: none;
+	background: #FAFAFA;
+	position: relative;
+	white-space: nowrap;
+
+	label {
+		font-size: 10px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		text-align: center;
+		width: 100%;
+	}
+
+	div {
+		height: 100%;
+		background-color: #CCC;
+		float:left;
+
+		/* ui:progressBar default colors */
+		&.progressBarGreen {
+			background-color: #00a85d;
+			color: white;
+			padding-bottom: 2px;
+		}
+		&.progressBarGray {
+			background-color: @gray3;
+			color: white;
+		}
+		&.progressBarRed {
+			background-color: #B31317;
+			color: white;
+			padding-bottom: 2px;
+		}
+	}
+}
+
+.miniprogressbar label {
+	line-height: 12px;
+}
+
+
+/**
+ * CSS for upload widget inside the actionBar (on documents screen for example),
+ * making it nicer...
+ *
+ * If the .qq-upload-overlaid class is put on the container that makes the list element overlaid (will not occupy space)
+ */
+.actionBarWithUploadWidget {
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+.actionBar .qq-upload-button,
+.qq-upload-overlaid .qq-upload-button {
+	background: transparent;
+	padding: 0;
+}
+.actionBar .qq-uploader,
+.qq-upload-overlaid .qq-uploader {
+	padding: 0;
+}
+.actionBar .qq-uploader .qq-upload-text {
+	color: white;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.actionBar .qq-upload-list,
+.qq-upload-overlaid .qq-upload-list {
+	list-style: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: auto;
+	white-space: nowrap;
+	z-index: 14;	/* behind the menus */
+	margin-top: 1.1em !important;
+
+	/* limiting the max height of the uploaded files, and showing a vertical scrollbar if that is longer */
+	max-height: 10em;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	border: 1px solid #ddd;
+	background-color: white;
+}
+
+.actionBar .qq-upload-list li,
+.qq-upload-overlaid .qq-upload-list li {
+	padding: 3px 0px 3px 10px;
+}
+
+.actionBar .qq-upload-list li.qq-upload-success {
+	font-weight: bold;
+	background-color: white;
+}
+
+.qq-upload-list li .qq-upload-remove {
+	display: inline-block !important;
+	width: 15px;
+	height: 15px;
+	background: white url('../images/remove_attachment.png') no-repeat right center;
+	background-position: 0 0;
+	text-decoration: none;
+
+	&:hover {
+		background-position: 0 -26px;
+		text-decoration: none;
+	}
+}
+
+/* hide remove button when upload failed */
+.qq-upload-list li.qq-upload-fail .qq-upload-remove {
+	visibility: hidden;
+}
+
+.actionBar .qq-upload-list li,
+.actionBar .qq-upload-list span {
+	color: #1e9ebf;
+}
+
+.actionBar .qq-upload-list span.qq-upload-size {
+	color: #aaa;
+	margin-right: 60px;
+}
+
+.actionBar .qq-upload-list .qq-upload-remove,
+.actionBar .qq-upload-list .qq-upload-cancel {
+	position: relative;
+	z-index: 99;
+	float: right;
+}
+.actionBar .qq-upload-list .qq-upload-fail .qq-upload-remove {
+    float: right;
+    visibility: visible;
+}
+.actionBar .qq-upload-list .qq-upload-fail .qq-upload-failed-text {
+    margin-right: 25px;
+}
+
+.actionBar .qq-upload-list .qq-upload-remove:hover {
+	text-decoration: none;
+}
+
+.actionBar .qq-upload-spinner {
+	background: url("../images/loading-actionbar.gif");
+	background-repeat:repeat-x;
+	background-position:center;
+}
+
+.qq-upload-overlaid .qq-upload-spinner {
+	background: url("../images/loading.png");
+	background-repeat:repeat-x;
+	background-position:center;
+}
+
+.qq-upload-icon {
+	background: url("@{imagePrefix}/action/attach-m.png") no-repeat !important;
+}
+
+.qq-upload-button {
+	margin: 1px 0px;
+	padding: 1px 4px;
+	width: 100%;
+	height: 100%;
+	border: dashed 1px #DDD;
+}
+
+.actionBar .fileUpload-flatbox .qq-upload-text {
+	width: 0;
+	height: 0;
+}
+
+.actionBar .fileUpload-flatbox .qq-upload-icon {
+	color: white;
+	font-weight: bold;
+	text-decoration: underline;
+	text-align: left;
+
+	min-width: 8em;
+	height: 20px;
+	vertical-align: middle;
+	background-position: left center;
+	background-repeat: no-repeat;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 15px;
+	float: none;
+	line-height: 20px;
+}
+
+.actionBar .qq-upload-icon-flatbox-tr {
+	height: 22px;
+}
+
+.qq-upload-list .qq-upload-fail .qq-upload-failed-text {
+	color: #A00;
+}
+
+/**
+ * By default don't show the list, just when it has files
+ */
+.qq-uploader .qq-upload-list {
+	display: none;
+	clear: both;
+	margin: 0 0 0 35px;
+}
+
+.qq-uploader .qq-upload-list-has-files {
+	display: block !important;
+}
+
+.qq-upload-overlaid .qq-numFiles {
+	padding-right: 10px !important;
+	opacity: 0.5;
+	color: black;
+}
+
+.qq-upload-drop-area {
+	opacity: 0;
+}
+
+/* use cssClass="inlineFileUpload" on ui:fileUpload tag if you want that the files should appear next to the upload widget in the same line */
+.inlineFileUpload .qq-uploader .qq-upload-list-has-files {
+	float: left;
+	width: auto;
+	padding: 7px 0 !important;
+	clear: none !important;
+	position: absolute;
+	left: 10em;
+	list-style: none;
+}
+
+/**
+ * When drop zone is a form field
+ */
+
+.uploadFormField {
+	border: dashed 1px #CCC;
+}
+.uploadFormField .qq-uploader {
+	position: relative;
+	width: 100%;
+	padding: 0;
+}
+.uploadFormField .qq-upload-drop-area {
+	min-height: 20px;
+	position: absolute;
+}
+
+/* - jQuery UI controls ---------------------------------------------------- */
+
+.ui-widget-content {
+	background-image: none !important;
+}
+
+.ui-corner-all {
+	border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+}
+
+.ui-widget-content .ui-state-hover {
+	background: #AAA !important;
+	color: #FFF !important;
+	border: 1px solid #AAA !important;
+	font-weight: normal !important;
+}
+
+.ui-autocomplete {
+	max-height: 300px !important;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+}
+
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+	height: 300px !important;
+}
+
+/* Document view */
+
+#baselines {
+	margin-bottom: 10px;
+}
+
+#baselines .collapsingBorder_content {
+	padding: 5px;
+}
+
+#requirements {
+	border: none !important;
+}
+
+#requirements.baseline {
+	background: #FFFFDD;
+}
+
+#requirements td.baseline, #docbaselineinfo, #requirements div.smallWarning {
+	background: #FFF0AA url(../images/approve.gif) no-repeat 5px 5px;
+	padding: 10px 10px 10px 26px;
+	font-size: 8pt;
+}
+
+#requirements .requirementTd {
+	padding: 10px 20px;
+}
+
+#requirements .name {
+	margin: 0;
+}
+
+#requirements .name .releaseid {
+	color: #777;
+	margin: 0 5px;
+}
+
+#requirements .name .editable {
+	padding: 1px 2px;
+}
+
+#requirements .name .edited {
+	background-color: #E5ECF9;
+	padding: 10px;
+
+	input {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		width: 75%;
+	}
+}
+
+#requirements .description .edited {
+	background-color: #E5ECF9;
+	padding: 10px;
+}
+
+#requirements .ditch-tab-pane-wrap {
+	background-color: #FFFFFF;
+}
+
+#requirements .name input {
+	font-weight: bold;
+}
+
+#requirements .name .okcancel {
+	display: inline;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 70%;
+	font-weight: normal;
+}
+
+#requirements .okcancel {
+	padding-right: 5px;
+	padding-left: 1em;
+	margin-bottom: 0;
+	font-weight: bold;
+}
+
+#requirements .okcancel a {
+	margin-left: 12px;
+}
+
+.attributes {
+	margin: 0 0 0.5em 0 !important;
+	border: 1px solid #CCC;
+	background: #F9F9F9;
+}
+
+.attributes table.propertyEditor {
+	border: none;
+	border-collapse: collapse;
+	margin-bottom: 0;
+}
+
+.attributes table.propertyEditor th,
+.attributes table.propertyEditor td {
+	border: none;
+	font-size: 11px;
+}
+
+.attributes table.propertyEditor td.tableItem,
+.attributes table.propertyEditor td.optional {
+	vertical-align: middle;
+	background-color: #F9F9F9 !important;
+}
+
+.attributes table.propertyEditor td.optional {
+	color: #777;
+}
+
+table.propertyEditor td.mandatory {
+	border-right: solid 4px #cc0000 !important;
+	background-color: #ffebcd !important;
+	vertical-align: middle;
+}
+
+#requirements .collapsingBorder_collapsed {
+	border-top: 1px solid #CCC;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+	background: #FFF;
+}
+
+.attributes legend a {
+	color: #666 !important;
+	font-size: 70%;
+}
+
+#requirements .commentbuttons {
+	margin-top: 10px;
+}
+
+#requirements .teststepwrapper {
+	background: #F0F0F0;
+}
+
+#requirements .testStepContainer {
+	padding: 5px;
+}
+
+#requirements .expandable {
+	 padding: 0 5px 5px 5px;
+}
+
+#requirements .testStepTable tr:hover {
+	background: #ffffcc !important;
+}
+
+#issuePropertiesPane h3 {
+	font-size: 100%;
+}
+
+#issuePropertiesPane h3 img {
+	vertical-align: text-bottom;
+	margin-right: 5px;
+}
+
+#issuePropertiesPane .attributes {
+	background: #FFF;
+	border: none;
+	border-bottom: 1px solid #DDD;
+}
+
+#issuePropertiesPane .attributes table {
+	margin-bottom: 10px;
+}
+
+#issuePropertiesPane .attributes table.chooseReferences { /* fix for the rule above */
+	margin-bottom: 0;
+}
+
+#issuePropertiesPane .attributes .optional {
+	background: #FFF !important;
+}
+
+#requirements .attributes div.collapsingBorder_content {
+	padding: 5px;
+}
+
+#requirements table.references {
+	background: #FFF;
+	box-shadow: 0 1px 0.25em silver;
+	-moz-box-shadow: 0 1px 0.25em silver;
+	-webkit-box-shadow: 0 1px 0.25em silver;
+	margin-bottom: 0.5em;
+}
+.IE #requirements table.references {
+	border: solid 1px silver;
+}
+
+#requirements table.references {
+}
+
+#requirements table.references td {
+	font-size: 11px;
+}
+
+#requirements .description {
+	margin-top: 10px;
+}
+
+#requirements .expander {
+	cursor: pointer;
+	font-size: 8pt;
+	color: #777;
+	margin: 5px 0;
+}
+
+#requirements .expander {
+	color: #777;
+}
+
+#requirements .expander img {
+	vertical-align: top !important;
+	margin: 2px 4px 0;
+}
+
+.expander span {
+	margin-right: 1em;
+}
+
+#requirements .attachments {
+	border-top: 1px solid #EEE;
+	margin: 5px 0 0 0;
+	padding: 2px 0 0 5px;
+	font-size: 8pt;
+}
+
+#requirements span.suspect2:hover {
+	background: #700;
+}
+
+#requirements .attachments .attachment {
+	margin-top: 1em;
+}
+
+#requirements .attachments .attachment div {
+	margin-top: 5px;
+}
+
+#requirements .references img, #requirements .attachments img {
+	vertical-align: middle;
+}
+
+/**
+ * CSS for floating overlay box
+ */
+.floatingOverlayContainer {
+	z-index: 9999;
+	position:fixed !important; /* makes the find difference panel always on-screen even when scrolling down */
+}
+
+.floatingOverlayContainer .floatingOverlay .allInHeader {
+	background: none;
+	border-bottom: none;
+}
+
+/* Next two css makes the buttons initially visible, but appear when the YUI-panel is shown */
+.floatingOverlay {
+	display:none;	/* hidden initially*/
+}
+.yui-panel-container .floatingOverlay {
+	display: block; /* show when the yui panel is shown */
+}
+
+/* fixes for IE6*/
+body.IE6 .floatingOverlayContainer {
+	position: absolute;
+}
+
+.versionSelector tbody tr td {
+	padding-top: 1px !important;
+	padding-bottom: 0px !important;
+}
+
+.itemDiff td {
+	padding: 1px !important;
+}
+
+.editsection a {
+	cursor: pointer !important;
+}
+
+/* baselines in document tree */
+
+.tree-baselineNode .ygtvtp {
+	background: url(../images/sprite-tree-baseline.gif) -103px -0px no-repeat !important;
+}
+
+.tree-baselineNode .ygtvtph {
+	background: url(../images/sprite-tree-baseline.gif) -103px -0px no-repeat !important;
+}
+
+.tree-baselineNode .ygtvtm {
+	background: url(../images/sprite-tree-baseline.gif) -21px -0px no-repeat !important;
+}
+
+.tree-baselineNode .ygtvtmh {
+	background: url(../images/sprite-tree-baseline.gif) -21px -0px no-repeat !important;
+}
+
+.tree-baselineNode .ygtvlmh {
+	background: url(../images/sprite-tree-baseline.gif) -245px -0px no-repeat !important;
+}
+
+/**
+ * Wysiwyg editor's popups should use this CSS class as sking by using:
+ * <meta name="moduleCSSClass" content="wysiwygPopup" />
+ */
+.wysiwygPopup {
+	background: #F0F0EE;
+	background-attachment:fixed;
+	overflow-y: scroll;
+	margin-top: 0px;
+	padding: 0;
+}
+
+.reqContextMenu {
+	font-size: 65%;
+}
+
+.contextMenuTable tr td {
+	padding: 3px 0 0 0;
+}
+
+/**
+ * Marker css class for elements the mouse is being dragged over currently during a drag-drop
+ */
+.treeDroppingOver {
+}
+.treeToTableDropPlaceHolder {
+	height: 20px;
+}
+.treeToTableDropPlaceHolder div {
+	border: 1px solid orange;
+	color: orange;
+	padding: 0.5em;
+}
+/**
+ * The look for the tree node disabled
+ */
+.newskin .jstree .treeNodeDisabled > a {
+	color: gray !important;
+}
+
+/*
+* test step editor related styling
+*/
+.inlineInput {
+	border: 1px solid white !important;
+	width: 100%;
+	background: inherit;
+	resize: none !important;
+}
+
+.even .inlineInput {
+	border: 1px solid whiteSmoke !important;
+}
+
+.inlineInput:hover {
+	border: 1px solid #E5ECF9 !important;
+	background-color:  #E5ECF9;
+}
+
+.inlineInput:focus {
+	background-color: white;
+	border: 1px solid silver !important;
+}
+
+.booleanColumn {
+	width: 50px;
+}
+
+.testStepBtn {
+	cursor: pointer;
+	margin-right: 5px;
+}
+
+.buttonColumn {
+	width: 80px;
+}
+
+/*
+* test progress bar colors
+*/
+.passed .runResult{
+	background-color:#AFA !important;
+}
+
+.failed .runResult {
+	background-color:#FAA !important;
+}
+
+.blocked .runResult {
+	background-color: #CCC !important;
+}
+
+/**
+ * the progress bars are using the lightest alternative of the related status color from the palette
+ * must use a light color, becuse we have to write with black font on that as the progress must be readable when it is 0% and the background is white too
+ */
+.testingProgressBarPassed {
+	background-color: #93f5c9 !important;	/* Passed status: #00A85D  */
+	color:black !important;
+}
+.testingProgressBarPartlyPassed {
+	background-color: #71D3A4 !important;
+	color:black !important;
+}
+.testingProgressBarFailed {
+	background-color: #ffb5b8 !important; 	/* Failed status: #B31317 */
+	color:black !important;
+}
+.testingProgressBarBlocked {
+	background-color: @gray2 !important; /* Blocked status: #777777 */
+	color:black !important;
+}
+
+.progressBarLightGrey, .notRun .runResult {
+	background-color: transparent !important;
+}
+
+.runResultLabel .runResult, .runResultLabel .coverageStatus {
+	color: white;
+	font-weight: bold;
+	padding: 0 2px 0 2px;
+	font-size: 0.85em;
+	margin: 1px 0px 1px;
+	height: 1.5em;
+}
+
+.testRunPassed .runResult {
+	background: #00a85d !important;
+}
+
+.testRunFailed .runResult {
+	background: #b31317 !important;
+}
+
+.testRunBlocked .runResult  {
+	background: #777777 !important;
+}
+
+.testRunIncomplete {
+	background: #ffab46 !important;
+}
+.testRunNotRun {
+	background: #ffd9ab !important;
+}
+
+.testRunNotcovered, .testRunNotCovered {
+	background: #0093b8 !important;
+}
+
+.barLabel {
+	font-weight: bold;
+	width: 100%;
+	font-size: .85em;
+	padding-left: 45%;
+}
+
+.menuItemWithoutIcon {
+	padding-left: 36px !important;
+}
+
+#closer-west {
+	float:right;
+	cursor:pointer;
+	background-image: url("../images/tree_close_west.png");
+	width: 15px;
+	height: 13px;
+}
+
+#closer-east {
+	cursor:pointer;
+	background-image: url("../images/tree_close_east.png");
+	width: 15px;
+	height: 13px;
+}
+
+.wikiContent {
+    display: inline;
+}
+
+/* Hide the header/footer in generated content of Word plugin */
+.WordPlugin_Docx4jWordToHtmlConverter {
+  div.header, div.footer {
+	display:none !important;
+  }
+}
+
+/* hide the wikiErrorDetails because that's just an ugly causal chain */
+.wikiError {
+	cursor: pointer;
+}
+small.wikiErrorDetails {
+	display:none;
+}
+
+/**
+ * CSS class for contextHelps' tooltip
+ */
+.contextHelpTooltip {
+	background-color: white !important;
+	max-width: 600px;
+	padding: 0.5em !important;
+	margin: 0;
+	font-size: 12px !important;
+
+	a {
+		color: #0093b8 !important;
+		text-decoration: none !important;
+	}
+	a:hover {
+		text-decoration: underline !important;
+	}
+
+	h3 {
+		font-size: 14px !important;
+	}
+}
+
+/**
+ * Show a little ? mark as icon used for help link. Just use like: <span class='helpLinkButton'></span>
+ */
+.helpLinkButton {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url("../images/newskin/action/help.png") center no-repeat;
+	cursor: pointer;
+	position: relative;
+	top: 2px;
+}
+
+.fieldConfiguration input[type="text"] {
+	width: 50%;
+}
+
+.fieldConfiguration .numberInputField {
+	width: 5em !important;
+}

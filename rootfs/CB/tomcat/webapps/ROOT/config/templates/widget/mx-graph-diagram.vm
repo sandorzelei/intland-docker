@@ -1,0 +1,104 @@
+
+
+	<script type="text/javascript">
+		window.RESOURCES_PATH = '${contextpath}/mxGraph/resources';
+		window.RESOURCE_BASE = window.RESOURCES_PATH + '/grapheditor';
+		window.STENCIL_PATH = '${contextpath}/mxGraph/stencils';
+		window.IMAGE_PATH = '${contextpath}/mxGraph/images';
+		window.STYLE_PATH = '${contextpath}/mxGraph/styles';
+		window.CSS_PATH = '${contextpath}/mxGraph/styles';
+		mxClient.basePath = "${contextpath}/mxGraph/src";
+
+		var urlParams = (function(url)
+		{
+			var result = new Object();
+			var idx = url.lastIndexOf('?');
+
+			if (idx > 0)
+			{
+				var params = url.substring(idx + 1).split('&');
+
+				for (var i = 0; i < params.length; i++)
+				{
+					idx = params[i].indexOf('=');
+
+					if (idx > 0)
+					{
+						result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+					}
+				}
+			}
+
+			return result;
+		})(window.location.href);
+
+		var mxBasePath = "${contextpath}/mxGraph/src";
+	</script>
+
+	<script type="text/javascript" src="${contextpath}/mxGraph/sanitizer/sanitizer.min.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/js/Graph.js"></script>
+	<script type="text/javascript" src="${contextpath}/mxGraph/js/Shapes.js"></script>
+
+	<span id="graph_${mxGraphId}" style="display: inline-block;"></span>
+	<script type="text/javascript">
+		if ($("#graph_${mxGraphId} svg").length == 0) {
+
+			function fixRelativePathInOldXml(xmlDoc) {
+				// check attributes
+				if (typeof xmlDoc.attributes !== 'undefined' && xmlDoc.attributes != null && typeof xmlDoc.attributes.length !== 'undefined' && xmlDoc.attributes.length != null && xmlDoc.attributes.length > 0) {
+					if (xmlDoc.hasAttribute('style') && xmlDoc.getAttribute('style') != null && xmlDoc.getAttribute('style').indexOf('image=stencils/') != -1) {
+						var tmp = xmlDoc.getAttribute('style');
+						var newStyle = tmp.slice(0, tmp.indexOf('stencils/')) + '${contextpath}/mxGraph/' + tmp.slice(tmp.indexOf('stencils/'));
+						xmlDoc.setAttribute('style', newStyle);
+					}
+				}
+				if(typeof xmlDoc.childNodes !== 'undefined' && xmlDoc.childNodes != null && xmlDoc.childNodes.length !== 'undefined' && xmlDoc.childNodes.length != null && xmlDoc.childNodes.length > 0) {
+					// scan children
+					var i = 0;
+					for (i = 0; i < xmlDoc.childNodes.length; ++i) {
+						fixRelativePathInOldXml(xmlDoc.childNodes[i]);
+					}
+	    		}
+			}
+
+			var graph = new Graph(document.getElementById('graph_${mxGraphId}'));
+			// load styles
+			var node = mxUtils.load('${contextpath}/mxGraph/styles/default.xml').getDocumentElement();
+
+			if (node != null)
+			{
+				var dec = new mxCodec(node.ownerDocument);
+				dec.decode(node, graph.getStylesheet());
+			}
+			graph.setEnabled(false);
+			graph.autoScroll = false;
+
+			var xmlDoc = mxUtils.parseXml('$!{xml.replace("'","\'")}');
+			fixRelativePathInOldXml(xmlDoc);
+			var codec = new mxCodec(xmlDoc);
+			codec.decode(xmlDoc.documentElement, graph.getModel());
+
+			var scale = graph.view.scale;
+			var bounds = graph.getGraphBounds();
+			graph.view.setTranslate(-bounds.x / scale, -bounds.y / scale);
+			graph.refresh();
+			
+			// Lot of legacy CSS rules indirectly apply to tables inserted into an MxHraph diagram.
+			// Fux rules like this to avoid this behaviour. Example: th:not(.mx-graph)
+			$("#graph_${mxGraphId} tr, #graph_${mxGraphId} td, #graph_${mxGraphId} th").addClass("mx-graph");
+		}
+	</script>
+
+	<style>
+		svg g[style*="pointer"] >*:hover {
+			cursor: pointer;
+		}
+
+		#graph_${mxGraphId} {
+			position: relative;
+		}
+
+		#graph_${mxGraphId} > svg {
+			position: relative !important;
+		}
+	</style>

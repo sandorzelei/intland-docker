@@ -1,0 +1,29 @@
+%%ad
+__Free Download__\\
+Want to try [codeBeamer|http://www.intland.com/products/codebeamer/overview/] on your own server? [Download|https://intland.com/products/download.html#download] it for free and install it in minutes.\\
+Questions? [Contact us|http://www.intland.com/company/contact/].
+%%
+
+%%information
+여기는 __당신만의 wiki homepage__입니다.\\
+개인(맞춤)화를 위해 ''Edit''을 클릭해주세요. 당신이 할 수 있는 몇가지 재미난 것들이 있습니다:
+* 이 블럭을 없애(이동해)주세요.
+* 당신의 생각들, 기록들 또는 어떤 종류의 개인적인 정보든 적어주세요.
+* 당신이 가장 좋아하는 링크들, 사진들 또는 당신 좋아하는 어느 것 이든지 추가해주세요.
+* 당신의 이슈들, 당신의 문서 및 자세한 내용 보여주기 위해 wiki 플러그인을 추가해주세요.
+* Excel spreadsheets, Google maps 또는 RSS feeds를 엠베드해주세요.
+
+__Learn More__\\
+codeBeamer가 처음이신 경우, 당신은 codeBeamer 지식 베이스와 사용자 가이드, 관리자 가이드 그리고 더 많은 codeBeamer 데모 동영상에서 흥미를 찾을 수 있습니다:
+* [codeBeamer Knowledge Base|https://codebeamer.com/cb/project/37] with the [user's guide|https://codebeamer.com/cb/wiki/8798], the [administrator's guide|https://codebeamer.com/cb/wiki/8797] and a lot more
+* [codeBeamer demonstration videos|http://www.intland.com/products/main.html#videos]
+당신은 둘어보거나 질문, 기능 요청 또는 버그 리포팅을 제출할 수 있습니다. [questions|https://codebeamer.com/cb/tracker/209/create], [feature requests|https://codebeamer.com/cb/tracker/209/create] or [bug reports|https://codebeamer.com/cb/tracker/199/create].
+%%
+
+[{Table style='width:100%; border:none; border-spacing:0;' dataStyle='vertical-align:top; padding-right:20px; border:none;'
+
+|(width:40%;) [{ActivityStream}] |(width:30%) #if(${licenseCode.isEnabled("trackers")}) [{MyIssueSummary}] \\ [{MyCurrentIssues title='my.starred.issues.label' tag='#Starred'}] \\ [{MyCurrentIssues}] #end | [{Html
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/TtMScF9-5bs" frameborder="0" allowfullscreen></iframe>}] \\ [{MostActiveProjects}]
+
+}]

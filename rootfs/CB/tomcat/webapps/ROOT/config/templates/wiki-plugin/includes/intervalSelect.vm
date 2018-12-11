@@ -1,0 +1,52 @@
+## Shows interval (period and grouping) select box
+## expects an instance of StandardTimeIntervalsAndGrouping[] in the scope as "standardTimeIntervalsAndGrouping"
+##
+## @param pluginId The unique plugin id
+## @param onchange The javascript onchange event
+## @param period The current period value, the <option/> for this will be automatically selected
+## @param grouping The current grouping value
+#macro(renderIntervalSelect $pluginId $onchange $period $grouping)
+
+#if($renderIntervalSelectors)
+	<select id="chartIntervalSelect_${pluginId}" onchange="${onchange}" autocomplete="off">
+		#if("$!{period}" != "")
+			## determine if the period/grouping is really custom, and only render the option for that
+	    	#set($iscustom = true)
+	    	#foreach($intervalAndGrouping in $standardTimeIntervalsAndGrouping)
+	    		#if(${period} == ${intervalAndGrouping.period} && ${grouping} == ${intervalAndGrouping.grouping})
+					#set($iscustom = false)
+				#end
+			#end
+			#if ($iscustom)
+	    		<option value="period=$!{period}&grouping=$!{grouping}" selected="selected" >
+	    			${period}, ${grouping}
+	    		</option>
+			#end
+		#end
+		#foreach($intervalAndGrouping in $standardTimeIntervalsAndGrouping)
+			<option value="${intervalAndGrouping.urlParams}"
+	    		#if(${period} == ${intervalAndGrouping.period} && ${grouping} == ${intervalAndGrouping.grouping})
+					selected="selected"
+				#end
+				>#esc($textFormatter.getMessageWithDefault(${intervalAndGrouping.decription}, ${intervalAndGrouping.decription}))
+			</option>
+		#end
+	</select>
+	<script type="text/javascript">
+		/**
+		 * Get the since and grouping url specified by the chartIntervalSelect_ select control above
+		 * @return the url parameters contain the "since" and "grouping" parameters
+		 */
+		function getChartIntervalSelect_${pluginId}() {
+			var chartIntervalSelect = document.getElementById("chartIntervalSelect_${pluginId}");
+			var value = chartIntervalSelect.value;
+			return value;
+		}
+	</script>
+#else
+	<span>${period}, ${grouping} - </span>
+#end
+
+#end
+
+

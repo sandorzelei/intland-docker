@@ -1,0 +1,46 @@
+<div class="form-field" id="${fieldName}">
+	<label for="${fieldName}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+	<select id="${selectorId}" #if ($postParamater) name="params[${fieldName}]" #end>
+
+	</select>
+	<span id="${selectorId}-ajaxLoadingImg" class="editor-field-loading-image" style="display: none;"><img src="${contextPath}/images/ajax-loading_16.gif"></span>
+</div>
+<script type="text/javascript" src="${groupValueFieldJsJsUrl}"></script>
+<script data-purpose="warning-message-template" type="text/template">
+	#@message('warning' true 'emptyValueWarning' '' 'padding-top: 20px; padding-left: 50px;')
+		$textFormatter.getMessage('widget.editor.chart.query.empty')
+	#end
+</script>
+<script type="text/javascript">
+		jQuery(function($) {
+
+			if ($("#emptyValueWarning").size() === 0) {
+				$("#editor-tab").prepend($('[data-purpose=warning-message-template]').html());
+			}
+
+			var selectedValue = "${value}";
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:changed", function(data) {
+				// codebeamer.dashboard.queryField.loadGroupingsById(data.id, "${selectorId}", "${queryIdOptionsUrl}", "${value}");
+				// set query string attribute in js
+				codebeamer.dashboard.groupValueField.setQueryId(data.id);
+			});
+
+			$("body").on("querySelector:advancedQuery:changed", null, function(event, query) {
+				// codebeamer.dashboard.queryField.loadGroupingsByQuery(query, "${selectorId}", "${queryStringOptionsUrl}", "${value}");
+				// set query string attribute in js
+				codebeamer.dashboard.groupValueField.setQueryString(query);
+			});
+
+			$("body").on("groupings:query:changed", null, function(event, groupingAlias) {
+				$("#emptyValueWarning").css('display', 'none');
+				$("#" + "${selectorId}").removeAttr("disabled");
+				// set grouping field and run query
+				// diasbled stored query selector and aggregation function selector
+
+				codebeamer.dashboard.groupValueField.setAggregationType(groupingAlias);
+				codebeamer.dashboard.groupValueField.loadGroupingValues("${selectorId}", "${groupingValuesOptionsUrl}", "${groupingValuesOptionsUrlByQueryString}", selectedValue);
+				selectedValue = "";
+			});
+		});
+</script>

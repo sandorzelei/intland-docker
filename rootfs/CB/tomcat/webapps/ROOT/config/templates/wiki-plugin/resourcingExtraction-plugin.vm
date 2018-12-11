@@ -1,0 +1,571 @@
+<style type="text/css">
+
+	.resourcingExtraction {
+		border-collapse: collapse;
+	}
+
+	.resourcingExtraction tr.userName td {
+		border-bottom: 1px solid #d1d1d1;
+		border-top: 1px solid #d1d1d1;
+		font-weight: bold;
+		background-color: #f5f5f5;
+	}
+
+	.resourcingExtraction tr.projectName td {
+		border-bottom: 1px solid #d1d1d1;
+		border-top: 1px solid #d1d1d1;
+		font-style: italic;
+	}
+
+	.resourcingExtraction tr.release td {
+		font-weight: bold;
+		background-color: #d1d1d1;
+	}
+
+	.resourcingExtraction td.indent {
+		width: 5px;
+	}
+
+	.resourcingExtraction .trackerKey {
+		vertical-align: middle;
+		width: 120px;
+	}
+
+	.resourcingExtraction .trackerKey a {
+		font-size: 11px !important;
+	}
+
+	.resourcingExtraction .storyPoints,
+	.resourcingExtraction .itemCount {
+		text-align: center !important;
+		width: 50px;
+	}
+
+	.resourcingExtraction .itemCount {
+		font-weight: normal !important;
+	}
+	.resourcingExtraction .itemCount.free {
+		font-weight: bold !important;
+		background-color: #ccffe8;
+	}
+
+	.resourcingExtraction .startDate,
+	.resourcingExtraction .endDate {
+		text-align: center;
+		vertical-align: middle;
+		width: 120px;
+	}
+
+	.resourcingExtraction .toggle {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		margin-right: 5px;
+		background: url("${contextPath}/images/newskin/action/accordion-inactive.png") no-repeat 2px;
+		cursor: pointer;
+	}
+
+	.resourcingExtraction .toggle.open {
+		background: url("${contextPath}/images/newskin/action/accordion-active.png") no-repeat 2px;
+	}
+
+	ul.resourcingExtractionGroupSelector {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		position: relative;
+		top: 1px;
+	}
+
+	ul.resourcingExtractionGroupSelector li {
+		display: inline-block;
+		padding: 0.5em;
+		border-top: 1px solid #d1d1d1;
+		border-right: 1px solid #d1d1d1;
+		border-bottom: 1px solid #d1d1d1;
+		cursor: pointer;
+	}
+
+	ul.resourcingExtractionGroupSelector li.team {
+		font-weight: bold;
+		padding: 0.4em 1em 0.4em 0.4em !important;
+	}
+
+	ul.resourcingExtractionGroupSelector li span.teamIcon {
+		width: 18px;
+		height: 18px;
+		margin: 0 0.5em;
+		display: inline-block;
+		background-image: url("${contextPath}/images/newskin/filter_list/icon_checkmark_white.png");
+		background-position: 3px;
+		background-repeat: no-repeat;
+		position: relative;
+		top: 3px;
+	}
+
+	ul.resourcingExtractionGroupSelector li.open {
+		border-bottom: 1px solid white;
+	}
+
+	.resourcingExtractionTableCont {
+		padding: 1em !important;
+		border: 1px solid #d1d1d1;
+	}
+
+	#resourcingExtraction_${pluginId} .warning {
+		padding: 10px 20px 10px 44px !important;
+	}
+
+	#resourcingExtraction_${pluginId} .exportUrl {
+		background: url("${contextPath}/images/newskin/action/icon_excel_export_blue.png") no-repeat 0 -2px;
+		padding-left: 18px;
+		font-weight: bold;
+	}
+
+</style>
+
+<div id="resourcingExtraction_${pluginId}">
+
+	#wikiBoxOpen(${command})
+	#wikiBoxTitle("${command.title}")
+
+	#if($ignoredProjects)
+		<div class="warning">${textFormatter.getMessage('resourcing.extraction.ignored.projects.label')}</div>
+	#end
+
+	#if($isEmpty)
+		${textFormatter.getMessage('resourcing.extraction.no.items.label')}
+	#else
+		#if($command.displayGroups)
+			<ul class="resourcingExtractionGroupSelector">
+				#set($first=true)
+				#foreach ($group in $allUserGroups)<li data-group-id="${group.id}"#if($first) style="border-left: 1px solid #d1d1d1"#set($first=false)#end>${group.name}</li>#end
+			</ul>
+			<div class="resourcingExtractionTableCont">
+		#end
+		#if($command.displayTeams)
+			<ul class="resourcingExtractionGroupSelector"><!--
+				#set($first=true)
+				#foreach ($team in $allTeams)
+					--><li class="team" data-group-id="${team.id}"#if($first) style="border-left: 1px solid #d1d1d1"#set($first=false)#end>
+						<span class="teamIcon" style="background-color: #if("$!team.customField[0]" == "")#5F5F5F#else${team.customField[0]}#end"></span>${team.name}
+					</li><!--
+				#end
+				#if($displayNoTeam)
+					--><li class="team" data-group-id="-1">
+						<span class="teamIcon" style="background-color: #5F5F5F"></span>${textFormatter.getMessage('cmdb.version.stats.team.none', 'No team')}
+					</li><!--
+				#end
+			--></ul>
+		<div class="resourcingExtractionTableCont">
+		#end
+		<table class="resourcingExtraction">
+			<tr>
+				<th></th>
+				<th></th>
+				<th class="trackerKey"></th>
+				<th></th>
+				<th class="itemCount">${textFormatter.getMessage('resourcing.extraction.items.label')}</th>
+				<th class="storyPoints">${textFormatter.getMessage('tracker.field.Story Points.label')}</th>
+				<th class="startDate">${textFormatter.getMessage('tracker.field.Start Date.label')}</th>
+				<th class="endDate">${textFormatter.getMessage('tracker.field.End Date.label')}</th>
+			</tr>
+			#if ($displayReleases)
+				#foreach ($project in $result.keySet())
+					#if(!$oneProject)
+						<tr class="projectName" data-project-id="${project.id}">
+							<td colspan="4">$project.name</td>
+							<td class="itemCount"></td>
+							<td class="storyPoints"></td>
+							<td></td>
+							<td></td>
+						</tr>
+					#end
+					#set($releases=$result.get($project))
+					#foreach($release in $releases.keySet())
+						<tr class="release" data-release-id="${release.id}">
+							<td colspan="4"><a href="$contextPath$release.getUrlLink()" target="_blank">$release.name</a></td>
+							<td class="itemCount"></td>
+							<td class="storyPoints"></td>
+							<td></td>
+							<td></td>
+						</tr>
+						#set($users=$releases.get($release))
+						#foreach($user in $users.keySet())
+							#set($trackerItems=$users.get($user))
+							<tr class="userName"#if($command.displayGroups) data-group-ids="${userGroups.get($user)}"#end#if($command.displayTeams) data-group-ids="${teams.get($user)}"#end data-release-id="${release.id}">
+								<td class="indent"></td>
+								<td colspan="3">#linkUser($user)</td>
+								#set($itemCount=$trackerItems.size())
+								<td class="itemCount #if($itemCount == 0)free#end"">$itemCount</td>
+								<td class="storyPoints"></td>
+								<td></td>
+								<td></td>
+							</tr>
+							#foreach($trackerItem in $trackerItems)
+								<tr class="trackerItems" data-user-id="${user.id}" data-project-id="${project.id}" #if($command.displayTeams) data-team-ids="${teamIdsByItem.get($trackerItem)}"#end data-release-id="${release.id}">
+									<td class="indent"></td>
+									<td class="indent"></td>
+									<td class="trackerKey"><a href="$contextPath$trackerItem.getUrlLink()" target="_blank">$trackerItem.getKeyAndId()</a></td>
+									<td class="trackerSummary">#getItemSummary($trackerItem)</td>
+									<td class="itemCount"></td>
+									<td class="storyPoints">#if($trackerItem.storyPoints)$trackerItem.storyPoints#else -- #end</td>
+									<td class="startDate">$textFormatter.formatDate(${currentUser}, ${trackerItem.startDate}, true)</td>
+									<td class="endDate">$textFormatter.formatDate(${currentUser}, ${trackerItem.endDate}, true)</td>
+								</tr>
+							#end
+						#end
+					#end
+				#end
+			#else
+				#foreach ($user in $result.keySet())
+					<tr class="userName"#if($command.displayGroups) data-group-ids="${userGroups.get($user)}"#end#if($command.displayTeams) data-group-ids="${teams.get($user)}"#end>
+						<td colspan="4"><span class="toggle#if(!$oneProject) open#end" data-user-id="${user.id}"></span>#linkUser($user)</td>
+						#set($itemCount=${userItemAggregationMap.get($user)})
+						<td class="itemCount #if($itemCount == 0)free#end">$itemCount</td>
+						#set($sum=${userSPAggregationMap.get($user)})
+						<td class="storyPoints">#if($sum != 0)Σ${sum} #end</td>
+						<td></td>
+						<td></td>
+					</tr>
+					#set($projects=$result.get($user))
+					#foreach($project in $projects.keySet())
+						#set($trackerItems=$projects.get($project))
+						#if($oneProject && $trackerItems.isEmpty())
+							<tr class="projectName" data-project-id="${project.id}" data-user-id="${user.id}" style="display: none">
+								<td class="indent"></td>
+								<td colspan="3">${textFormatter.getMessage('resourcing.extraction.no.items.label')}</td>
+								<td class="itemCount"></td>
+								<td class="storyPoints"></td>
+								<td></td>
+								<td></td>
+							</tr>
+						#end
+						#if(!$oneProject)
+							<tr class="projectName" data-user-id="${user.id}" data-project-id="${project.id}">
+								<td class="indent"></td>
+								<td colspan="3">#if(!$trackerItems.isEmpty())<span class="toggle" data-user-id="${user.id}" data-project-id="${project.id}"></span>#end$project.name#if($trackerItems.isEmpty()) (${textFormatter.getMessage('resourcing.extraction.no.items.label')})#end</td>
+								#set($itemCount=${projectItemAggregationMap.get($user).get($project)})
+								<td class="itemCount #if($itemCount == 0)free#end">$itemCount</td>
+								#set($sum=${projectSPAggregationMap.get($user).get($project)})
+								<td class="storyPoints">#if($sum != 0)Σ${sum} #end</td>
+								<td></td>
+								<td></td>
+							</tr>
+						#end
+						#foreach($trackerItem in $trackerItems)
+							<tr class="trackerItems" data-user-id="${user.id}" data-project-id="${project.id}" style="display: none"#if($command.displayTeams) data-team-ids="${teamIdsByItem.get($trackerItem)}"#end>
+								<td class="indent"></td>
+								<td class="indent"></td>
+								<td class="trackerKey"><a href="$contextPath$trackerItem.getUrlLink()" target="_blank">$trackerItem.getKeyAndId()</a></td>
+								<td class="trackerSummary">#getItemSummary($trackerItem)</td>
+								<td class="itemCount"></td>
+								<td class="storyPoints">#if($trackerItem.storyPoints)$trackerItem.storyPoints#else -- #end</td>
+								<td class="startDate">$textFormatter.formatDate(${currentUser}, ${trackerItem.startDate}, true)</td>
+								<td class="endDate">$textFormatter.formatDate(${currentUser}, ${trackerItem.endDate}, true)</td>
+							</tr>
+						#end
+					#end
+				#end
+			#end
+		</table>
+		#if($command.displayGroups || $command.displayTeams)
+			</div>
+		#end
+		<p><a class="exportUrl" href="${exportUrl}">${textFormatter.getMessage('tracker.issues.exportToExcel.label')}</a></p>
+	#end
+
+	#wikiBoxClose()
+
+</div>
+
+<script type="text/javascript">
+	(function($) {
+
+		var pluginCont = $("#resourcingExtraction_${pluginId}");
+		var table = $("table.resourcingExtraction", pluginCont);
+
+		var currentGroupId = pluginCont.find(".resourcingExtractionGroupSelector li").first().data("groupId");
+
+		var initToggle = function() {
+			table.on("click", "span.toggle", function() {
+				var isOpen = $(this).hasClass("open");
+				isOpen ? $(this).removeClass("open") : $(this).addClass("open");
+				var userId = $(this).data("userId");
+				var projectId = $(this).data("projectId");
+				if (userId && !projectId) {
+					if (isOpen) {
+						table.find('tr[data-user-id="' + userId + '"]').hide();
+						return;
+					}
+					#if($oneProject)
+						table.find('tr[data-user-id="' + userId + '"]').show();
+					#else
+						var projectTrs = table.find('tr.projectName[data-user-id="' + userId + '"]');
+						projectTrs.show();
+						projectTrs.each(function() {
+							var currentProjectId = $(this).find("span[data-project-id]").data("projectId");
+							if ($(this).data("openState")) {
+								table.find('tr.trackerItems[data-user-id="' + userId + '"][data-project-id="' + currentProjectId + '"]').show();
+							}
+						});
+					#end
+					return;
+				}
+				var trs = table.find('tr.trackerItems[data-user-id="' + userId + '"][data-project-id="' + projectId + '"]');
+				$(this).closest('tr').data('openState', !isOpen);
+				isOpen ? trs.hide() : trs.show();
+			});
+		};
+
+		var countReleaseData = function() {
+			setTimeout(function() {
+				table.find("tr.release").each(function() {
+					var releaseId = $(this).data("releaseId");
+					var releaseItems = table.find('.trackerItems[data-release-id="' + releaseId + '"]:visible');
+					var spCount = 0;
+					releaseItems.each(function() {
+						var spString = $(this).find(".storyPoints").text();
+						if (spString == "--" || spString == " -- " || spString == "") spString = 0;
+						spCount += parseInt(spString, 10);
+					});
+					$(this).find(".itemCount").text(releaseItems.length);
+					var sp = spCount > 0 ? "Σ" + spCount : "";
+					$(this).find(".storyPoints").text(sp);
+				});
+			}, 100);
+		};
+		countReleaseData();
+
+		#if($command.displayGroups)
+
+			var initGroupSelector = function() {
+				var groupSelector = $(".resourcingExtractionGroupSelector", pluginCont);
+				groupSelector.on("click", "li", function() {
+					groupSelector.find('li').removeClass('open');
+					$(this).addClass("open");
+					currentGroupId = $(this).data("groupId");
+					table.find("tr.userName").each(function() {
+						var groupIds = $(this).data("groupIds");
+						var currentUserId = $(this).next("tr").data("userId");
+						var userTrs = table.find('tr[data-user-id="' + currentUserId + '"]');
+						if ($.inArray(currentGroupId, groupIds) !== -1) {
+							#if($displayReleases)
+								$(this).show();
+								userTrs.show();
+							#else
+								$(this).show();
+								#if($oneProject)
+									$(this).find('span.toggle').removeClass("open");
+								#else
+									$(this).find('span.toggle').addClass("open");
+								#end
+								userTrs.each(function() {
+									if ($(this).hasClass("projectName")) {
+										$(this).find('span.toggle').removeClass("open");
+										#if($oneProject)
+											$(this).hide();
+										#else
+											$(this).show();
+										#end
+									} else {
+										$(this).hide();
+									}
+								});
+							#end
+						} else {
+							$(this).hide();
+							userTrs.hide();
+						}
+					});
+					#if($displayReleases)
+						countReleaseData();
+					#end
+				});
+				groupSelector.find('li').first().click();
+			};
+
+		#end
+
+		#if($command.displayTeams)
+
+		var initTeamToggle = function() {
+
+			var filterByTeam = function(trackerItems, open) {
+				trackerItems.each(function() {
+					if (open) {
+						if ($.inArray(currentGroupId, $(this).data("teamIds")) !== -1) {
+							$(this).show();
+						} else {
+							$(this).hide();
+						}
+					} else {
+						$(this).hide();
+					}
+				});
+			};
+
+			var countTrackerItems = function(trackerItems) {
+				var count = 0;
+				trackerItems.each(function() {
+					if ($.inArray(currentGroupId, $(this).data("teamIds")) !== -1) {
+						count++;
+					}
+				});
+				return count;
+			};
+
+			table.on("click", "span.toggle", function() {
+				var isOpen = $(this).hasClass("open");
+				isOpen ? $(this).removeClass("open") : $(this).addClass("open");
+
+				$(this).closest('tr').data('openState', !isOpen);
+
+				var userId = $(this).data("userId");
+				var projectId = $(this).data("projectId");
+				if (userId && !projectId) {
+					if (isOpen) {
+						table.find('tr[data-user-id="' + userId + '"]').hide();
+						return;
+					}
+					#if($oneProject)
+						filterByTeam(table.find('tr[data-user-id="' + userId + '"]'), true);
+					#else
+						var projects = table.find('tr.projectName[data-user-id="' + userId + '"]');
+						projects.each(function() {
+							var currentProjectId = $(this).data("projectId");
+							var count = countTrackerItems(table.find('tr.trackerItems[data-user-id="' + userId + '"][data-project-id="' + currentProjectId + '"]'));
+							if (count == 0) {
+								$(this).hide();
+							} else {
+								$(this).show();
+								filterByTeam(table.find('tr.trackerItems[data-user-id="' + userId + '"][data-project-id="' + currentProjectId + '"]'), $(this).find(".toggle").hasClass("open"));
+							}
+						});
+					#end
+					return;
+				}
+				if (projectId) {
+					filterByTeam(table.find('tr.trackerItems[data-user-id="' + userId + '"][data-project-id="' + projectId + '"]'), !isOpen);
+				}
+			});
+		};
+
+		var initTeamSelector = function() {
+
+			var groupSelector = $(".resourcingExtractionGroupSelector", pluginCont);
+
+			var filterByTeam = function(trackerItems, row) {
+				var count = 0;
+				trackerItems.each(function() {
+					if ($.inArray(currentGroupId, $(this).data("teamIds")) !== -1) {
+						count++;
+					}
+					$(this).hide();
+				});
+				if (count == 0) {
+					row.hide();
+				} else {
+					row.show();
+					row.find(".itemCount").text(count);
+				}
+				return count;
+			};
+
+			var countStoryPoints = function(trackerItems, row) {
+				var sp = 0;
+				trackerItems.each(function() {
+					if ($.inArray(currentGroupId, $(this).data("teamIds")) !== -1) {
+						var currentSp = $(this).find(".storyPoints").text();
+						if (currentSp !== "--" && currentSp !== " -- " && currentSp !== "") {
+							sp += parseInt(currentSp, 10);
+						}
+					}
+				});
+				if (sp > 0) {
+					row.find(".storyPoints").text("Σ" + sp);
+				} else {
+					row.find(".storyPoints").text("");
+				}
+
+				return sp;
+			};
+
+			groupSelector.on("click", "li", function() {
+				groupSelector.find('li').removeClass('open');
+				$(this).addClass("open");
+				currentGroupId = $(this).data("groupId");
+				table.find("tr.userName").each(function() {
+					var groupIds = $(this).data("groupIds");
+					var currentUserId = $(this).next("tr").data("userId");
+
+					if ($.inArray(currentGroupId, $(this).data("groupIds")) !== -1) {
+						$(this).show();
+						#if($oneProject)
+							$(this).find('span.toggle').removeClass("open");
+						#else
+							$(this).find('span.toggle').addClass("open");
+							table.find('tr.projectName[data-user-id="' + currentUserId + '"]').each(function() {
+								$(this).show();
+								$(this).find('span.toggle').removeClass("open");
+							});
+						#end
+					} else {
+						$(this).hide();
+						#if(!$oneProject)
+							table.find('tr.projectName[data-user-id="' + currentUserId + '"]').hide();
+						#end
+					}
+
+					#if($oneProject)
+						var items = table.find('tr.trackerItems[data-user-id="' + currentUserId + '"]');
+						filterByTeam(items, $(this));
+						countStoryPoints(items, $(this));
+					#else
+						var projects = table.find('tr.projectName[data-user-id="' + currentUserId + '"]');
+						var userItemCount = 0;
+						var userSpCount = 0;
+						projects.each(function() {
+							var projectId = $(this).data("projectId");
+							var items = table.find('tr.trackerItems[data-user-id="' + currentUserId + '"][data-project-id="' + projectId + '"]');
+							var count = filterByTeam(items, $(this));
+							var spCount = countStoryPoints(items, $(this));
+							userItemCount += count;
+							userSpCount += spCount;
+						});
+						$(this).find(".itemCount").text(userItemCount);
+						if (userSpCount > 0) {
+							$(this).find(".storyPoints").text("Σ" + userSpCount);
+						} else {
+							$(this).find(".storyPoints").text("");
+						}
+						var userNameTr = projects.first().prev("tr.userName");
+						if (userItemCount == 0) {
+							userNameTr.hide();
+						} else {
+							userNameTr.show();
+						}
+					#end
+				});
+				#if($displayReleases)
+					countReleaseData();
+				#end
+			});
+			groupSelector.find('li').first().click();
+		};
+
+		#end
+
+		$(function() {
+			#if($command.displayGroups)
+				initGroupSelector();
+				initToggle();
+			#elseif($command.displayTeams)
+				initTeamSelector();
+				initTeamToggle();
+			#else
+				initToggle();
+			#end
+		});
+	})(jQuery);
+</script>

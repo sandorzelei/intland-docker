@@ -1,0 +1,7 @@
+<script type="text/javascript">
+	$(window).on("load", function() {
+		setTimeout(function() {
+			codebeamer.dashboard.updateFormAlignment(400);
+		}, 10);
+	});
+</script>

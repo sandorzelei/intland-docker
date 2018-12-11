@@ -1,0 +1,4 @@
+## Renders a widget in a widget container
+#parse("/dashboard/dashboard-macros.vm")
+
+#renderWidget($widget, $renderingContext, $editable)

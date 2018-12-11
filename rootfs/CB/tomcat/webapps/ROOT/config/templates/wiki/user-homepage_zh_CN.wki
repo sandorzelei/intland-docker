@@ -1,0 +1,12 @@
+%%ad__Free Download__\\Want to try [codeBeamer|http://www.intland.com/products/codebeamer/overview/] on your own server? [Download|https://intland.com/products/download.html#download] it for free and install it in minutes.\\Questions? [Contact us|http://www.intland.com/company/contact/].%%%%information此为 __您专属的维基首页__.\\请点选''编辑''做您个人化的内容. 您可以考虑以下建议玩玩看:* 删除此框框.* 记下您的新点子,做做笔记,或写一些个人数据* 加入您常去的网站链结,公司的重要系统连结,每天工作需马上跳入的CodeBeamer信息连结,您喜欢的照片或任何其它您工作需要的信息.* 运用wiki plugins展示实时发生的事项, 变动的文件或展现更多的实时状况统计资料.* 嵌入Excel电子表格, Google地图或RSS订阅.__学习信息__\\如果您初用CodeBeamer,欢迎多多参考以下信息:* [英文的CodeBeamer知识库|https://codebeamer.com/cb/project/37]* [英文的系统管理者指引 Administrator's guide|https://codebeamer.com/cb/wiki/8797]* [英文的使用者手册|https://codebeamer.com/cb/wiki/8798]* [英文的CodeBeamer视频|http://www.intland.com/support/video-library/codebeamer/]* [中文的CodeBeamer服务网|http://cb.esast.com]如果您使用时有问题,欢迎到* [CodeBeamer原厂问题讨论区|https://codebeamer.com/cb/project/CB/tracker]* [CodeBeamer大中华服务嵌艺创研问题讨论区|http://cb.esast.com]注册账戶询问%%
+
+%%tabbedSection
+%%tab-快速链结
+|[CodeBeamer中文支持|http://cb.esast.com]|[软件开发团队工具心得微群|http://q.t.sina.com.cn/191385/public/]
+|[CodeBeamer原厂新闻|http://www.intland.com/news-blog/news/]|[JavaForge|http://www.javaforge.com]
+%%
+%%tab-我的項目
+[{ProjectList}]
+%%
+%%
+[{Table style='width:100%; border:none; border-spacing:0;' dataStyle='vertical-align:top; padding-right:20px; border:none;'|(width:40%;) [{ActivityStream}] |(width:30%) #if(${licenseCode.isEnabled("trackers")}) [{MyIssueSummary}] \\ [{MyCurrentIssues title='my.starred.issues.label' tag='#Starred'}] \\ [{MyCurrentIssues}] #end | [{Html<iframe width="560" height="315" src="http://www.youtube.com/embed/TtMScF9-5bs" frameborder="0" allowfullscreen></iframe>}] \\ [{MostActiveProjects}]}]

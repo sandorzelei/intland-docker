@@ -1,0 +1,23 @@
+# 1. Create ~/.local/share/applications/cboffice.desktop with content as below:
+# 2. Replace ABSOLULT-PATH-TO with the correct path of cboffice_launcher.sh
+# 3. Ensure that cboffice_launcher.sh is executable: chmod a+x cboffice_launcher.sh
+# 4. Execute the command below:
+# xdg-mime default cboffice.desktop x-scheme-handler/cboffice
+# 5. Restart Chrome
+# It might be necessary editing /usr/bin/xdg-open as described here:
+# http://www.linuxandlife.com/2013/01/Chrome-chromium-magnet-links-Linux.html
+# The function "detectDE" should set gnome into DE as below:
+# detectDE() {
+#      DE=gnome;
+# }
+[Desktop Entry]
+Exec=/home/zk/bin/cboffice_launcher.sh %U
+Version=1.0
+Name=codeBeamer
+GenericName=codeBeamer
+X-GNOME-FullName=codeBeamer
+Comment=codeBeamer Office launcher
+StartupNotify=true
+Terminal=false
+Type=Application
+MimeType=x-scheme-handler/cboffice;

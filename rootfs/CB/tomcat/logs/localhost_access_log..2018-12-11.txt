@@ -1,0 +1,12 @@
+127.0.0.1 - - [11/Dec/2018:10:47:04 +0100] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [11/Dec/2018:10:47:04 +0100] "GET /installer/postInstall.spr HTTP/1.1" 302 -
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /installer/postInstall.spr?execution=e1s1 HTTP/1.1" 200 1990
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /js/yui/assets/skins/sam/ajax-loader.gif HTTP/1.1" 200 154
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /urlversioned/9.3.0-PRE5-201812111047/js/installer/installer.js HTTP/1.1" 200 3281
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /urlversioned/9.3.0-PRE5-201812111047/js/json2.js HTTP/1.1" 200 5426
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /urlversioned/9.3.0-PRE5-201812111047/stylesheet/installer/installer.css HTTP/1.1" 200 2393
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /urlversioned/9.3.0-PRE5-201812111047/js/installer/jquery-serialize.js HTTP/1.1" 200 411
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /urlversioned/9.3.0-PRE5-201812111047/js/jquery/jquery.js HTTP/1.1" 200 77030
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /urlversioned/9.3.0-PRE5-201812111047/images/newskin/installer/next.png HTTP/1.1" 200 15425
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /urlversioned/9.3.0-PRE5-201812111047/images/newskin/installer/cb_icon.png HTTP/1.1" 200 18321
+127.0.0.1 - - [11/Dec/2018:10:47:06 +0100] "GET /urlversioned/9.3.0-PRE5-201812111047/images/favicon.ico HTTP/1.1" 200 1150

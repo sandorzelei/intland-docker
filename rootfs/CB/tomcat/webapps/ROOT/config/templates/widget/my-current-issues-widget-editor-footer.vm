@@ -1,0 +1,19 @@
+<script type="text/javascript">
+	$(update); // calls update fn on document ready
+
+	codebeamer.dashboard.multiSelect.attachEventListener('releaseSelector:release:changed projectSelector:project:changed', function() {
+	    setTimeout(update, 250);
+	});
+
+	function update() {
+		var $checkbox = $('#OnlyIssuesAssignedToMe input[type=checkbox]');
+
+	    if ($('select[name="params[releaseId]"]').val()) {
+	        $checkbox.removeAttr('disabled');
+	    } else {
+	        $checkbox
+	            .attr('disabled', true)
+	            .attr('checked', true);
+	    }
+	}
+</script>

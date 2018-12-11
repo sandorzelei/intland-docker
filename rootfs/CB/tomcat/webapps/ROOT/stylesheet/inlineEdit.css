@@ -1,0 +1,59 @@
+tr td .no-highlight-on-hover,
+tr td .highlight-on-hover,
+.highlight-on-hover-nested label {
+	padding: 1px 5px;
+	padding-bottom: 2px;
+}
+
+.IE8 tr td .highlight-on-hover {
+	display: inline-block;
+	margin: 1px 0;
+}
+
+.IE8 tr td .highlight-on-hover.show-on-hover {
+	display: none;
+}
+
+tr td:hover .highlight-on-hover.show-on-hover {
+	display: inline;
+}
+
+tr td:hover .highlight-on-hover, .highlight-on-hover-nested:hover label {
+	border: solid 1px #b1b1b1;
+	padding: 0 4px;
+	padding-bottom: 1px;
+	border-radius: 2px;
+    cursor: pointer;
+}
+
+tr td .highlight-on-hover-w-pencil {
+    padding: 1px 5px;
+    padding-bottom: 2px;
+    color: #0093b8;
+}
+
+tr td:hover .highlight-on-hover-w-pencil {
+    border: solid 1px #b1b1b1;
+    border-radius: 2px;
+    cursor: pointer;
+    padding: 1px 5px;
+    padding-bottom: 2px;
+}
+
+tr td:hover .highlight-on-hover-w-pencil:after {
+    content: " " url("../stylesheet/../images/newskin/action/edit-s.png");
+}
+
+.IE8 tr td .highlight-on-hover {
+	display: inline-block;
+	margin: 0 1px;
+}
+
+span.fieldLabel {
+    color: #0093b8;
+}
+
+span.fieldLabel:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

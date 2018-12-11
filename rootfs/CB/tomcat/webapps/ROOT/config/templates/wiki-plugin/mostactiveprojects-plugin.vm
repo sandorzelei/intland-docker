@@ -1,0 +1,19 @@
+#wikiBoxOpen(${command})
+   	#wikiBoxTitle("$!{command.title}", "$textFormatter.getMessage('projects.most.active.label')")
+	<table>
+		<tbody>
+            #if(!${projects.isEmpty()})
+    			#foreach($project in $projects)
+    				#trOpen
+    					<td class="stretched">#linkProject(${project.key})</td>
+    					<td class="number">$numberFormat.format(${project.value.longValue()})&nbsp;<small>${textFormatter.getMessage('projects.most.active.pts')}</small></td>
+    				#trClose
+				#end
+			#else
+				#trOpen()
+					<td>$textFormatter.getMessage('projects.most.active.none')</td>
+				#trClose()
+			#end
+		</tbody>
+	</table>
+#wikiBoxClose()

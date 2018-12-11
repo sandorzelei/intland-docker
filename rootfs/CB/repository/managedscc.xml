@@ -1,0 +1,148 @@
+<!--
+	$Revision$ $Date$
+
+	Please modify this file only if you know what you are doing!
+-->
+
+<!--
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ *
+ * $Id$
+-->
+
+<project name="managed SVN" default="none" basedir=".">
+
+	<!--
+		<property name="svn_host" value="intland.com" />
+	-->
+	<!--
+		<property name="apache_host" value="intland.com" />
+	-->
+
+<!--
+	"svn_repository_directory" contains the name of the directory on "svn_host" where
+	the repositories will be created.
+	<property name="svn_repository_directory" value="/home/codebeamer/cb4/repository/svn" />
+-->
+
+	<condition property="svn_repository_directory" value="${repoDir}/svn">
+		<not>
+			<isset property="svn_repository_directory" />
+		</not>
+	</condition>
+
+	<condition property="hg_repository_directory" value="${repoDir}/hg">
+		<not>
+			<isset property="hg_repository_directory" />
+		</not>
+	</condition>
+
+	<condition property="git_repository_directory" value="${repoDir}/git">
+		<not>
+			<isset property="git_repository_directory" />
+		</not>
+	</condition>
+
+	<!--
+		Configure here the Apache-SSH specific data to access apache host via SSH.
+		If "apache_host" is set, the authorization file will be copied into to the
+		"apache_host".
+	-->
+	<target name="apache_init" if="apache_host">
+		<property name="apache_user" value="codebeamer" />
+		<property name="apache_password" value="secret" />
+		<property name="apache_svn_auth_dir" value="/home/codebeamer/CB/repository" />
+	</target>
+
+	<!--
+		Here are the "ant" entry points.
+	-->
+	<target name="delete_repository"
+		depends="init,svn_local_delete_repository" />
+
+	<target name="delete_hg_repository" depends="hg_local_delete_repository" />
+
+	<target name="delete_git_repository" depends="git_local_delete_repository" />
+
+	<!-- Don't call any other targets from outside. -->
+
+	<target name="init" depends="apache_init">
+		<property name="SCM_SVN" value="true" />
+
+		<condition property="svn_apache">
+			<isset property="apache_host" />
+		</condition>
+
+		<condition property="file_scheme" value="file://" >
+			<os family="unix"/>
+		</condition>
+
+		<condition property="file_scheme" value="file:///" >
+			<os family="windows"/>
+		</condition>
+
+		<condition property="svn_apache">
+			<isset property="apache_host" />
+		</condition>
+
+		<!-- Set to unix if we are running on unix or using remote svn. -->
+		<condition property="svn_unix">
+			<os family="unix" />
+		</condition>
+
+		<condition property="svn_win">
+			<not>
+				<isset property="svn_unix" />
+			</not>
+		</condition>
+
+		<condition property="scmloop" value="${repoDir}/scmloop/scmloop">
+			<not>
+				<isset property="scmloop" />
+			</not>
+		</condition>
+
+	</target>
+
+	<!-- deletes/backs up repository using zipping the content of the files-->
+	<macrodef name="backup-repository-using-zip-and-delete">
+		<attribute name="repoType" />
+		<attribute name="repoDir" />
+		<attribute name="repoName" />
+		<sequential>
+			<property name="deleted_dir" value="@{repoDir}/@{repoType}_DELETED" />
+			<mkdir dir="${deleted_dir}" />
+
+			<tstamp>
+				<format property="zip_stamp" pattern="yyyy-MM-dd-HH-mm-ss" />
+			</tstamp>
+
+			<echo message="Backing up repository '@{repoDir}/@{repoName}' by zipping it"/>
+			<zip destfile="${deleted_dir}/@{repoName}-${zip_stamp}.zip" basedir="@{repoDir}/@{repoName}" />
+
+			<delete dir="@{repoDir}/@{repoName}" />
+		</sequential>
+	</macrodef>
+
+	<target name="svn_local_delete_repository">
+		<backup-repository-using-zip-and-delete repotype="SVN" reponame="${REPOSITORY_NAME}" repodir="${svn_repository_directory}" />
+	</target>
+
+	<target name="hg_local_delete_repository">
+		<backup-repository-using-zip-and-delete repotype="HG" reponame="${REPOSITORY_NAME}" repodir="${hg_repository_directory}" />
+	</target>
+
+	<target name="git_local_delete_repository">
+		<backup-repository-using-zip-and-delete repotype="GIT" reponame="${REPOSITORY_NAME}" repodir="${git_repository_directory}" />
+	</target>
+
+	<target name="none" />
+</project>

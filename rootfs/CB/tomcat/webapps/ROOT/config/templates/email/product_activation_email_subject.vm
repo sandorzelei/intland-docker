@@ -1,0 +1,8 @@
+##$RCSfile$ $Revision: 22730:e1ad4375ec9f $ $Date: 2009-10-13 12:05 +0000 $
+##
+## The following special context objects are available:
+## 	user 			- is a UserDto with the customer information
+##	licensed 		- is the generated LicenseCode
+##  activationCode	- is the generated product activation key (String)
+
+$textFormatter.getMessageWithDefault("cb.activation.email.subject", "Your {0} activation key", ${licensed.type})

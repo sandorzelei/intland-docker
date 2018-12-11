@@ -1,0 +1,61 @@
+/*
+	$Id$
+ */
+
+/**
+ * override for yui tooltip
+ */
+.yui-skin-cb .yui-tt {
+	font-family: 'arial', 'helvetica', 'verdana', sans-serif;
+	font-size: 8pt;
+	/*background: #F5F5F5;
+	border: 1px solid #E5E5E5;
+	*/
+}
+
+/**
+ * This makes the "normal" close button look nice on the global dialogs
+ * copy of the .yui-skin-sam .container-close
+ */
+.yui-skin-cb .container-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 25px;
+    height: 15px;
+    background: url("../yui/assets/skins/sam/sprite.png") no-repeat 0 -300px;
+    cursor:pointer;
+}
+
+/**
+ * Down/up button to detach the dialog
+ */
+.yui-skin-cb .container-down-button,
+.yui-skin-cb .container-up-button {
+	right: 36px !important;
+	background-repeat: no-repeat scroll;
+	background-position: 0 0;
+}
+
+.yui-skin-cb .container-down-button {
+	background-image: url("yui-skin-down-button.png");
+}
+.yui-skin-cb .container-up-button {
+	background-image: url("yui-skin-up-button.png");
+	display: none; /* hidden because switching back to modal does not work, also does not make sense */
+}
+
+/**
+ * so the dialog header will look nice
+ */
+.yui-skin-cb .yui-panel .hd {
+    background: url("../yui/assets/skins/sam/sprite.png") repeat-x scroll 0 -200px transparent;
+    color: #000000;
+    font-size: 93%;
+    font-weight: bold;
+    line-height: 2;
+    padding: 0 10px;
+}
+.yui-skin-cb .yui-panel .hd {
+    border-bottom: 1px solid #CCCCCC;
+}

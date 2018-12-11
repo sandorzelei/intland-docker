@@ -1,0 +1,97 @@
+<div class="form-field">
+	<div id="query-order-${selectorId}">
+
+		<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+		<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end multiple="multiple">
+		</select>
+	</div>
+
+	<script type="text/javascript" src="${queryEditorJsUrl}"></script>
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			var init = true;
+			var storedValue = "${value}";
+			var showGroups;
+
+			codebeamer.dashboard.multiSelect.initSingleSelect("${selectorId}", "${eventName}");
+
+			codebeamer.dashboard.multiSelect.attachEventListener("queryColumnsSelector:columns:changed", function(value) {
+				if (value != null && value.length > 0) {
+					var $selector = $("#" + "${selectorId}");
+					$selector.data("value", value);
+					var aggrFunc = $selector.data("aggrFunc");
+					value = showGroups && aggrFunc && aggrFunc.length > 0 ? [] : value ;
+					codebeamer.dashboard.queryEditor.getQueryOrderBy(value, storedValue, "${selectorId}", "${eventName}");
+				}
+
+				if (init == true) {
+					init = false;
+					storedValue = "";
+				}
+			});
+
+			codebeamer.dashboard.visibilityManager.init("query-order-${selectorId}", function() {
+					codebeamer.dashboard.multiSelect.refreshSelection("${selectorId}", "${eventName}");
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:advancedQuery:changed", function(value) {
+
+				codebeamer.dashboard.visibilityManager.updateFirstSwitchState("query-order-${selectorId}", false);
+
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:changed", function(value) {
+
+				codebeamer.dashboard.visibilityManager.updateFirstSwitchState("query-order-${selectorId}", true);
+
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("boolean:enabled", function(value) {
+				if (value === "showOnlyGroups") {
+					showGroups = true;
+					var $selector = $("#" + "${selectorId}");
+					$selector.data("showOnlyGroups", true);
+					var aggrFunc = $selector.data("aggrFunc");
+					var show = !(aggrFunc && aggrFunc.length > 0);
+					if (!show) {
+						codebeamer.dashboard.queryEditor.getQueryOrderBy([], storedValue, "${selectorId}", "${eventName}");
+					}
+
+					codebeamer.dashboard.visibilityManager.updateSecondSwitchState("query-order-${selectorId}", show);
+				}
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("boolean:disabled", function(value) {
+				if (value === "showOnlyGroups") {
+					showGroups = false;
+					var $selector = $("#" + "${selectorId}");
+					$selector.data("showOnlyGroups", false);
+					var value = $selector.data("value");
+					codebeamer.dashboard.queryEditor.getQueryOrderBy(value, storedValue, "${selectorId}", "${eventName}");
+					codebeamer.dashboard.visibilityManager.updateSecondSwitchState("query-order-${selectorId}", false);
+				}
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("query:orderByAggregate", function() {
+				var $selector = $("#" + "${selectorId}");
+				$selector.data('aggrFunc', arguments)
+				var showOnly = $selector.data("showOnlyGroups");
+				// Promises could be a nicer solution, fixed-choice-editor -> query:orderByAggregate has to run before boolean:enabled
+				setTimeout(function() {
+					if (showOnly) {
+						$("body").trigger("boolean:enabled", "showOnlyGroups");
+					} else {
+						$("body").trigger("boolean:disabled", "showOnlyGroups");
+					}
+				}, 10);
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:cleared", function(value) {
+				codebeamer.dashboard.multiSelect.clear("${selectorId}");
+			});
+		});
+	</script>
+
+</div>

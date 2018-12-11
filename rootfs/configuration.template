@@ -1,0 +1,6 @@
+database.driver=com.mysql.jdbc.Driver
+database.connectionURL=${CB_database_JDBC_ConnectionURL}
+database.username=${CB_database_JDBC_Username}
+database.password=${CB_database_JDBC_Password}
+database.passwordStorageType=PLAIN
+

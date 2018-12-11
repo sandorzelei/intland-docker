@@ -1,0 +1,10 @@
+#parse("notification_email_header.vm")
+
+<div class="heading">
+${textFormatter.getMessage('project.member.join.rejected.title')}: [#${project.id}] $textFormatter.escape(${project.name})
+</div>
+
+#partHeader("${textFormatter.getMessage('project.member.join.comment.label')}")
+#partStart() $!{comment} #partEnd()
+
+#parse("notification_email_footer.vm")

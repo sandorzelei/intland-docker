@@ -1,0 +1,26 @@
+%%information
+__You can find information about the usage of codeBeamer on [codeBeamer Knowledge Base|https://codebeamer.com/cb/project/CB] wiki pages.__
+%%
+
+%%ad
+__Free Download__\\
+Want to try [codeBeamer|http://www.intland.com/products/codebeamer/overview/] on your own server? [Download|https://intland.com/products/download.html#download] it for free and install it in minutes.\\
+Questions? [Contact us|http://www.intland.com/company/contact/].
+%%
+
+%%information
+__Welcome!__\\
+This is the wiki __homepage of ''${project.name}''__. It is visible for all project members. Click ''Edit'' to customize it:
+* Remove this block
+* Add a welcome message
+* Write up project goals, design, schedule or any kind of project related information
+* Add links to project resources, pictures or any related content
+* Add wiki plugins to show recent activity, statistical charts and more
+* Embed Excel spreadsheets, Google maps or RSS feeds
+%%
+
+[{Table style='width:100%; border:none; border-spacing:0;' dataStyle='vertical-align:top; padding-right:20px; border:none;'
+
+|(width:60%;) [{ReleaseActivityTrends}] \\ [{ActivityStream}] | #if(${licenseCode.isEnabled("trackers")}) [{IssueCountTrends}] #end \\ [{ProjectActivityTrends period='Last 30 days' grouping='Daily'}] \\ [{Members}]
+
+}]

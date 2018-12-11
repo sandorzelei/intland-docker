@@ -1,0 +1,12 @@
+##$Revision: 22742:44d5b0ab8152 $ $Date: 2009-10-14 15:47 +0000 $
+##
+## The following special context objects are available:
+## 	user 			- is a UserDto with the customer information
+##	licensed 		- is the generated LicenseCode
+##  activationCode	- is the generated product activation key (String)
+
+#parse("notification_email_header.vm")
+
+$textFormatter.getMessage("cb.activation.email.body", ${user.realName}, ${licensed.type}, ${activationCode}, "bond", "007")
+
+#parse("notification_email_footer.vm")

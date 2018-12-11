@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- see: http://code.google.com/p/wro4j/wiki/WroFileFormat -->
+<groups xmlns="http://www.isdc.ro/wro">
+	<group name="all-base">
+		<!-- these javascripts were compressed -->
+
+		<js>/js/jquery/jquery.js</js>
+		<js>/js/jquery/jquery.detect.js</js>
+		<js>/js/jquery/jquery-migrate/jquery-migrate.js</js>
+		<js>/js/jquery/jquery-ui/jquery-ui.js</js>
+		<js>/js/jquery/datetimepicker/jquery.datetimepicker.full.min.js</js>
+		<js>/js/jquery/jquery-uitablefilter/jquery.uitablefilter.js</js>
+		<js>/js/jquery/jquery-tokeninput/jquery.tokeninput.js</js>
+
+		<js>/js/jquery/jquery-storage/jquery.jstore-all.js</js>
+		<js>/js/jquery/jquery-jstree/_lib/jquery.cookie.js</js>
+		<js>/js/jquery/jquery.cookie.patched.js</js>
+		<js>/js/jquery/jquery-tablehover/jquery.tablehover.js</js>
+		<js>/js/valang_codebase.js</js>
+		<js>/js/jquery/jquery-jstree/jstree.js</js>
+		<js>/js/jquery/rangyinputs/textinputs_jquery_src.js</js>
+		<js>/js/jquery.watermarkinput.js</js>
+		<js>/js/jquery/jquery.history.js</js>
+		<js>/js/jquery/hotkeymap/jquery.hotkeys.js</js>
+		<js>/js/jquery/hotkeymap/jquery.hotkeymap.js</js>
+		<js>/js/org.ditchnet.taglib/tabs.js</js>
+		<js>/js/jquery/dragtable/jquery.dragtable.js</js>
+		<js>/js/jquery/jquery-caret/jquery.caret.js</js>
+		<!-- our javascripts were NOT compressed -->
+		<js>/js/i18n.js</js>
+		<js>/menu/cookie.js</js>
+		<js>/menu/helpwindow.js</js>
+		<js>/menu/AnchorPosition.js</js>
+		<js>/menu/PopupWindow.js</js>
+		<js>/menu/date.js</js>
+		<js>/js/overlayNotification.js</js>
+		<js>/js/codebeamer-main.js</js>
+		<js>/js/jquery/jquery-layout/jquery.layout.js</js>
+		<js>/js/hotkeys.js</js>
+		<js>/js/inlineEditor.js</js>
+		<js>/js/toolbarTag.js</js>
+		<js>/js/jspwiki-common.js</js>
+		<!-- JS for calendar-popups -->
+		<js>/js/calendarPopup.js</js>
+		<js>/docs/ajaxDocumentLock.js</js>
+
+		<!-- Highcharts plugin -->
+		<js>/js/highcharts/highcharts.js</js>
+		<js>/js/highcharts/highcharts-more.js</js>
+		<js>/js/highcharts/highcharts-3d.js</js>
+		<js>/js/highcharts/modules/solid-gauge.js</js>
+		<js>/js/highcharts/modules/no-data-to-display.js</js>
+
+		<js>/js/documentViewCommon.js</js>
+
+		<js>/js/trees.js</js>
+		<js>/js/threePaneLayout.js</js>
+		<js>/js/baselinesCommon.js</js>
+
+		<js>/js/numeral.js</js>
+		<js>/js/rating.js</js>
+		<js>/decorators/includes/globalMessages.js</js>
+
+		<js>/js/AjaxUtils.js</js>
+		<js>/js/ComboBoxActionHandler.js</js>
+		<js>/js/CollapsingBorder.js</js>
+		<js>/js/ScrollUtil.js</js>
+		<js>/js/OfficeEdit.js</js>
+		<js>/js/chartRendererSupport.js</js>
+		<js>/js/TaggingWidget.js</js>
+		<js>/scm/includes/showDiff.js</js>
+
+		<js>/js/valumsfileuploader/fileuploader.js</js>
+		<js>/js/valumsfileuploader/fileuploader_extensions.js</js>
+		<js>/js/browseTracker.js</js>
+
+		<js>/js/imagePasteHandler.js</js>
+		<js>/js/wysiwyg/cbWikiConversion.js</js>
+		<js>/js/wysiwyg/cbWysiwygShortcuts.js</js>
+		<js>/js/wysiwyg/cbWysiwyg.js</js>
+		<js>/js/wysiwyg/cbEditorToolbars.js</js>
+		<js>/js/wysiwyg/cbEditorLanguages.js</js>
+		<js>/js/wysiwyg/cbEditorFileList.js</js>
+		<css>/stylesheet/froala.css</css>
+
+		<js>/js/editTestStep.js</js>
+		<js>/js/treeToTableDndIntegration.js</js>
+		<js>/js/jquery/jquery-autoresize/jquery.autosize.js</js>
+		<js>/js/jquery/jquery-areyousure/jquery.are-you-sure.js</js>
+		<js>/menu/wikiEditorOverlay.js</js>
+		<js>/js/codeReview.js</js>
+		<js>/js/navigationAwayProtection.js</js>
+		<js>/js/minifiedOverlay.js</js>
+		<js>/js/ajaxRefreshingWikiPlugin.js</js>
+
+		<js>/js/jquery/jquery-contextMenu/jquery.contextMenu.js</js>
+		<js>/js/jquery/jquery-contextMenu/jquery.ui.position.js</js>
+		<js>/js/contextMenuManager.js</js>
+
+		<js>/js/jquery/jquery-multiselect/jquery.multiselect.js</js>
+		<js>/js/jquery/jquery-multiselect/jquery.multiselect.filter.js</js>
+		<js>/js/jquery/jquery-multiselect/jquery.multiselect.minwidth.js</js>
+		<js>/js/jquery/jquery-multiselect/jquery.multiselect.optiontags.js
+		</js>
+		<js>/js/jquery/jquery-multiselect/jquery.multiselect.hierarchy.js</js>
+
+		<js>/js/jquery/jquery-treetable/jquery.treetable.js</js>
+		<js>/js/jquery/jquery-jeditable/jquery.jeditable.js</js>
+		<js>/js/trackerItemTreeTable.js</js>
+		<js>/js/lightbox.js</js>
+		<js>/js/trackerItemRelationsExpander.js</js>
+		<js>/js/referenceSettingBadges.js</js>
+		<js>/js/unresolvedDependenciesBadges.js</js>
+		<js>/js/multiselectautocomplete/ajaxReferenceFieldAutoComplete.js</js>
+		<js>/js/chooseReferences.js</js>
+		<js>/bugs/tracker/includes/trackerActionsHandler.js</js>
+		<js>/bugs/includes/issueReminder.js</js>
+		<js>/bugs/tracker/includes/referenceField.js</js>
+		<js>/bugs/tracker/includes/fieldUpdates.js</js>
+		<js>/bugs/includes/associationConfiguration.js</js>
+		<js>/bugs/tracker/includes/itemHistory.js</js>
+		<js>/bugs/includes/issueCopyMove.js</js>
+
+		<js>/js/transitions.js</js>
+		<js>/js/colorPicker.js</js>
+
+		<js>/js/moment/moment-with-locales.js</js>
+
+		<js>/js/itemTooltip.js</js>
+
+		<css>/stylesheet/CB-Style.css</css>
+		<css>/stylesheet/wiki.css</css>
+		<css>/stylesheet/print.css</css>
+
+		<css>/js/yui/container/assets/container.css</css>
+		<css>/js/yui/container/assets/skins/sam/container.css</css>
+		<css>/js/yui-extensions/container-cb-skin.css</css>
+		<css>/js/yui/autocomplete/assets/autocomplete-core.css</css>
+		<css>/js/yui-extensions/autocomplete/assets/skins/cb/autocomplete-skin.css
+		</css>
+		<css>/js/yui/menu/assets/menu-core.css</css>
+		<css>/js/yui-extensions/menu/assets/skins/cb/menu-skin.css</css>
+		<css>/js/yui/resize/assets/skins/sam/resize.css</css>
+		<css>/js/yui/layout/assets/skins/sam/layout.css</css>
+		<css>/js/yui/button/assets/skins/sam/button.css</css>
+
+		<js>/js/preventPrefill.js</js>
+
+		<!-- dashboard -->
+		<js>/dashboard/dashboard.js</js>
+		<js>/js/dashboard/barChart.js</js>
+		<js>/js/dashboard/storedQuery.js</js>
+		<js>/js/dashboard/multiSelect.js</js>
+		<js>/js/dashboard/visibilityManager.js</js>
+		<js>/js/dashboard/shared.js</js>
+
+		<js>/js/multiAccordion.js</js>
+
+		<js>/js/configurationForm/configurationForm.js</js>
+
+		<!-- mxGraph -->
+		<js>/mxGraph/src/js/mxClient.js</js>
+		<js>/mxGraph/src/js/util/mxLog.js</js>
+		<js>/mxGraph/src/js/util/mxObjectIdentity.js</js>
+		<js>/mxGraph/src/js/util/mxDictionary.js</js>
+		<js>/mxGraph/src/js/util/mxResources.js</js>
+		<js>/mxGraph/src/js/util/mxPoint.js</js>
+		<js>/mxGraph/src/js/util/mxRectangle.js</js>
+		<js>/mxGraph/src/js/util/mxEffects.js</js>
+		<js>/mxGraph/src/js/util/mxUtils.js</js>
+		<js>/mxGraph/src/js/util/mxConstants.js</js>
+		<js>/mxGraph/src/js/util/mxEventObject.js</js>
+		<js>/mxGraph/src/js/util/mxMouseEvent.js</js>
+		<js>/mxGraph/src/js/util/mxEventSource.js</js>
+		<js>/mxGraph/src/js/util/mxEvent.js</js>
+		<js>/mxGraph/src/js/util/mxXmlRequest.js</js>
+		<js>/mxGraph/src/js/util/mxClipboard.js</js>
+		<js>/mxGraph/src/js/util/mxWindow.js</js>
+		<js>/mxGraph/src/js/util/mxForm.js</js>
+		<js>/mxGraph/src/js/util/mxImage.js</js>
+		<js>/mxGraph/src/js/util/mxDivResizer.js</js>
+		<js>/mxGraph/src/js/util/mxDragSource.js</js>
+		<js>/mxGraph/src/js/util/mxToolbar.js</js>
+		<js>/mxGraph/src/js/util/mxUndoableEdit.js</js>
+		<js>/mxGraph/src/js/util/mxUndoManager.js</js>
+		<js>/mxGraph/src/js/util/mxUrlConverter.js</js>
+		<js>/mxGraph/src/js/util/mxPanningManager.js</js>
+		<js>/mxGraph/src/js/util/mxPopupMenu.js</js>
+		<js>/mxGraph/src/js/util/mxAutoSaveManager.js</js>
+		<js>/mxGraph/src/js/util/mxAnimation.js</js>
+		<js>/mxGraph/src/js/util/mxMorphing.js</js>
+		<js>/mxGraph/src/js/util/mxImageBundle.js</js>
+		<js>/mxGraph/src/js/util/mxImageExport.js</js>
+		<js>/mxGraph/src/js/util/mxAbstractCanvas2D.js</js>
+		<js>/mxGraph/src/js/util/mxXmlCanvas2D.js</js>
+		<js>/mxGraph/src/js/util/mxSvgCanvas2D.js</js>
+		<js>/mxGraph/src/js/util/mxVmlCanvas2D.js</js>
+		<js>/mxGraph/src/js/util/mxGuide.js</js>
+		<js>/mxGraph/src/js/shape/mxStencil.js</js>
+		<js>/mxGraph/src/js/shape/mxShape.js</js>
+		<js>/mxGraph/src/js/shape/mxStencilRegistry.js</js>
+		<js>/mxGraph/src/js/shape/mxMarker.js</js>
+		<js>/mxGraph/src/js/shape/mxActor.js</js>
+		<js>/mxGraph/src/js/shape/mxCloud.js</js>
+		<js>/mxGraph/src/js/shape/mxRectangleShape.js</js>
+		<js>/mxGraph/src/js/shape/mxEllipse.js</js>
+		<js>/mxGraph/src/js/shape/mxDoubleEllipse.js</js>
+		<js>/mxGraph/src/js/shape/mxRhombus.js</js>
+		<js>/mxGraph/src/js/shape/mxPolyline.js</js>
+		<js>/mxGraph/src/js/shape/mxArrow.js</js>
+		<js>/mxGraph/src/js/shape/mxArrowConnector.js</js>
+		<js>/mxGraph/src/js/shape/mxText.js</js>
+		<js>/mxGraph/src/js/shape/mxTriangle.js</js>
+		<js>/mxGraph/src/js/shape/mxHexagon.js</js>
+		<js>/mxGraph/src/js/shape/mxLine.js</js>
+		<js>/mxGraph/src/js/shape/mxImageShape.js</js>
+		<js>/mxGraph/src/js/shape/mxLabel.js</js>
+		<js>/mxGraph/src/js/shape/mxCylinder.js</js>
+		<js>/mxGraph/src/js/shape/mxConnector.js</js>
+		<js>/mxGraph/src/js/shape/mxSwimlane.js</js>
+		<js>/mxGraph/src/js/layout/mxGraphLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxStackLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxPartitionLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxCompactTreeLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxRadialTreeLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxFastOrganicLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxCircleLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxParallelEdgeLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxCompositeLayout.js</js>
+		<js>/mxGraph/src/js/layout/mxEdgeLabelLayout.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/model/mxGraphAbstractHierarchyCell.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/model/mxGraphHierarchyNode.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/model/mxGraphHierarchyEdge.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/model/mxGraphHierarchyModel.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/model/mxSwimlaneModel.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/stage/mxHierarchicalLayoutStage.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/stage/mxMedianHybridCrossingReduction.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/stage/mxMinimumCycleRemover.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/stage/mxCoordinateAssignment.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/stage/mxSwimlaneOrdering.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/mxHierarchicalLayout.js</js>
+		<js>/mxGraph/src/js/layout/hierarchical/mxSwimlaneLayout.js</js>
+		<js>/mxGraph/src/js/model/mxGraphModel.js</js>
+		<js>/mxGraph/src/js/model/mxCell.js</js>
+		<js>/mxGraph/src/js/model/mxGeometry.js</js>
+		<js>/mxGraph/src/js/model/mxCellPath.js</js>
+		<js>/mxGraph/src/js/view/mxPerimeter.js</js>
+		<js>/mxGraph/src/js/view/mxPrintPreview.js</js>
+		<js>/mxGraph/src/js/view/mxStylesheet.js</js>
+		<js>/mxGraph/src/js/view/mxCellState.js</js>
+		<js>/mxGraph/src/js/view/mxGraphSelectionModel.js</js>
+		<js>/mxGraph/src/js/view/mxCellEditor.js</js>
+		<js>/mxGraph/src/js/view/mxCellRenderer.js</js>
+		<js>/mxGraph/src/js/view/mxEdgeStyle.js</js>
+		<js>/mxGraph/src/js/view/mxStyleRegistry.js</js>
+		<js>/mxGraph/src/js/view/mxGraphView.js</js>
+		<js>/mxGraph/src/js/view/mxGraph.js</js>
+		<js>/mxGraph/src/js/view/mxCellOverlay.js</js>
+		<js>/mxGraph/src/js/view/mxOutline.js</js>
+		<js>/mxGraph/src/js/view/mxMultiplicity.js</js>
+		<js>/mxGraph/src/js/view/mxLayoutManager.js</js>
+		<js>/mxGraph/src/js/view/mxSwimlaneManager.js</js>
+		<js>/mxGraph/src/js/view/mxTemporaryCellStates.js</js>
+		<js>/mxGraph/src/js/view/mxCellStatePreview.js</js>
+		<js>/mxGraph/src/js/view/mxConnectionConstraint.js</js>
+		<js>/mxGraph/src/js/handler/mxGraphHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxPanningHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxPopupMenuHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxCellMarker.js</js>
+		<js>/mxGraph/src/js/handler/mxSelectionCellsHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxConnectionHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxConstraintHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxRubberband.js</js>
+		<js>/mxGraph/src/js/handler/mxHandle.js</js>
+		<js>/mxGraph/src/js/handler/mxVertexHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxEdgeHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxElbowEdgeHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxEdgeSegmentHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxKeyHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxTooltipHandler.js</js>
+		<js>/mxGraph/src/js/handler/mxCellTracker.js</js>
+		<js>/mxGraph/src/js/handler/mxCellHighlight.js</js>
+		<js>/mxGraph/src/js/editor/mxDefaultKeyHandler.js</js>
+		<js>/mxGraph/src/js/editor/mxDefaultPopupMenu.js</js>
+		<js>/mxGraph/src/js/editor/mxDefaultToolbar.js</js>
+		<js>/mxGraph/src/js/editor/mxEditor.js</js>
+		<js>/mxGraph/src/js/io/mxCodecRegistry.js</js>
+		<js>/mxGraph/src/js/io/mxCodec.js</js>
+		<js>/mxGraph/src/js/io/mxObjectCodec.js</js>
+		<js>/mxGraph/src/js/io/mxCellCodec.js</js>
+		<js>/mxGraph/src/js/io/mxModelCodec.js</js>
+		<js>/mxGraph/src/js/io/mxRootChangeCodec.js</js>
+		<js>/mxGraph/src/js/io/mxChildChangeCodec.js</js>
+		<js>/mxGraph/src/js/io/mxTerminalChangeCodec.js</js>
+		<js>/mxGraph/src/js/io/mxGenericChangeCodec.js</js>
+		<js>/mxGraph/src/js/io/mxGraphCodec.js</js>
+		<js>/mxGraph/src/js/io/mxGraphViewCodec.js</js>
+		<js>/mxGraph/src/js/io/mxStylesheetCodec.js</js>
+		<js>/mxGraph/src/js/io/mxDefaultKeyHandlerCodec.js</js>
+		<js>/mxGraph/src/js/io/mxDefaultToolbarCodec.js</js>
+		<js>/mxGraph/src/js/io/mxDefaultPopupMenuCodec.js</js>
+		<js>/mxGraph/src/js/io/mxEditorCodec.js</js>
+
+		<js>/js/codeEditor/codeEditor.js</js>
+		<css>/js/codeEditor/codeEditor.css</css>
+
+		<!-- CSS for calendar-popup -->
+		<css>/js/yui/fonts/fonts.css</css>
+		<css>/js/yui/calendar/assets/skins/sam/calendar.css</css>
+		<css>/js/jquery/datetimepicker/jquery.datetimepicker.css</css>
+		<css>/js/calendarPopup.css</css>
+
+		<css>/stylesheet/rating.css</css>
+
+		<css>/js/multiselectautocomplete/yui-multibox.css</css>
+		<css>/stylesheet/collapsingBorder.css</css>
+
+		<css>/js/jquery/jquery-ui/jquery-ui.css</css>
+		<css>/js/valumsfileuploader/fileuploader.css</css>
+		<css>/js/jquery/jquery-tokeninput/token-input.css</css>
+		<css>/js/jquery/jquery-tokeninput/token-input-facebook.css</css>
+
+		<css>/js/jquery/jquery-jstree/themes/default/style.css</css>
+		<css>/stylesheet/jstree.css</css>
+		<css>/stylesheet/layout.css</css>
+		<css>/stylesheet/lightbox.css</css>
+		<css>/js/jquery/jquery-multiselect/jquery.multiselect.css</css>
+		<css>/js/jquery/jquery-multiselect/jquery.multiselect.filter.css</css>
+		<css>/js/jquery/jquery-contextMenu/jquery.contextMenu.css</css>
+
+		<css>/js/jquery/jquery-treetable/jquery.treetable.css</css>
+
+		<css>/stylesheet/trackerItemRelationsExpander.css</css>
+		<css>/bugs/tracker/versionsview/versionsView.css</css>
+
+		<css>/stylesheet/colorPicker.css</css>
+
+		<css>/stylesheet/accordion.css</css>
+
+		<css>/js/font-awesome/css/font-awesome.min.css</css>
+	</group>
+	<!-- all with normalize.css for modern browsers -->
+	<group name="all">
+		<css>/stylesheet/normalize.css</css>
+		<group-ref>all-base</group-ref>
+	</group>
+	<!-- all with normalize-legacy.css for IE7 and legacy browsers -->
+	<group name="all-legacy">
+		<css>/stylesheet/normalize-legacy.css</css>
+		<group-ref>all-base</group-ref>
+	</group>
+	<!-- TODO: when development is done merge this file to wro's all.css -->
+	<group name="newskin">
+		<css>/stylesheet/newskin.css</css>
+	</group>
+
+	<group name="froala">
+		<js>/js/wysiwyg/froala/js/froala_editor.pkgd.js</js>
+		<js>/js/wysiwyg/froala/js/languages/de.js</js>
+		<js>/js/wysiwyg/froala/js/languages/en_gb.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbwikihistorylink/js/wikiLink.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbwikimarkup/js/wikiMarkup.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbimage/js/imageAttachment.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbtable/js/cbtable.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbtable/js/cbReorderTableColumns.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbcreaterelatedissue/js/cbCreateRelatedIssue.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbwikitableofcontents/js/tableOfContents.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbemoticons/js/cbEmoticons.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbmxgraph/js/mxgraph.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbartifact/js/artifact.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbcolors/js/cbColors.js</js>
+		<js>/js/wysiwyg/froala_plugins/cbuserselector/js/cbUserSelector.js
+		</js>
+	</group>
+
+	<group name="froala-styles">
+		<css>/js/wysiwyg/froala/css/froala_editor.pkgd.min.css</css>
+		<css>/stylesheet/fontawesome/css/font-awesome.min.css</css>
+	</group>
+
+	<group name="swagger">
+		<js>/js/jquery/jquery.js</js>
+		<js>/js/swagger/swagger-ui-bundle.js</js>
+		<js>/js/swagger/swagger-ui-standalone-preset.js</js>
+		<js>/js/swagger/swagger-editor.js</js>
+		<css>/js/swagger/swagger-ui.css</css>
+		<css>/js/swagger/swagger-ui-collapsible.css</css>
+	</group>
+	
+	<!-- common codemirror files -->
+	<group name="codemirror">
+		<js>/js/codemirror/lib/codemirror.js</js>
+		<js>/js/codemirror/mode/sql/sql.js</js>
+		<js>/js/codemirror/mode/javascript/javascript.js</js>
+		<js>/js/codemirror/mode/xml/xml.js</js>
+		<js>/js/codemirror/mode/groovy/groovy.js</js>
+		<js>/js/codemirror/addon/edit/matchbrackets.js</js>
+
+		<js>/js/codemirror/addon/fold/foldgutter.js</js>
+		<js>/js/codemirror/addon/fold/foldcode.js</js>
+		<js>/js/codemirror/addon/fold/brace-fold.js</js>
+		<js>/js/codemirror/addon/fold/xml-fold.js</js>
+		<js>/js/codemirror/addon/fold/indent-fold.js</js>
+		<js>/js/codemirror/addon/fold/markdown-fold.js</js>
+		<js>/js/codemirror/addon/fold/comment-fold.js</js>
+
+		<js>/js/codemirror/jsonlint.js</js>	
+		<js>/js/codemirror/addon/lint/lint.js</js>
+		<js>/js/codemirror/addon/lint/json-lint.js</js>
+		
+		<js>/js/codemirror/addon/search/jump-to-line.js</js>
+		<js>/js/codemirror/addon/search/searchcursor.js</js>	
+		<js>/js/codemirror/addon/search/search.js</js>	
+		
+		<js>/js/codemirror/addon/dialog/dialog.js</js>
+			
+		<css>/js/codemirror/addon/dialog/dialog.css</css>
+		<css>/js/codemirror/lib/codemirror.css</css>
+		<css>/js/codemirror/addon/fold/foldgutter.css</css>
+		<css>/js/codemirror/addon/lint/lint.css</css>
+	</group>
+</groups>

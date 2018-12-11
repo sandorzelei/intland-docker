@@ -1,0 +1,529 @@
+## $Revision: 23625:52b279f302df $ $Date: 2009-11-12 17:36 +0100 $
+
+## For quick escaping
+#macro(esc $x)$textFormatter.escape($x)#end
+## easy i18n
+#macro(i18n $code $codeargs)${textFormatter.getMessage($code, $codeargs)}#end
+
+## - URL generator macros -----------------------------------------------------
+
+#macro(linkUser $user)
+	#linkUserShort($user)
+	#if(${user.firstName} && ${user.lastName})
+		($textFormatter.escape(${user.lastName}),&nbsp;$textFormatter.escape(${user.firstName}))
+	#end
+#end
+
+#macro(linkUserShort $user)
+	$userLink.writeSimple($cbBaseUrl, $user)
+#end
+
+#macro(linkUserEmail $user)
+	#if( !${user.email} || ${user.email} == "")
+		--
+	#else
+		<a href="mailto:${user.email}">$textFormatter.escape(${user.email})</a>
+	#end
+#end
+
+#macro(linkUserPhone $user)
+	#if( !${user.phone} || ${user.phone} == "")
+		--
+	#else
+		<a href="callto:${user.phone}">$textFormatter.escape(${user.phone})</a>
+	#end
+#end
+
+#macro(linkGeoIP $geoIP)
+	#if( !${geoIP.mapUrl})
+		--
+	#else
+		<a href="${geoIP.mapUrl}">$textFormatter.escape(${geoIP.location})</a>
+	#end
+#end
+
+## Link to any ReferableDto
+#macro(linkReferableDto $referable)
+	#linkReferableDtoWithParams($referable "")
+#end
+
+## $refereable The link will be created to this referable
+## $params Optional parameters on the url
+#macro(linkReferableDtoWithParams $referable $params $linkParams)
+  #if ($referable)
+	#set($url = "${cbBaseUrl}${referable.urlLink}")
+	#set($url = ${textFormatter.buildUrl(${url},${params})})
+	#set($desc = "")
+	#set($desc = $!{textFormatter.escape($!referable.shortDescription)})
+	#if ("$!{desc}" == "")
+	 	#set($desc = "$!{referable.interwikiLink}")
+	#end
+	<a href="${url}" $!{linkParams} >${desc}</a>
+  #end
+#end
+
+#macro(linkProject $project)#linkReferableDto($project)#end
+
+#macro(linkArtifact $artifact)
+	#set($name = $textFormatter.escape($artifact.name))
+	#set($url = "${cbBaseUrl}/proj/doc/details.do?doc_id=${artifact.id}&orgDitchnetTabPaneId=document-properties")
+	#if(${artifact.class.simpleName} == "TrackerItemDto" ||
+		${artifact.class.simpleName} == "TrackerItemReferenceWrapperDto" ||
+		${artifact.class.simpleName} == "TraceabilityReferenceWrapperDto")
+		#set($name = "#getItemSummary($artifact)")
+		#set($url = "${cbBaseUrl}$artifact.getUrlLink()")
+	#end
+	<a href="$url">${name}</a>
+#end
+
+#macro(linkArtifactParent $artifact)
+	<a href="${cbBaseUrl}${artifact.parent.urlLink}">$textFormatter.escape(${artifact.parent.name})</a>
+#end
+
+#macro(linkArtifactComments $artifact)
+	<a href="${cbBaseUrl}/proj/doc/details.do?doc_id=${artifact.id}&orgDitchnetTabPaneId=document-comments">View all comments on $textFormatter.escape(${artifact.name})</a>
+#end
+
+#macro(linkWikiPageComments $wikiPage)
+	<a href="${cbBaseUrl}/proj/wiki/displayWikiPageProperties.spr?doc_id=${wikiPage.id}&orgDitchnetTabPaneId=wiki-page-comments" >View all comments on $textFormatter.escape(${wikiPage.name})</a>
+#end
+
+#macro(linkTrackerItemPane $item $trackerItemTabPane)
+	#if( !$trackerItemTabPane || $trackerItemTabPane == "")
+		#set( $trackerItemTabPane = "task-details-attachments" )
+	#end
+
+	#set($description = "#getItemSummary($item)")
+
+	$textFormatter.getMessageWithDefault("issue.label", ${item.typeName})
+	#if($item.closed)
+		[<SPAN class="closedItem">${item.keyAndId}</SPAN>]
+	#else
+		[${item.keyAndId}]
+	#end
+
+	#if($item.urlLink.indexOf("?") > 0)
+		#set($paramSep = "&")
+	#else
+		#set($paramSep = "?")
+	#end
+
+	- <a href="${cbBaseUrl}${item.urlLink}${paramSep}orgDitchnetTabPaneId=${trackerItemTabPane}">${description}</a>
+#end
+
+#macro(linkTrackerItem $item)
+	#linkTrackerItemPane($item "task-details-attachments")
+#end
+
+#macro(linkTrackerItemAssociation $item)
+	#linkTrackerItemPane($item "task-details-associations")
+#end
+
+#macro(linkAssociationDetails $association)
+	#if(${association.urlReference})
+		<a href="${association.url}">$textFormatter.escape(${association.url})</a>
+	#else
+		#linkReferableDto(${association.to})
+	#end
+#end
+
+#macro(linkTracker $tracker)
+	<a href="${cbBaseUrl}${tracker.urlLink}">$textFormatter.getMessageWithDefault("tracker.${tracker.name}.label", ${tracker.name})</a>
+#end
+
+#macro(linkScmRepository $scmRepository)
+	<a href="${cbBaseUrl}${scmRepository.urlLink}">$textFormatter.escape(${scmRepository.name})</a>
+#end
+
+#macro(linkForumThread ${forumPost})
+	#set ($anchor = "")
+	#if (${forumPost.threadId} > 0 && ${forumPost.threadId} != ${forumPost.id})
+		#set ($anchor = "#MSG_${forumPost.id}")
+	#end
+	#set ($forumPostLink = "${cbBaseUrl}/proj/forum/viewMessage.do?thread_id=${forumPost.threadId}" )
+
+	<a href="${forumPostLink}${anchor}">$textFormatter.escape(${forumPost.subject})</a>
+#end
+
+#macro(linkForumPostAttachment ${forumPost})
+	<a href="${cbBaseUrl}/displayDocument/${textFormatter.encodeURL(${forumPost.attachmentFileName})}?msg_id=${forumPost.Id}">$textFormatter.escape(${forumPost.attachmentFileName})</a>
+#end
+
+#macro(linkWikiPage $wikiPage)
+	<a href="${cbBaseUrl}${wikiPage.urlLink}">${wikiPage.name}</a>
+#end
+
+#macro(linkReport $doc)
+	#if(${doc.lastModifiedBy.name})
+		#set( $lastModifiedBy = ${doc.lastModifiedBy.name})
+	#else
+		#set( $lastModifiedBy = "--")
+	#end
+
+	#set( $lastModified = "Last modified: $textFormatter.formatDate(${user}, ${doc.lastModifiedAt}, true) by $textFormatter.escape($lastModifiedBy)" )
+	#if($doc.writable)<a href="${cbBaseUrl}/proj/report/edit.do?doc_id=${doc.id}" TITLE="${lastModified}">${doc.name}</a>#else${doc.name}&nbsp;&nbsp;${lastModified}#end
+#end
+
+#macro(aliasedInterwikiLink $alias $referable)
+#set($interwikiLinkWoSquareBrackets = $referable.interwikiLink.replace('[','').replace(']',''))
+[$alias|$interwikiLinkWoSquareBrackets]
+#end
+
+#macro(getItemSummary $item)
+	#set($summary = "--")
+	#if($trackerItemFieldHandler && !$trackerItemFieldHandler.isFieldReadable($item, $summaryFieldId))
+		#set($summary = $textFormatter.getMessage("tracker.view.layout.document.summary.not.readable"))
+	#else
+		#set($summary = $item.getReqIfSummary())
+		#if (!$summary)
+			#set($summary = $textFormatter.getMessage("tracker.view.layout.document.no.summary"))
+		#end
+	#end
+	$textFormatter.escape($summary)
+#end
+
+## - Table macros -------------------------------------------------------------
+
+#macro(tableOpen)
+	#tableOpenStyled("")
+#end
+
+#macro(tableOpenStyled $style)
+	$rowCounter.reset()
+	<table class="emailTable $!{style}" border="0" cellspacing="0" cellpadding="0">
+#end
+
+#macro(tableClose)
+	</table>
+#end
+
+#macro(trTitle $text $style)
+	<tr>
+		<td colspan="99" class="${style}-style">${text}</td>
+	</tr>
+#end
+
+#macro(bold $text)
+	<strong>${text}</strong>
+#end
+
+#macro(partHeader $text)
+<h3 class="partHeader">$!{text}</h3>
+#end
+
+## marks the start/end of a part in the email that belong together
+#macro(partStart)
+<div class="emailPart">
+#end
+
+#macro(partEnd)
+</div>
+#end
+
+
+#macro (trOpen $cssClass $rowStyle)
+	<tr class="$rowCounter.getStyle() $!{cssClass}" $!{rowStyle}>
+#end
+
+## macro automatically add the "lastRow" css class if there are
+#macro (trOpenWithLastRow $elements $cssClass $rowStyle)
+	#set($lastRowCSS="")
+	#if($velocityCount == ${elements.size()})
+		#set($lastRowCSS="lastRow")
+	#end
+	#trOpen("$!{lastRowCSS} $!{cssClass}" "$!{rowStyle}")
+#end
+
+#macro (trClose)
+	</tr>
+#end
+
+#macro(thField $text)
+	<th>$text</th>
+#end
+
+#macro(tdField $text)
+	#if( !$text || $text == "")
+		<td class="textField">--</td>
+	#else
+		<td class="textField">$!{text}</td>
+	#end
+#end
+
+#macro(tdText $text)
+	#if( !$text || $text == "")
+		<td class="textData">--</td>
+	#else
+		<td class="textData">$!{text}</td>
+	#end
+#end
+
+#macro(tdTextWithColspan $text $colspan)
+	#if( !$text || $text == "")
+		<td class="textData" colspan="$!{colspan}" style="text-align: center">--</td>
+	#else
+		<td class="textData" colspan="$!{colspan}" style="text-align: center">$!{text}</td>
+	#end
+#end
+
+#macro(tdNumber $text)
+	#if( !$text || $text == "")
+		<td class="numberData">--</td>
+	#else
+		<td class="numberData">$textFormatter.formatLong(${text})</td>
+##		<td class="numberData">$!{text}</td>
+	#end
+#end
+
+#macro( tdSeparator )
+	<td nowrap class="col-separator" width="1"></td>
+#end
+
+## - Other macros -------------------------------------------------------------
+
+#macro (br)<br/>#end
+
+## prints a trimmed HTML-escaped text or "--" if it is blank
+#macro (trimmedEscaped $text)
+	#set($trimmedEscapedText = $textFormatter.trimAndEscape($text))
+	#if($trimmedEscapedText)
+		${trimmedEscapedText}
+	#else
+		--
+	#end
+#end
+
+## prints any NamedDto
+#macro (named $named)
+	#if($named)
+		${named.name}
+	#else
+		--
+	#end
+#end
+
+#macro (account $user)
+<div class="account">
+	## please set last parameter to true in the next call if you want to include group information
+	${textFormatter.getMessage('user.account.label')}: ${notificationAuthorHelper.renderUserInfo($cbBaseUrl, $user, $textFormatter.locale, false)}
+</div>
+#end
+
+## prints a tiny highlighted "New!" sign
+#macro (newTablet)
+	#set($Q = '"')
+	<span class=${Q}highlight${Q}>New!</span>
+#end
+
+## puts the reason why the recipient receives this artifact approval related email
+#macro (artifactApprovalReason $artifact)
+	<div class="comment-box">
+		## check against the last modifier
+		#if(${artifact.lastModifiedBy.id} == ${recipient.id})
+			#set($lastModifiedBy = true)
+		#end
+
+		#you($recipient) ${textFormatter.getMessage('document.notification.reason')}
+
+		#if($lastModifiedBy == true)
+			${textFormatter.getMessage('document.notification.reason.modifier')}
+		#else
+			${textFormatter.getMessage('document.notification.reason.approver')}
+		#end
+	</div>
+#end
+
+## puts the reason why the recipient receives this tracker item related email
+#macro (trackerItemReason $trackerItem)
+	<div class="trackerItemNotificationReason">
+		#set($submittedBy = false)
+		#set($assignedToYou = false)
+		#set($assignedToYourRole = false)
+		#set($supervisedBy = false)
+		#set($subscribedBy = false)
+		#set($projectAdmin = false)
+		#set($escalatedTo = false)
+		#set($trackerItemType = $textFormatter.getMessageWithDefault("tracker.type.${trackerItem.typeName}.this.label", "this ${trackerItem.typeName}"))
+
+		## check against the submitter
+		#if(${trackerItem.submitter.id} == ${recipient.id})
+			#set($submittedBy = true)
+		#end
+
+		#set($notificationReasonsForUser = ${notificationReasons.get($recipient)})
+		#foreach($reason in ${notificationReasonsForUser})
+			#if ($reason == 'ASSIGNED_TO_USER')
+				#set($assignedToYou = true)
+			#end
+			#if ($reason == 'ASSIGNED_TO_ROLE')
+				#set($assignedToYourRole = true)
+			#end
+			#if ($reason == 'OWNER_AS_ROLE' || $reason == 'OWNER_AS_USER')
+				#set($supervisedBy = true)
+			#end
+			#if ($reason == 'SUBSCRIBED_BY_ROLE' || $reason == 'SUBSCRIBED_BY_USER')
+				#set($subscribedBy = true)
+			#end
+			#if ($reason == 'PROJECT_ADMIN')
+				#set($projectAdmin = true)
+			#end
+			#if ($reason == 'ESCALATION_TO_ROLE' || $reason == 'ESCALATION_TO_USER')
+				#set($escalatedTo = true)
+			#end
+		#end
+
+		## check against all the assignees
+		#set($assignedToYouOnly = ${notificationReasons.isAssignedToAnUserOnly(${recipient})})
+
+		#you($recipient) ${textFormatter.getMessage('document.notification.reason')}
+
+		#if($submittedBy == true)
+			${textFormatter.getMessage('issue.notification.reason.submitted', $trackerItemType)}
+		#elseif($assignedToYouOnly == true)
+			#if(!$isPullRequest)
+				${textFormatter.getMessage('issue.notification.reason.assignedOnly', $trackerItemType)}
+			#else
+				${textFormatter.getMessage('pullRequest.notification.reason.assignedOnly', $trackerItemType)}
+			#end
+		#elseif($assignedToYou == true)
+			#if(!$isPullRequest)
+				${textFormatter.getMessage('issue.notification.reason.assignedTo', $trackerItemType)}
+			#else
+				${textFormatter.getMessage('pullRequest.notification.reason.assignedTo', $trackerItemType)}
+			#end
+		#elseif($assignedToYourRole == true)
+			${textFormatter.getMessage('issue.notification.reason.assignedRole', $trackerItemType)}
+		#elseif($supervisedBy == true)
+			${textFormatter.getMessage('issue.notification.reason.supervised', $trackerItemType)}
+		#elseif($escalatedTo == true)
+			${textFormatter.getMessage('issue.notification.reason.escalated', $trackerItemType)}
+		#elseif($projectAdmin == true)
+			${textFormatter.getMessage('issue.notification.reason.projectAdmin', $textFormatter.escape(${trackerItem.project.name}))}
+		#else ## that must be -> subscribedBy == true, so not checking that flag
+			#if(${trackerItem.configItem})
+				#set($trackerType = $textFormatter.getMessage("tracker.label"))
+			#else
+				#set($trackerType = $textFormatter.getMessage("cmdb.category.label"))
+			#end
+			#set($trackerName = $textFormatter.getMessageWithDefault("tracker.${trackerItem.tracker.name}.label", ${trackerItem.tracker.name}))
+
+			${textFormatter.getMessage('issue.notification.reason.subscribed', $trackerItemType, $trackerType, $textFormatter.escape($trackerName))}
+		#end
+	</div>
+#end
+
+#macro(you $user)
+	#if(${user.firstName})
+		${textFormatter.getMessage('user.salutation.text', $textFormatter.escape(${user.firstName}), ${user.lastName})}
+	#else
+		${textFormatter.getMessage('user.you.label')}
+	#end
+#end
+
+######## duplicate macros from different ".vm" files
+#macro( PrintArrayJSnamed $name $array )
+$name = new Array(#foreach( $item in $array )#if( $velocityCount!=1 ),#end "${item.name}"#end);
+#end
+
+#macro (printParametersSet $list )
+				#set($comma ="")
+				#foreach( $item in $list )
+								#set($paramString = "")
+								#foreach ($par in ${item.getParametersSet()} )
+												#set($paramString = $paramString + "&${par.key}=${par.value}")
+								#end
+								${comma} "${paramString}"
+								#if(${comma} != ",") #set($comma = ",")#end
+				#end
+#end
+
+#macro( tableRow $cells )
+	#trOpen()
+		#foreach( $cell in $cells )
+			#tdText( ${cell} )
+		#end
+	#trClose()
+#end
+
+#macro( tdTextRight $text )
+	<td style="text-align: right">
+		$text
+	</td>
+#end
+
+## macro to insert a cell with r_arrow.gif image
+#macro( tdArrow )
+	<td valign="top" width="10"><img src="${cbBaseUrl}/images/r_arrow.gif" height="10" width="10" border="0" ></img></td>
+#end
+
+## macro used in subjects, and shows the project name if "showProjectNameInSubjects" variable is true (see general.xml)
+#macro( showProjectNameInSubjects $subject)
+#if(${project} && ${showProjectNameInSubjects})${textFormatter.getMessage('project.label')}: ${project.name} - #end ${subject}
+#end
+
+## macro to insert an HTML color value by the passed priority value (typically in the [1 .. 5] range)
+## (when making modification, also update colorByPriority.tag)
+#macro(colorByPriority $priority)
+	#set($D = '#')
+	#if($priority == 1)
+		${D}FF0000
+	#elseif($priority == 2)
+		${D}FFA500
+	#elseif($priority == 3)
+		${D}FFFF00
+	#elseif($priority == 4)
+		${D}90EE90
+	#elseif($priority == 5)
+		${D}ADD8E6
+	#else
+		${D}D3D3D3
+	#end
+#end
+## - wiki charts 2.0 ----------------------------------------------------------
+
+## box for a wiki chart
+## @param $command is expected to be an instance of AbstractWikiPluginCommand
+#macro(wikiBoxOpen $command $cssClass)
+	<div class="wikichartbox#if($command.cssClass) ${command.cssClass}#end $!{cssClass}" #if($command.cssStyle)style="${command.cssStyle}"#end
+			#if(${command.tooltip})title='#esc(${command.tooltip})'#end
+	>
+#end
+
+#macro(wikiBoxClose)
+	</div>
+#end
+
+## title bar for wiki boxes
+## @param $title chart title
+## @param $chartControls optional chart control goes to the title, aligned right
+#macro(wikiBoxTitle $title $defaultTitle $chartControls $chartControlsCss)
+	#set($escapedTitle = $textFormatter.escape(${title}))
+	#set($escapedDefaultTitle = $textFormatter.escape(${defaultTitle}))
+	#wikiBoxTitleNoEscape($escapedTitle $escapedDefaultTitle $chartControls $chartControlsCss)
+#end
+
+## title bar for wiki boxes without escaping the titles, see above
+#macro(wikiBoxTitleNoEscape $title $defaultTitle $chartControls $chartControlsCss)
+    <h4>
+		#if(${title} != "") <span class="plugin-title">${title}</span> #else <span class="plugin-title">$defaultTitle</span> #end
+    	#if(${chartControls})<div class='chartControls $!{chartControlsCss}'>${chartControls}</div>#end
+		#if(${chartControls})<div class="clearer"></div>#end
+	</h4>
+#end
+
+#macro(message $type $isSingleMessage $containerId $messageId $style)
+
+	#if ($type == 'error')
+		#set( $cssClass = 'error')
+	#elseif ($type == 'warning')
+		#set( $cssClass = 'warning')
+	#else
+		#set( $cssClass = 'information')
+	#end
+
+<div class="infoMessages" #if ($!containerId) id="${containerId}" #end>
+	<div #if ($!messageId) id="${messageId}" #end class="${cssClass} #if ($isSingleMessage) onlyOneMessage #end"  #if ($!style) style="${style}" #end>
+		$xssPreventionTools.sanitizeHtml($!bodyContent.toString())
+	</div>
+</div>
+#end

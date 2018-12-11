@@ -1,0 +1,63 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+.trackerSelectorTree ol,
+.trackerSelectorTree li {
+	padding: 0;
+	margin: 0;
+}
+
+.trackerSelectorTree ol {
+	list-style-type: none;
+	margin-left: 36px;
+}
+
+.trackerSelectorTree > ol {
+	margin-top: 10px;
+	border-width: 1px 0;
+	border-style: solid;
+	border-color: #d1d1d1;
+}
+
+.trackerSelectorTree > ol,
+.trackerSelectorTree .aggregateSelectors {
+	padding-left: 5px;
+	margin-left: 0;
+}
+
+.trackerSelectorTree li {
+	display: block;
+	border-top: 1px solid #f5f5f5;
+	line-height: 30px;
+	vertical-align: middle;
+}
+
+.trackerSelectorTree .toggle {
+	display: inline-block;
+	background: url('../images/sprite-collapse-expand-2.png') no-repeat 0 -14px;
+	width: 16px;
+	height: 14px;
+	margin-top: 5px;
+	margin-right: 0;
+}
+
+.trackerSelectorTree .toggle.closed {
+	background-position: 0 0;
+}
+
+.trackerSelectorTree .small a {
+	font-size: 10px;
+	margin-left: 15px;
+}
+
+.trackerSelectorTree li img {
+    vertical-align: middle;
+}

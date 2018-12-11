@@ -1,0 +1,21 @@
+#if($isPinned)<div class="pinned-content ${justifyContent}">#end
+<div id="${id}">
+#if ($errorMessages)
+	#@message('error' true 'globalMessages' null null)
+		<ul>
+		#foreach( $errorMessage in $errorMessages )
+			<li>${errorMessage}</li>
+		#end
+		</ul>
+	#end
+#else
+	${html}
+#end
+
+#if ($queryUrl)
+	$queryUrl
+#else
+	<a style="visibility:hidden; display: block; height: 16px;"></a>
+#end
+</div>
+#if($isPinned)</div>#end

@@ -1,0 +1,60 @@
+<div class="form-field">
+	<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+	<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end multiple="multiple">
+		<optgroup label="${recentProjectsLabel}">
+			#foreach ($project in $recentProjects)
+				<option value="$project.get("id")"  #if ($project.get("selected")) selected="selected" #end>$project.get("name")</option>
+			#end
+		</optgroup>
+		<optgroup label="${allProjectsLabel}">
+			#foreach ($project in $allProjects)
+				<option value="$project.get("id")"  #if ($project.get("selected")) selected="selected" #end>$project.get("name")</option>
+			#end
+		</optgroup>
+	</select>
+
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			var currentProjectId = "${currentProjectId}";
+
+			function replaceCurrentProjectPseudoId(ids) {
+				var i, pseudoIdValue, result;
+
+				result = null;
+
+				currentProjectPseudoId = "2147483647";
+
+				if ($.isArray(ids)) {
+				    result = [];
+
+					for (i = 0; i < ids.length; i++) {
+						if (ids[i] === currentProjectPseudoId) {
+							if ($.inArray(currentProjectId, ids) < 0) {
+								result.push(currentProjectId);
+							}
+						} else {
+							result.push(ids[i]);
+						}
+					}
+				} else {
+					if (ids === currentProjectPseudoId) {
+						result = currentProjectId;
+					} else {
+						result = ids;
+					}
+				}
+
+				return result;
+			};
+
+			#if ($isMultipleChoiceAllowed)
+				codebeamer.dashboard.multiSelect.init("${selectorId}", "projectSelector:project:changed", null, null, replaceCurrentProjectPseudoId);
+			#else
+				codebeamer.dashboard.multiSelect.initSingleSelect("${selectorId}", "projectSelector:project:changed", null, null, replaceCurrentProjectPseudoId);
+			#end
+		});
+	</script>
+
+</div>

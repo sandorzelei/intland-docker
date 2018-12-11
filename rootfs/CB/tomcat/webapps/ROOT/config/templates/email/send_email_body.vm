@@ -1,0 +1,20 @@
+## $Revision: 23943:f5c76e8d52e5 $ $Date: 2009-11-27 16:11 +0100 $
+
+#parse("notification_email_header.vm")
+
+<div class="heading">
+${textFormatter.getMessage('sysadmin.sendEmail.title')}: #linkUser(${originator})
+</div>
+
+$textFormatter.format(${body}, ${format}, ${recipient})
+
+## add attached HTML text, used when sending a page in email
+#if (${pageHtmlText})
+	#br()
+	${textFormatter.getMessage('sysadmin.sendEmail.attached')}:#br()
+	$!{pageHtmlText}
+	#br()
+#end
+
+#br()
+#parse("notification_email_footer.vm")

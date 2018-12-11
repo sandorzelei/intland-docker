@@ -1,0 +1,14 @@
+<table cellpadding="0" id="trackerItems" class="trackerItems displaytag treetable trackerItemTreeTable">
+	<thead>
+		${headers}
+	</thead>
+	<tbody>
+		${html}
+	</tbody>
+</table>
+
+#if ($queryUrl)
+	<a href="$queryUrl" target="_blank" title="$queryLabel">$queryLabel</a>
+#else
+	<a style="visibility:hidden; display: block; height: 16px;"></a>
+#end

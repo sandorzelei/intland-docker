@@ -1,0 +1,93 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+.chooseReferences, .yui-multibox, .yui-ac {
+	margin: 0 0 0 0;
+	padding: 0;
+	width: 100%;
+	min-width: 32em;
+}
+
+.yui-ac-input {
+	border: 0;
+	margin: 0 0 0 0;
+	padding: 0;
+}
+
+.yui-multibox .box {
+	padding: 0px;
+}
+
+ul.workflowActions {
+ 	margin: 0px;
+ 	padding: 0px 0px 0px 0px;
+	list-style-type: none;
+}
+
+li.workflowAction {
+	margin-bottom: 6px;
+}
+
+table.actionParamEditor > td.labelCell {
+	min-width : 10em;
+	width : 10%;
+}
+
+label.actionTitle {
+	padding: 1px 3px 1px 3px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: lightGray;
+	background-color: #F0F0F0;
+	margin-bottom: 8px;
+
+}
+
+div.inlineActionEditor {
+	border-style: solid;
+	border-width: 1px;
+	border-color: lightGray;
+}
+
+table.stateTransitions {
+	margin: 8px 15px;
+}
+
+table.stateTransitions th {
+	text-align: left !important;
+}
+
+div.moreStateTransitions {
+	margin-top: 12px;
+}
+
+a.addStateTransition {
+
+}
+
+.ui-multiselect-menu.transition-permission.ui-widget-content  .ui-widget-header {
+	display: block;
+	background: transparent;
+	border: 0;
+}
+
+.transition-permission-form button[type=submit], .transition-permission-form button[type=cancel] {
+	display: none;
+}
+
+.ui-widget-header .ui-icon {
+	top: 1px;
+}
+
+.newskin .ui-widget-header .ui-helper-reset {
+	display: block;
+}

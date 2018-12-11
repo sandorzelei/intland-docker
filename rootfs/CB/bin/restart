@@ -1,0 +1,43 @@
+#! /bin/sh
+#
+
+# resolve links - $0 may be a softlink
+PRG="$0"
+while [ -h "$PRG" ] ; do
+	ls=`ls -ld "$PRG"`
+	link=`expr "$ls" : '.*-> \(.*\)$'`
+	if expr "$link" : '.*/.*' > /dev/null; then
+		PRG="$link"
+	else
+		PRG=`dirname "$PRG"`/"$link"
+	fi
+done
+
+PRGDIR=`dirname "$PRG"`
+cd $PRGDIR/..
+CBPATH=`pwd`
+
+$CBPATH/bin/stop
+$CBPATH/bin/startup
+
+#kill_sign=-9
+
+#pidfile=$CBPATH/tomcat/cb.pid
+#if [ -f $pidfile ]
+#then
+#	read cbpid < $pidfile
+#
+#	callkill="y"
+#	while [ $callkill = "y" ]
+#	do
+#		kill $kill_sign $cbpid > /dev/null 2>&1
+#		if [ $? -ne 0 ]
+#		then
+#			callkill="n"
+#		else
+#			sleep 1
+#		fi
+#	done
+#fi
+#
+#exec $CBPATH/bin/startup "$@"

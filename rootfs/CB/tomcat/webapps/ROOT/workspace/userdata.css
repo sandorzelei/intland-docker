@@ -1,0 +1,67 @@
+.block {
+	margin-bottom: 25px;
+}
+
+.block h4 {
+	font-size: 16px;
+	color: #2b2b2b;
+	border-bottom: solid 1px #d1d1d1;
+	padding-bottom: 10px;
+	margin: 0 0 5px 0;
+}
+
+#userDataTable {
+	margin: 30px 15px 15px 15px;
+}
+
+#userDataTable > tbody > tr > td {
+	vertical-align: top;
+	padding-right: 30px;
+}
+
+#userDataTable .formTableWithSpacing td {
+	padding: 5px 5px 5px 0 !important;
+	vertical-align: top;
+}
+
+#userDataTable td.optional, #userDataTable td.mandatory {
+	width: 1%;
+	min-width: 10em;
+}
+.newskin .tableItem {
+	padding-left: 5px;
+}
+#userDataTable ul {
+	list-style: none;
+	padding-left:0;
+	margin: 10px 0;
+}
+#userDataTable ul li {
+	margin-bottom: 10px;
+}
+#userDataTable .bigGapBefore > td {
+	padding-top: 35px !important;
+}
+
+.newskin .displaytag > thead th.licenseHeader {
+	text-align: center;
+	background-color: #00a85d;
+	border: 1px solid #ababab;
+	color: #ffffff;
+}
+
+.newskin .displaytag > thead th.licenseHeader:first-child {
+		padding-left: 22px;
+}
+
+.newskin .displaytag > tbody td.licenseOptions {
+	text-align: center;
+	border: 1px solid #ababab;
+}
+
+.displaytag.formTableWithSpacing.licenseTable {
+	border-collapse: collapse;
+	margin-left: 0px;
+	width: auto;
+	table-layout: fixed;
+}

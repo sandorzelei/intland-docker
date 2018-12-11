@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="$styles" type="text/css" media="all" />
+<script type="text/javascript" src="$js"></script>
+
+<div class="searchBoxContainer">
+	<form action="$contextPath/search.spr" method="GET">
+
+		<div class="searchContainer closed" data-original-width="174">
+			<div class="searchField">
+				<input class="searchInput" name="filter" type="text" value="" maxlength="80" placeholder="$searchFieldPlaceholder" autocomplete="on">
+				<span class="toggleButton" title="$searchButtonTitle"></span>
+			</div>
+		</div>
+		<div class="searchOptions">
+
+			<input type="hidden" name="advanced" value="true">
+			<input type="hidden" name="projId">
+
+			<div class="labelContainer linkActionLabel"><span>$dateLabel</span><a href="#" class="goToHistoryLink">$searchGoToHistoryLabel</a></div>
+			<ul class="inputContainer">
+
+				#foreach ($checkableInputDto in $dateRangeInput)
+					<li class="inputField" title="$checkableInputDto.title">
+						<input type="radio" class="advancedSearchDateRangeFilter" id="$checkableInputDto.id" name="lastModifiedAtDuration" value="$checkableInputDto.value" #if ($checkableInputDto.checked) checked="checked" #end>
+						<label for="$checkableInputDto.id">$checkableInputDto.label</label>
+					</li>
+				#end
+
+			</ul>
+			<hr class="searchOptionsSeparator" />
+			<div class="labelContainer">$projectLabel</div>
+			<ul class="inputContainer">
+
+				<select class="projectIdSelector" id="${selectorId}" multiple="multiple">
+				</select>
+
+
+			</ul>
+			<hr class="searchOptionsSeparator" />
+			<div class="labelContainer linkActionLabel"><span>$searchContentsLabel</span><a href="#" class="clearAllLink">$searchContentsClearAllLabel</a></div>
+			<ul class="inputContainer">
+				#foreach ($checkableInputDto in $artifactSearchInput)
+				<li class="inputField#if ($checkableInputDto.extraClass) $checkableInputDto.extraClass #end" title="$checkableInputDto.label">
+					<input type="checkbox" id="$checkableInputDto.id" name="searchOnArtifact" value="$checkableInputDto.value" #if ($checkableInputDto.checked) checked #end/>
+					<label for="$checkableInputDto.id">
+						<span class="labelImageContainer">
+							<img class="labelImage" src="$contextPath$checkableInputDto.imageUrl"></img>
+						</span>
+						$checkableInputDto.label
+					</label>
+				</li>
+				#end
+			</ul>
+			<hr class="searchOptionsSeparator" />
+			<div class="searchButtonContainer">
+				<input type="button" class="button searchOptionsButton" title="$searchButtonTitle" value="$searchButtonLabel" />
+				<a href="$advancedSearchUrl" class="advancedSearchLink" title="$advancedSearchLabel"><img src="$advancedSearchImage" /></a>
+			</div>
+		</div>
+
+		<script>$initScript</script>
+	</form>
+</div>

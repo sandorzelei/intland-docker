@@ -1,0 +1,1 @@
+#showProjectNameInSubjects("${textFormatter.getMessage('wiki.notification.deleted.subject')} [#${wikiPage.id}] ${wikiPage.name}")

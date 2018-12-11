@@ -1,0 +1,1 @@
+#showProjectNameInSubjects("${textFormatter.getMessage('attachment.created.subject')} ${trackerItem}")

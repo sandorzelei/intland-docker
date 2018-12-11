@@ -1,0 +1,1 @@
+#showProjectNameInSubjects("${textFormatter.getMessage('tracker.escalation.notification.subject')} ${escalation.level}: ${trackerItem}")

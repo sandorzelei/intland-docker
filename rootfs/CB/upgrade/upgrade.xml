@@ -1,0 +1,262 @@
+<!--
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+-->
+
+<!--
+	This file must be in the top installation directory and the command below can be used to execute it:
+
+	$ ant -f upgrade.xml 
+-->
+
+<project name="Code Beamer Upgrade" default="upgrade" basedir="..">
+	
+	<target name="check_available_files_and_directories">
+		<fileset dir="${oldRepositoryDir}/docs" id="docsDirFileset"/>
+		<pathconvert refid="docsDirFileset" property="copyDocs" setonempty="false"/>
+	
+		<fileset dir="${oldRepositoryDir}/git" id="gitDirFileset" erroronmissingdir="false"/>
+		<pathconvert refid="gitDirFileset" property="copyGit" setonempty="false"/>
+
+		<fileset dir="${oldRepositoryDir}/hg" id="hgDirFileset" erroronmissingdir="false"/>
+		<pathconvert refid="hgDirFileset" property="copyHg" setonempty="false"/>
+
+		<fileset dir="${oldRepositoryDir}/svn" id="svnDirFileset" erroronmissingdir="false"/>
+		<pathconvert refid="svnDirFileset" property="copySvn" setonempty="false"/>
+		
+		<fileset dir="${oldRepositoryDir}/src" id="srcDirFileset" erroronmissingdir="false"/>
+		<pathconvert refid="srcDirFileset" property="copySrc" setonempty="false"/>
+
+		<available file="${oldRepositoryDir}/acl.svn" property="copyAclSvn" />
+		<available file="${oldRepositoryDir}/.htaccess" property="copyHtaccess" />
+	</target>
+
+	<target name="validate_new_dir">
+		<record name="cb-upgrade.txt" loglevel="verbose" append="true"/>
+		<property name="newDir" location="${basedir}" description="Path of target (new) codeBeamer installation" />
+		<property name="newRepositoryDir" location="${newDir}/repository" />
+		<property name="newTomcatDir" location="${newDir}/tomcat" />
+		
+		<fail message="Invalid target (new) installation directory: ${newDir}">
+			<condition>
+				<or>
+					<not>
+						<available file="${newDir}/bin" type="dir"/>
+					</not>
+					<not>
+						<available file="${newRepositoryDir}" type="dir"/>
+					</not>
+				</or>
+			</condition>
+		</fail>
+
+		<fail message="Target (new) codeBeamer seems to be running:, ${newTomcatDir}/cb.pid exists">
+			<condition>
+				<available file="${newTomcatDir}/cb.pid" type="file"/>
+			</condition>
+		</fail>
+		
+		<echo message="${newDir}" />
+	</target>
+
+	<target name="validate_old_dir" depends="validate_new_dir">
+		<input
+			message="Have you made a database backup to rollback if upgrade fails?"
+			validargs="y,n"
+			defaultvalue="n"
+			addproperty="backUpIsAvailable"
+		/>
+
+		<fail message="Please create a database backup and start upgrading afterwards.">
+			<condition>
+				<equals arg1="n" arg2="${backUpIsAvailable}"/>
+			</condition>
+		</fail>
+		
+		<input
+			message="Have you made a codeBeamer backup to rollback if upgrade fails?"
+			validargs="y,n"
+			defaultvalue="n"
+			addproperty="cbBackUpIsAvailable"
+		/>
+
+		<fail message="Please create a codeBeamer backup and start upgrading afterwards.">
+			<condition>
+				<equals arg1="n" arg2="${cbBackUpIsAvailable}"/>
+			</condition>
+		</fail>
+
+		<input
+			message="Enter codeBeamer installation context, default is cb (tomcat/webapps/cb)"
+			addproperty="contextDir"
+			defaultvalue="cb"
+		/>
+		
+		<input
+			message="Enter source (old) codeBeamer installation directory:"
+			addproperty="oldDirInput"
+		/>
+
+		<property name="oldDir" location="${oldDirInput}" description="Path of source (old) codeBeamer installation" />
+
+		<fail message="Source (old) and Target (new) installaton directories must be different: ${newDir}">
+			<condition>
+				<equals arg1="${oldDir}" arg2="${newDir}"/>
+			</condition>
+		</fail>
+
+		<property name="oldRepositoryDir" location="${oldDir}/repository" />
+
+		<fail message="Invalid source (old) installaton directory: ${oldDir} or invalid context: /tomcat/webapps/${contextDir}">
+			<condition>
+				<or>
+					<not>
+						<available file="${oldDir}/bin" type="dir"/>
+					</not>
+					<not>
+						<available file="${oldRepositoryDir}" type="dir"/>
+					</not>
+				</or>
+			</condition>
+		</fail>
+	
+		<property name="oldTomcatDir" location="${oldDir}/tomcat" />
+		
+		<!-- cb.pid is move to the tomcat directory in 9.3, but during a 9.2, it could be in the /repository directory -->
+		<fail message="Source (old) codeBeamer seems to be running, ${oldRepositoryDir}/cb.pid exists">
+			<condition>
+				<available file="${oldRepositoryDir}/cb.pid" type="file"/>
+			</condition>
+		</fail>
+		
+		<fail message="Source (old) codeBeamer seems to be running, ${oldTomcatDir}/cb.pid exists">
+			<condition>
+				<available file="${oldTomcatDir}/cb.pid" type="file"/>
+			</condition>
+		</fail>
+		
+		<length property="fsize" mode="all">
+			<fileset dir="${oldRepositoryDir}"/>
+		</length>
+		
+		<script language="javascript">
+			<![CDATA[
+				var length_bytes = project.getProperty("fsize");
+				var length_gbytes = Math.round(length_bytes / 1024 / 1024 / 1024 * 1.5);
+				project.setNewProperty("fsize.gb", length_gbytes);
+			]]>
+		</script>
+		<fail message="There is not enough space on the disk. Required space: ${fsize.gb} GB">
+			<condition>
+				<not>
+					<hasfreespace partition="${basedir}" needed="${fsize.gb}G"/>
+				</not>
+			</condition>
+		</fail>
+	</target>
+
+	<target name="copy_files" depends="validate_new_dir,validate_old_dir,check_available_files_and_directories">
+		<defaultexcludes remove="**/CVS"/>
+		<defaultexcludes remove="**/CVS/**"/>
+		<defaultexcludes remove="**/.cvsignore"/>
+		
+		<defaultexcludes remove="**/.git/**"/>
+		<defaultexcludes remove="**/.git"/>
+		<defaultexcludes remove="**/.gitignore"/>
+		<defaultexcludes remove="**/.gitmodules"/>
+		<defaultexcludes remove="**/.gitattributes"/>
+		
+		<defaultexcludes remove="**/.hg/**"/>
+		<defaultexcludes remove="**/.hg"/>
+		<defaultexcludes remove="**/.hgtags"/>
+		<defaultexcludes remove="**/.hgignore"/>
+		<defaultexcludes remove="**/.hgsubstate"/>
+		<defaultexcludes remove="**/.hgsub"/>
+		
+		<defaultexcludes remove="**/.svn/**"/>
+		<defaultexcludes remove="**/.svn"/>
+		
+		<patternset id="repositoryContentPattern">
+			<include name=".htaccess" if="copyHtaccess" />
+			<include name="acl.svn" if="copyAclSvn" />
+			<include name="docs/**" if="copyDocs" />
+			<include name="git/**" if="copyGit" />
+			<include name="hg/**" if="copyHg" />
+			<include name="svn/**" if="copySvn" />
+			<include name="src/**" if="copySrc" />
+		</patternset>
+
+		<!-- Check whether target (new) directory already contains data. -->
+		<fileset dir="${newRepositoryDir}" id="newRepositoryContent">
+			<patternset refid="repositoryContentPattern" />
+		</fileset>
+
+		<pathconvert refid="newRepositoryContent" property="newRepositoryContentList" setonempty="false"/>
+
+		<fail if="newRepositoryContentList" message="Target (new) installation directory already contains data" />
+		
+		<delete dir="${newDir}/upgrade/repository" quiet="true"/>
+		
+		<mkdir dir="${newDir}/upgrade/repository"/>
+		
+		<!-- Copy to a temp directory and in case of error we can run script again -->
+		<copy todir="${newDir}/upgrade/repository" preservelastmodified="true" failonerror="true">
+			<fileset dir="${oldRepositoryDir}">
+				<patternset refid="repositoryContentPattern" />
+			</fileset>
+		</copy>
+		
+		<move todir="${newRepositoryDir}" preservelastmodified="true" failonerror="true">
+			<fileset dir="${newDir}/upgrade/repository">
+				<patternset refid="repositoryContentPattern" />
+			</fileset>
+		</move>
+		
+		<delete dir="${newDir}/upgrade/repository" quiet="true"/>
+		
+		<copy file="${oldDir}/tomcat/webapps/${contextDir}/images/IL_Logo_120x40.jpg"
+			todir="${newDir}/tomcat/webapps/${contextDir}/images" overwrite="true"
+			preservelastmodified="true" failonerror="true" />
+			
+		<copy file="${oldDir}/tomcat/webapps/${contextDir}/WEB-INF/classes/general.xml"
+			todir="${newDir}/tomcat/webapps/${contextDir}/WEB-INF/classes" overwrite="true"
+			preservelastmodified="true" failonerror="false" />
+			
+		<copy file="${oldDir}/tomcat/conf/server.xml"
+			tofile="${newDir}/tomcat/conf/old-server.xml"/>
+		
+		<copy file="${oldDir}/tomcat/conf/context.xml"
+			tofile="${newDir}/tomcat/conf/old-context.xml"/>
+
+		<!-- Check whether copied (target) data is equals to source (old). -->
+		<fileset dir="${oldRepositoryDir}" id="dirContentDiff">
+			<patternset refid="repositoryContentPattern" />
+			<different targetdir="${newRepositoryDir}"/>
+		</fileset>
+
+		<pathconvert refid="dirContentDiff" property="dirContentDiffValue" setonempty="false"/>
+
+		<!-- <echo message="Diff: ${diffProperty}" /> -->
+		<fail message="Copy failed: ${dirContentDiffValue}">
+			<condition>
+				<isset property="dirContentDiffValue"/>
+			</condition>
+		</fail>
+	</target>
+
+	
+	<target name="upgrade" depends="validate_new_dir,validate_old_dir,check_available_files_and_directories,copy_files">
+		<echo message="Upgrade was successful." />
+		<echo message="**********************************************" />
+		<echo message="WARN: if you made any customization with your old codeBeamer instance, check this customization in the new instance" />
+		<echo message="WARN: compare old-server.xml / old-context.xml with new server.xml / new context.xml before codeBeamer start, some settings does not work with Tomcat 8" />
+		<echo message="**********************************************" />
+	</target>
+</project>

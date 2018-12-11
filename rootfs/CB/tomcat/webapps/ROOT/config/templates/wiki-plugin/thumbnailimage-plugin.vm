@@ -1,0 +1,30 @@
+<div>
+	<a href="${src}" data-lightbox="${uuid}" data-title="${caption}">
+		#set($imgAttrs = " src='${src}' class='${class}' thumbnailWidth='${width}' thumbnailHeight='${height}' onload='setThumbnailPluginImageSize(this);' ")
+		#if ($display == 'both')
+			<img ${imgAttrs} style="display:none;padding-bottom:3px;${style}" />
+			#set( $showText = "true" )
+		#elseif($display == 'thumbnail')
+			<img ${imgAttrs} style="display:none;${style}" />
+		#else
+			$linkText
+		#end
+	</a>
+
+	#if ($showText)
+		<span style="display:block;">$linkText</span>
+	#end
+</div>
+
+#foreach($additinalSrc in $additinalSrcs)
+   <a href="${additinalSrc}" style="display:none" data-lightbox="${uuid}" data-title="${additionalCaptions[$foreach.index]}"></a>
+#end
+
+<script type="text/javascript">
+	if (typeof lightboxIncluded === 'undefined') {
+		var lightboxIncluded = true;
+		lightbox.option({'albumLabel': "${pictureCounterString}"})
+		lightbox.init();
+	}
+</script>
+

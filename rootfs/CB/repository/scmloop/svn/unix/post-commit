@@ -1,0 +1,3 @@
+#!/bin/sh
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+exec "/your_install_dir/scmloop/scmloop" -mode svn_post_receive "$@"

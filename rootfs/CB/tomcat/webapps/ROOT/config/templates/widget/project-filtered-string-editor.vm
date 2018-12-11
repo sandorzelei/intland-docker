@@ -1,0 +1,25 @@
+<div class="form-field">
+	<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+	<input id="${selectorId}" name="params[${fieldName}]" type="text" value="$textFormatter.escape(${value})" />
+</div>
+
+<script type="text/javascript">
+	jQuery(function($) {
+
+		if ('$!value' != '') {
+			$('select[name="params[id]"]').multiselect("uncheckAll");
+			$('input[name="params[nameFilter]"]').removeAttr('disabled');
+			$('input[name="params[categoryFilter]"]').removeAttr('disabled');
+		} else if ($('select[name="params[id]"]').multiselect("getChecked").length > 0) {
+			$('#' + '${selectorId}').attr('disabled','disabled');
+		}
+
+		codebeamer.dashboard.multiSelect.attachEventListener("projectSelector:project:changed", function(projectIds) {
+			if (projectIds.length > 0) {
+				$('#' + '${selectorId}').attr('disabled','disabled');
+			} else {
+				$('#' + '${selectorId}').removeAttr('disabled');
+			}
+		});
+	});
+</script>

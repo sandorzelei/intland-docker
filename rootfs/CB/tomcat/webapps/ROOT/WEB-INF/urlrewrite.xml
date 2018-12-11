@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite
+        PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+        "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+<!--
+	Configuration file for UrlRewriteFilter http://urlrewritefilter.googlecode.com/svn/trunk/src/doc/manual/4.0/index.html#configuration
+	For encoding problems of restful urls see also: "https://www.talisman.org/~erlkonig/misc/lunatech%5Ewhat-every-webdev-must-know-about-url-encoding/"
+-->
+<urlrewrite decode-using="null" >
+
+	<!--
+		From https://github.com/paultuckey/urlrewritefilter
+
+		See: Permanently redirect incoming URLs containing jsessionid
+	-->
+	<rule>
+		<name>Strip URL Session ID's</name>
+		<note>
+			Strip ;jsession=XXX from urls passed through
+			response.encodeURL().
+			The characters ? and # are the only things we can use to
+			find out where the jsessionid ends.
+			The expression in 'from' below contains three capture
+			groups, the last two being optional.
+			1, everything before ;jesessionid
+			2, everything after ;jesessionid=XXX starting with a ?
+			(to get the query string) up to #
+			3, everything ;jesessionid=XXX and optionally ?XXX
+			starting with a # (to get the target)
+			eg,
+			from index.jsp;jsessionid=sss?qqq to index.jsp?qqq
+			from index.jsp;jsessionid=sss?qqq#ttt to index.jsp?qqq#ttt
+			from index.jsp;jsessionid=asdasdasdsadsadasd#dfds -
+			index.jsp#dfds
+			from u.jsp;jsessionid=wert.hg - u.jsp
+			from /;jsessionid=tyu - /
+		</note>
+		<condition type="requested-session-id-from-url" operator="equal">true</condition>
+        <condition type="requested-session-id-valid" operator="equal">true</condition>
+		<from>^(.*?)(?:\;jsessionid=[^\?#]*)?(\?[^#]*)?(#.*)?$</from>
+        <to type="redirect">$1$2$3</to>
+	</rule>
+
+	<!-- rule for avoiding caching /urlversioned/<version>/any... is forwarded to /any -->
+	<rule>
+		<from>^/urlversioned/(.*?)/(.*)$</from>
+		<to type="forward">/$2</to>
+	</rule>
+
+	<rule>
+		<from>^/proj/([0-9]+)/scm/repositories$</from>
+		<to>/proj/scm/repositories.spr?proj_id=$1</to>
+	</rule>
+
+	<!-- show the repository details -->
+	<rule>
+		<from>^/repository/([0-9]+)$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1</to>
+	</rule>
+	<!-- sub-pages of the repository are selecting each ditchnet tab -->
+	<rule>
+		<from>^/repository/([0-9]+)/forks$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=forks</to>
+	</rule>
+	<rule>
+		<from>^/repository/([0-9]+)/changesets$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=changesets</to>
+	</rule>
+	<rule>
+		<from>^/repository/([0-9]+)/changesets/(.*)$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=changesets&amp;branchOrTag=${escape:${unescapePath:$2}}</to>
+	</rule>
+	<rule>
+		<from>^/repository/([0-9]+)/files$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=files</to>
+	</rule>
+	<rule>
+		<from>^/repository/([0-9]+)/pullrequests(/?)(.*)$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=pullrequests&amp;submodule=$3</to>
+	</rule>
+
+	<rule>
+		<from>^/repository/([0-9]+)/branchesAndTags(/?)(.*)$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=branchesAndTags</to>
+	</rule>
+
+	<rule>
+		<from>^/repository/([0-9]+)/permissions$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=permissions</to>
+	</rule>
+	<rule>
+		<from>^/repository/([0-9]+)/notifications$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=notifications</to>
+	</rule>
+	<rule>
+		<from>^/repository/([0-9]+)/statistics$</from>
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=statistics</to>
+	</rule>
+	<rule>
+		<from>^/changeset/([0-9]+)$</from>
+		<to>/proj/scm/sccChangeSet.spr?commit_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/tracker/([0-9]+)/create$</from>
+		<to>/proj/tracker/submitNew.spr?tracker_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/cmdb/([0-9]+)/create$</from>
+		<to>/proj/cmdb/submitNew.spr?tracker_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/issue/([0-9]+)/edit$</from>
+		<to>/proj/tracker/addUpdateTrackerItem.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/query/([0-9]+)/edit$</from>
+		<to>/proj/queries/editQuery.spr?queryId=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/cmdb/([0-9]+)/edit$</from>
+		<to>/proj/cmdb/addUpdateItem.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/item/([0-9]+)/stats$</from>
+		<to>/proj/tracker/versionStats.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/repository/([0-9]+)/pullrequest/send$</from>
+		<to>/proj/scm/pullrequest/send.spr?repositoryId=$1</to>
+	</rule>
+	<rule>
+		<from>^/pullrequest/([0-9]+)$</from>
+		<to>/proj/scm/pullrequest/view.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/pullrequest/([0-9]+)/merge$</from>
+		<to>/proj/scm/pullrequest/merge.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/pullrequest/([0-9]+)/reject$</from>
+		<to>/proj/scm/pullrequest/reject.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/pullrequest/([0-9]+)/revoke$</from>
+		<to>/proj/scm/pullrequest/revoke.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/pullrequest/([0-9]+)/resend$</from>
+		<to>/proj/scm/pullrequest/resend.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/pullrequest/([0-9]+)/addcomment$</from>
+		<to>/proj/scm/pullrequest/addcomment.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/scm/([0-9]+)/fork$</from>
+		<to>/scm/fork.spr?repositoryId=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/requirement/([0-9]+)$</from>
+		<to>/proj/tracker/getrequirement.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/requirement-tracker/([0-9]+)/create</from>
+		<to>/proj/tracker/createtrackeritem.spr?tracker_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/release-tracker/([0-9]+)/create</from>
+		<to>/proj/tracker/createtrackeritem.spr?tracker_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/requirement/([0-9]+)/update</from>
+		<to>/proj/tracker/updaterequirement.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/requirement/([0-9]+)/rename</from>
+		<to>/proj/tracker/renametrackeritem.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/release-tracker/([0-9]+)/rename</from>
+		<to>/proj/tracker/renametrackeritem.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/requirementcomment/([0-9]+)</from>
+		<to>/proj/tracker/getRequirementComment.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/requirement/([0-9]+)/addcomment</from>
+		<to>/proj/tracker/addCommentToRequirement.spr?task_id=$1</to>
+	</rule>
+	<rule>
+		<from>^/requirement/([0-9]+)/updatecomment</from>
+		<to>/proj/tracker/updateRequirementComment.spr?task_id=$1&amp;</to>
+	</rule>
+	<rule>
+		<from>^/requirement/([0-9]+)/deletecomment</from>
+		<to>/proj/tracker/deleteRequirementComment.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/report/([0-9]+)$</from>
+		<to>/proj/report/execute.do?doc_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/scm/dir/([0-9]+)/(.*)/history$</from>
+		<to>/scm/filelog.spr?repositoryId=$1&amp;path=${escape:${unescapePath:$2}}&amp;isDir=true</to>
+	</rule>
+
+	<rule>
+		<from>^/scm/file/([0-9]+)/(.*)/history$</from>
+		<to>/scm/filelog.spr?repositoryId=$1&amp;path=${escape:${unescapePath:$2}}&amp;isDir=false</to>
+	</rule>
+
+	<rule>
+		<from>^/scm/file/([0-9]+)/(.+)/open(.*)$</from>
+		<to>/scmShowFileRevision?repositoryId=$1&amp;path=${escape:${unescapePath:$2}}&amp;$1</to>
+	</rule>
+
+	<rule>
+		<from>^/scm/dir/([0-9]+)(/?)$</from>
+		<to last="true" qsappend="true">/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=files&amp;isDir=true&amp;path=/</to>
+	</rule>
+
+	<rule>
+		<from>^/scm/dir/([0-9]+)/(.+)/open$</from>
+		<!-- going directly to the url avoiding double rewrite -->
+		<to>/proj/scm/repository.spr?repositoryId=$1&amp;orgDitchnetTabPaneId=files&amp;isDir=true&amp;path=${escape:${unescapePath:$2}}</to>
+	</rule>
+
+	<rule>
+		<from>^/scm/(dir|file)/([0-9]+)/(.+)$</from>
+		<to qsappend="true">/scm/$1/$2/$3/open</to>
+	</rule>
+
+	<rule>
+		<from>^/scm/(dir|file)/([0-9]+)(/?)$</from>
+		<to qsappend="true">/scm/$1/+/$2/open</to> <!-- using space for missing branch, see ScmDirEntry and PathParts-->
+	</rule>
+
+	<!-- legacy urls -->
+
+	<!--
+		send the legacy login.do/signin.do/logout.do to the new login.spr/logout.spr urls,
+		just in case if there is any legacy configuration -in general.xml- at customer sites...
+	-->
+	<rule>
+		<from>^/login.do(\??.*)$</from>
+		<to>/login.spr$1</to>
+	</rule>
+	<rule>
+		<from>^/signin.do(\??.*)$</from>
+		<to>/login.spr$1</to>
+	</rule>
+	<rule>
+		<from>^/logout.do(\??.*)$</from>
+		<to>/logout.spr$1</to>
+	</rule>
+
+	<!-- START OF forwards for legacy add/edit issue/cmdb urls -->
+	<rule>
+		<from>^/proj/tracker/submitNew.do?(.*)$</from>
+		<to>/proj/tracker/submitNew.spr?$1</to>
+	</rule>
+
+	<rule>
+		<from>^/proj/cmdb/submitNew.do?(.*)$</from>
+		<to>/proj/cmdb/submitNew.spr?$1</to>
+	</rule>
+
+	<rule>
+		<from>^/proj/tracker/updateTrackerItem.do?(.*)$</from>
+		<to>/proj/tracker/addUpdateTrackerItem.spr?$1</to>
+	</rule>
+
+	<rule>
+		<from>^/proj/cmdb/updateItem.do?(.*)$</from>
+		<to>/proj/cmdb/addUpdateItem.spr?$1</to>
+	</rule>
+
+	<rule>
+		<from>^/proj/tracker/newIssue.do(.*)$</from>
+		<to>/proj/tracker/newIssue.spr$1</to>
+	</rule>
+	<!-- END OF forwards for legacy add/edit issue/cmdb urls -->
+
+	<rule>
+		<from>^/userdata/?([0-9]*)$</from>
+		<to>/userdata.spr?user_id=$1</to>
+	</rule>
+
+	<!-- forwards to legacy urls -->
+	<rule> <!-- Account Tasks -->
+		<from>/accounttasks.do</from>
+		<to>/browseIssues.spr</to>
+	</rule>
+	<rule> <!-- User Tasks/Tracker Items -->
+		<from>/usertasks.do</from>
+		<to>/browseIssues.spr</to>
+	</rule>
+
+	<rule>
+		<from>^/cardboard/([0-9]+)/configure$</from>
+		<to>/cardboard/configureCardboard.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/cardboard/([0-9]+)$</from>
+		<to>/cardboard/cardboard.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/cardboard/([0-9]+)/tracker$</from>
+		<to>/cardboard/trackerCardboard.spr?tracker_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/item/([0-9]+)/planner/?$</from>
+		<to>/planner/planner.spr?task_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/category/([0-9]+)/planner/?$</from>
+		<to>/planner/planner.spr?tracker_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/category/([0-9]+)/dashboard/?$</from>
+		<to>/proj/tracker/browseTracker.do?tracker_id=$1&amp;view_id=0</to>
+	</rule>
+
+	<rule>
+		<from>^/review/([0-9]+)/statistics/?$</from>
+		<to>/proj/review/statistics.spr?reviewId=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/review/([0-9]+)/feedback/?$</from>
+		<to>/proj/review/feedback.spr?reviewId=$1</to>
+	</rule>
+
+	<rule>
+		<from>^/review/([0-9]+)/history/?$</from>
+		<to>/proj/review/history.spr?reviewId=$1</to>
+	</rule>
+
+	<rule>
+		<from>/accountSshKeys?$</from>
+		<to>/updateaccountsshkeys.spr$1</to>
+	</rule>
+
+	<rule>
+		<from>/updateUserPhoto?$</from>
+		<to>/updateUserPhoto.spr?user_id=$1</to>
+	</rule>
+
+	<rule>
+		<from>/proj/wiki/compareWikiPageRevisions?$</from>
+		<to>/proj/wiki/compareWikiPageRevisions.spr?$1</to>
+	</rule>
+	<rule>
+		<from>proj/sources/scmFileDiff?$</from>
+		<to>proj/sources/scmFileDiff.spr?$1</to>
+	</rule>
+	<rule>
+		<from>^/item/([0-9]+)/attachment/([0-9]+)$</from>
+		<to>/displayDocument?task_id=$1&amp;artifact_id=$2</to>
+	</rule>
+</urlrewrite>

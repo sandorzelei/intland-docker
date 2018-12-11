@@ -1,0 +1,16 @@
+#parse("notification_email_header.vm")
+
+<div class="heading">
+${textFormatter.getMessage('forumPost.notification.created.title')}: [${forumPost.forum.keyName}-${forumPost.threadId}]: #linkForumThread(${forumPost})
+</div>
+
+#account(${originator})
+
+#partHeader("${textFormatter.getMessage('forum.description.label')}") $textFormatter.format(${forumPost.description}, ${forumPost.descriptionFormat}, ${wikiContext})
+
+#if(${forumPost.attachmentFileName})
+	#partHeader("${textFormatter.getMessage('attachment.label')}")
+	#linkForumPostAttachment(${forumPost})
+#end
+
+#parse("notification_email_footer.vm")

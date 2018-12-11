@@ -1,0 +1,80 @@
+#if(!$empty)
+<div class="empty">
+	${textFormatter.getMessage('cmdb.version.issues.none')}
+</div>
+<table class="embedded releases">
+	<thead>
+	<tr>
+		<th>${textFormatter.getMessage('issue.version.label')}</th>
+		<th>${textFormatter.getMessage('tracker.field.Release Date.label')}</th>
+		<th class="numberOfIssues">${textFormatter.getMessage('release.activity.trends.items')}</th>
+		#if($command.showBurnDownChart)
+			<th class="burnDown">${textFormatter.getMessage('release.activity.trends.burn.down.chart')}</th>
+		#end
+	</tr>
+	</thead>
+	<tbody>
+		#foreach($release in $releases)
+		<tr>
+			#set($padding = $release.level * 5)
+			<td style="padding-left: ${padding}px">
+				<table class="releaseName">
+					<tr>
+						<td class="releaseIcon">
+							#if($release.released)
+								<img src="$contextPath/images/newskin/action/lock_gray_closed.png">
+							#else
+								<img src="$contextPath/images/newskin/action/lock_gray_open.png">
+							#end
+						</td>
+						<td>
+							<b><a href="$contextPath$release.url" title="$release.description">$release.name</a></b>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<span class="subtext">
+					#if($release.released && $release.actualReleaseDate)
+						${textFormatter.getMessage('cmdb.version.released.label')}: $textFormatter.formatDate(${user}, ${release.actualReleaseDate}, true)
+					#else
+						#if((!$release.releaseDate) && ("$!release.releaseDate" == ""))
+							${textFormatter.getMessage('cmdb.version.notScheduled.label')}
+						#else
+							#if($release.daysLeft >= 0)
+								${textFormatter.getMessage('cmdb.version.dueIn.label', ${release.daysLeft})}
+							#else
+								${textFormatter.getMessage('cmdb.version.lateBy.label', $math.abs(${release.daysLeft}))}
+							#end
+							($textFormatter.formatDate(${user}, ${release.releaseDate}, true))
+						#end
+					#end
+				</span>
+			</td>
+			<td class="numberOfIssues" data-unresolved-issues="$release.numberOfIssues.get('Unresolved')"
+				data-resolved-issues="$release.numberOfIssues.get('Resolved')"
+				data-all-issues="$release.numberOfIssues.get('All')"></td>
+			#if($command.showBurnDownChart)
+				<td class="burnDown">
+					#if($release.numberOfIssues.get('All') > 0)
+						<span class="showBurnDown" data-releaseId="${release.id}" title="${textFormatter.getMessage('release.activity.trends.show.burn.down.chart')}"></span>
+					#end
+				</td>
+			#end
+		</tr>
+		#end
+		#if($command.showUnscheduledItems)
+		<tr>
+			<td>Unscheduled</td>
+			<td></td>
+			<td class="numberOfIssues" data-unresolved-issues="$unscheduledItems.get('Unresolved')"
+				data-resolved-issues="$unscheduledItems.get('Resolved')"
+				data-all-issues="$unscheduledItems.get('All')"></td>
+			#if($command.showBurnDownChart)
+				<td></td>
+			#end
+		</tr>
+		#end
+	</tbody>
+</table>
+#end

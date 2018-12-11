@@ -1,0 +1,11 @@
+#wikiBoxOpen(${command})
+    ## chart
+    #if($command.chart)
+
+		#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("cmdb.version.bubbleChart.label")}, "")
+
+        <span id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </span>
+    #end
+#wikiBoxClose()

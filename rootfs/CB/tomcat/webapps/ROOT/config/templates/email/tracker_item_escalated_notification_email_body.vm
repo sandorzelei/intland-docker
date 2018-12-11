@@ -1,0 +1,79 @@
+
+#parse("notification_email_header.vm")
+
+#define($footerText) 
+#trackerItemReason(${trackerItem})
+#end
+
+<div class="heading">
+${textFormatter.getMessage('tracker.escalation.notification.title')} #linkTrackerItem(${trackerItem})
+</div>
+
+#account(${originator})
+
+#tableOpen()
+#trOpen()
+    #tdField("${textFormatter.getMessage('tracker.escalation.level.label')}")
+    #tdText( ${escalation.level} )
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('tracker.escalation.predicate.label')}")
+    #tdText( ${escalation.predicate.name} )
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('tracker.escalation.anchor.label')}")
+    #tdText( ${renderer.getAnchor($recipient)} )
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('issue.submitter.label')}")
+    <td class="textData">
+    #if(${trackerItem.submitter})
+    	#linkUserShort(${trackerItem.submitter})
+    #else
+    	--
+    #end
+    </td>
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('issue.status.label')}")
+    <td class="textData">
+	#if(${trackerItem.status})
+		$textFormatter.getMessageWithDefault("tracker.choice.${trackerItem.status.name}.label", ${trackerItem.status.name})
+	#else
+		--
+	#end
+    </td>
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('issue.priority.label')}")
+    <td class="textData">
+ 	#if(${trackerItem.namedPriority})
+		$textFormatter.getMessageWithDefault("tracker.choice.${trackerItem.namedPriority.name}.label", ${trackerItem.namedPriority.name})
+	#else
+		--
+	#end
+    </td>
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('issue.startDate.label')}")
+    #tdText("${textFormatter.formatDate($recipient, ${trackerItem.startDate})}")
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('issue.endDate.label')}")
+    #tdText("${textFormatter.formatDate($recipient, ${trackerItem.endDate})}")
+#trClose()
+#trOpen()
+    #tdField("${textFormatter.getMessage('issue.assignedTo.label')}")
+    <td class="textData">
+    #if(${trackerItem.assignedTo} && !${trackerItem.assignedTo.empty})
+    	#foreach($assignee in ${trackerItem.assignedTo})
+    		#linkUserShort($assignee)
+    	#end
+    #else
+    	<span style="color: red;">${textFormatter.getMessage('issue.assignedTo.none')}</span>
+    #end
+    </td>
+#trClose()
+#tableClose()
+
+#parse("notification_email_footer.vm")

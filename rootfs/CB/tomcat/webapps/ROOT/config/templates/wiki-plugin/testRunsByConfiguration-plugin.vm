@@ -1,0 +1,163 @@
+#wikiBoxOpen(${command}, "testRunsByConfiguration")
+	#if($command.chart)
+	#parse("includes/chartSelect.vm")
+
+		#set($chartControls = '')
+		#if($command.projectId)
+
+			#if($renderIntervalSelectors)
+
+				#define($statusControls)
+					#renderSelect("${pluginId}", "testRunsByConfiguration_${pluginId}.updateChart();", ${statuses}, "", "status", "-1", true)
+					<br class="responsiveChartControlBreak first" />
+				#end
+
+				#define($nameControls)
+					#renderInput("${pluginId}", "testRunsByConfiguration_${pluginId}.onInputChange();", "name")
+					<br class="responsiveChartControlBreak second" />
+				#end
+
+				#define($dateRangeControls)
+					#renderDateRange("${pluginId}", "$.proxy(testRunsByConfiguration_${pluginId}.updateChart, testRunsByConfiguration_${pluginId})", "dateRange", ${selectorUtilsJsUrl}, ${dateRangeEditorJsUrl}, $selectorUtilsLessUrl)
+				#end
+
+				#set($statusLabel = ${textFormatter.getMessage("test.case.plugin.configuration.status.label")})
+				#set($nameLabel = ${textFormatter.getMessage("test.case.plugin.configuration.name.label")})
+				#set($dateRangeLabel = ${textFormatter.getMessage("test.case.plugin.date.range.name.label")})
+
+				#set($chartControls = "$statusLabel: $statusControls $nameLabel: $nameControls $dateRangeLabel: $dateRangeControls")
+			#end
+
+		#end
+
+		#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.testRunsByConfig.label")}, "${chartControls}")
+
+        <span id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </span>
+
+        <script type="text/javascript">
+        	var testRunsByConfiguration_${pluginId} = {
+        	    timer: null,
+        		updateChart: function() {
+        			var chartUrl = this.createChartUrl();
+        			var tableUrl = this.createTableUrl();
+
+        			chartRendererSupport.updateChart('${contextPath}', "chart_${pluginId}", chartUrl, ${command.width}, ${command.height});
+        			chartRendererSupport.updateTable('${contextPath}', "table_${pluginId}", tableUrl);
+        		},
+        		createChartUrl: function() {
+        			var chartUrl = "${chartSupport.chartURL}";
+
+					chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "configurationStatusId", 22, $("#status_" + "${pluginId}").val());
+					chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "configurationName", 18, $("#name_" + "${pluginId}").val());
+
+					var $dateRange = $("#" + "dateRange_hidden_${pluginId}");
+					if ($dateRange.val()) {
+						var dateRangeValue = JSON.parse($dateRange.val());
+
+						if (dateRangeValue.from) {
+							chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "testRunFromDate", 16, encodeURIComponent(dateRangeValue.from));
+						}
+
+						if (dateRangeValue.to) {
+							chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "testRunToDate", 14, encodeURIComponent(dateRangeValue.to));
+						}
+					}
+
+					return chartUrl;
+        		},
+        		createTableUrl: function() {
+        			var tableUrl = contextPath + "$tableUpdateUrl";
+
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "configurationStatusId", 22, $("#status_" + "${pluginId}").val());
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "configurationName", 18, $("#name_" + "${pluginId}").val());
+
+					var $dateRange = $("#" + "dateRange_hidden_${pluginId}");
+					if ($dateRange.val()) {
+						var dateRangeValue = JSON.parse($dateRange.val());
+
+						if (dateRangeValue.from) {
+							tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "testRunFromDate", 16, encodeURIComponent(dateRangeValue.from));
+						}
+
+						if (dateRangeValue.to) {
+							tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "testRunToDate", 14, encodeURIComponent(dateRangeValue.to));
+						}
+					}
+
+					return tableUrl;
+        		},
+        		onInputChange: function() {
+        			var self = this;
+
+        			if (this.timer) {
+        				clearTimeout(this.timer);
+        			}
+
+        			this.timer = setTimeout(function() {
+        				self.updateChart();
+        			}, 1000);
+
+        		}
+        	}
+        </script>
+    #end
+
+	#if($command.table)
+    	#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.testRunsByConfig.label")}, "")
+    	<div id="table_${pluginId}">
+	    	<table class="embedded">
+	    		<thead>
+	    			<tr>
+	    				<th>${textFormatter.getMessage("testrunner.configuration.label")}</th>
+						<th class="number sortable">
+							<div data-column-index="0">${textFormatter.getMessage("tracker.coverage.status.passed.label")}<span class="sortIndicator"></span></div>
+						</th>
+						<th class="number sortable">
+							<div data-column-index="1">${textFormatter.getMessage("tracker.coverage.status.partlypassed.label")}<span class="sortIndicator"></span></div>
+						</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="2">${textFormatter.getMessage("tracker.coverage.status.failed.label")}<span class="sortIndicator"></span></div>
+    					</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="3">${textFormatter.getMessage("tracker.coverage.status.blocked.label")}<span class="sortIndicator"></span></div>
+    					</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="4">${textFormatter.getMessage("tracker.coverage.status.notrun.label")}<span class="sortIndicator"></span></div>
+    					</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+					#foreach($key in $data.keySet())
+						#set($configMap = ${data.get($key)})
+						#trOpen
+							<td><a href="${contextPath}${key.urlLink}" title="$key">${key.name}</a></td>
+							#foreach($e in $defaultOrder)
+								<td class="number">
+									#if(${configMap.containsKey($e)})
+										${configMap.get($e)}
+									#else
+										0
+									#end
+								</td>
+							#end
+						#trClose
+					#end
+	    		</tbody>
+	    	</table>
+    	</div>
+
+        <script type="text/javascript">
+			$(function() {
+				$("#table_${pluginId}").on("click", "th.sortable", function(event) {
+					var tableUrl;
+
+					tableUrl = testRunsByConfiguration_${pluginId}.createTableUrl();
+
+					chartRendererSupport.sortTable(tableUrl, "table_${pluginId}", "${contextPath}");
+				});
+			});
+        </script>
+	#end
+#wikiBoxClose()

@@ -1,0 +1,10 @@
+#parse("notification_email_header.vm")
+
+<p>
+${textFormatter.getMessage('user.inactivation.title')}
+<br/>
+<br/>
+<a href="${cbBaseUrl}/activateAccount.spr?user=${userSecureId}">${textFormatter.getMessage('user.activate.label')}</a>
+<p/>
+
+#parse("notification_email_footer.vm")

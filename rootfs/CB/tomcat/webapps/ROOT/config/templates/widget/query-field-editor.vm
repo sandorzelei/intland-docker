@@ -1,0 +1,32 @@
+<div class="form-field" id="${fieldName}">
+	<label for="${fieldName}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+	<select id="${selectorId}" #if ($postParamater) name="params[${fieldName}]" #end>
+
+	</select>
+</div>
+
+<script type="text/javascript" src="${queryFieldJsJsUrl}"></script>
+<script type="text/javascript">
+		jQuery(function($) {
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:changed", function(data) {
+				if ($.isNumeric(data.id)) {
+					codebeamer.dashboard.queryField.loadGroupingsById(data.id, "${selectorId}", "${queryIdOptionsUrl}", "${value}", true);
+				}
+			});
+
+			$("body").on("querySelector:advancedQuery:changed", null, function(event, query) {
+				codebeamer.dashboard.queryField.loadGroupingsByQuery(query, "${selectorId}", "${queryStringOptionsUrl}", "${value}", true);
+			});
+		});
+
+		var selectedQuery = $("[name='params\[queryId\]']").val();
+		if (selectedQuery) {
+			if ($.isNumeric(queryId)) {
+				codebeamer.dashboard.queryField.loadGroupingsById(selectedQuery, "${selectorId}", "${queryIdOptionsUrl}", "${value}", false);
+			}
+		}
+
+		$("#${selectorId}").on('change', function() {
+			$("body").trigger("groupings:query:changed", $("#${selectorId}").val(), true);
+		});
+</script>

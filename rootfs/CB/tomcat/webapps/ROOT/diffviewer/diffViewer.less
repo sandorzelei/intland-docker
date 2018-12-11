@@ -1,0 +1,103 @@
+#diffContainer {
+	white-space: pre;
+	font-family: monospace;
+
+	table.DiffUtilsDiffRenderer {
+		width: 100%;
+	}
+	table.DiffUtilsDiffRenderer td, .diff td, .GoogleDiffMatchPatchRenderer {
+		padding: 0px 15px;
+	}
+}
+
+#diffContainer * {
+	font-size: 11px;
+}
+
+#importantText {
+	font-style: bold;
+	font-size: 13px;
+}
+
+/* on IE6 not the full page will scroll but just the diffContainer */
+body.IE6 #diffContainer {
+	border: solid 1px silver;
+	overflow: auto;
+	width: 100%;
+	height: 600px;
+}
+
+.allow_pre_wrap_template {
+	/*
+		allow some wrapping in <pre>-s if necessary:
+		http://myy.helia.fi/~karte/pre-wrap-css3-mozilla-opera-ie.html
+	 */
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+/**
+ * CSS class allows wrapping
+ */
+.allow_pre_wrap {
+	.GoogleDiffMatchPatchRenderer {
+		.allow_pre_wrap_template;
+	}
+	table.diff * {
+		.allow_pre_wrap_template;
+	}
+	table.DiffUtilsDiffRenderer td {
+		.allow_pre_wrap_template;
+
+		/* add some light underlining so rows can be differentiated */
+		border-bottom: solid 1px #F0F0F0;
+		border-collapse: collapse;
+	}
+}
+
+table.DiffUtilsDiffRenderer td {
+	white-space: pre;
+}
+
+/**
+ * CSS for GoogleDiffMatchPatchRenderer
+ */
+.GoogleDiffMatchPatchRenderer .diff-selected {
+	border-left:none !important;
+	border-bottom: solid 2px blue !important;
+}
+
+/* make the revisionsLazyLoad panel inline, so it won't break to the next line */
+#revisionsLazyLoad div {
+	display: inline;
+	color: #2b2b2b;
+}
+
+.newskin input[type="checkbox"], input[type="radio"] {
+    vertical-align: middle;
+}
+
+.diffRenderer_SideBySide, .diffRenderer_WordLevelDiff {
+	h3.filename {
+		border-top: 1px solid #C0C0C0;
+		border-bottom: 1px solid #C0C0C0;
+		padding: 10px;
+	}
+}
+.diffRenderer_Unidiff {
+	h3.filename {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+}
+
+select {
+	min-width: 100px;
+}
+
+#findDiffButtonsPanel {
+    white-space: nowrap;
+}

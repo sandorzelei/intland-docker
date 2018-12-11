@@ -1,0 +1,18 @@
+LoadModule authn_file_module modules/mod_authn_file.so
+LoadModule auth_basic_module modules/mod_auth_basic.so
+LoadModule authz_user_module modules/mod_authz_user.so
+
+SetEnv GIT_PROJECT_ROOT ${repoDir}/git
+SetEnv GIT_HTTP_EXPORT_ALL
+
+#Replace /usr/lib/git-core with the absolute path of your Git installation directory.
+SetEnv GIT_HTTP_BACKEND /usr/lib/git-core/git-http-backend
+ScriptAlias /git/ ${scriptAlias}/
+
+<Location /git>
+    AuthType Basic
+    AuthName "Git Access"
+    AuthUserFile "${repoDir}/.htaccess"
+
+    Require valid-user
+</Location>

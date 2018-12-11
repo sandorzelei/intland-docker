@@ -1,0 +1,112 @@
+#macro(commitsLink $repository $range $value )
+	#set($url = "${cbBaseUrl}${repository.urlLink}/changesets")
+	#if(${range} != "")
+		#set($url = "${url}?$!{range}")
+	#end
+	<a href="${url}">${value}</a>
+#end
+
+#set($title = ${command.title})
+#if (!${title})
+	#set($title =  ${textFormatter.getMessage('SCM commits')})
+#end
+
+#macro(commitLinks $repo $stat)
+	<td>#commitsLink(${repo}, 'range=day'   ,$numberFormat.format(${stat.yesterday}) )</td>
+	<td>#commitsLink(${repo}, 'range=week'  ,$numberFormat.format(${stat.thisWeek}) )</td>
+	<td>#commitsLink(${repo}, 'range=month' ,$numberFormat.format(${stat.last30Days}) )</td>
+	<td>#commitsLink(${repo}, ''            ,$numberFormat.format(${stat.all}))</td>
+#end
+
+#wikiBoxOpen(${command})
+#if ($emptyMessage)
+    <table>
+    	<thead>
+    		<tr><th align="left">${title}</th></tr>
+        </thead>
+		<tbody>
+			<tr><td>${textFormatter.getMessage(${emptyMessage})}</td></tr>
+        </tbody>
+        </tbody>
+	</table>
+#else
+    #if(! ${columnLayout})
+    		<style type="text/css">
+    			table.commitStatisticsPlugin tbody th {
+    				text-align: right;
+    				width: 25%;
+    			}
+    			table.commitStatisticsPlugin tbody td {
+    				text-align: right;
+    			}
+            </style>
+    		<table class="commitStatisticsPlugin">
+    				<thead>
+    					<tr><th colspan="999" align="left">${title}</th></tr>
+    				</thead>
+    				<tbody>
+    						#trOpen()
+    						#if(${command.detailed})
+    							<th style="text-align:left;">${textFormatter.getMessage('scm.repository.node.label')}</th>
+    						#end
+    						<th>${textFormatter.getMessage('document.accessLog.last2Days')}</th>
+    						<th>${textFormatter.getMessage('document.accessLog.thisWeek')}</th>
+    						<th>${textFormatter.getMessage('document.accessLog.last30Days')}</th>
+    						<th>${textFormatter.getMessage('document.accessLog.total')}</th>
+       						#trClose()
+
+    						#if(${command.isDetailed()})
+    							#foreach($repo in $repositories)
+            						#trOpen()
+        								<td style="text-align:left;padding-left: 2em;">#linkScmRepository(${repo})</td>
+        								#set($stat = ${stats.get(${repo.id})})
+        								#commitLinks($repo, $stat)
+            						#trClose()
+    							#end
+    						#end
+
+    						## displaying total, which is without links
+    						#trOpen()
+    						#if(${command.detailed})
+    							<td style="text-align:left;">${textFormatter.getMessage('scm.commitstatistics.plugin.total')}:</td>
+    						#end
+    						#if(${repositories} && (${repositories.size()} == 1))
+    							## when only a single repo then render the numbers as links, because we can jump to that repository !
+    							#commitLinks(${repositories.get(0)}, ${commitStatsTotal})
+    						#else
+        						<td>${commitStatsTotal.yesterday}</td>
+        						<td>${commitStatsTotal.thisWeek}</td>
+        						<td>${commitStatsTotal.last30Days}</td>
+        						<td>${commitStatsTotal.all}</td>
+    						#end
+    						#trClose()
+    				</tbody>
+    		</table>
+    #else
+    				<table>
+    					<thead>
+    						<tr><th colspan="2" align="left">${title}</th></tr>
+    					</thead>
+    					<tbody>
+    						#trOpen()
+    							#tdText("${textFormatter.getMessage('document.accessLog.last2Days')}")
+    							#tdTextRight("${commitStatsTotal.yesterday}")
+    						#trClose()
+    						#trOpen()
+    							#tdText("${textFormatter.getMessage('document.accessLog.thisWeek')}")
+    							#tdTextRight("${commitStatsTotal.thisWeek}")
+    						#trClose()
+    						#trOpen()
+    							#tdText("${textFormatter.getMessage('document.accessLog.last30Days')}")
+    							#tdTextRight("${commitStatsTotal.last30Days}")
+    						#trClose()
+    						#trOpen()
+    							#tdText("${textFormatter.getMessage('document.accessLog.total')}")
+    							#tdTextRight("${commitStatsTotal.all}")
+    						#trClose()
+    					</tbody>
+    			</table>
+    #end
+#end
+#wikiBoxClose()
+

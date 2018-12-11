@@ -1,0 +1,4 @@
+${target} ${action}
+#if( "$!{activity.madeBy}" != "")
+	by $textFormatter.escape(${activity.madeBy.name})
+#end

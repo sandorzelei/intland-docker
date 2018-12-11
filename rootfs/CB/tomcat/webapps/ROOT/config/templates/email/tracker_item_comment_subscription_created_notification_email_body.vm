@@ -1,0 +1,5 @@
+#parse("notification_email_header.vm")
+
+$textFormatter.format(${comment.description}, ${comment.descriptionFormat}, ${wikiContext})
+
+#parse("notification_email_footer.vm")

@@ -1,0 +1,47 @@
+%%ad
+__Free Download__\\
+Want to try [codeBeamer|http://www.intland.com/products/codebeamer/overview/] on your own server? [Download|https://intland.com/products/download.html#download] it for free and install it in minutes.\\
+Questions? [Contact us|http://www.intland.com/company/contact/].
+%%
+
+%%information
+此為 __您專屬的維基首頁__.\\
+請點選''編輯''做您個人化的內容. 您可以考慮以下建議玩玩看:
+* 刪除此框框.
+* 記下您的新點子,做做筆記,或寫一些個人資料
+* 加入您常去的網站連結,公司的重要系統連結,每天工作需馬上跳入的codeBeamer資訊連結,您喜歡的照片或任何其他您工作需要的資訊.
+* 運用wiki plugins秀出即時發生的事項, 變動的文件或展現更多的即時狀況統計資料.
+* 嵌入Excel試算表, Google地圖或RSS訂閱.
+
+__學習資訊__\\
+如果您初用CodeBeamer,歡迎多多參考以下資訊:
+* [英文的CodeBeamer知識庫|https://codebeamer.com/cb/project/37]
+* [英文的系統管理者指引 Administrator's guide|https://codebeamer.com/cb/wiki/8797]
+* [英文的使用者手冊|https://codebeamer.com/cb/wiki/8798]
+* [英文的CodeBeamer影片|http://www.intland.com/support/video-library/codebeamer/]
+* [中文的CodeBeamer服務網|http://cb.esast.com]
+
+如果您使用時有問題,歡迎到
+* [CodeBeamer原廠問題討論區|https://codebeamer.com/cb/project/CB/tracker]
+* [CodeBeamer台灣總代理嵌藝創研問題討論區|http://cb.esast.com]
+註冊帳號詢問
+
+%%
+
+%%tabbedSection
+%%tab-我的專案
+[{ProjectList}]
+%%
+%%tab-快速連結
+|[CodeBeamer中文支援網|http://cb.esast.com]|[研發團隊協同作業解決方案|http://www.facebook.com/teamworksolution]
+|[CodeBeamer原廠新聞|http://www.intland.com/news-blog/news/]|[JavaForge|http://www.javaforge.com]
+%%
+%%
+
+[{Table style='width:100%; border:none; border-spacing:0;' dataStyle='vertical-align:top; padding-right:20px; border:none;'
+
+|(width:40%;) [{ActivityStream}] |(width:30%) #if(${licenseCode.isEnabled("trackers")}) [{MyIssueSummary}] \\ [{MyCurrentIssues title='my.starred.issues.label' tag='#Starred'}] \\ [{MyCurrentIssues}] #end | [{Html
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/TtMScF9-5bs" frameborder="0" allowfullscreen></iframe>}] \\ [{MostActiveProjects}]
+
+}]

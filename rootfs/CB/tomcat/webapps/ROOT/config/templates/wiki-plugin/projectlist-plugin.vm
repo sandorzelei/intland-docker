@@ -1,0 +1,64 @@
+## $Revision: 22330:f005dd802642 $ $Date: 2009-08-18 11:45 +0000 $
+## macro to insert a cell with r_arrow.gif image
+#macro( tdTextCenter $text )
+	<td align="center">
+		$text
+	</td>
+#end
+
+#set($title = "$textFormatter.getMessage('project.list.label') (${format} view)" )
+#set($defaultTitle = $textFormatter.getMessage('project.list.label'))
+#wikiBoxTitle("$!{title}" "$!{defaultTitle}")
+<table cellpadding=2 width="100%" class="displaytag" >
+	#if (${projects.size()} != 0)
+		## Header line
+		#trOpen()
+			#if( $format == "full")<th>$textFormatter.getMessage('project.action')</th>#end
+			<th>Name</th>
+			#if( $format == "full")<th>$textFormatter.getMessage('project.description.label')</th>#end
+			#if( $format == "full")<th>$textFormatter.getMessage('project.category.label')</th>#end
+			#if( $format != "name")<th>$textFormatter.getMessage('project.members.title')</th>#end
+			#if( $format != "name")<th>$textFormatter.getMessage('project.createdAt.label')</th>#end
+		#trClose()
+
+		## Table body
+        #foreach ($entry in $projects )
+            #trOpen()
+				#if( $format == "full")
+					<td>
+					#if( ${entry.action} )
+						<a href="${contextPath}/joinOrRemoveProjectMember.spr?proj_id=${entry.project.id}&amp;action=${entry.action}">$textFormatter.getMessageWithDefault("project.${entry.action}", ${entry.action})</a>
+					#end
+					</td>
+				#end
+				<td class="textDataWrap">
+					<a class='${entry.project.styleClass}' href='${contextPath}${entry.project.getUrlLink()}'>${entry.project.name}</a>
+				</td>
+				#if( $format == "full")
+					<td class="textDataWrap">
+						$!{entry.description}
+					</td>
+				#end
+				#if( $format == "full")
+					<td class="textData">
+						$!{entry.project.category}
+					</td>
+				#end
+				#if( $format != "name")
+					<td class="numberData">
+						$!{entry.membersCnt}
+					</td>
+				#end
+				#if( $format != "name")
+					<td class="dateData">
+						$textFormatter.formatDate(${user}, ${entry.project.createdAt}, false)
+					</td>
+				#end
+            #trClose()
+        #end
+    #else
+        #trOpen()
+            #tdText("No projects available")
+        #trClose()
+    #end
+</table>

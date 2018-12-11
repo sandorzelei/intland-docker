@@ -1,0 +1,90 @@
+#! /bin/sh
+#
+# $Revision$ $Date$
+
+# resolve links - $0 may be a softlink
+PRG="$0"
+while [ -h "$PRG" ] ; do
+	ls=`ls -ld "$PRG"`
+	link=`expr "$ls" : '.*-> \(.*\)$'`
+	if expr "$link" : '.*/.*' > /dev/null; then
+		PRG="$link"
+	else
+		PRG=`dirname "$PRG"`/"$link"
+	fi
+done
+
+PRGDIR=`dirname "$PRG"`
+cd $PRGDIR/..
+CBPATH=`pwd`
+
+cd $CBPATH/bin
+
+# Check whether the current user can start CB.
+whoami="whoami"
+if [ -f /usr/ucb/whoami ]
+then
+	whoami="/usr/ucb/whoami"
+fi
+id_file=.user.id
+user_id=`$whoami`
+if [ ! -f $id_file ]
+then
+	echo $user_id > $id_file
+else
+	old_id=`cat $id_file`
+	if [ "$old_id" != "$user_id" ]
+	then
+		echo CodeBeamer must be started by user: $old_id
+		exit 2
+	fi
+fi
+
+if [ -d $CBPATH/jre/bin ]
+then
+	export PATH="$CBPATH/jre/bin:$PATH"
+fi
+# Checking Java 1.8 is available in PATH
+java_version=`java -version 2>&1 | grep '1\.[8]'`
+# If java is not available, or not 1.8, exit with error message
+if [ $? -ne 0 ]
+then
+	echo "Java 1.8 must be available to launch codeBeamer!"
+	exit 1
+fi
+
+pidfile=$CBPATH/tomcat/cb.pid
+if [ -f $pidfile ]
+then
+	read cbpid < $pidfile
+
+	kill -0 $cbpid > /dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		process=`ps -p $cbpid |grep java`
+		if [ "$process""x" != "x" ]
+		then
+			echo CodeBeamer is already running, pid: $cbpid
+			exit 1
+		fi
+	fi
+fi
+
+# Set the locale/language used by JVM. Only use UTF-8 encodings!
+REQUIRED_LOCALE=`locale -a | grep -i 'en_US.utf.*8'`
+if test $REQUIRED_LOCALE"x" = "x" ; then
+	echo "CodeBeamer requires en_US.utf8 or en_US.UTF-8 locale, which is missing. Please configure your OS and add this locale (see locale-gen command)!"
+	exit 1;
+fi
+
+LANG=$REQUIRED_LOCALE
+LC_CTYPE=$LANG
+LC_ALL=$LANG
+LC_MESSAGES=$LANG
+export LANG LC_CTYPE LC_ALL LC_MESSAGES
+
+rm -rf $CBPATH/tomcat/work
+
+nohup $CBPATH/bin/cb "$@" start &
+
+sleep 5

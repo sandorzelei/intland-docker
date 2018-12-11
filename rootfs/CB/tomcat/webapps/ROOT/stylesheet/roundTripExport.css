@@ -1,0 +1,76 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+/*
+ * Stylesheet for roundTripExport.jsp
+ */
+
+.options {
+	margin: 0 20px;
+}
+
+.options h3 {
+	margin-top: 0;
+}
+
+.options label {
+	display:block;
+	margin: 10px;
+}
+
+.options label#propertiesEditableLabel {
+	margin-left: 30px;
+}
+
+.options input {
+	vertical-align: middle;
+}
+
+.disabledLabel {
+	color: #777;
+}
+
+.exportKind {
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 16px;
+}
+
+.exportExplanation {
+	margin: 0 20px 10px 20px;
+}
+
+.exportInformation {
+	margin: 10px 10px 10px 15px;
+}
+
+.disabledRoundtripOptions .options * {
+	color: #777;
+}
+
+/* don't allow template selection for these exports */
+body.roundtripExcelExport .templateSelection,
+body.msprojectExport .templateSelection {
+	display:none;
+}
+
+#officeExportOptionsTabContainer .ditch-tab {
+	width: 100px;
+}
+
+.tabIcon {
+	margin-right: 5px;
+	vertical-align: middle;
+	position: relative;
+	top: -2px;
+}

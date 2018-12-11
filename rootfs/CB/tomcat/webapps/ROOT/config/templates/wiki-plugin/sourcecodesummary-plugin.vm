@@ -1,0 +1,97 @@
+## $Revision$ $Date$
+#macro(format $val )
+	$numberFormat.format( ${val.longValue()} )
+#end
+#macro(formatBytes $val )
+	$textFormatter.formatBytes( ${val.longValue()} )
+#end
+
+#define ($title)
+	#if(${command.title})
+		${command.title}
+	#else
+		$textFormatter.getMessage('source.code.label')
+	#end
+#end
+
+#macro(showPercentage $val $total)
+	#set ($ratio = ${val} * 1.0/ ${total})
+	#set ($pct = ${ratio} * 100.0)
+	<div class="miniprogressbar">
+ 	  <div style="width: ${pct}%;"></div>
+	  <label>$textFormatter.formatPercentage($ratio)</label>
+   </div>
+##    <span class="nowrap">$textFormatter.formatPercentage($pct)</span>
+#end
+
+<style type="text/css">
+	.nowrap {
+		white-space:nowrap;
+	}
+</style>
+
+#wikiBoxOpen(${command})
+#wikiBoxTitle("${title}")
+    <table class="embedded">
+##    	<thead>
+    		##<tr>
+    			##<th class="stretched"></th>
+    			##<th class="number">#*$textFormatter.getMessage('source.files.label')*#</th>
+    			##<th class="number">#*$textFormatter.getMessage('source.lines.label')*#</th>
+##    			<th class="number">$textFormatter.getMessage('source.bytes.label')</th>
+    		##</tr>
+        ##</thead>
+    	<tbody>
+        	#foreach ( $item in $sourceCodeStats )
+        		#trOpen()
+					#set($fileGroupText = ${fileGroupDescriptions.get($item.typeId)})
+        			#tdText( $fileGroupText )
+					#if($item.totalLines == 0)
+						## for binary files (where LOC is 0) show the number of bytes
+						#set($value = $item.length)
+						#set($totalvalue = $total.length)
+
+						#tdTextRight( "#showPercentage($value, $totalvalue)" )
+						#tdTextRight( "<span class='nowrap'>#formatBytes($value)</span>" )
+					#else
+						#set($value = $item.totalLines)
+						#set($totalvalue = $total.totalLines)
+
+						#tdTextRight( "#showPercentage($value, $totalvalue)" )
+						#tdTextRight( "<span class='nowrap'>#format($value) lines</span>" )
+					#end
+
+#*
+        			#tdTextRight( "#format( ${item.files} )" )
+
+        			#if (${item.typeId} == '*' )
+        				#set( $txt = "")
+        			#else
+        				#set( $txt = "#format(${item.totalLines})")
+        				#set( $sumLines = $sumLines +  ${item.totalLines} )
+        			#end
+        			#tdTextRight( $txt )
+
+        			#tdTextRight( "#format( ${item.length} )" )
+*#
+        		#trClose()
+        	#end
+    		#trOpen()
+				#if ($sourceCodeStats.isEmpty())
+					<td colspan="3">${textFormatter.getMessage('table.nothing.found')}</td>
+				#else
+    				#tdText($textFormatter.getMessage('tracker.summary.label'))
+					<td style="text-align:right" colspan="2">
+						#if(${command.getRepositoryId().size()}>1)
+							<span class='nowrap'>${command.getRepositoryId().size()} repositories</span>,
+						#end
+						<span class='nowrap'>#format( $total.totalLines ) lines</span>,
+						<span class='nowrap'>#formatBytes( $total.length )</span>
+##					#tdText()
+##    				#tdTextRight( "<span class='nowrap'>#format( $total.totalLines ) lines</span> and <span class='nowrap'>#format( $total.length ) bytes</span>" )
+					</td>
+				#end
+    		#trClose()
+        </tbody>
+    </table>
+#wikiBoxClose()

@@ -1,0 +1,28 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$("#displayGroups input[type=checkbox]").on("change", function() {
+			if ($(this).is(":checked")) {
+				$("#displayTeams input[type=checkbox]").attr("disabled", true);
+			} else {
+				$("#displayTeams input[type=checkbox]").removeAttr("disabled");
+			}
+		});
+
+		$("#displayTeams input[type=checkbox]").on("change", function() {
+			if ($(this).is(":checked")) {
+				$("#displayGroups input[type=checkbox]").attr("disabled", true);
+			} else {
+				$("#displayGroups input[type=checkbox]").removeAttr("disabled");
+			}
+		});
+
+		if ($("#displayGroups input[type=checkbox]").is(":checked")) {
+			$("#displayTeams input[type=checkbox]").attr("disabled", true);
+		} else {
+			if ($("#displayTeams input[type=checkbox]").is(":checked")) {
+				$("#displayGroups input[type=checkbox]").attr("disabled", true);
+			}
+		}
+	});
+</script>

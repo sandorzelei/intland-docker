@@ -1,0 +1,150 @@
+.newskin .diffTable {
+  width: 100%;
+  table-layout: fixed;
+
+  tbody {
+    border: 1px solid #d1d1d1;
+  }
+
+  tr.header {
+	border: 1px solid #d1d1d1;
+  }
+
+  tr.highlighted {
+	position: static;
+	border-collapse: separate;
+	&:hover {
+	  box-shadow: none;
+	  outline: none;
+		border-left-width: 2px;
+	}
+  }
+
+  th {
+	background: url("../images/newskin/header/bg-menu-xs.png");
+	color: black;
+	font-weight: bold;
+  }
+
+  th,
+  td {
+	padding: 6px 10px;
+	word-break: break-word;
+	background-color: white !important;
+  }
+
+  thead th[colspan] {
+	border-left: 1px solid #d1d1d1;
+	border-right: 1px solid #d1d1d1;
+  }
+
+  tbody td {
+	border-right: 1px solid #d1d1d1;
+  }
+
+  .controls {
+	width: 100px;
+	text-align: center;
+  }
+
+  .label {
+	width: 15%;
+	font-weight: bold;
+	select {
+	  float: right;
+	  margin: 0;
+	  padding: 0;
+	  position: relative;
+	  top: -2px;
+	}
+  }
+
+  .value > span {
+	display: block;
+	overflow-x: auto;
+  }
+
+  tr .original.value {
+	padding: 3px 7px;
+	vertical-align: top;
+	> span {
+	  padding: 3px;
+	}
+  }
+
+  tr .original.label, tr .copy.label, tr .copy.value, tr .controls {
+    vertical-align: top;
+  }
+
+  &.highlightDifferent tr.highlighted .original.value > span {
+	background-color: #ffead1;
+	min-height: 15px;
+  }
+
+  tr.odd td {
+  	background-color: #FFF !important;
+  }
+  tr.even td {
+  	background-color: #FAFAFA !important;
+  }
+
+  tr td.diff-deleted {
+      background-color: #ffe8e9 !important;
+  }
+
+  tr td.diff-added {
+      background-color: #ccffe8 !important;
+  }
+}
+
+.showDifferentOnlyContainer {
+  float: right;
+  display: inline-block;
+}
+
+.triggering-field {
+	display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../images/newskin/action/suspected.png");
+    position: relative;
+    top: 4px;
+    margin-left: 5px;
+}
+
+.newskin .diffTable .table-field {
+	margin: 10px;
+	background-color: transparent !important;
+}
+
+.newskin .diffTable  .table-field .table-field-header {
+	font-weight: bold;
+	min-width: 100px;
+	border: 1px solid #d1d1d1;
+	background-image: none;
+	background-color: transparent !important;
+}
+
+.newskin .diffTable .table-field .table-field-value {
+	border: 1px solid #d1d1d1;
+	background-color: transparent !important;
+}
+
+.newskin .diffTable .fixed-id {
+	line-height: 20px;
+}
+
+.newskin .diffTable .issueIcon {
+	position: relative;
+	top: 4px;
+}
+
+.newskin .diffTable .issueLink {
+	position: relative;
+	top: 1px;
+}
+
+a.colored-diff-link {
+	margin-top: 5px;
+	display: inline-block;
+}

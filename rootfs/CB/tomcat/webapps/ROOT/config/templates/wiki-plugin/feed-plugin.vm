@@ -1,0 +1,51 @@
+
+<style type="text/css">
+	.feedPlugin {
+		border:0 !important;
+	}
+</style>
+
+#wikiBoxOpen(${command}, "feedPlugin")
+	<table>
+    	<thead>
+			<tr><th><a href="${feed.link}">${feed.title}</a> - Feed</th></tr>
+		</thead>
+    	<tbody>
+        	#if(${feedDetails} == 'true')
+        		#trOpen()
+        			<td class="separator">
+        				#if($feed.image.url)
+        					<a href="${feed.link}"><img src="${feed.image.url}"/></a><br/>
+        				#end
+    					#if($feed.description)
+    						$feed.description
+    					#else
+    						No description available.
+    					#end
+        			</td>
+        		#trClose()
+        	#end
+
+        	#foreach ($entry in $feed.entries)
+        		#trOpen()
+        			<td>
+        				<a href="${entry.link}">${entry.title}</a><br/>
+        				<span class="subtext">$textFormatter.formatDate(${user}, ${entry.publishedDate}, false)</span>
+
+        				#if(${entryDetails} == 'true')
+        					#if($entry.contents.empty)
+        						<br/>
+        						$entry.description.value
+        					#else
+        						#foreach($content in $entry.contents)
+        							<br/>
+        							${content.value}
+        						#end
+        					#end
+        				#end
+        			</td>
+        		#trClose()
+			#end
+		</tbody>
+	</table>
+#wikiBoxClose()

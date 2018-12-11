@@ -1,0 +1,8 @@
+## $Revision$ $Date$
+#if(!${childPages.isEmpty()})
+	<ol>
+		#foreach($childPage in $childPages)
+			<li>#linkWikiPage(${childPage})</li>
+		#end
+	</ol>
+#end

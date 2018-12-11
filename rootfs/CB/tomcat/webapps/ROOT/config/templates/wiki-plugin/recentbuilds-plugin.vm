@@ -1,0 +1,24 @@
+#wikiBoxOpen(${command})
+    <table>
+    	<thead>
+			<tr><th>#if(!$isCurrentProject)${project.name} - #end $textFormatter.getMessage('build.run.recent.label')</th></tr>
+    	</thead>
+    	<tbody>
+        	#if (${logs.size()} != 0)
+        		#foreach ($log in $logs )
+        			#trOpen()
+            			<td width="99%">
+            				$textFormatter.escape(${log.build.name}) - $textFormatter.getMessageWithDefault("build.run.status.${log.status}", ${log.status})
+            				<br/>
+            				<span class="subtext">$textFormatter.formatDate(${user}, ${log.endDate})</span>
+            			</td>
+        			#trClose()
+        		#end
+        	#else
+        		#trOpen()
+        			#tdText("$textFormatter.getMessage($emptyMessage)" )
+        		#trClose()
+        	#end
+    	</tbody>
+    </table>
+#wikiBoxClose()

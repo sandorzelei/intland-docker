@@ -1,0 +1,4 @@
+##$RCSfile$ $Revision: 18984:ea8b6a084fe4 $ $Date: 2008-10-18 13:28 +0000 $
+
+#set($toptext = "${textFormatter.getMessage('document.notification.created.title')}:")
+#parse("artifact_notification_email_body.vm")

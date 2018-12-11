@@ -1,0 +1,19 @@
+#parse("notification_email_header.vm")
+
+<div class="heading">
+Comment Added To:
+[#${artifact.id}] #linkWikiPage(${artifact})
+</div>
+
+#account(${originator})
+
+#partHeader("Comment") 
+#partStart() $textFormatter.format(${comment.description}, ${comment.descriptionFormat}, ${wikiContext}) #partEnd()
+
+#if (${comment.fileSize} && ${comment.fileSize} > 0)
+	#partHeader("With attachment") ${comment.name}
+#end
+
+#linkWikiPageComments(${artifact})
+
+#parse("notification_email_footer.vm")

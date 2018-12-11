@@ -1,0 +1,13 @@
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+[web]
+allow_push = *
+allow_read = *
+[hooks]
+changegroup = "${hookDirectory}/changegroup-hook" hg_post_receive
+pretxnchangegroup = "${hookDirectory}/changegroup-hook" hg_pre_update
+[extensions]
+# enables the strip command
+mq =
+[ui]
+merge = internal:merge
+

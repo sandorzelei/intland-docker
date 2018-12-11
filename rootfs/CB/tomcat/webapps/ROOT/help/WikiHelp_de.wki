@@ -1,0 +1,2761 @@
+[{TableOfContents title='Wiki Syntax Hilfe'}]
+
+
+!!! Grundfunktionen
+
+
+!! Text Formatierung
+
+Wiki Text ist eine Zeichenfolge mit eingebettetem Wiki Markup. Die Grundfunktionen zur einfachen Textformatierung sind:
+
+{{{
+----           = Fügt einen horizontalen Trennstrich ein. Überzählige '-' werden ignoriert.
+\\             = Fügt einen Zeilenumbruch ein.
+// Kommentar   = Kommentarzeile die nicht ausgegeben wird.
+
+[Seite]        = Erzeugt einen Verweis (Hyperlink) auf die interne Wikiseite mit den Namen 'Seite'.
+[Alias|Seite]  = Erzeugt einen Verweis (Hyperlink) auf die interne Wikiseite mit den Namen 'Seite', mit der Beschriftung 'Alias' anstelle des Seiten-Namens.
+[1]            = Erzeugt einen Verweis (Hyperlink) auf die Fußnote mit der Nummer 1.
+[#1]           = Erstellt eine Fußnote mit der Nummer 1.
+[[Text]        = Zeigt den Text in eckigen Klammern an: '[Text]'
+~[Text~]       = Zeigt den Text in eckigen Klammern an: '[Text]' (das Zeichen '~' hebt die Sonderbedeutung der eckigen Klammern auf)
+
+!1 Überschrift = Zeigt den Text 'Überschrift' als grosse Überschrift (Oberste Ebene im Inhaltsverzeichnis) an
+!2 Überschrift = Zeigt den Text 'Überschrift' als mittlere Überschrift (2. Ebene im Inhaltsverzeichnis) an
+!3 Überschrift = Zeigt den Text 'Überschrift' als kleine Überschrift (3. Ebene im Inhaltsverzeichnis) an
+!4 Überschrift = Zeigt den Text 'Überschrift' als kleinere Überschrift (4. Ebene im Inhaltsverzeichnis) an
+!5 Überschrift = Zeigt den Text 'Überschrift' als kleinste Überschrift (5. Ebene im Inhaltsverzeichnis) an
+
+''Text''       = Stellt den 'Text' kursiv dar.
+__Text__       = Stellt den 'Text' fett dar.
+{{Text}}       = Stellt den 'Text' in nicht-proportionaler Schrift dar.
+^^Text^^       = Stellt den 'Text' höhergestellt dar.
+,,Text,,       = Stellt den 'Text' tiefergestellt dar.
+
+* Text         = Stellt 'Text' als Zeile in einer Aufzählungsliste dar.
+# Text         = Stellt 'Text' als Zeile in einer nummerierten Liste dar.
+;Begriff:Def   = Erstellt eine Definition für den 'Begriff' mit der Erklärung 'Def'
+}}}
+
+Bitte beachten Sie, dass Zeilenumbrüche im Wiki Text nicht automatisch auch als Zeilenumbrüche dargestellt werden. Um in der Ausgabe einen Zeilenumbruch zu erzwingen, fügen sie entweder eine Leerzeile ein, oder den Markup für einen Zeilenumbruch (s.o).
+
+
+! Externe Verweise
+Sie können auch Verweise auf externe Webseiten einbetten, indem Sie eine vollständige URL angeben.\\
+z.B.: Ein Verweis auf die Intland Webseite: {{[[http://www.intland.de]}}, oder mit Alias {{[[Intland Software|http://www.intland.de]}}
+
+
+!Vorformattierter Text
+Um vorformattierten Text einzubetten, leiten Sie den vorformattierten Textblock mit drei geschweiften Klammern ({) ein und schliessen Sie ihn ebenfalls mit drei geschweiften Klammern (}) ab.
+
+
+!Zitate
+
+Sie können zu zitierenden Text mit einem oder mehreren Größer-Zeichen (>) markieren, ja nach gewünschter Einrück-Stufe.\\
+Analog der Einrückung des Original-E-Mail-Texts in einer Antwort-E-Mail.
+
+{{{
+>> Hier ist der zu zitierende Text
+> Und das ist eine direkte Anmerkung dazu
+Und hier ist eine Anmerkung zur ersten Anmerkung
+}}}
+
+>> Hier ist der zu zitierende Text
+> Und das ist eine direkte Anmerkung dazu
+Und hier ist eine Anmerkung zur ersten Anmerkung
+
+
+! Anmerkungen
+
+Ein Anwendungsfall für ';:' ist, eine Anmerkungen zu einem bestimmten Textabschnitt,
+indem Sie einfach eine Begriffsdefinition mit leerem Begriff verwenden, z.B.:
+{{{
+;:''Anmerkung dazu.''
+}}}
+Das würde wie folgt aussehen
+;:''Anmerkung dazu.''
+
+
+!! Bilder
+
+! Externe Bilder
+
+Sie können im Web gespeicherte Bilder über folgende Syntax einbetten:
+{{{
+[http://www.intland.com/images/intland_01.gif]
+}}}
+Sie können auch Verweise mit einem Bild anstelle von Text erzeugen:
+{{{
+[http://www.intland.com|http://www.intland.com/images/intland_01.gif]
+}}}
+Falls der angegebene Verweis-Text/Alias keine gültige URL ist, wird er als ALT Text für das Bild verwendet.\\
+
+
+Alternativ können Sie Verweise über ein Bild auch mit dem Image-Plugin erstellen:
+{{{
+[{Image src='http://opi.yahoo.com/online?u=YahooUser1234&m=g&t=2' border='0' height='30'
+        link='http://edit.yahoo.com/config/send_webmesg?.target=YahooUser1234&.src=pg'}]
+}}}
+Weitere Beispiele für die Verwendung des Image-Plugins finden Sie auf der [Plugin Webseite|https://jspwiki-wiki.apache.org/Wiki.jsp?page=Image].\\
+
+! Slideshow mit Vorschaubildern
+
+Das Beispiel zeigt, wie interne und externe Bilder mit Vorschau angezeigt werden.
+{{{
+[{ThumbnailImage width='300' height='300'
+
+ [sometext|!pasted.png!]
+ [alias|https://lh3.googleusercontent.com/-6MXnUYxdpb8/Ux8uNOHiZfI/AAAAAAAAAAk/lk3TXPjf6dk/s630-fcrop64=1,00000000ffffffff/Intland-Software-Google.png]
+}]
+}}}
+
+Die Bilder müssen in dem Hauptteil des Plugins (zwei neue Linien nach den Parametern) gelistet werden, gleiche Wikisyntax anwendend
+ wie in [{Html
+
+ <a href="#section-External+pictures">Externes Bild</a>
+ }] und [{Html
+
+ <a href="#section-Links+with+pictures">Links mit Bildern</a>
+ }]
+ Bereich
+
+
+Vorschaubild Plugin unterstützt folgende Parameter:
+*linkText (optional): anstatt der Nutzung von Vorschaubildern, ein öffnet ein klickbarer Link die Slideshow
+*Breite (optional): Die maximale Breite des Vorschaubildes, Standardwert ist 200.
+*Höhe (optional): Die maximal Höhe des Vorschaubildes, Standardwert ist 200.
+
+! Automatische Dimensionierung/Anpassung des Bildes in Wiki auf die Seite unter Verwendung von Thumbnails.
+Wenn Sie größere Bilder haben - z.B. Screenshots - die auf eine Wiki-Seite oder an die Beschreibung eines Issues/Fehlers hinzugefügt werden, kann es passieren, dass die Bilder über die Grenzlinien herausstechen und das Layout ruinieren.
+
+Um diese Situation zu beheben, können Sie ein spezielles Wiki Markup (eine CSS Klasse) verwenden, welches bei einer Verwendung die Größe der Bilder automatisch ändert/verkleinert.
+Wenn dieses Markup verwendet wird, kann auf das verkleinerte Bild in dem Overlay für eine Slideshow geklickt werden, um das Bild in Originalgröße anzuzeigen.
+
+Beispielsweise wird das Markup das Bild rendern, welches verkleinert wird, wenn das Bild auf der Seite nicht gefunden wird:
+
+{{{
+%%thumbnailImages
+[https://intland.com/wp-content/uploads/2016/02/slider-home-2-automotive.png]
+[https://intland.com/wp-content/uploads/2016/02/slider-home-2-medical.png]
+%%
+}}}
+
+Wird folgendermaßen verkleinert:
+
+%%thumbnailImages [https://intland.com/wp-content/uploads/2016/02/slider-home-2-automotive.png]
+[https://intland.com/wp-content/uploads/2016/02/slider-home-2-medical.png]
+%%
+
+Das einfache "~%%thumbnailImages" Markup wird das Bild verkleinert, wenn dies zu groß ist, sodass zu große Bilder vermieden werden.
+
+Alternativ können Sie echte Thumbnails zu Ihren Bildern hinzufügen, wenn Sie bereits die Größe Ihrer Thumbnails kennen.
+Zum Beispiel wird das Markup einen 200px breiten Thumbnail für das vorherige Bild zeigen und bei einem Klick auf das Bild, wird eine große Version angezeigt:
+{{{
+%%thumbnailImages200px ... images... %%
+}}}
+
+%%thumbnailImages200px
+[https://intland.com/wp-content/uploads/2016/02/slider-home-2-automotive.png]
+[https://intland.com/wp-content/uploads/2016/02/slider-home-2-medical.png]
+%%
+
+Folgende CSS Klassen können darüberhinaus verwendet werden:
+||CSS class||effect
+|~%%thumbnailImages ...~%%|Das Bild wird verkleinert, wenn dies nicht auf die Breite der aktuellen Seite passt
+|~%%thumbnailImages200px ...~%%|Eine festgelegte 200px Breite für das Thumbnail wird anstatt des Bildes angezeigt
+|~%%thumbnailImages300px ...~%%|Eine festgelegte 300px Breite für das Thumbnail wird angezeigt
+|~%%thumbnailImages400px ...~%%|Eine festgelegte 400px Breite für das Thumbnail wird angezeigt
+|~%%thumbnailImages600px ...~%%|Eine festgelegte 600px Breite für das Thumbnail wird angezeigt
+|~%%thumbnailImages800px ...~%%|Eine festgelegte 800px Breite für das Thumbnail wird angezeigt
+|~%%thumbnailImages1000px ...~%%|Eine festgelegte 1000px Breite für das Thumbnail wird angezeigt
+|~%%thumbnailImages20pct ...~%%|Ein Thumbnail wird angezeigt, welches 20% der Seiten-/Containerbreite beträgt. Dies bedeutet, dass bei einer Nutzung von mehrfachen Bildern, 5 Bilder auf einer Seite nebeneinander angezeigt und angepasst werden
+|~%%thumbnailImages25pct ...~%%|Zeigt 25% der Breite für das Thumbnail auf der Seite/ dem Container
+|~%%thumbnailImages33pct ...~%%|Zeigt einen Thumbnail mit 33% Breite der Seite an
+|~%%thumbnailImages50pct ...~%%|Zeigt einen Thumbnail mit 50% der Breite an
+|~%%thumbnailImages75pct ...~%%|Zeigt einen Thumbnail mit 75% Breite an
+|~%%thumbnailImages150pct ...~%%|Zeigt einen Thumbnail mit 150% Breite an
+
+
+
+! Als Anlagen zu Dokumenten und Vorgängen gespeicherte Bilder einbetten
+
+Sie können auch Bilder einbetten, die als Anlagen zu Dokumenten und Vorgängen in CodeBeamer gespeichert sind:\\
+\\
+Ein Bild (z.B. "Foto.jpg") einbetten, das als Anlage zur aktuellen Wikiseite bzw. Vorgang abgelegt ist:
+{{{
+[!Foto.jpg!]
+}}}
+Es wird die jeweils neueste Anlage mit dem angegebenen Namen (zu der dargestellten Wikiseite bzw. zu dem Vorgang, dessen Beschreibung angezeigt wird) eingebettet.\\
+\\
+Sie können auch Bilder einbetten, die als Anlage zu einer anderen Wikiseite (im gleichen Projekt) abgelegt sind:
+{{{
+[!Seite/Foto.jpg!]
+}}}
+Alternativ können Sie Anlagen auch über die (projekt-unabhängige) Anlagen-Nr./Id einbetten:
+{{{
+[!28!]
+}}}
+Auch hier können Sie explizit die Version des einzubettenden Bildes angeben:
+{{{
+[!Seite/Foto.jpg#1!]
+[!28#1!]
+}}}
+Zum Einbetten von Bildern, die als Anlage zu einem Vorgang gespeichert sind, in eine Wikiseite, die nicht die Beschreibung dieses Vorgangs ist,
+müssen Sie den Vorgang über einen entsprechenden Verweis angeben:
+{{{
+[![ISSUE:4711]/Beispiel.gif!]
+}}}
+Sie können auch Verweise mit einem in CodeBeamer als Anlage gespeicherten Bild anstelle von Text erzeugen:
+{{{
+[http://www.intland.com|!mypic.jpg!]
+[http://www.intland.com|!My favourite page/mypic.jpg!]
+[http://www.intland.com|!28!]
+}}}
+Das funktioniert sogar für Verweise auf andere CodeBeamer Objekte (Interwiki-Links):
+{{{
+[BUG:1000|!mypic.jpg!]
+[PROJ:1|!My favourite page/mypic.jpg!]
+[DOC:1000|!28!]
+}}}
+
+
+! In CodeBeamer als Dokumente gespeicherte Bilder einbetten
+
+Sie können auch Bilder einbetten, die als Dokumente in CodeBeamer gespeichert sind.\\
+Entweder über einen (projektspezifischen) Pfad (relativ zum Dokumentenverzeichnis des aktuellen Projekts):
+{{{
+[!/Bilder/Schaltflächen/Hilfe.gif!]
+}}}
+Oder (projekt-unabhängig) über die Dokumenten-Nr./Id:
+{{{
+[!/1723!]
+}}}
+Sie können auch explizit die Version des einzubettenden Bildes angeben:
+{{{
+[!/Bilder/Schaltflächen/Hilfe.gif#2!]
+[!/1723#2!]
+}}}
+Sie können auch Verweise mit einem in CodeBeamer gespeicherten Bild anstelle von Text erzeugen:
+{{{
+[http://www.intland.com|!/My pictures/Buttons/button.gif!]
+[http://www.intland.com|!/1723!]
+}}}
+
+
+!! Aufzählungen
+
+! Einfache Aufzählung
+Ein Sternchen ( * ) am Anfang einer Zeile, leitet eine Aufzählung ein. Die Anzahl der Sterne definiert die Einrücktiefe (maximal 3).
+z.B:
+{{{
+* Eins
+* Zwei
+* Drei
+** Drei.Eins}}}
+
+Wird dargestellt als:
+* Eins
+* Zwei
+* Drei
+** Drei.Eins
+
+
+! Nummerierte Aufzählung
+Für eine nummerierte Aufzählung leiten Sie die Zeile mit dem Nummernzeichen ( # ) anstelle des Sternchens ein.
+z.B.:
+{{{
+# Eins
+# Zwei
+# Drei
+## Drei.Eins
+}}}
+
+Wird dargestellt als:
+# Eins
+# Zwei
+# Drei
+## Drei.Eins
+
+Alle nachfolgenden Zeilen unterhalb einer Aufzählungszeile, die nicht mit dem Aufzählungszeichen beginnen,
+sondern mit mindestens einem Leerzeichen, werden als Fortsetzung der aktuellen Aufzählungszeile betrachtet.
+{{{
+* Das hier ist der erste Eintrag der Aufzählung.
+* Hier beginnt der zweite Eintrag der Aufzählung.
+  Und dies hier ist der zweite Satz des zweiten Eintrags.
+  Und hier ist noch ein dritter Satz.
+  Alle diese vier Zeilen bilden einen Eintrag in der Aufzählung!
+* Und hier ist ein dritter Eintrag.
+}}}
+\\
+Weiter Beispiele finden Sie unter ''Erweiterte Funktionen''.
+
+! Glossar
+
+Über das {{;:}}-Konstrukt können sie einfach ein Glossar erstellen:
+{{{
+;__Begriff__:''Erklärung''
+}}}
+
+wird dargestellt als:
+
+;__Begriff__:''Erklärung''
+
+
+
+!! Tabelle
+
+Mit dem Spalten-Symbol ('|') können Sie Zeilen und Spalten einer Tabelle markieren.\\
+Benutzen Sie jeweils doppelte Spalten-Symbole ('||') für die Kopfzeile und einfache Spalten-Symbole für die Einträge der Tabelle.\\
+
+Zum Beispiel:
+
+{{{
+|| Nr. || Name
+| 1 | Vorgänge
+| 2 | Dokumente
+}}}
+
+erzeut die folgende Tabelle:
+
+|| Nr. || Name
+| 1 | Vorgänge
+| 2 | Dokumente
+
+Tabellenspalten können auch Verweise und Bilder enthalten. Weiter Beispiele finden Sie unter ''Erweiterte Funktionen''.
+
+
+!!! Erweiterte Funktionen
+
+
+!!Textgestaltung
+
+Zusätzlich zu kursiv und Fettdruck können Sie Ihren eigenen Text-Stil (Farbe, Schriftart, etc.) definieren.
+
+%%warning Formattierte Abschnitte sollten immer mit __~%~!__ abgeschlossen werden:
+{{{
+  first %%blue second%!third
+}}}
+
+Nicht länger wie bisher üblich mit ~%~%:
+{{{
+  first %%blue second%%third
+}}}
+%%
+
+!Farbe
+Folgende Textfarben sind vordefiniert:
+%%blue
+blue%%
+%%cyan
+cyan%%
+%%gray
+gray%%
+%%green
+green%%
+%%magenta
+magenta%%
+%%orange
+orange%%
+%%pink
+pink%%
+%%red
+red%%
+%%yellow
+yellow%%
+
+Über dieses Konstrukt definieren Sie einen farbigen Textblock:
+{{{%%red
+Dieser Text ist rot.%%}}}
+
+%%red
+Dieser Text ist rot.%%
+
+
+! Grösse und Ausrichtung
+
+{{{
+%%small Text %%    = Kleinere Schrift
+%%sub Text %%      = Tiefgestellter Text
+%%sup Text %%      = Hochgestellter Text
+%%strike Text %%   = Durchgestrichener Text
+%%center Text %%   = Zentrierter Text
+%%ltr Text %%      = Von links nach rechts geschriebener Text
+%%rtl Text %%      = Von rechts nach links geschriebener Text
+}}}
+
+
+
+! Benutzerdefiniert
+Mit dem folgenden Konstrukt können Sie ihren eigenen Text-Stil (analog zu HTML Style Sheets (CSS) definieren):
+{{{%%( font-size: 150%; color: green; )
+Hallo Welt!%%}}}
+
+%%( font-size: 150%; color: green; )
+Hallo Welt!%%
+
+
+!! Text Rahmen
+
+! Information, Warnung und Fehler
+
+Für hervorgehobene Informationen, Warnungen und Fehlermeldungen stehen spezielle farbige Rahmen mit Symbol zur Verfügung:
+{{{
+%%information Vorläufiger Entwurf %%
+%%warning Bitte beachten %%
+%%error Das ist ein Fehler! %%
+}}}
+
+%%information Vorläufiger Entwurf %%
+%%warning Bitte beachten %%
+%%error Das ist ein Fehler! %%
+
+! Video box
+
+{{{
+%%videobox Sie finden ein Tutorialvideo im KB. %%
+}}}
+
+%%videobox Sie finden ein Tutorialvideo im KB. %%
+
+! Zusammenklappbar
+
+Beim zusammenklappbaren Rahmen wird im zusammengeklappten Zustand nur die Überschrift angezeigt.
+Diese Überschrift muss mit dem entsprechenden Markup in der ersten Textzeile stehen, andernfalls kann der Rahmen nicht zusammengeklappt werden !
+
+{{{
+%%collapsebox
+!! Rahmen Überschrift
+Eingerahmter Text, der ausgeblendet werden kann.
+%%
+}}}
+
+%%collapsebox
+! Rahmen Überschrift
+Eingerahmter Text, der ausgeblendet werden kann.
+%%
+
+
+! Kommentar
+
+Ein Kommentarrahmen, zeigt seinen Inhalt am rechten Seitenrand. Der restliche Text auf der Seite umfließt den Kommentar:
+
+{{{
+%%commentbox
+__Beispiel Kommentar!__
+%%
+}}}
+
+%%commentbox
+__Beispiel Kommentar!__\\
+Dieser Kommentar ist absichtlich etwas grösser, um zu zeigen, wie der restliche Text auf der Seite diesen Kommentar umfließt.
+%%
+
+
+!! Karteikarten
+
+Über einen Stapel von Karteikarten, können Sie Textabschnitte gruppieren und platzsparend darstellen.\\
+Nur der Inhalt der obersten (ersten) Karteikarte wird initial dargestellt. Durck Klicken auf eine andere Karteikarte im Stapel
+können Sie diese nach oben bringen und ihren Inhalt sichbar machen.
+
+Innerhalb eines Stapels {{tabbedSection}} können mehrere (mindestens eine) Karteikarte {{tab-XXX}} sein.
+
+{{{
+%%tabbedSection
+%%tab-Allgemein
+Allgemeiner Text.
+%%
+%%tab-Speziell
+Spezieller Text.
+%%
+%%
+}}}
+
+%%tabbedSection
+%%tab-Allgemein
+Allgemeiner Text.
+%%
+%%tab-Speziell
+Spezieller Text.
+%%
+%%
+
+
+!! Zusammenklappbare Aufzählungen
+
+Über einen {{collapse}} Block können Sie eine Aufzählung in einen auf- und zuklappbaren Baum verwandeln:
+
+{{{
+%%collapse
+* Datenbanken
+** Kommerziell
+*** DB2
+*** Oracle
+** Frei
+*** MySQL
+%%
+}}}
+
+%%collapse
+* Datenbanken
+** Kommerziell
+*** DB2
+*** Oracle
+** Frei
+*** MySQL
+%%
+
+
+!! Tabellen Erweiterungen
+
+
+!Tabellen Plugin
+
+Das Tabellen Plugin erweitert die Standard Tabellen um folgende Funktionen:
+* Verschmelzen von Zellen, sowohl horizontal als auch vertikal (colspan und rowspan)
+* Automatische Zeilen-Nummerierung
+* Zellen können mehrzeilige Inhalte haben, ja sogar wiederum eingebettete Tabellen enthalten.
+* Erweiterte Möglichkeiten zur Formatierung von Titelzeile sowie geraden und ungeraden Zeilen.
+\\
+
+{{{
+[{Table
+
+|Nr |A |< |C |<
+|#  |a |b |c |(background:yellow;)d
+|#  |^ |b |^ |(background:yellow;)d
+
+}]
+}}}
+
+[{Table
+
+|Nr |A |< |C |<
+|#  |a |b |c |(background:yellow;)d
+|#  |^ |b |^ |(background:yellow;)d
+
+}]
+
+Beispiel: Ordne drei Plugins in zwei Spalten an. Die Projektliste in der ersten Spalte, Abonnements und Freigaben untereinander in der zweiten Spalte:
+
+{{{
+[{Table
+
+|[{ProjectList}] |(vertical-align:top;) [{MySubscriptions}]
+|^               |(vertical-align:top;) [{PullRequests}]
+
+}]
+}}}
+
+Weitere Informationen über das Tabellen-Plugin finden Sie auf der [Plugin Webseite|https://jspwiki-wiki.apache.org/Wiki.jsp?page=TablePlugin].\\
+
+
+! Zebra Tabellen
+
+Über einen {{zebra-}} Block können Sie eine Tabelle in eine Zebra-Tabelle verwandeln, bei der gerade und ungerade Zeilen eine andere Hintergrundfarbe haben.\\
+Dadurch erhöht sich die Lesbarkeit von grossen Tabellen. \\
+Die Hintergrundfarbe für die geraden und die ungerade Zeilen können Sie entweder über den hexadezimalen Farbcode oder einen der vordefinierten Namen {{aqua}},
+{{black}}, {{blue}}, {{fuchsia}}, {{gray}}, {{green}}, {{lime}}, {{maroon}}, {{navy}}, {{olive}}, {{purple}}, {{red}}, {{silver}}, {{teal}}, {{white}}, {{yellow}}
+oder {{transparent}} definieren.
+
+{{{
+%%zebra-#FFFFCE-#F0C000
+|| Nr. || Name
+| 1 | Dokumente
+| 2 | Vorgänge
+| 3 | Abfragen
+%%
+}}}
+
+%%zebra-#FFFFCE-#F0C000
+|| Nr. || Name
+| 1 | Dokumente
+| 2 | Vorgänge
+| 3 | Abfragen
+%%
+
+
+! Sortierbare Tabellen
+
+Über einen {{sortable}} Block können Sie eine Tabelle interaktiv sortierbar machen.\\
+Die Benutzer können zur Laufzeit durck Anklicken einer Spaltenüberschrift den Inhalt der Tabelle auf- oder absteigend nach dieser Spalte sortieren.
+
+{{{
+%%sortable
+|| Titel || Autor || Veröffentlicht || Auflage
+| Buch1  |  zappy  |  25.02.2005 |  5
+| Buch2  |  happy  |  25.01.2005 |  9
+| Buch3  |  pappy  |  23.03.2005 |  6
+| Buch4  |  dappy  |  21.04.2005 |  7
+| Buch5  |  rappy  |  25.07.2005 |  11
+%%
+}}}
+
+%%sortable
+|| Titel || Autor || Veröffentlicht || Auflage
+| Buch1  |  zappy  |  25.02.2005 |  5
+| Buch2  |  happy  |  25.01.2005 |  9
+| Buch3  |  pappy  |  23.03.2005 |  6
+| Buch4  |  dappy  |  21.04.2005 |  7
+| Buch5  |  rappy  |  25.07.2005 |  11
+%%
+
+!! Balkendiagramm
+
+Ein Balkendiagramm stellt numerische Werte als farbige horizontale Balken dar. Sowohl Farbe als auch Länge der Balken kann definiert werden.
+
+{{{
+%%graphBars-#F0C000-70
+* %%gBar 20 %% Äpfel
+* %%gBar 40 %% Birnen
+* %%gBar 60 %% Bananen
+%%
+}}}
+
+%%graphBars-#F0C000-70
+* %%gBar 20 %% Äpfel
+* %%gBar 40 %% Birnen
+* %%gBar 60 %% Bananen
+%%
+
+
+!!! Interwiki Links
+Interwiki Links sind Verweise von einer Wikiseite zu einem CodeBeamer Objekt.
+
+!! CodeBeamer Objekt Referenzen
+Folgende CodeBeamer Objekte können von einer Wikiseite referenziert werden:
+
+[{Table
+
+|{{{[PROJ:37]}}}| Verweis auf das CodeBeamer Projekt mit der Nr. 37
+|{{{[WIKIPAGE:1037]}}}| Verweis auf die Wikiseite mit der Nr. 1037
+|{{{[WIKIPAGE:1037/HEAD]}}}| Verweis auf die aktuelle Version der Wikiseite mit der Nr. 1037
+|{{{[WIKIPAGE:1037/17]}}}| Verweis auf die Version 17 der Wikiseite mit der Nr. 1037
+|{{{[WIKIPAGE:1037#Einleitung]}}}| Verweis auf den Abschnitt mit Überschrift "Einleitung" in der (aktuellen Version der) Wikiseite mit der Nr. 1037
+|{{{[WIKIPAGE:1037/HEAD#Einleitung]}}}| Wie oben, nur mit expliziter Angabe der neuesten/aktuellen Version
+|{{{[WIKIPAGE:1037/17#Einleitung]}}}| Verweis auf den Abschnitt mit Überschrift "Einleitung" in der Version 17 der Wikiseite mit der Nr. 1037
+|{{{[DIR:1320]}}}| Verweis auf das Dokumenten-Verzeichnis mit der Nr. 1320
+|{{{[DOC:2798]}}}| Verweis auf die aktuellste Version des Dokuments mit der Nr. 2798
+|{{{[DOC:2798/HEAD]}}}| Verweis auf die aktuellste Version des Dokuments mit der Nr. 2798
+|{{{[DOC:2798/23]}}}| Verweis auf die Version 23 des Dokuments mit der Nr. 2798
+|{{{[TAG:2798]}}}| Verweis auf den Versionsstand mit der Nr. 2798
+|{{{[TRACKER:91]}}} | Verweis auf den Tracker mit der Nr. 91
+|{{{[ISSUE:1567]}}} | Verweis auf den Vorgang mit der Nr. 1567
+|{{{[REPORT:965]}}} | Verweis auf die Abfrage mit der Nr. 965
+|{{{[REPO:1234]}}} | Verweis auf das Repository mit der Nr. 1234
+|{{{[USER:1]}}} | Verweis auf den Benutzer mit der Id 1
+|{{{[USER:bond]}}} | Verweis auf den Benutzer mit dem Namen "bond"
+
+}]
+
+
+!! Link Sterotypen
+
+Ab CodeBeamer 6.0, können Interwiki Referenzen auf Vorgänge {{~[ISSUE:XXX~]}} und Konfigurationsobjekte {{~[ITEM:XXX~]}} über Stereotypen angepaßt werden.\\
+\\
+Ein Interwiki-Referenz-Stereotyp definiert:
+*Ob ein Hyperlink zu dem referenzierten Objekt angezeigt wird, und mit welcher Beschriftung.
+*Ob beim Überfahren des Hyperlinks mit dem Mauszeiger ein Popup-Text angezeigt werden soll, und woraus dieser Text besteht.
+*Ob zusätzliche Objekt-Attribute (z.B. Status, Beschreibung, etc.) in einem Absatz nach dem Hyperlink angezeigt werden sollen.
+\\
+Zur Verknüpfung eines Interwiki-Links mit einem Stereotypen, verwenden Sie folgende Notation:
+{{{
+[<<stereotype>>|ISSUE:XXX]
+}}}
+Wobei {{stereotype}} der Name eines definierten Interwiki-Referenz-Stereotypen ist, wie z.B.
+{{{
+[<<infosheet>>|ISSUE:XXX]
+}}}
+
+
+! Globale Stereotypen
+
+Globale Interwiki-Referenz-Stereotypen werden in der Datei {~/CB-X.Y/tomcat/webapps/cb/WEB-INF/classes/general.xml}} als Elemente im Unterabschnitt {{<interwiki>}} des Abschnitts {{<wiki>}} definiert.\\
+\\
+Zum Beispiel: Der Standard-Stereotyp {{infosheet}} ist wie folgt definiert:
+{{{
+<infosheet>
+   <link></link>
+   <popup></popup>
+   <body>columns=3, value.style=min-width: 18em, categories, namedPriority, severities, status, versions, subjects, platforms, description</body>
+</infosheet>
+}}}
+Der Stereotyp zeigt nur spezielle Attribute und die Beschreibung des referenzierten Objekts an (keinen Hyperlink), und ist für die absatzweise Darstellung von Objekt-Datensätzen gedacht, wobei eine einfache Referenz den Absatz-Kopf darstellt, und eine {{<<infosheet>>}} Referenz den Absatz-Inhalt:
+{{{
+![ISSUE:123]
+[<<infosheet>>|ISSUE:123]
+
+![ISSUE:123]
+[<<infosheet>>|ISSUE:124]
+}}}
+
+\\
+Ein weiterer Standard-Stereotyp ist {{description}}:
+{{{
+<description>
+   <link></link>
+   <popup></popup>
+   <body>description</body>
+</description>
+}}}
+Wie der Name schon sagt, zeigt dieser Stereotyp nur die Beschreibung des referenzierten Objekts an, z.B.
+{{{
+[<<description>>|ISSUE:124]
+}}}
+
+\\
+Eine Stereotyp-Definition besteht aus 3 Teilen, jeder davon kann leer sein.\\
+\\
+||Definition||Bedeutung||Format
+|{{link}}|Definiert den Hyperlink (Beschriftung)|Der Beschriftungstext mit {{${attribute} }} Platzhaltern,\\wobei ''attribute'' der Name des Objekt-Attributs ist, durch dessen Wert der Platzhalter ersetzt wird.\\z.B. {{${name} }} zeigt den Objekt-Namen als Link-Beschriftung an.
+|{{popup}}|Definiert den Popup-Text|Analog {{link}}
+|{{body}}|Definiert zusätzlich zum Link anzuzeigende Attribute|Eine komma-separierte Liste der zusätzlich anzuzeigenden Attribute, plus optionaler Anzeige-Optionen.
+\\
+\\
+In der {{body}} Definition, können zusätzlich Anzeige-Optionen als {{Einstellung = Wert}} Paare angegeben werden.\\
+\\
+||Einstellung||Wert||Standard||Beispiel
+|{{columns}}|Anzahl Attribute pro Zeile in der Attribute-Tabelle|5|{{columns=3}}
+|{{table.class}}|CSS class der Attribute-Tabelle ({{<table>}})|--|
+|{{table.style}}|CSS style für die Attribute-Tabelle ({{<table>}})|--|
+|{{label.class}}|CSS class der Attribut-Beschriftungen ({{<td>}})|--|{{label.class=optional}}
+|{{label.style}}|CSS style für Attribut-Beschriftungen ({{<td>}})|margin-left: 1em; white-space: nowrap; font-weight: bold;\\background-color: #EEEEEE; text-align: right;|
+|{{value.class}}|CSS class der Attribut-Werte ({{<td>}})|--|{{value.class=tableItem}}
+|{{value.style}}|CSS style für Attribut-Werte ({{<td>}})|min-width: 15em;|{{value.style=min-width: 18em}}
+|''attribute''.{{label.class}}|CSS class der Beschriftung von ''attribute''|--|{{status.class=mandatory}}
+|''attribute''.{{label.style}}|CSS style für Beschriftung von ''attribute'|--|
+|''attribute''.{{value.class}}|CSS class des Werts von ''attribute''|--|
+|''attribute''.{{value.style}}|CSS style für den Wert von  ''attribute''|--|
+|''attribute''.{{colspan}}|Wieviele Spalten soll ''attribute'' überspannen|1|{{subject.colspan=3}}
+|''attribute''.{{newline}}|Soll ''attribute'' in einer neuen Zeile dargestellt werden|false|{{subject.newline=true}}
+\\
+Bitte beachten Sie, dass Änderungen in {{general.xml}} erst nach einem Neustart von CodeBeamer wirksam werden.
+\\
+\\
+
+! Lokale Stereotypen
+
+Sie können auch lokal/individuell für eine spezielle Wikiseite Interwiki Link Stereotypen definieren.\\
+Deklarieren Sie die Stereotypen mit folgender Notation am Anfang der Seite:
+{{{
+[{SET <<stereotype>> = body}]
+}}}
+\\
+Zum Beispiel:
+{{{
+[{SET <<special>> = status, namedPriority}]
+
+[<<special>>|ISSUE:123]
+}}}
+
+
+!!! Wiki Inhalt
+
+
+!! Inhaltsverzeichnis
+{{{
+[{TableOfContents}]
+}}}
+erzeugt ein Inhaltsverzeichnis über alle Abschnitte mit !!!, !! und ! Überschriften der aktuellen Seite.\\
+\\
+Sie können optional den Titel des Inhaltsverzeichnisses ändern und/oder das Verzeichnis durchnummerieren lassen:
+{{{
+[{TableOfContents title='Inhalt' numbered='true' start='100'}]
+}}}
+
+Sie können auch ein Inhaltsverzeichnis über mehrere Seiten erstellen, indem Sie diese explizit auflisten (Seiten Name oder Nr.):
+{{{
+[{TableOfContents title='EJB 3.0 Tutorial' numbered='true'
+
+Stateless EJBs
+Stateful EJBs
+Transaction and Security
+1261
+Dependency Injection
+1244
+}]
+}}}
+
+!! Schlagwortwolke
+Zeigt die Häufigkeit von verwendeten Schlagworten in Form einer [Schlagwortwolke|http://de.wikipedia.org/wiki/Schlagwortwolke].
+
+{{{
+[{TagCloud}]
+}}}
+
+
+!!! Projektbezogener Inhalt
+
+
+Die nachfolgend vorgestellten Plugins sind primär zur Verwendung in den Projekt- oder Tracker-Wikiseiten vorgesehen.\\
+\\
+Bei all diesen Plugins gilt: Ist kein explizites Projekt angegeben, werden immer die Informationen bezüglich des aktuellen Projekts angezeigt.\\
+
+!! Projekt Übersicht
+Zeigt eine Liste aller für den aktuellen Benutzer zugänglichen Projekte an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{id}}        |ja     |Komma-separierte Liste von Projekt-Nr./Ids. Liste nur diese Projekte auf.
+|{{name}}      |ja     |Liste nur Projekte auf, deren Name diesem regulären Ausdruck entspricht.
+|{{category}}  |ja     |Liste nur Projekte auf, deren Kategorie diesem regulären Ausdruck entspricht.
+|{{format}}    |ja     |Detaillierungsgrad der Liste: {{name~|brief~|full}}   Falls nicht angegeben, wird nur der Projektname angezeigt {{name}}
+
+Hinweis:
+* Falls der {{id}} Parameter vorhanden ist, werden {{name}} und {{category}} ignoriert.
+* Falls sowohl {{name}} als auch {{category}} angegeben ist, dann werden beide Kriterien ODER verknüpft.
+
+Beispiele:\\
+Liste nur die Namen der Projekte mit Nr. 1 und 12 auf:
+{{{
+[{ProjectList id='12,1'}]
+}}}
+Liste alle Projekte auf, deren Name mit "Test" beginnt:
+{{{
+[{ProjectList name='Test.*' format='brief'}]
+}}}
+
+
+!! Projekt Steckbrief
+Zeigt einen Steckbrief des angegebenen Projekts an.\\
+\\
+Beispiele:\\
+Zeige Steckbrief des aktuellen Projekts:
+{{{
+[{ProjectInfo}]
+}}}
+Zeige Steckbrief des Projekts Nr. 2:
+{{{
+[{ProjectInfo projectId='2'}]
+}}}
+
+
+!! Projekt Mitglieder
+Listed die Projektleiter, sowie summarisch die Anzahl restlicher Mitglieder eines Projekts auf.
+
+{{{
+[{Members}]
+[{Members projectId='2'}]
+}}}
+
+
+!! Tracker Übersicht
+
+Listet die Tracker in einem Projekt auf, sowie summarisch zu jedem Tracker die Anzahl offener und geschlossener Vorgänge.
+
+{{{[{TrackerList}]}}} \\
+{{{[{TrackerList projectId='2'}]}}} \\
+{{{[{TrackerList items='work'}]}}} \\
+{{{[{TrackerList items='configuration'}]}}} \\
+{{{[{TrackerList items='both'}]}}} \\
+{{{[{TrackerList sorting='name'}]}}} \\
+{{{[{TrackerList sorting='key'}]}}} \\
+{{{[{TrackerList sorting='lastmodified'}]}}} \\
+{{{[{TrackerList sorting='type'}]}}} \\
+{{{[{TrackerList types='Bugs,Requirements,Test Cases'}]}}} displays the Bug/Requirement/Test Cases trackers of the current project, only these kind of trackers are shown. Note: You can use the tracker's type names as they appear on the UI, except that you must use English names for types. So you can use "Bug" or "Bugs" as filter, but can not use "Fehler" here.\\
+{{{[{TrackerList typesExcluded='Test Cases,Test Sets'}]}}} displays all trackers except the Test Case and Test Set types\\
+{{{[{TrackerList detailedLayout='true']}}} Show the detailed layout/view of the tracker list, contains more information about the Word items in each tracker
+{{{[{TrackerList trackerOrder='1,2,3']}}} Show the trackers in specific order if the trackerOrder parameter is present. This can contain tracker id-numbers in the desiered order. Typically updated by the project configuration  when drag-drop reordering the trackers on the plugin UI. \\
+
+
+!! Aktivste Projekte
+Zeigt eine Hitliste der zur Zeit aktivsten Projekte an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{projectId}} |ja     |Komma-separierte Liste von Projekt-Nr./Ids, von denen die aktivsten bestimmt werden sollen.
+|{{tag}}       |ja     |Komma-separierte Liste von Schlagworten. Von allen mit diesen Schlagworten versehenen Projekten, sollen die aktivsten bestimmt werden.
+|{{period}}    |ja     |Betrachtungszeitraum im Format: {{~[{Past~|Last~|This}~] ~[x~] {day~|week~|month~|quarter~|year}~[s~]}}\\Falls nicht angegeben: {{Past 30 days}}\\Der Betrachtungszeitraum in {{Anzahl}} Kalender-Tage/Wochen/Monate/Quartale/Jahre ist immer relativ zum aktuellen Datum, und ist entweder der aktuelle Tag/Monat/Woche/Quartal/Jahr (z.B. {{'This month'}}), oder umfasst die angegebene Anzahl Tage/Wochen/Monate/Quartale/Jahre direkt vor (z.B. {{'Past 7 days'}}) oder einschließlich (z.B. {{'Last 6 weeks'}}) dem aktuellen Tag/Woche/Monat/Woche/Quartal/Jahr.
+|{{max}}       |ja     |Maximal soviele aktivste Projekte sollen angezeigt werden.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{cssClass}}  |ja     |CSS Klasse für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Beispiel:\\
+Zeige eine Hitliste der 5 in den vergangenen 30 Tagen aktivsten Projekte aus der aktiven Projektgruppe des aktuellen Benutzers (da weder {{projectId}} noch {{tag}} angegeben wird):
+{{{
+[{MostActiveProjects period='Last 30 days' max='5'}]
+}}}
+
+
+!! Projekt Aktivitäten
+Zeigt die Anzahl der Aktivitäten in den angegebenen Projekten pro Kalendereinheit über den angegebenen Zeitraum an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{projectId}} |ja     |Komma-separierte Liste von Projekt-Nr./Ids.
+|{{tag}}       |ja     |Komma-separierte Liste von Schlagworten. Zeige die Aktivitäten aller mit diesen Schlagworten versehenen Projekte.
+|{{period}}    |ja     |Betrachtungszeitraum im Format: {{~[{Past~|Last~|This}~] ~[x~] {day~|week~|month~|quarter~|year}~[s~]}}\\Falls nicht angegeben: {{Past 30 days}}\\Der Betrachtungszeitraum in {{Anzahl}} Kalender-Tage/Wochen/Monate/Quartale/Jahre ist immer relativ zum aktuellen Datum, und ist entweder der aktuelle Tag/Monat/Woche/Quartal/Jahr (z.B. {{'This month'}}), oder umfasst die angegebene Anzahl Tage/Wochen/Monate/Quartale/Jahre direkt vor (z.B. {{'Past 7 days'}}) oder einschließlich (z.B. {{'Last 6 weeks'}}) dem aktuellen Tag/Woche/Monat/Woche/Quartal/Jahr.
+|{{grouping}}  |ja     |Granularität der Anzeige: {{daily~|weekly~|monthly}}. Falls nicht angegeben: {{daily}}.
+|{{display}}   |ja     |Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{width}}     |ja     |Die Breite des Diagramms in Pixeln. Falls nicht angegeben: 400 Pixel.
+|{{height}}    |ja     |Die Höhe des Diagramms in Pixeln. Falls nicht angegeben: 200 Pixel.
+|{{cssClass}}  |ja     |CSS Klasse für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Beispiel:\\
+Zeige die Anzahl Aktivitäten pro Tag in den Projekten 2 und 4 über die vergangenen 30 Tage:
+{{{
+[{ProjectActivityTrends projectId='2,4' period='Last 30 days' grouping='Daily'}]
+}}}
+
+
+!! Letzte Aktivitäten
+Zeigt die Chronologie der Aktivitäten in den angegebenen Projekten in dem angegebenen Zeitraum an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{projectId}} |ja     |Komma-separierte Liste von Projekt-Nr./Ids.
+|{{tag}}       |ja     |Komma-separierte Liste von Schlagworten. Zeige die Aktivitäten aller mit diesen Schlagworten versehenen Projekte.
+|{{filter}}    |ja     |Welche Art von Aktivitäten soll angezeigt werden. Spezifiziert als komma-separierte Liste von {{issue}}, {{commit}}, {{wikipage}}, {{document}} und {{build}}. Falls nicht angegeben, werden alle Arten von Aktivitäten angezeigt.
+|{{period}}    |ja     |Betrachtungszeitraum im Format: {{~[{Past~|Last~|This}~] ~[x~] {day~|week~|month~|quarter~|year}~[s~]}}\\Falls nicht angegeben: {{Past 30 days}}\\Der Betrachtungszeitraum in {{Anzahl}} Kalender-Tage/Wochen/Monate/Quartale/Jahre ist immer relativ zum aktuellen Datum, und ist entweder der aktuelle Tag/Monat/Woche/Quartal/Jahr (z.B. {{'This month'}}), oder umfasst die angegebene Anzahl Tage/Wochen/Monate/Quartale/Jahre direkt vor (z.B. {{'Past 7 days'}}) oder einschließlich (z.B. {{'Last 6 weeks'}}) dem aktuellen Tag/Woche/Monat/Woche/Quartal/Jahr.
+|{{max}}       |ja     |Maximal soviele Aktivitäten sollen angezeigt werden.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{cssClass}}  |ja     |CSS Klasse für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Falls weder {{projectId}} noch {{tag}} angegeben ist, werden die Aktivitäten des aktuellen Projekts angezeigt, bzw. falls sich das Plugin auf einer persönlichen Wikiseite befindet,
+die Aktivitäten aller Projekte, bei denen der Eigentümer der Seite direktes Projektmitglied ist.\\
+\\
+Beispiele:\\
+Zeige die letzten Aktivitäten im aktuellen Projekt:
+{{{
+[{ActivityStream}]
+}}}
+Zeige die 10 letzten Aktivitäten bzgl. Vorgängen und Abläufen der vergangenen 3 Monate in den Projekten 2 und 4:
+{{{
+[{ActivityStream projectId='2,4' filter='issue,build' max='10' period='Last 3 months' title='Letzte Entwicklungstätigkeiten' cssStyle='-moz-box-shadow: 0 0 1em gray;' }]
+}}}
+Zeige die letzten 30 Aktivitäten in allen Projekten, die mit dem Schlagwort "Kunde" oder "Anwender" versehen sind:
+{{{
+[{ActivityStream tag='Kunde, Anwender' title='Letzte Kundenaktivitäten' max='30'}]
+}}}
+
+
+!! Dokumentenzugriffe
+Zeigt die Anzahl Lese -oder Schreibzugriffe auf die angegebenen Dokumente über den angegebenen Zeitraum an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{artifactId}}|ja     |Komma-separierte Liste von Dokument-Nr./Ids.
+|{{tag}}       |ja     |Komma-separierte Liste von Schlagworten. Zeigt die Zugriffe auf alle mit diesen Schlagworten versehenen Dokumente an.
+|{{activity}}  |ja     |Welche Art von Zugriff soll angezeigt werden {{read~|update}}. Falls nicht angegeben: {{read}}
+|{{period}}    |ja     |Betrachtungszeitraum im Format: {{~[{Past~|Last~|This}~] ~[x~] {day~|week~|month~|quarter~|year}~[s~]}}\\Falls nicht angegeben: {{Past 30 days}}\\Der Betrachtungszeitraum in {{Anzahl}} Kalender-Tage/Wochen/Monate/Quartale/Jahre ist immer relativ zum aktuellen Datum, und ist entweder der aktuelle Tag/Monat/Woche/Quartal/Jahr (z.B. {{'This month'}}), oder umfasst die angegebene Anzahl Tage/Wochen/Monate/Quartale/Jahre direkt vor (z.B. {{'Past 7 days'}}) oder einschließlich (z.B. {{'Last 6 weeks'}}) dem aktuellen Tag/Woche/Monat/Woche/Quartal/Jahr.
+|{{grouping}}  |ja     |Granularität der Anzeige: {{daily~|weekly~|monthly}}. Falls nicht angegeben: {{daily}}.
+|{{display}}   |ja     |Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{width}}     |ja     |Die Breite des Diagramms in Pixeln. Falls nicht angegeben: 400 Pixel.
+|{{height}}    |ja     |Die Höhe des Diagramms in Pixeln. Falls nicht angegeben: 200 Pixel.
+|{{cssClass}}  |ja     |CSS Klasse für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Beispiele:\\
+Zeige die Lesezugriffe auf das Dokument Nr. 1000 in den vergangenen 30 Tagen:
+{{{
+[{ArtifactActivityTrends artifactId='1000'}]
+}}}
+Zeige die Lesezugriffe auf die Dokumente Nr. 1000 und 1002 in den vergangenen 30 Tagen in tabellarischer Darstellung:
+{{{
+[{ArtifactActivityTrends artifactId='1000,1002' display='table'}]
+}}}
+Zeige die Schreibzugriffe auf alle mit den Schlagworten "MySQL" oder "RDBMS" versehenen Dokumente in den vergangenen 30 Tagen als Diagramm und in tabellarischer Darstellung:
+{{{
+[{ArtifactActivityTrends title='Änderungen an MySQL Dokumenten' tag='MySQL, RDBMS' activity='update' period='Past 30 days' display='both' cssStyle='background-color:#DEEFF6'}]
+}}}
+
+
+!! Dokumenten Anzahl
+Zeigt die Anzahl Wikiseiten oder Dateien in den angegebenen Projekten über den angegebenen Zeitraum an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{projectId}} |ja     |Komma-separierte Liste von Projekt-Nr./Ids.
+|{{tag}}       |ja     |Komma-separierte Liste von Schlagworten. Zeige die Aktivitäten aller mit diesen Schlagworten versehenen Projekte.
+|{{type}}      |ja     |Art der zu betrachtenden Dokumente: {{document~|wikipage}}. Falls nicht angegeben: {{wikipage}}.
+|{{period}}    |ja     |Betrachtungszeitraum im Format: {{~[{Past~|Last~|This}~] ~[x~] {day~|week~|month~|quarter~|year}~[s~]}}\\Falls nicht angegeben: {{Past 30 days}}\\Der Betrachtungszeitraum in {{Anzahl}} Kalender-Tage/Wochen/Monate/Quartale/Jahre ist immer relativ zum aktuellen Datum, und ist entweder der aktuelle Tag/Monat/Woche/Quartal/Jahr (z.B. {{'This month'}}), oder umfasst die angegebene Anzahl Tage/Wochen/Monate/Quartale/Jahre direkt vor (z.B. {{'Past 7 days'}}) oder einschließlich (z.B. {{'Last 6 weeks'}}) dem aktuellen Tag/Woche/Monat/Woche/Quartal/Jahr.
+|{{grouping}}  |ja     |Granularität der Anzeige: {{daily~|weekly~|monthly}}. Falls nicht angegeben: {{daily}}.
+|{{display}}   |ja     |Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{width}}     |ja     |Die Breite des Diagramms in Pixeln. Falls nicht angegeben: 400 Pixel.
+|{{height}}    |ja     |Die Höhe des Diagramms in Pixeln. Falls nicht angegeben: 200 Pixel.
+|{{cssClass}}  |ja     |CSS Klasse für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Beispiele:\\
+Zeige die Anzahl Wikiseiten im aktuellen Projekt über die vergangenen 30 Tage:
+{{{
+[{ArtifactCountTrends}]
+}}}
+Zeige die Anzahl Dateien in den Projekten Nr. 11 und 27 über die vergangenen 30 Tage in tabellarischer Darstellung:
+{{{
+[{ArtifactCountTrends projectId='11,27' type='document' display='table'}]
+}}}
+Zeige die Anzahl der mit den Schlagworten "Grundlagen" oder "Handbuch" versehenen Wikiseiten in den vergangenen 30 Tagen als Diagramm und in tabellarischer Darstellung:
+{{{
+[{ArtifactCountTrends title='Wikiseiten mit Anwenderdokumentation' tag='Grundlagen, Handbuch' period='Past 30 days' display='both' cssStyle='background-color:#DEEFF6'}]
+}}}
+
+
+!! Vorgang Zu- und Abgänge
+Zeigt die Anzahl zu- und abgehender Vorgänge (=zusätzliche/erledigte Arbeit) in den angegebenen Trackern und/oder Projekten im angegebenen Zeitraum an.\\
+\\
+Das Diagramm zeigt zwei farbige Linien:
+* Die %%green grüne%% Linie repräsentiert Abgänge (erledigte Arbeit)
+* Die %%red rote%% Linie repräsentiert Zugänge (zusätzliche Arbeit).
+Die Farbe der Fläche zwischen den beiden Linien signalisiert die Produktivität:
+* %%green grün%%: Es wird mehr oder genau soviel Arbeit erledigt wie neue Arbeit hereinkommt (der Arbeitsvorrat bleibt konstant oder wird abgebaut).
+* %%red rot%% : Es kommt mehr neue Arbeit herein als im gleichen Zeitraum erledigt wurde (der Arbeitsvorrat wächst, evtl. werden zusätzliche Ressourcen benötigt).
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{projectId}} |ja     |Komma-separierte Liste von Projekt-Nr./Ids.
+|{{trackerId}} |ja     |Komma-separierte Liste von Tracker-Nr./Ids.
+|{{tag}}       |ja     |Komma-separierte Liste von Schlagworten. Zeige die Zu- und Abgänge in allen mit diesen Schlagworten versehenen Projekten und/oder Trackern.
+|{{showHiddenTrackers}}|ja     |Ob auch versteckte Tracker angezeigt werden.
+|{{types}}     |ja     |Filter zur Anzeige der Bug/Requirement/Test Cases Tracker des gegenwärtigen Projekts. Nur diese Trackertypen werden angezeigt. Achtung: Dieser Parameter kann nicht zusammen mit dem trackerIds Parameter verwendet werden. Es können die Trackertyp Namen, so wie sie in der Oberfläche erscheinen, genutzt werden. Die Angabe muss in englischer Sprache erfolgen, es können also "Bug" oder "Bugs" als Filter, nicht aber "Fehler" verwendet werden.
+|{{period}}    |ja     |Betrachtungszeitraum im Format: {{~[{Past~|Last~|This}~] ~[x~] {day~|week~|month~|quarter~|year}~[s~]}}\\Falls nicht angegeben: {{Past 30 days}}\\Der Betrachtungszeitraum in {{Anzahl}} Kalender-Tage/Wochen/Monate/Quartale/Jahre ist immer relativ zum aktuellen Datum, und ist entweder der aktuelle Tag/Monat/Woche/Quartal/Jahr (z.B. {{'This month'}}), oder umfasst die angegebene Anzahl Tage/Wochen/Monate/Quartale/Jahre direkt vor (z.B. {{'Past 7 days'}}) oder einschließlich (z.B. {{'Last 6 weeks'}}) dem aktuellen Tag/Woche/Monat/Woche/Quartal/Jahr.
+|{{grouping}}  |ja     |Granularität der Anzeige: {{daily~|weekly~|monthly}}. Falls nicht angegeben: {{daily}}.
+|{{display}}   |ja     |Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{width}}     |ja     |Die Breite des Diagramms in Pixeln. Falls nicht angegeben: 400 Pixel.
+|{{height}}    |ja     |Die Höhe des Diagramms in Pixeln. Falls nicht angegeben: 200 Pixel.
+|{{cssClass}}  |ja     |CSS Klasse für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Beispiele:\\
+Zeige die Anzahl zu- und abgehender Vorgänge im aktuellen Projekt über die vergangenen 30 Tage an:
+{{{
+[{IssueCountTrends}]
+}}}
+Zeige die Anzahl zu- und abgehender Vorgänge in den Projekten Nr. 11 und 27 über die vergangenen 30 Tage in tabellarischer Form an:
+{{{
+[{IssueCountTrends projectId='11,27' display='table'}]
+}}}
+Zeige die Anzahl zu- und abgehender Vorgänge in den Trackern Nr. 21 und 33 pro Woche über die letzten 13 Wochen sowohl grafisch als auch in tabellarischer Form an:
+{{{
+[{IssueCountTrends trackerId='33,21' period='Last 13 weeks' grouping='weekly' display='both' cssStyle='background-color:#DEEFF6'}]
+}}}
+Zeige die Anzahl zu- und abgehender Vorgänge in allen mit dem Schlagwort "Unternehmenskritisch" markierten Projekten und Trackern pro Tag für den aktuellen Monat an:
+{{{
+[{IssueCountTrends tag='Unternehmenskritisch' period='This Month'}]
+}}}
+
+
+!! Anzahl Vorgänge nach Feldwert
+Zeigt die Anzahl Vorgänge in den angegebenen Trackern und/oder Projekten, aufgeschlüsselt nach den Werten eines bestimmten Attributs/Felds an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{projectId}} |ja     |Komma-separierte Liste von Projekt-Nr./Ids.
+|{{trackerId}} |ja     |Komma-separierte Liste von Tracker-Nr./Ids.
+|{{tag}}       |ja     |Komma-separierte Liste von Schlagworten. Berücksichtige nur Vorgänge in mit diesen Schlagworten versehenen Projekten und/oder Trackern.
+|{{showHiddenTrackers}}|ja     |Ob auch versteckte Tracker angezeigt werden.
+|{{types}}     |ja     |Filter zur Anzeige der Bug/Requirement/Test Cases Tracker des gegenwärtigen Projekts. Nur diese Trackertypen werden angezeigt. Achtung: Dieser Parameter kann nicht zusammen mit dem trackerIds Parameter verwendet werden. Es können die Trackertyp Namen, so wie sie in der Oberfläche erscheinen, genutzt werden. Die Angabe muss in englischer Sprache erfolgen, es können also "Bug" oder "Bugs" als Filter, nicht aber "Fehler" verwendet werden.
+|{{field}}     |ja     |Das Feld, nach dessen Werten die Vorgänge aufgeschlüsselt werden sollen: {{category~|priority~|severity~|status~|resolution~|submitter~|assignedto~|detected~|target~|os~|platform}}. Falls nicht angegeben: {{status}}.
+|{{includeClosed}}|ja  |Geschlossene Vorgänge berücksichtigen: {{true~|false}}. Falls nicht angegeben: {{false}}.
+|{{display}}   |ja     |Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{width}}     |ja     |Die Breite des Diagramms in Pixeln. Falls nicht angegeben: 400 Pixel.
+|{{height}}    |ja     |Die Höhe des Diagramms in Pixeln. Falls nicht angegeben: 200 Pixel.
+|{{cssClass}}  |ja     |CSS Klasse für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Beispiele:\\
+Zeige die Anzahl Vorgänge im aktuellen Projekt, aufgeschlüsselt nach Status:
+{{{
+[{IssueCountByField}]
+}}}
+Zeige die Anzahl Vorgänge in den Projekten 11 und 27, aufgeschlüsselt nach Status, sowohl grafisch als auch in tabellarischer Form:
+{{{
+[{IssueCountByField projectId='11,27' display='table'}]
+}}}
+Zeige die Anzahl Vorgänge in den Trackern 81 und 85, aufgeschlüsselt nach Priorität, sowohl grafisch als auch in tabellarischer Form:
+{{{
+[{IssueCountByField trackerId='81,85' title='Vorgänge nach Priorität' field='priority' display='both'}]
+}}}
+{{{
+[{IssueCountByField trackerId='81,85' includeClosed='false']
+}}}
+Der Parameter {{includeClosed}} kann {{true}} oder {{false}} sein. Falls die Option auf {{false}} gesetzt ist ignoriert das Plugin 'geschlossene' Vorgänge.
+
+
+
+!! Release Übersicht
+
+Das Release Übersicht Plugin zeigt die verfügbaren Releases und Sprints des vorliegenden Projektes in einem Baum-Diagramm an. Es werden die enthaltenen Einträge sowie optional Burn-Down Charts des jeweiligen Releases/Sprints angezeigt.
+
+Parameter:
+*{{title='any-text'}} Optionaler Parameter um den Standardwert zu überschreiben (Release Übersichts-Plugin)
+*{{projectId='3'}} Optionaler Parameter welches das Projekt spezifiziert, (falls das Projekt gelöscht wird, gilt das aktuelle Projekt, etwaiger Fehler wird angezeigt)
+*{{releaseStatus='Unreleased|Released|All'}} Optionaler Parameter, welcher den Status des jeweiligen Releases/Sprints anzeigt (Standardwert: 'Unreleased')
+*{{trackerItemStatus='Unresolved|Resolved|All'}} Optionaler Parameter welche die Einträge per Release/Sprint anzeigt (Standardwert: 'Unresolved')
+*{{showUnscheduledItems='true|false'}} Optionaler Parameter welcher die offenen Einträge unterhalb des Release/Sprints anzeigt (Standardwert: 'false')
+*{{showBurnDownChart='true|false'}} Optionaler Parameter, der anzeigt ob eine Burn Down Chart pro Release/Sprint angezeigt werden soll (Standardwert: 'true')
+*{{showDropdownFilters='true|false'}} Optionaler Parameter, falls true, dann werden zwei Dropdown-Anzeigen in der Kopfzeile dargestellt. Hier lässt sich der Release Status und der Tracker Einträge Status auswählen (Standardwert: 'true')
+*{{trackerTypes='default|all_tracker_items|test_runs_only'}} Optionaler Parameter, Möglichkeit nach Elementen zu filtern, um den Burndown-Chart zu generieren (Standardwert: 'default').
+
+Beispiele:
+{{{[{ReleaseActivityTrends}]}}} zeigt die offenen Releases/Sprints des derzeitigen Projektes mit einer Burn-Down Chart an mit der Nummer der jeweiligen offenen Einträge pro Release/Sprint. Der Status der Drop-Down Menüs ist verfügbar in der Kopfzeile.
+{{{[{ReleaseActivityTrends title='Project (3) Releases' projectId='3'}]}}} zeigt die offenen Releases/Sprints des Projektes mit der ID 3 mit Burn-Down Charts an. Gibt darüber hinaus die Anzahl der offenen Einträge per Release/Sprint an. Der Titel des Plugins ist 'Project (3) Releases'.
+{{{[{ReleaseActivityTrends showUnscheduledItems='true' showBurnDownChart='false' trackerItemStatus='Resolved'}]}}} zeigt die offenen Releases/Sprints, die Anzahl der geschlossenen Einträge per Release/Sprints und die Anzahl der noch nicht geplanten geschlossen Einträge an. In der Kopfzeile ist ein Dropdown-Menü verfügbar.
+{{{[{ReleaseActivityTrends showDropdownFilters='false'}]}}} zeigt die offenen Einträge der Releases/Sprints des aktuellen Projektes mit Burn-Down Chart und die Anzahl der offenen Einträge je Release/Sprints. In der Kopfzeile ist kein Dropdown-Menü verfügbar.
+
+
+!! Release Gantt Chart Plugin
+
+Zeigt einen Gantt Chart sowohl für die bereitgestellten Release(s)/Sprint(s) und deren Sprint(s)/Subsprint(s) als auch die referenzierten Release(s), sobald vorhanden. Der Chart zeigt die Releases an, die keinen geplanten Arbeitsbeginn und geplantes Release-Datum mit einem fiktiven Zeitplan haben. Es wird nur ein Chart pro Wikiseite angezeigt.
+
+Parameters:
+*{{releaseIds='1234,12345'}} Pflicht-Parameter, komma-getrennte Liste der Release/Sprint IDs.
+*{{height='200'}} Optionaler Parameter, Chart-Größe in Pixel.
+
+Beispiel:
+{{{[{ReleaseGanttChart releaseIds='12345'}]}}} zeigt den Gantt Chart eines Releases, identifiziert über 12345.
+
+
+
+!! Risiko Matrix
+
+Das Risiko Matrix Plugin zeigt die Anzahl der Anforderungen oder User Stories/Risiken in Abhängigkeit zu den jeweiligen Risiken. Das Plugin zeigt eine Matrix; Dt auf der Y-Achse die Ausfallwahrscheinlichkeit und auf der X-Achse die Schwere der Auswirkung. Beide sind vollständig in der Felder-Einstellungen des Trackers konfigurierbar. Die Farben der Zellen in der Matrix können über die Risiko-Tracker-Konfiguration eingestellt werden. Bitte beachten Sie, dass das Plugin nur bei entsprechender Konfiguration funktioniert.
+
+Parameter:
+*{{trackerId='12345'}} Erforderlicher Parameter, kann ein Anforderungs/User Story- oder Risiko-Tracker sein.
+*{{trackerKey='REQ'}} Alternative zur {{trackerId}}: Der Kurzname des Anforderungs/User Story- oder Risiko-Trackers.
+*{{riskTrackerId='12346'}} Optionaler Parameter, Sie können das Ergebnis nach Risiko-Tracker ID filtern.
+*{{riskTrackerKey='RISK'}} Alternative zur {{riskTrackerId}}: Der Kurzname des Risiko-Trackers.
+*{{reduction='before|after|afterthenbefore'}} Optionaler Parameter, zeigt die Ausfallwahrscheinlichkeit und die Schwere der Auswirkung. Falls nicht angegeben, wird das initale Risiko angezeigt.
+*{{countBasedOn='requirement|risk'}} Optional: Wonach soll gruppiert werden (Anforderungen/User Stories oder Risiken). Falls nicht angegeben, wird standardmässig nach Anforderungen/User Stories ({{'requirement'}}) gruppiert.
+*{{reverseAxis='true|false'}} Optionaler Parameter, ob die Achsen für die Ausfallwahrscheinlichkeit und die Schwere der Auswirkung umgekehrt werden soll oder nicht. Wenn dieser Parameter weggelassen wird, wird der umgekehrte Achsen-Wert für den Risiko Tracker verwendet.
+*{{title='any-text'}} Optionaler Parameter, falls weggelassen, wird der Titel nicht angzeigt
+
+Beispiele:
+{{{[{RiskMatrixDiagram trackerId='12345'}]}}} zeigt die Anzahl der Anforderungen/User Stories im Verhältnis zu den zugeordneten Risiken "vor" der Reduzierung des Risikos.
+{{{[{RiskMatrixDiagram title='Risk Matrix Diagram' trackerId='12345'}]}}} exakt wie das Beispiel darüber, zusätzlich zeigt das Plugin-Box den Titel "Risk Matrix Diagram".
+{{{[{RiskMatrixDiagram trackerId='12346' riskTrackerId='123456' reduction='after'}]}}} falls der Tracker welcher als Anforderungs- oder User Story-Tracker identifiziert ist, dann wird in der Matrix die Werte nach Risiko-Reduzierung angezeigt. Falls der identifizierte Tracker ein Risiko-Tracker ist, werden die Risiko-Werte ignoriert.
+
+
+!! Resourcing Extraction
+
+Das {{Resourcing Extraction}} Plugin zeigt die Anzahl (und Story Points) offener Vorgänge, gruppiert nach Projekten und Bearbeitern.
+
+Parameter:
+*{{projectIds='12345,12346'}} Komma-separierte Liste von Projekt-Ids. Falls nicht angegeben, wird das aktuelle Projekte verwendet.
+*{{displayGroups='true|false'}} Falls {{true}}, wird zusätzlich zu den Bearbeitern auch nach der Benutzer-Gruppe der Bearbieter gruppiert. Standardmässig wird nur nach den individuellen Bearbeitern gruppiert ({{false}}).
+*{{groupIds='123,124'}} Optionale, komma-separierte Liste von Gruppen-Ids, um nur nach diesen Gruppen zu gruppieren. Standardmässig wird nach allen Bearbeiter-Gruppen gruppiert.
+*{{displayTeams='true|false'}} Falls {{true}}, werden Mitglieder durch das zugewiesene Team des Trackerobjektes gruppiert. Standard: false
+*{{teamIds='12345,12346'}} Sie können die zu anzeigenden Teams filtern, wodurch die Team IDs in einer Liste durch Kommas getrennt werden. Standard: Alle Teams
+*{{fromDate='2015-01-01' toDate='2015-02-01'}} Optionales Zeitfenster, um nur Vorgänge mit Start-/End-Termin innerhalb dieses Zeitraums zu berücksichtigen. Der Zeitraum ist tagesgenau, das Datum ist im ISO Datumsformat anzugeben.
+*{{displayReleases='true|false'}} Falls auf wahr gesetzt, werden die Tabellendaten über die Releases des aktuellen Projektes (oder der bereitgestellten Projekte) gruppiert. In diesem Fall werden fromDate und toDate ignoriert.
+*{{releaseIds='12345,123'}} Wenn displayReleases gesetzt ist, können Sie nach den zu anzeigenden Releases, über eine komma-getrennte Liste der Release IDs filtern. Standard: Alle Releases des aktuellen Projektes oder bereitgestellten Projektes werden gefiltert.
+
+Beispiele:
+{{{[{ResourcingExtraction}]}}} Zeigt die Anzahl (und Story Points) offener Vorgänge im aktuellen Projekt, gruppiert nach indivuduellem Bearbeiter.
+{{{[{ResourcingExtraction projectIds='12345,12346' displayGroups='true'}]}}} Zeigt die Anzahl (und Story Points) offener Vorgänge im den angegebenen Projekten, gruppiert nach Beabeitern sowie zusätzlich der Benutzer-Gruppe der Bearbeiter.
+{{{[{ResourcingExtraction projectIds='12345,12346' displayGroups='true' groupIds='123,124'}]}}} Zeigt die Anzahl (und Story Points) offener Vorgänge im den angegebenen Projekten, gruppiert nach Beabeitern sowie zusätzlich den beiden angegebenen Bearbeiter-Benutzer-Gruppen.
+{{{[{ResourcingExtraction projectIds='12345,12346' displayTeams='true' teamIds='123,124'}]}}} Zeigt die Anzahl offener Tracker Vorgänge, gruppiert nach Bearbeitern des Projektes und identifiziert nach Projekt ID. Das Ergebnis zeigt die Gruppen mit Teams an (, welche von der bereitgestellten Team ID gefiltert wird).
+{{{[{ResourcingExtraction projectIds='12345,12346' fromDate='2015-01-01' toDate='2015-02-01'}]}}} Zeigt die Anzahl (und Story Points) offener Vorgänge im den angegebenen Projekten an, deren Start-/End-Termin innerhalb des Zeitraums ~[1.1.2015 .. 1.2.2015] liegt.
+
+
+!! Meine offenen Trackereinträge Plugin
+
+Das 'Meine offenen Trackereinträge' Plugin zeigt eine Zusammenfassung der "unerledigten" Vorgänge, die von dem aktuellen Benutzer eingereicht, die ihm zugewiesen sind oder von ihm überwacht werden und den spezifischen Kriterien pro Projekt zusammenpassen.
+
+Parameter:
+*{{title='New title'}} Optionaler Parameter, Sie können den Titel des Plugins modifizieren. Standard: Meine unerledigten Einträge
+
+Beispiele:
+{{{[{MyOpenTrackerItemsPlugin}]}}} Zeigt die "unerledigten" Einträge, die von dem aktuellen Benutzer eingereicht, ihm zugewiesen oder von ihm überwacht werden und den spezifischen Kriterien pro Projekt zusammenpassen.
+{{{[{MyOpenTrackerItemsPlugin title='New title'}]}}} Zeigt das selbe Ergebnis mit einem anderen Titel an: 'Neuer Titel'
+
+!!Tracker Statusübergangs Diagramm Plugin
+
+Das Tracker Statusübergangs Diagramm Plugin zeigt die Arbeitsschritte des Trackers.
+
+Parameter:
+*{{trackerId='1234'}} Die ID des Trackers
+*{{distance='2'}} Der Abstand zwischen aufeinander bezogene Tracker, maximaler Wert ist zwei.
+*{{showObsolete='true|false'}} Zeige veraltete Status
+
+Beispiele:
+{{{[{TrackerStateTransitionChart trackerId='1234'}]}}} zeigt die Arbeitsschritte des Trackers.
+
+!!Trackerklassen Diagramm Plugin
+
+(in CodeBeamer 8.3)
+
+Das Trackerklassen Diagramm Plugin zeigt ein Konfigurationsdiagramm eines Trackers.
+
+Parameter:
+*{{projectId='2'}} Die ID des Projekts, benötigter Parameter
+*{{trackerIds='2732,2733,2762'}} Tracker ID Liste. Diese Tracker werden im generierten Diagramm angezeigt. Optionaler Parameter
+
+Die maximale Anzahl der sichtbaren Tracker ist 30. Falls ein Projekt mehr als 30 Tracker enthält nutzen Sie bitte den trackerIds Parameter um die sichtbaren Tracker zu filtern.
+
+Beispiele:
+{{{[{TrackerClassDiagram projectId='2' trackerIds='1234, 1235,1238'}]}}} Zeigt das Konfigurationsdiagramm des ausgewählten Trackers.
+
+!!! Abfragen
+
+!! Abfrage
+Abfrage Plugin führt eine Abfrage aus und zeigt die Issues in einer Tabelle an.
+
+Parameter:
+*{{id='1234'}} ID der Abfrage
+
+Beispiele:
+{{{[{Query id='9875'}]}}
+
+!! Abfrage (klassisch)
+Abfrage (klassisch) Plugin führt die Abfragen aus und zeigt die Issues an, die durch die Abfrage erfasst werden.
+
+Parameter:
+*{{id='1234'}} ID der Abfrage
+*{{limit='10'}} Optionaler Parameter für die Limitierung der angezeigten Issues
+*Erscheinungsparameter (optional): Höhe, Breite, Rand, Zellenfüllung, Zellenabstand, Hintergrundfarbe, Tabellenklasse, Überschriftenfarbe, Hintergrundfarbe für die Überschrift, Überschriftenklasse, Farbe für die geraden Zeilen, Hintergrund für die geraden Zeilen, Klasse für die geraden Zeilen, Farbe für die ungeraden Zeilen, Hintergrund für die ungeraden Zeilen, Klasse für die ungeraden Zeilen.
+
+Beispiele:
+{{{[{Report id='9875'}]}}} führt die Abfrage mit dem Kennzeichen 9875 aus und zeigt die Issues an, die durch die Abfrage erfasst werden.
+{{{[{Report id='9875' limit='10'}]}}} führt die Abfrage mit dem Kennzeichen 9875 aus und zeigt die ersten 10 Issues an, die durch die Abfrage erfasst werden.
+
+
+!! Vorgangs-Status-Historie
+Zeigt die Status-Historie eines Vorgangs an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{id}}        |nein   |Die Vorgangs-Nr./Id
+|{{showHeader}}|ja     |Soll eine Kopfzeile mit der Vorgangsbezeichnung angezeigt werden: {{true~|false}}. Falls nicht angegeben: {{true}}.
+
+Beispiel:\\
+{{{
+[{TrackerItemStateHistory id='1000' showHeader='true'}]
+}}}
+
+
+!! Tracker Konfigurations Historien Audit Log Plugin
+{{{[{TrackerHistoryAuditTrailPlugin}]}}}
+Zeigt die Konfigurationshistorie für einen oder mehrere Tracker in einem bestimmtem Projekt. Die Historie enthält generelle Tracker Änderungen, Feld bezogene Änderungen und Änderungen an Statusübergängen. Dieses Plugin ist außerdem nützlich zur Überprüfung von erstellten Baselines und den Workflow Diagrammen einer Baseline.
+
+\\
+Optionalale Parameter:
+ * {{projectId='100'}} Optionaler Parameter der die numerische ID eines Projekts enthält. Ist nur im Kontext eines Projektes optional.
+ * {{trackerIds='10001,10002'}} Optionaler Parameter mit einer Kommaseparierten Liste von Tracker IDs. Wenn dieser Parameter nicht angegeben wird werden standardmäßig alle Projekte ausgewählt.
+ * {{showFieldChanges='true'}} Bestimmt, ob Feldänderungen angezeigt werden.
+ * {{showWorkflowChanges='true'}} Bestimmt, ob Workflow Änderungen angezeigt werden.
+ * {{showBaselineEntries='true'}} Bestimmt, ob Baselineeinträge in dir Änderungshistorie inbegriffen sind.
+ * {{showHiddenTrackers='true'}} Bestimmt, ob auch versteckte Tracker angezeigt werden.
+ * {{showTransitionDiagrams='true'}} Bestimmt, ob Übergangsdiagramme angezeigt werden.
+ * {{showPermissions='true'}} Bestimmt, ob die gegenwärtigen Berechtungseinstellungen aufgelistet werden.
+ * {{startBaseline='20000'}} Eine optionale Baseline ID. Nur Änderungen nach dem Erstellungsdatum der Baseline werden angezeigt.
+ * {{endBaseline='30000'}} Eine optionale Baseline ID. Nur Änderungen vor dem Erstellungsdatum der Baseline werden angezeigt.
+ * {{sorting='name'}} Bestimmt, nach welchem Wert die Tracker sortiert werden. Mögliche Werte sind 'type', 'name', 'lastmodified', 'key' und 'priority'. Standardwert ist 'type'.
+ * {{types='Bugs,Requirements,Test Cases'}} Filter zur Anzeige der Bug/Requirement/Test Cases Tracker des gegenwärtigen Projekts. Nur diese Trackertypen werden angezeigt. Achtung: Dieser Parameter kann nicht zusammen mit dem trackerIds Parameter verwendet werden. Es können die Trackertyp Namen, so wie sie in der Oberfläche erscheinen, genutzt werden. Die Angabe muss in englischer Sprache erfolgen, es können also "Bug" oder "Bugs" als Filter, nicht aber "Fehler" verwendet werden.
+
+Beispiele:
+{{{[{TrackerHistoryAuditTrailPlugin trackerIds='10001' showWorkflowChanges='true' showTransitionDiagrams='true'}]}}}
+zeigt Workflow Änderungen und Übergangsdiagramme für genau einen Tracker.
+{{{[{TrackerHistoryAuditTrailPlugin trackerIds='10001,10002' showFieldChanges='true' showBaselineEntries='true' startBaseline='20000'}]}}}
+zeigt Feldänderungen inklusive Baselineeinträge für die zwei angegebenen Tracker; nur Änderungen die nach einer bestimmten Baseline erstellt wurden werden angezeigt.
+
+
+!!! Quellcode
+
+
+!! Quellcode Statistik
+Zeigt Statistiken über den Quellcode in einem Projekt.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{projectId}} |ja     |Projekt Id/Nr. Falls nicht angegeben wird das aktuelle Projekt verwendet.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{cssClass}}  |ja     |CSS Klasse für für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Beispiele:
+{{{[{SourceCodeSummary}]}}} zeigt die Quellcode Statistik des aktuellen Projekts.\\
+{{{[{SourceCodeSummary projectId='2'}]}}} zeigt die Quellcode Statistik für das Projekt mit der Nr. 2.
+
+
+!! Quellcode Änderungen
+{{{[{CommitStatistics}]}}} zeigt eine Übersicht über die Quellcode Änderungen im aktuellen Projekt.\\
+{{{[{CommitStatistics projectId='2' layout='column'}]}}} zeigt eine Übersicht über die Quellcode Änderungen im Projekt mit der Nr. 2.
+
+
+!! Quellcode-Änderungs-Trend
+Zeigt die Anzahl von Quellcode Änderungen pro Kalendereinheit über den angegebenen Zeitraum an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{projectId}} |ja     |Komma-separierte Liste von Projekt-Nr./Ids. Falls nicht angegeben: Aktuelles Projekt.
+|{{period}}    |ja     |Betrachtungszeitraum im Format: {{~[{Past~|Last~|This}~] ~[x~] {day~|week~|month~|quarter~|year}~[s~]}}\\Falls nicht angegeben: {{Past 30 days}}\\Der Betrachtungszeitraum in {{Anzahl}} Kalender-Tage/Wochen/Monate/Quartale/Jahre ist immer relativ zum aktuellen Datum, und ist entweder der aktuelle Tag/Monat/Woche/Quartal/Jahr (z.B. {{'This month'}}), oder umfasst die angegebene Anzahl Tage/Wochen/Monate/Quartale/Jahre direkt vor (z.B. {{'Past 7 days'}}) oder einschließlich (z.B. {{'Last 6 weeks'}}) dem aktuellen Tag/Woche/Monat/Woche/Quartal/Jahr.
+|{{grouping}}  |ja     |Granularität der Anzeige: {{daily~|weekly~|monthly}}. Falls nicht angegeben: {{daily}}.
+|{{display}}   |ja     |Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+|{{title}}     |ja     |Der anzuzeigende Titel.
+|{{tooltip}}   |ja     |Der anzuzeigende Text für die Kurzinfo.
+|{{width}}     |ja     |Die Breite des Diagramms in Pixeln. Falls nicht angegeben: 400 Pixel.
+|{{height}}    |ja     |Die Höhe des Diagramms in Pixeln. Falls nicht angegeben: 200 Pixel.
+|{{cssClass}}  |ja     |CSS Klasse für den anzuzeigenden Rahmen.
+|{{cssStyle}}  |ja     |CSS Formatierung für für den anzuzeigenden Rahmen.
+
+Beispiele:\\
+Zeige die Anzahl Quellcode Änderungen pro Tag für die vergangenen 30 Tage:
+{{{
+[{CommitTrends}]
+}}}
+\\
+Zeige die Anzahl Quellcode Änderungen pro Monat für das aktuelle Jahr, sowohl als Diagramm als auch tabellarisch:
+{{{
+[{CommitTrends projectId='4,5' period='This year' grouping='Weekly' title='Quellcode Änderungen in diesem Jahr (pro Monat)' display='both'}]
+}}}
+
+
+!! Vorgänge mit Quellcode-Änderungen
+Das CommittedIssues Plugin listet Vorgänge, zu denen Quellcode-Änderungen existieren.
+
+Parameter:
+
+*{{repositoryId='1'}} Komma-separierte Liste von Repository-Ids.
+*{{max='20'}} Es werden nur maximal soviele Vorgänge mit Quellcode-Änderungen angezeigt, und zwar diejenigen mit den neuesten Änderungen.
+*{{startDate='2011-06-21 11:00' endDate='2011-06-21 12:00'}} Optional: Eingrenzung des Zeitbereichs der Quellcode-Änderungen über Datum/Uhrzeit
+*{{startRevision='rev12' endRevision='rev33'}} Optional: Eingrenzung des Zeitbereichs der Quellcode-Änderungen über Repository-Versionen.
+*{{branchOrTag='branch-name'}} Optional: Nur Quellcode-Änderungen auf dem angegebenen Branch oder Tag berücksichtigen.
+*{{title='any-text'}} Optional: Der anzuzeigende Titel der Ergebnistabelle
+*{{cssClass='class-name'}} Optional: CSS Style Klasse für die Anzeige
+*{{cssStyle='css-rules'}} Optional: CSS Style Definitionen für die Anzeige
+
+Beispiele:
+{{{[{CommittedIssues repositoryId='1'}]}}} Zeigt die Vorgänge, zu den letzten 20 Quellcode-Änderungen im aktuellen Projekt.
+{{{[{CommittedIssues repositoryId='4,5' title='Vorgänge mit Quellcode-Änderungen im Repository A und B' }]}}} Zeigt die Vorgänge zu den letzten Änderungen im Repository A und B.
+
+
+!!! Versionskontrolle
+
+
+!! Pull Requests Plugin
+
+Dieses Plugin zeigt die offenen Pull-Requests, die Sie entweder selbst erstellt haben, oder die Ihnen zugewiesen sind.
+Sie können nach Projekten oder Repositories filtern. Standardmässig werden all Ihre Pull-Requests in allen Ihnen zugänglichen Repositories gelistet.
+
+Parameter:
+* {{projectId='15,23'}} Optional. Komma-separierte Liste von Projekt-Ids. Es werden Pull-Requests von allen Ihnen zugänglichen Repositories in diesen Projekten gelistet.
+* {{repositoryId='47,66,82'}} Optional. Komma-separierte Liste von Repository-Ids.
+
+
+!!! Anforderungsmanagement
+
+!! Anforderungsabdeckung
+
+Dieses Plugin zeigt ein Histogramm der Abdeckung der angegebenen Anforderungen durch Testfälle. Die Länge der Balken repräsentiert dabei die Anzahl der Testfälle pro Anforderung,
+insbesondere zu welchen Testfällen überhaupt keine Testfälle definiert sind.
+
+Parameter:
+* {{id='1'}} Optional: Projekt-Id. Zeige Abdeckung aller Anforderungen in diesem Projekt.
+* {{trackerId='1001,1002'}} Optional. Komma-separierte Liste von Anforderungs-Trackern, um nur Anforderungen aus diesen Trackern anzuzeigen.
+* {{display ='chart|table|both'}} Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+
+Beispiele:
+{{{[{RequirementCoverage}]}}} Zeige die Testabdeckung aller Anforderungen im aktuellen Projekt.
+{{{[{RequirementCoverage projectId='1'}]}}} Zeige die Testabdeckung aller Anforderungen im Projekt mit Id 1.
+{{{[{RequirementCoverage trackerId='1001,1002'}]}}} Zeige die Testabdeckung aller Anforderungen in den Trackern 1001 und 1002.
+
+
+!!! Test Management
+
+
+!! Letzte Testergebnisse
+
+Dieses Plugin zeigt ein Kuchendiagramm, mit der Verteilung der Testergebnisse der jeweils letzten Testläufe zu einem Satz von Testfällen.
+Jedes Kuchenstück repräsentiert den Anteil der jeweils erfolgreichen, fehlgeschlagenen, blockierten oder nicht gelaufenen Tests an der Anzahl der insgesamt durchgeführten Tests.
+
+Parameter:
+* {{id='1'}} Zeige die Verteilung der letzten Testergebnisse aller Testläufe im angegebenen Projekt
+* {{trackerId='1001,1002'}} Optional: Zeige die Verteilung der letzten Testergebnisse aller Testläufe zu den Testfällen in den angegebenen Trackern.
+* {{display ='chart|table|both'}} Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+
+Beispiel:
+{{{[{TestCasesByLastRunResult}]}}} Zeige die Verteilung der letzten Testergebnisse aller Testläufe im aktuellen Projekt
+
+
+!! Testläufe pro Testumgebung
+
+Zeigt ein Balkendiagramm mit der Gesamtzahl aller Testläufe zu den angegebenen Testumgebungen
+
+Parameter:
+* {{id='1'}} Zeige die Anzahl der Testläufe zu allen im dem angegebenen Projekt definierten Testumgebungen.
+* {{display ='chart|table|both'}} Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+* {{build}} Optional. Eingrenzung der Kalkulation der Testläufe über die angegebene Buildnummer.
+* {{statusFilter ='all|accepted|in progress'}} Optional. Eingrenzung der Kalkulation der Testläufe über den angegebenen Status der Testfälle. Falls nincs angegeben: 'all' (keine Ergrenzung).
+* {{releaseId='1'}} Optional. Eingrenzung der Kalkulation der Testläufe über das angegebene Release. Sprints des Releases werden nicht in der Kalkulation gezählt.
+
+Beispiel:
+{{{[{TestRunsByConfiguration}]}}} Zeige die Anzahl der Testläufe zu allen im aktuellen Projekt definierten Testumgebungen
+
+
+!! Testläufe pro Testablauf
+
+Zeigt ein Balkendiagramm mit der Gesamtzahl aller Testläufe zu den angegebenen Testabläufen. Die Pluginfilter berücksichtigen nur das Standard Testablauf Tracker.
+
+Parameter:
+* {{id='1'}} Zeige die Anzahl der Testläufe zu allen im dem angegebenen Projekt definierten Testabläufen.
+* {{trackerId='1001,1002'}} Optional. Komma-separierte Liste von __Testablauf__ Trackern, um nur die Anzahl der Testläufe zu den Testabläufen in diesen Trackern anzuzeigen.
+* {{display ='chart|table|both'}} Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+* {{testRunTrackerId='1'}} Optional. Eingrenzung der Kalkulation über das angegebene Testläufe Tracker.
+
+Beispiel:
+{{{[{TestRunsByTestSet}]}}} Zeige die Anzahl der Testläufe zu allen im aktuellen Projekt definierten Testabläufe
+
+
+!! Testläufe pro Tester
+Zeigt ein Balkendiagramm mit der Gesamtzahl aller Testläufe zu den angegebenen Testabläufen, aufgeschlüsselt nach Tester (Test Durchführer). Die Pluginfilter berücksichtigen nur das Standard Testlauf Tracker.
+
+Parameter:
+* {{id='1'}} Zeige die Anzahl der Testläufe pro Tester, zu allen im dem angegebenen Projekt definierten Testabläufen.
+* {{testRunTrackerId='1001'}} Optional. Komma-separierte ID Liste von __Testläufe__ Trackern.
+* {{display ='chart|table|both'}} Grafische und/oder tabellarische Darstellung: {{chart~|table~|both}}. Falls nicht angegeben: {{chart}}.
+* {{showInactiveUsers='false|true'}} Optional. Falls true, Statistik wird die inaktivierte Benutzer enthalten. Falls nicht angegeben: false.
+
+Beispiel:
+{{{[{TestRunsByAssignee}]}}} Zeige die Anzahl der Testläufe pro Tester zu allen im aktuellen Projekt definierten Testabläufe
+
+
+!!! Personenbezogener Inhalt
+Die hier vorgestellten Plugins, sind primär für die Verwendung auf den persönlichen Benutzer-Wikiseiten vorgesehen.
+
+
+!! Benutzerprofil
+Zeigt das Profil des angegebenen Benutzers an.
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{id}}        |ja     |Die Benutzer-Nr./Id
+|{{name}}      |ja     |Der Benutzer-Name
+
+Beispiele:\\
+Zeigt das Profil des aktuell angemeldeten Benutzers an:
+{{{
+[{UserProfile}]
+}}}
+Zeigt das Profil des angegebenen Benutzers an:
+{{{
+[{UserProfile id='12'}]
+[{UserProfile name='john.doe'}]
+}}}
+
+
+!! Meine Vorgänge
+Zeigt eine summarische Übersicht über die (unerledigten) Vorgänge, bei denen der aktuelle Benutzer der Ersteller, Eigentümer oder Bearbeiter ist.\\
+Es werden nur Vorgänge aus den Projekten der unter {{Projekte -> Projektauswahl}} eingestellten Projektgruppe berücksichtigt.
+
+||Parameter            ||Option||Inhalt und Bedeutung
+|{{title}}              |ja     |Die anzuzeigende Titelzeile
+|{{show}}               |ja     |Berücksichtige nur Vorgänge mit diesem Status: {{Any status~|Open~|Closed~|Resolved~|Unresolved~|Successful~|Unsuccessful}}\\Falls nicht angegeben: {{Unresolved}}
+|{{onlyDirectUserItems}}|ja     |Sollen nur direkt dem Benutzer zugeordnete Vorgänge berücksichtigt werden ({{true}})), oder auch indirekt über Rollen zugeordnete Vorgänge ({{false}}).\\Falls nicht angegeben: {{true}}
+|{{showNewIssue}}       |ja     |Soll ein Verweis angezeigt werden, über den man direkt neue Vorgänge anlegen kann: {{true~|false}}   Falls nicht angegeben: {{false}}
+
+Beispiele:\\
+Zeigt eine summarische Übersicht aller erfolgreich erledigten Vorgänge, bei denen der aktuelle Benutzer direkt oder indirekt beteiligt ist/war:
+{{{
+[{MyIssueSummary show='Successful' onlyDirectUserItems='false'}]
+}}}
+Zeigt eine summarische Übersicht der offenen Vorgänge, bei denen der aktuelle Benutzer direkt zugeordnet ist:
+{{{
+[{MyIssueSummary show='Open' onlyDirectUserItems='true'}]
+}}}
+
+
+!! Meine aktuellen Vorgänge
+Dieses Plugin zeigt die unerledigten Vorgänge des aktuellen Benutzers, absteigend sortiert nach Priorität und Zeitpunkt der letzten Änderung.
+
+Parameter:
+*{{title='My Linux Issues'}}: Optionaler Parameter, um den Standardtitel zu überschreiben.
+*{{projectId='1,33'}}: Optionaler Parameter, der die Komma-getrennten IDs aus den Projekten spezifiziert, um die Issues daraus zu sammeln.
+*{{trackerId='44,55'}}: Optionaler Parameter, der die Komma-getrennten IDs aus den Trackern spezifiziert, um die Issues daraus zu sammeln.
+*{{releaseId='1245,5389'}}: Optionaler Parameter, der die Komma-getrennten IDs aus den Releases/Sprints spezifiziert, um die Issues daraus zu sammeln.
+*{{tag='mysql,#runtime'}}: Optionaler Parameter, der spezifiziert, welche Issues mit deren einschließenden Projekte oder deren Tracker mit einem Tag markiert werden soll. (Nur die Issues werden mit diesen Tags markiert. Erledigte oder geschlossene Issues werden in der Ergebnisliste nicht eingeschlossen.) Hinweis: Benutzen Sie "#Starred“, um Ihre Issues mit einem Stern zu versehen.
+*{{onlyIssuesAssignedToMe='true|false'}}: Optionaler boolescher Parameter. Wenn der Parameter auf true oder false gesetzt wird, werden nur die Issues angezeigt, die einem aktuellen Bearbeiter (bei false -> die nicht einem aktuellen Bearbeiter) zugewiesen sind. Wenn der „tag" Parameter vorhanden ist, wird der Standard auf „false“ gesetzt, wodurch alle Issues unabhängig vom Bearbeitungsstatus angezeigt werden.
+
+Bemerkung: Nur eine oder keine der Parameter {{projectId}}, {{trackerId}}, {{releaseId}} oder {{tag}} kann verwendet werden.
+
+Beispiele:
+{{{[{MyCurrentIssues}]}}} zeigt nur die eigenen offenen Issues in dem aktuellen Projekt an.
+{{{[{MyCurrentIssues projectId='11,27'}]}}} zeigt die offenen Issues in diesen Projekten an.
+{{{[{MyCurrentIssues releaseId='1396'}]}}} zeigt die offnen Issues in dem Release/Sprint an.
+{{{[{MyCurrentIssues tag='mysql,#runtime'}]}}} zeigt die offnen Issues an, die entweder mit einem öffentlichen Tag {{mysql}} oder privaten Tag {{runtime}} haben. Zusätzlich werden alle offenen Issues in Projekten oder Trackern, die mit einem der zwei Tags markiert wurden, inkludiert.
+{{{[{MyCurrentIssues title='My Starred Issues' tag='#Starred'}]}}} zeigt nur die offenen Issues, versehen mit einem Stern an.
+
+
+!! Meine Abonnements
+Zeigt summarisch an, wieviele Tracker und Foren der aktuelle Benutzer abonniert hat.
+{{{
+[{MySubscriptions}]
+}}}
+
+
+!! Meine Reviews
+Zeigt eine Liste mit den Reviews für den aktuellen Benutzer an
+
+Parameter:
+* {{showOnlyOpenReviews='false|true'}}: Optional. Sollen nur offene Reviews angezeigt werden (true) oder alle Reviews des Benutzers (false). Default ist 'false' (alle).
+* {{showOnlyCurrentProjectRelatedReviews='false|true'}}: Optional. Sollen nur Reviews für Vorgänge im aktuellen Projekt angezeigt werden (true), oder alle Reviews (false). Default ist 'false' (alle).
+
+{{{[{MyReviews}]}}} **displays the all reviews for me.
+{{{[{MyReviews showOnlyOpenReviews='true'}]}}} **displays all open reviews for me.
+{{{[{MyReviews showOnlyOpenReviews='true' showOnlyCurrentProjectRelatedReviews='true'}]}}} **displays open and which have work items related to the current project reviews for me.
+
+!!! Agiler Inhalt
+
+Agile Plugins funktionieren sowohl mit Releases und Sprints (sofern Sie agil arbeiten), als auch mit Releases und Unter-Releases (sofern Sie nicht agil arbeiten). Sie können die IDs der Releases, Sprints oder Unter-Releases weiterreichen, indem Sie den {{releaseId}} Parameter verwenden.
+Wenn das dazugehörige Release oder Sprint Kinder (weitere Sprints, Unter-Releases, Unter-Sprints) besitzt, werden sämtliche Themen in den Kindern rekursiv durch diese Plugins bearbeitet.
+
+!! Burn Down Chart Plugin
+{{{[{BurnDownChart releaseId='1000' showBurnDown='false' showVelocity='false' showNew='false'}]}}} \\
+Zeigt den [Burndown Chart|http://en.wikipedia.org/wiki/Burn_down_chart] basierend auf den offenen Vorgängen eines Releases oder Sprints an. Der Burndown Chart kann nach Teams gefiltert werden
+
+Parameters:
+* {{releaseId='1000'}} (optional) ID des Sprints. Wenn die ID weggelassen wird, erprobt das Plugin einen Anlauf, um den aktiven Sprint zu schätzen.
+* {{team='no|12345'}} (optional) Team ID oder 'no‘, wenn alle Issues ohne Teams zählen sollen.
+* {{showBurnDown='false'}} (optional) Zeigt an, ob die Burndown Linie angezeigt werden soll oder nicht. Standard auf true.
+* {{showVelocity='false'}} (optional) Zeigt die Geschwindigkeit (Anzahl der bearbeiteten Issues) pro Tag an. Standard auf false.
+* {{showNew='false'}} (optional) Zeigt die Anzahl der Issues, welche einem Sprint pro Tag hinzugefügt werden. Standard auf false.
+* {{dataSource='numberOfItems'}} (optional) Welcher Wert soll angezeigt werden: 'storyPoints' oder 'numberOfItems'. Standard ist 'storyPoints'.
+* {{applyProjectCalendar='false'}} ** (optional) When set to true the chart show values only for work days defined in the Working Calendar.
+* {{showIdealLine='false'}} ** (optional) Whether to display the ideal work remaining line. The applyProjectCalendar parameter also affects the ideal line; it renders straight segment for leisure days.
+
+!! Burn Up Chart Plugin
+{{{[{BurnUpChart releaseId='1000'}]}}} \\
+** Burn up chart shows the number of resolved/closed and the total number of Work Items over time. This chart type is useful to visualize the effect of scope changes. Supported from 9.3.0.
+
+Parameters:
+* {{releaseId='1000'}} (optional) ID des Sprints. Wenn die ID weggelassen wird, erprobt das Plugin einen Anlauf, um den aktiven Sprint zu schätzen.
+* {{team='no|12345'}} (optional) Team ID oder 'no‘, wenn alle Issues ohne Teams zählen sollen.
+* {{dataSource='numberOfItems'}} ** (optional) What data point should be used.  Defaults to numberOfItems. Possible values: storyPoints, numberOfItems and both.
+* {{applyProjectCalendar='false'}} ** (optional) When set to true the chart show values only for work days defined in the Working Calendar.
+
+!! Bubble Visualisierungs-Plugin
+{{{[{BubbleVisualization}]}}} \\
+Zeigt den [bubble chart|http://en.wikipedia.org/wiki/bubble_chart] an.
+
+!! Velocity Trends Plugin
+{{{[{VelocityTrends releaseId='1000'}]}}} \\
+Zeigt den veränderten [velocity|http://en.wikipedia.org/wiki/Velocity_(software_development)] im Zeitablauf für einen Release oder Sprint an. Geschwindigkeit ist essenziell für die Anzahl der erfolgreich abgeschlossenen Issues pro Tag. Möglichkeit nach Teams zu filtern.
+
+Parameter:
+* {{releaseId='1000'}} (optional) ID des Sprints. Wenn die ID weggelassen wird, erprobt das Plugin einen Anlauf, um den aktiven Sprint zu schätzen.
+* {{team='no|12345'}} (optional) Team ID oder 'no‘, wenn alle Issues ohne Teams zählen sollen.
+* {{dataSource='numberOfItems'}} (optional) Welcher Wert soll angezeigt werden: 'storyPoints' oder 'numberOfItems'. Standard ist 'storyPoints'.
+
+!! Sprint Break Down Plugin
+{{{[{SprintBreakDown releaseId='1000'}]}}} \\
+Zeigt die Statusverteilung der Issues in einem Release oder Sprint an. Dieses Plugin gibt einen schnellen und einen Überblick über den Statusfortschritt.
+
+Parameter:
+* {{releaseId='1000'}} (optional) ID des Sprints. Wenn die ID weggelassen wird, erprobt das Plugin einen Anlauf, um den aktiven Sprint zu schätzen.
+* {{teams='all|12345,12346'}} (optional) Komma-getrennte Team ID Liste um das Ergebnis, identifiziert anhand der ID, nach Team zu filtern.
+
+!! Aktuelle Velocity Plugin
+{{{[{CurrentVelocity releaseId='1000'}]}}} \\
+Zeigt die [velocity|http://en.wikipedia.org/wiki/Velocity_(software_development)] der letzten bekannten Tage innerhalb eines Releases oder Sprints an. \\
+Typischerweise ist das die Velocity von gestern, aber am Montag kann die Velocity vom letzten Freitag sein. Möglichkeit nach Teams zu filtern.
+
+Parameter:
+* {{releaseId='1000'}} (optional) ID des Sprints. Wenn die ID weggelassen wird, erprobt das Plugin einen Anlauf, um den aktiven Sprint zu schätzen.
+* {{team='no|12345'}} (optional) Team ID oder 'no‘, wenn alle Issues ohne Teams zählen sollen.
+* {{dataSource='numberOfItems'}} (optional) Welcher Wert soll angezeigt werden: 'storyPoints' oder 'numberOfItems'. Standard ist 'storyPoints'.
+
+!! Verbleibende Zeit Plugin
+{{{[{RemainingTime releaseId='1000'}]}}} \\
+Zeigt die Nummer der übrigen Trage bis zum Ende (geplantes Releasedatum) eines Releases oder Sprints. Releases und Sprints sind in der agilen Welt strikt und zeit-verpackt, so dass diese Information ausschlaggebend ist.
+
+Parameter:
+* {{releaseId='1000'}} (optional) ID des Sprints. Wenn die ID weggelassen wird, erprobt das Plugin einen Anlauf, um den aktiven Sprint zu schätzen.
+* {{applyProjectCalendar='false'}} ** (optional) When set to true the chart show values only for work days defined in the Working Calendar.
+
+!! Release Stats Plugin
+{{{[{ReleaseStats releaseId='1000'}]}}} \\
+Zeigt die Statistik Informationen eines Releases, welches der Statistik für Anzahl und Fortschritt in der Release Statistik Seite ähnelt.
+
+Parameter:
+* {{releaseId='1000'}} (optional) Die ID der Releases/Sprints, die angezeigt werden soll. Wenn dieser Parameter fehlt, erprobt das Plugin einen Anlauf, um den aktiven Sprint zu schätzen
+* {{project='Demo Project'}} (optional) Name des Projektes. Wenn angegeben, werden nur Issues/Item in diesem Projekt gezählt
+* {{assignedTo='zluspai'}} (optional) Name des Users, dessen Issues gezählt werden sollen
+* {{team='Test Team'}} (optional) Name des Teams, für die die Statistik angezeigt werden soll
+* {{priority='High'}} (optional) Name der Priorität. Einzig die Items mit dieser Priorität werden angezeigt
+* {{type='Bug'}} (optional) Issue Typen werden danach gefiltert
+* {{open='true'}} (optional) Wenn vorhanden, werden nur die offenen Issues gezählt
+
+
+!!! Graphen
+
+!!Allgemein
+
+! Hierarchischer Graph (horizontale Ausbreitung)
+
+{{{
+[{ HorizontalGraph title='Abhängigkeiten'
+
+(Action class[:color:red]
+	(ProjectManager[Service layer][:color:#009900][:background:#DDFFDD]
+		(ProjectDao[Persistence Layer][:color:#3C78B5][:background:#D8E4F1])
+		(Security[ACL][:color:#3C78B5][:background:#D8E4F1])
+	)
+	(ArtifactManager[Service layer][:color:#009900][:background:#DDFFDD]
+		(ArtifactDao[Persistence Layer][:color:#3C78B5][:background:#D8E4F1]
+			(File System[:color:#777777][:background:#DDDDDD])
+			(RDBMS[:color:#777777][:background:#DDDDDD])
+		)
+		(Security[ACL][:color:#3C78B5][:background:#D8E4F1])
+	)
+)
+}]
+}}}
+
+[{ HorizontalGraph title='Abhängigkeiten'
+
+(Action class[:color:red]
+	(ProjectManager[Service layer][:color:#009900][:background:#DDFFDD]
+		(ProjectDao[Persistence Layer][:color:#3C78B5][:background:#D8E4F1])
+		(Security[ACL][:color:#3C78B5][:background:#D8E4F1])
+	)
+	(ArtifactManager[Service layer][:color:#009900][:background:#DDFFDD]
+		(ArtifactDao[Persistence Layer][:color:#3C78B5][:background:#D8E4F1]
+			(File System[:color:#777777][:background:#DDDDDD])
+			(RDBMS[:color:#777777][:background:#DDDDDD])
+		)
+		(Security[ACL][:color:#3C78B5][:background:#D8E4F1])
+	)
+)
+}]
+
+! Hierarchischer Graph (vertikale Ausbreitung)
+
+{{{
+[{ VerticalGraph title='Klassen Hierarchie'
+
+(BaseDao[Each Dao must extend this][:color:red]
+	(EntityDao[Persists entities][:color:#009900][:background:#DDFFDD]
+		(ArtifactDao[:color:#3C78B5][:background:#D8E4F1]
+			(Documents[:color:#777777][:background:#DDDDDD])
+			(Wiki pages[:color:#777777][:background:#DDDDDD])
+		)
+		(ProjectDao[:color:#3C78B5][:background:#D8E4F1])
+		(UserDao[:color:#3C78B5][:background:#D8E4F1])
+	)
+	(TemporalDao[Persists timestamped entities][:color:#009900][:background:#DDFFDD]
+		(ArtifactSample[:color:#3C78B5][:background:#D8E4F1])
+		(IssueSample[:color:#3C78B5][:background:#D8E4F1])
+	)
+)
+}]
+}}}
+
+[{ VerticalGraph title='Klassen Hierarchie'
+
+(BaseDao[Each Dao must extend this][:color:red]
+	(EntityDao[Persists entities][:color:#009900][:background:#DDFFDD]
+		(ArtifactDao[:color:#3C78B5][:background:#D8E4F1]
+			(Documents[:color:#777777][:background:#DDDDDD])
+			(Wiki pages[:color:#777777][:background:#DDDDDD])
+		)
+		(ProjectDao[:color:#3C78B5][:background:#D8E4F1])
+		(UserDao[:color:#3C78B5][:background:#D8E4F1])
+	)
+	(TemporalDao[Persists timestamped components][:color:#009900][:background:#DDFFDD]
+		(ArtifactSample[:color:#3C78B5][:background:#D8E4F1])
+		(IssueSample[:color:#3C78B5][:background:#D8E4F1])
+	)
+)
+}]
+
+! Gerichteter Azyklischer Graph
+
+{{{
+[{ DirectedAcyclicGraph title='Project Steps'
+
+(
+(Separate Tasks[:status:done][:color:#777777][:background:#DDDDDD])
+(Develop Business Core[:depend:Separate Tasks][:color:red])
+(Develop Web Frontend[:depend:Separate Tasks][:status:done][:color:#777777][:background:#DDDDDD])
+(Deploy Components[:depend:Develop Business Core][:depend:Develop Web Frontend][:color:#009900][:background:#DDFFDD])
+(Milestone[:depend:Develop Business Core][:date:2.14.2006])
+)
+}]
+}}}
+
+[{ DirectedAcyclicGraph title='Project Steps'
+
+(
+(Separate Tasks[:status:done][:color:#777777][:background:#DDDDDD])
+(Develop Business Core[:depend:Separate Tasks][:color:red])
+(Develop Web Frontend[:depend:Separate Tasks][:status:done][:color:#777777][:background:#DDDDDD])
+(Deploy Components[:depend:Develop Business Core][:depend:Develop Web Frontend][:color:#009900][:background:#DDFFDD])
+(Milestone[:depend:Develop Business Core][:date:2.14.2006])
+)
+}]
+
+! Explorer Graph
+
+{{{
+[{ ExplorerGraph title='Dependencies'
+
+(My Project[:color:red]
+	(Microkernel[POJO wiring][:color:#009900][:background:#DDFFDD]
+		(Spring IoC[Lightweight container][:color:#3C78B5][:background:#D8E4F1])
+	)
+	(Persistence[RDBMS access][:color:#009900][:background:#DDFFDD]
+		(Hibernate[ORM mapping][:color:#3C78B5][:background:#D8E4F1]
+			(EHCache[Entity caching][:color:#777777][:background:#DDDDDD])
+		)
+		(Spring AOP[Templates and transactions][:color:#3C78B5][:background:#D8E4F1])
+	)
+)
+}]
+}}}
+
+[{ ExplorerGraph title='Dependencies'
+
+(My Project[:color:red]
+	(Microkernel[POJO wiring][:color:#009900][:background:#DDFFDD]
+		(Spring IoC[Lightweight container][:color:#3C78B5][:background:#D8E4F1])
+	)
+	(Persistence[RDBMS access][:color:#009900][:background:#DDFFDD]
+		(Hibernate[ORM mapping][:color:#3C78B5][:background:#D8E4F1]
+			(EHCache[Entity caching][:color:#777777][:background:#DDDDDD])
+		)
+		(Spring AOP[Templates and transactions][:color:#3C78B5][:background:#D8E4F1])
+	)
+)
+}]
+
+
+
+!! Mindmap
+
+{{{
+[{MindMapGraph title='New version'
+
+(New version[:color:red]
+	(New features[:color:#009900][:background:#DDFFDD]
+		(RDBMS agnostic persistence[Vendor independence][:color:#3C78B5][:background:#D8E4F1]
+			(Oracle support[:color:#777777])
+			(PostgreSQL support[:color:#777777])
+		)
+		(JCR support[Java Content Repository][:color:#3C78B5][:background:#D8E4F1])
+		(Portlet interface[:color:#3C78B5][:background:#D8E4F1])
+	)
+	(Enhanced features[:color:#009900][:background:#DDFFDD]
+		(Reporting[:color:#3C78B5][:background:#D8E4F1]
+			(Visuals[Charts and graphs][:color:#777777])
+			(Performance improvements[:color:#777777])
+		)
+	)
+)
+}]
+}}}
+
+[{MindMapGraph title='New version'
+
+(New version[:color:red]
+	(New features[:color:#009900][:background:#DDFFDD]
+		(RDBMS agnostic persistence[Vendor independence][:color:#3C78B5][:background:#D8E4F1]
+			(Oracle support[:color:#777777])
+			(PostgreSQL support[:color:#777777])
+		)
+		(JCR support[Java Content Repository][:color:#3C78B5][:background:#D8E4F1])
+		(Portlet interface[:color:#3C78B5][:background:#D8E4F1])
+	)
+	(Enhanced features[:color:#009900][:background:#DDFFDD]
+		(Reporting[:color:#3C78B5][:background:#D8E4F1]
+			(Visuals[Charts and graphs][:color:#777777])
+			(Performance improvements[:color:#777777])
+		)
+	)
+)
+}]
+
+!! Weitere
+
+Sie finden weitere Beispiele auf der ImageGen [Plugin Webseite|http://www.ecyrd.com/JSPWiki/wiki/ImageGen].
+
+
+!!! Diagramme
+
+
+!! Allgemein
+
+! Gantt Diagramm
+
+{{{
+[{ GanttChart title='Development Project Plan' yaxislabel='Phases'
+
+:Name|String, Start|Month, End|Month, Percentage
+Coding
+* 'Design', 3-2006, 4-2006, 0.7
+* 'Implementation', 4-2006, 6-2006, 0
+
+Testing
+* 'Test case planning', 4-2006, 5-2006, 1.0
+
+Coding
+* 'Integration testing', 5-2006, 6-2006, 0.1
+
+Testing
+* 'Test execution', 6-2006, 8-2006, 0
+}]
+}}}
+
+[{ GanttChart title='Development Project Plan' yaxislabel='Phases'
+
+:Name|String, Start|Month, End|Month, Percentage
+Coding
+* 'Design', 3-2006, 4-2006, 0.7
+* 'Implementation', 4-2006, 6-2006, 0
+
+Testing
+* 'Test case planning', 4-2006, 5-2006, 1.0
+
+Coding
+* 'Integration testing', 5-2006, 6-2006, 0.1
+
+Testing
+* 'Test execution', 6-2006, 8-2006, 0
+}]
+
+! Dynamische Gantt Diagramme
+
+Das Dynamische Gantt Diagramm ist eine neues und flexibleres Werkzeug zur Anzeige von Gantt Diagrammen. Es stellt Vorgänge als horizontal Balken dar, optional mit Verknüpfungen, um logische Zusammenhänge zwischen einzelnen Vorgängen zu visualisieren.\\
+Die Daten für das Gannt Diagramm (Vorgänge und Verknüpfungen) müssen statisch im Plugin bereitgestellt werden.\\
+Der Nutzen ist allerdings stark eingeschränkt, da die Daten (anders als der Name verspicht) statisch sind und die Start-Termine und die Dauer von Vorgängen nur tagesgenau angegegen werden können.\\
+
+__Daten in Form von Wiki-Tabellen__
+
+Das Plugin enthält in dieser Form zwei Wiki-Tabellen. Die erste Tabelle definiert die Vorgänge, die zweite (optionale) Tabelle die Verknüpfungen.
+
+{{{[{DynamicGantt
+
+| 1 | First Task   | 2015-03-10 | 3 | 0.5 |   | true |
+| 2 | Another Task | 2015-03-15 | 5 | 0.7 | 1 |
+| 3 | Third Task   | 2015-03-09 | 2 |     |
+| 4 | Fourth Task  | 2015-03-17 |
+
+| 1 -> 2 | finish-to-start  |
+| 4 -> 3 | finish-to-finish |
+| 2 -> 3 | start-to-start   |
+
+}]
+}}}
+
+[{DynamicGantt
+
+| 1 | First Task   | 2015-03-10 | 3 | 0.5 |   | true |
+| 2 | Another Task | 2015-03-15 | 5 | 0.7 | 1 |
+| 3 | Third Task   | 2015-03-09 | 2 |     |
+| 4 | Fourth Task  | 2015-03-17 |
+
+| 1 -> 2 | finish-to-start  |
+| 4 -> 3 | finish-to-finish |
+| 2 -> 3 | start-to-start   |
+
+}]
+
+Die Vorgangs-Tabelle hat folgende Spalten:
+# Die eindeutige Vorgangs-Id
+# Der Name des Vorgangs
+# Das Start Datum des Vorgangs
+# Die Dauer des Vorgangs (in Tagen)
+# Der aktuelle Fortschritt des Vorgangs (0.0 .. 1.0).
+# Die ID des übergeordneten Vorgangs (falls Vorgangs-Hierarchie)
+# Falls der Vorgang Untervorgänge/Kinder hat. Sollen diese initial angezeigt werden (true), oder soll der Vorgang initial kollabiert sein (kann aufgeklappt werden)
+
+%%(line-height: 22px;)Die Spalten der optionalen Verknüpfungs-Tabelle:%%
+# Von Vorgangs-Id -> Nach Vorgangs-Id
+# Art der Verknüpfung: "finish-to-start" (default), "finish-to-finish" oder "start-to-start"
+%%(line-height: 22px;)%%(line-height: 22px;)Sie können leere Spalten am Ende weglassen, aber nicht in der Mitte.%% %%
+
+__Daten im JSON Format__
+
+Sie können die Daten auch im JSON Format bereitstellen, falls Sie zusätzlich den Parameter {{inputType='json'}} setzen.\\
+
+{{{[{DynamicGantt inputType='json'
+
+{
+    data:[
+        {id:1, text:"Project #1",start_date:"2013-04-01", duration:11,
+        progress: 0.6, open: true},
+        {id:2, text:"Task #1",   start_date:"2013-04-03", duration:5,
+        progress: 1,   open: true, parent:1},
+        {id:3, text:"Task #2",   start_date:"2013-04-02", duration:7,
+        progress: 0.5, open: true, parent:1},
+        {id:4, text:"Task #2.1", start_date:"2013-04-03", duration:2,
+        progress: 1,   open: true, parent:3},
+        {id:5, text:"Task #2.2", start_date:"2013-04-04", duration:3,
+        progress: 0.8, open: true, parent:3},
+        {id:6, text:"Task #2.3", start_date:"2013-04-05", duration:4,
+        progress: 0.2, open: true, parent:3}
+    ],
+    links:[
+        {id:1, source:1, target:2, type:"1"},
+        {id:2, source:1, target:3, type:"1"},
+        {id:3, source:3, target:4, type:"1"},
+        {id:4, source:4, target:5, type:"0"},
+        {id:5, source:5, target:6, type:"0"}
+    ]
+}
+
+}]
+}}}
+
+Weiterführende Informationen finden Sie in [dieser Dokumentation|http://docs.dhtmlx.com/gantt/desktop__how_to_start.html#step4loaddatatotheganttchart].\\
+\\
+
+__Optionale Parameter__
+
+Das Plugin unterstützt folgende optionalen Parameter:
+
+* {{height}} ist die Höhe des Diagramms in CSS Einheiten. Standardmässig sind dies {{15em}}
+* {{inputType}} ist entweder {{'wiki'}} oder {{'json'}}. Standardmässig {{'wiki'}}
+* {{cssClass}} optionale CSS Klassen für das Diagramm
+* {{cssStyle}} optionale CSS Styles für das Diagramm
+
+
+! Kuchendiagramm
+
+{{{
+[{ PieChart title='Unit tests' threed='true'
+
+Successful, 22
+Failure, 13
+Error, 2
+}]
+}}}
+
+[{ PieChart title='Unit tests' threed='true'
+
+Successful, 22
+Failure, 13
+Error, 2
+}]
+
+! Polardiagramm
+
+{{{
+[{ PolarChart title='Database Performance Comparison'
+
+MySQL
+* 60, 290
+* 23, -120
+* -45, 90
+
+PostgreSQL
+* -10, 200
+* -12, -30
+* 13, 140
+}]
+}}}
+
+[{ PolarChart title='Database Performance Comparison'
+
+MySQL
+* 60, 290
+* 23, -120
+* -45, 90
+
+PostgreSQL
+* -10, 200
+* -12, -30
+* 13, 140
+}]
+
+! Streudiagramm
+
+{{{
+[{ ScatterPlotChart title='System downtime'
+
+Accounting
+* 10, 20
+* 22, 30
+* 33, 45
+
+Reporting
+* 60, 10
+* 23, 42
+* 45, 29
+}]
+}}}
+
+[{ ScatterPlotChart title='System downtime'
+
+Accounting
+* 10, 20
+* 22, 30
+* 33, 45
+
+Reporting
+* 60, 10
+* 23, 42
+* 45, 29
+}]
+
+! Stapelflächendiagramm
+
+{{{
+[{ StackedXYAreaChart title='Issues Over Time' legend='true'
+
+:Date|Day|MM/dd/yyyy,Blocking,Critical,Minor,Cosmetic
+03/22/2006,9,17,13,16
+03/23/2006,4,8,14,19
+03/24/2006,7,11,11,12
+03/25/2006,5,6,11,6
+03/28/2006,0,1,6,3
+}]
+}}}
+
+[{ StackedXYAreaChart title='Issues Over Time' legend='true'
+
+:Date|Day|MM/dd/yyyy,Blocking,Critical,Minor,Cosmetic
+03/22/2006,9,17,13,16
+03/23/2006,4,8,14,19
+03/24/2006,7,11,11,12
+03/25/2006,5,6,11,6
+03/28/2006,0,1,6,3
+}]
+
+! Zeitreihendiagramm
+
+{{{
+[{ TimeSeriesChart title='Contributors Over Time'
+
+Programmers
+* 10/7/2006, 22
+* 12/6/2006, 30
+* 11/1/2006, 49
+
+Managers
+* 10/9/2006, 2
+* 12/13/2006, 4
+* 11/8/2006, 2
+
+Testers
+* 10/3/2006, 3
+* 12/22/2006, 8
+* 11/7/2006, 12
+}]
+}}}
+
+[{ TimeSeriesChart title='Contributors Over Time'
+
+Programmers
+* 10/7/2006, 22
+* 12/6/2006, 30
+* 11/1/2006, 49
+
+Managers
+* 10/9/2006, 2
+* 12/13/2006, 4
+* 11/8/2006, 2
+
+Testers
+* 10/3/2006, 3
+* 12/22/2006, 8
+* 11/7/2006, 12
+}]
+
+! Flächendiagramm
+
+{{{
+[{ XYAreaChart title='Commits By Team'
+
+Team A
+* 10, 20
+* 12, 30
+* 13, 45
+* 40, 10
+
+Team B
+* 60, 10
+* 23, 12
+* 45, 50
+}]
+}}}
+
+[{ XYAreaChart title='Commits By Team'
+
+Team A
+* 10, 20
+* 12, 30
+* 13, 45
+* 40, 10
+
+Team B
+* 60, 10
+* 23, 12
+* 45, 50
+}]
+
+! Liniendiagramm
+
+{{{
+[{ XYLineChart title='System Response Time'
+
+Queries
+* 10, 20
+* 20, 30
+* 30, 45
+
+Report Generator
+* 10, 40
+* 20, 20
+* 30, 10
+}]
+}}}
+
+[{ XYLineChart title='System Response Time'
+
+Queries
+* 10, 20
+* 20, 30
+* 30, 45
+
+Report Generator
+* 10, 40
+* 20, 20
+* 30, 10
+}]
+
+! Step Area Chart
+
+{{{
+[{ XYStepAreaChart title='Lines-of-Code Over Weeks'
+
+LOC
+* 1, 7545
+* 2, 8987
+* 3, 7788
+* 4, 8544
+* 5, 10344
+}]
+}}}
+
+[{ XYStepAreaChart title='Lines-of-Code Over Weeks'
+
+LOC
+* 1, 7545
+* 2, 8987
+* 3, 7788
+* 4, 8544
+* 5, 10344
+}]
+
+! Balkendiagramm
+
+{{{
+[{ BarChart title='Number-of-classes By Package' threed=true orientation=horizontal
+
+:Package|String, Classes
+persistence, 32
+remoting, 16
+utils, 23
+}]
+}}}
+
+[{ BarChart title='Number-of-classes By Package' threed=true orientation=horizontal
+
+:Package|String, Classes
+persistence, 32
+remoting, 16
+utils, 23
+}]
+
+! Stapelbalkendiagramm
+
+{{{
+[{ StackedBarChart title='Issues By Version' seriespaint='red,orange,green' threed=true orientation=horizontal
+
+:Version|String, 0.7-pre, 0.9-rc1, 1.0-final
+Fatal, 10, 6, 1
+Major, 23, 11, 4
+Minor, 15, 3, 6
+}]
+}}}
+
+[{ StackedBarChart title='Issues By Version' seriespaint='red,orange,green' threed=true orientation=horizontal
+
+:Version|String, 0.7-pre, 0.9-rc1, 1.0-final
+Fatal, 10, 6, 1
+Major, 23, 11, 4
+Minor, 15, 3, 6
+}]
+
+! Wasserfalldiagramm
+
+{{{
+[{ WaterfallChart title='Timeframes'
+
+:Phase|String, Requirements Capture, Analysis, Design, Implementation, Testing, Total
+Manweeks, 1, 2, 4, 3, 2, 13
+}]
+}}}
+
+[{ WaterfallChart title='Timeframes'
+
+:Phase|String, Requirements Capture, Analysis, Design, Implementation, Testing, Total
+Manweeks, 1, 2, 4, 3, 2, 13
+}]
+
+! Mehrfach Kuchendiagramm
+
+{{{
+[{ MultiplePieChart title='Number of classes' legend='false' height=400
+
+:Country|String, V1, V2, V3
+Abstract, 7, 7, 4
+Interface, 5, 9, 3
+Concrete, 15, 26, 22
+}]
+}}}
+
+[{ MultiplePieChart title='Number of classes' legend='false' height=400
+
+:Country|String, V1, V2, V3
+Abstract, 7, 7, 4
+Interface, 5, 9, 3
+Concrete, 15, 26, 22
+}]
+
+! Blasendiagramm
+
+{{{
+[{ BubbleChart title='Bubble Chart' seriespaint='red,orange'
+
+Norway, 10, 10
+*3, 4, 2
+*4, 5, 2.5
+*5, 6, 2.7
+
+France, 15, 15
+* 1, 14, 5
+* 3, 12, 7
+* 2, 11, 8
+}]
+}}}
+
+[{ BubbleChart title='Bubble Chart' seriespaint='red,orange'
+
+Norway, 10, 10
+*3, 4, 2
+*4, 5, 2.5
+*5, 6, 2.7
+
+France, 15, 15
+* 1, 14, 5
+* 3, 12, 7
+* 2, 11, 8
+}]
+
+! Spinnennetzdiagramm
+
+{{{
+[{ SpiderWebChart title='Radar Plot' direction='clockwise' webfilled='true'
+	headpercent='0.02' axislabelgap='0.1' interiorgap='0.2'
+
+:Country|String, Value, Angle, Height, Weight, Coverage
+Italy, 10, 10, 40, 30, 50
+Norway, 20, 50, 3, 66, 76
+France, 15, 100, 20, 56, 100
+
+}]
+}}}
+
+[{ SpiderWebChart title='Radar Plot' direction='clockwise' webfilled='true'
+	headpercent='0.02' axislabelgap='0.1' interiorgap='0.2'
+
+:Country|String, Value, Angle, Height, Weight, Coverage
+Italy, 10, 10, 40, 30, 50
+Norway, 20, 50, 3, 66, 76
+France, 15, 100, 20, 56, 100
+
+}]
+
+! Tacho-Diagramm
+
+{{{
+[{ GaugeChart minimum='0' positions='6,16,24' maximum='30' value='27' name='name' valueLabel='label' seriespaint='RED,YELLOW,GREEN' width='500'  height='300'
+
+}]
+}}}
+
+[{ GaugeChart minimum='0' positions='6,16,24' maximum='30' value='27' name='name' valueLabel='label' seriespaint='RED,YELLOW,GREEN' width='500'  height='300'
+
+}]
+
+! Tachometer Chart Widget
+
+{{{
+[{ SpeedometerChart minimum='0' positions='6,16' maximum='30' value='27' name='name' valueLabel='label' seriespaint='RED,YELLOW,GREEN' width='500'  height='300'
+
+}]}}}
+
+[{ SpeedometerChart minimum='0' positions='6,16' maximum='30' value='27' name='name' valueLabel='label' seriespaint='RED,YELLOW,GREEN' width='500'  height='300'
+
+}]
+
+!! Weitere
+
+Sie finden weitere Beispiele auf der ImageGen [Plugin Webseite|http://www.ecyrd.com/JSPWiki/wiki/ImageGen].
+
+
+!!! Exportieren als PDF
+
+!! Export Wiki Plugin
+Über das ''ExportWiki'' Plugin können Sie Wikiseiten in PDF konvertieren.
+
+{{{[{ExportWiki id='1004,1005' format='pdf'}]}}}
+
+||Parameter   ||Option||Inhalt und Bedeutung
+|{{id}}        |nein   |Komma-separierte Liste mit den Ids der zu exportierenden Wikiseiten
+|{{format}}    |ja     |Das Ausgabe-Format, zur Zeit wird nur {{pdf}} unterstützt.
+|{{revision}}  |ja     |Der zu exportierenden Versionsstand (falls nicht angegeben, werden die jeweils neuesten Versionen exportiert).
+|{{linkText}}  |ja     |Die Beschriftung des Export-Links.
+|{{path}}      |ja     |Pfad zu einem Dokumenten-Verzeichnis, wo das exportierte Dokument abgespeichert werden soll.\\Falls angegeben, __muss__ dieses Verzeichnis bereits existieren.
+|{{headerText}}|ja     |Kopfzeile für das zu erzeugende Dokument.
+|{{footerText}}|ja     |Fußzeile für das zu erzeugende Dokument.
+|{{dpi}}       |ja     |Druckauflösung des Dokuments (in DPI).
+
+Anwendungsbeispiele:
+{{{[{ExportWiki id='1004,1005' path='/export/Wiki.pdf' dpi='300'}]}}} erstellt {{Wiki.pdf}} im {{export}} Verzeichnis des aktuellen Projekts.
+
+{{{[{ExportWiki id='1004' path='result.pdf' footerText='Das ist das Ende.'}]}}} erstellt {{result.pdf}} im Dokumentenverzeichnis des aktuellen Projekts.
+
+
+!!! Sonstiges
+
+
+!! Excel Plugin
+{{{[{Excel id='1067'}]}}} zeigt den Inhalt der Microsoft Excel Tabelle mit der Dokumenten-Nr. 1067.\\
+Falls die Excel-Tabelle nicht als Dokument in CodeBeamer gespeichert ist, sondern als Anlage der Wikiseite, können sie z.B. so darauf zugreifen:
+{{{
+[{Excel src='175'}]
+[{Excel src='Berechnung.xls'}]
+[{Excel src='Andere Seite/Berechnung.xls'}]
+}}}
+Sie identifizieren die Datei entweder über die Nr. oder den Namen der Anlage, optional zusätzlich mit dem Namen der Wikiseite, an der die Anlage hängt.
+{{{[{Excel src='http://www.mysite.com/files/calculations.xls'}]}}} zeigt eine Excel-Tabelle aus dem Netz.
+
+Der optionale Parameter {{sheet}} enthält den Namen eines Tabellen-Blatts. Falls nicht angegeben werden alle Blätter angezeigt.\\
+Die optionalen Parameter {{maxRows}} und {{maxColumns}} dienen zur Begrenzung der angezeigten Anzahl Zeilen und Spalten. Standardmässig werden maximal 1000 Zeilen und 100 Spalten angezeigt.
+
+
+!! Word Plugin
+Das Word Plugin bettet den Inhalt eines Microsoft Word 2007 (oder neuer) Dokuments in die Wikiseite ein.  Ältere MS Word Versionen werden nicht unterstützt.
+
+Das Word Plugin konvertiert den Inhalt nach HTML. Eingebettete Grafiken werden angezeigt, wenn der Browser das Bild-Format unterstützt.
+Die Konfiguration is analog dem
+[{Html
+
+<a href="#section-Excel+Spreadsheet+Plugin">Excel Plugin</a>}]. Über den __src__ Parameter können Anlagen zu der aktuellen Wikiseite, oder externe/interne URLs referenziert werden.
+
+Beispiel:
+{{{[{Word id='1067'}]}}} zeigt das Word Dokument #1067, welches in der Dokumentenverwaltung abgelegt sein muss.
+
+!! Jenkins Build Trends und Jenkins Performance Trends Plugin
+Zeichnet ein Diagramm, basierend auf den hochgeladenen Anhang durch das [codebeamer-result-trend-updater|https://codebeamer.com/cb/wiki/727287] Jenkins Plugin
+
+Für junit basierte Tests:
+{{{[{JenkinsBuildTrends}]}}}
+For performance tests:
+{{{[{JenkinsPerformanceTrends}]}}}
+
+* Der optionale Parameter {{wikiId}} determiniert, welche Wikiseite das Plugin für die Diagrammdaten verwendet. Standardmäßig auf der aktuellen Seite.
+* Der optionale Parameter {{limit}} limitiert, wie viele Builds angezeigt, wenn „alle Builds“ aus der Drop-Down-Liste selektiert werden.
+* Der optionale Parameter {{height}} überschreibt die Standard-Diagramm-Höhe auf 400px.
+* Der optionale Parameter {{width}} überschreibt die Standard-Diagramm-Breite auf 800px.
+* Der optionale Parameter {{title}} überschreibt den Standard-Diagramm-Titel.
+
+!! Shockwave (SWF) Plugin
+Bettet eine Shockware/Flash Datei in eine Wikiseite ein.
+* ''src'': Referenz zu der SWF Datei. Analog zur Einbettung von Bildern.
+* ''height'' und ''width'' (optional): Grösse in Pixeln.
+* ''controls'' (optional): Sollen Wiedergabe-Steuerelemente angezeigt werden ('true' oder 'false',  Falls nicht angegeben: true).
+* ''play'' (optional): Soll die Wiedergabe automatisch gestartet werden ('true' oder 'false',  Falls nicht angegeben: true).
+* ''loop'' (optional): Soll die Wiedergabe in einer Endlosschleife laufen ('true' oder 'false',  Falls nicht angegeben: true).
+* ''parameters'' (optional): Zusätzliche Parameter, die an den Shockwave Player übergeben werden sollen.
+Beispiele:
+{{{
+[{Flash src='!12!'}]
+[{Flash src='!mygame.swf!' controls='false'}]
+[{Flash src='!/1034!' parameters='param1=value1&param2=value2'}]
+[{Flash src='!/mydir/mygame.swf!'}]
+}}}
+Sie finden noch weitere Beispiele auf der [Flash Plugin|http://www.ecyrd.com/JSPWiki/wiki/AFlashPlugin] Webseite.
+
+!! Google Maps Plugin
+Bettet eine Google Maps [Karte|http://maps.google.com/] in eine Wikiseite ein.
+
+{{{[{GoogleMaps lat='48.738142' lng='9.111185' zoom='17'}]}}} zeigt eine Karte mit dem Standort der Intland Software Zentrale.
+
+Sie finden noch weitere Beispiele auf der [Google Maps Plugin|http://www.ecyrd.com/JSPWiki/wiki/GoogleMapsPlugin] Webseite.
+
+Hinweis: Damit dieses Plugin funktioniert, benötigen Sie einen Google Maps [API Key|http://www.google.com/apis/maps/]. \\
+Tragen Sie diesen API Key unter dem Schlüssel {{jspwiki.Google.maps.key=...}} in der Konfigurationsdatei {{WEB-INF/classes/googlemap.properties}} ein.
+
+CodeBeamer spezifische Erweiterung:
+* {{showMembers='true'}} - zeigt die Standorte der Projektmitglieder an.\\
+* {{projectId=<Projekt-Nr.>}} (optional) - Nr. des Projekts, dessen Mitglieder-Standorte angezeigt werden sollen. Falls nicht angegeben, wird das aktuelle Projekt verwendet.
+* {{trace='true'}} (optional) - zeigt zusätzliche Statistikzeile mit: Anzahl Projektmitglieder / Anzahl gefundener Standorte.
+{{{[{GoogleMaps showMembers='true' }]}}}
+In diesem Fall werden die {{lat}}, {{lng}} und {{zoom}} Parameter ignoriert. Die Karte wird automatisch angepasst, um die Standorte aller Projektmitglieder anzeigen zu können.
+
+
+!! Feed Plugin
+Bettet [RSS Feed/Atom|https://rome.dev.java.net] Inhalte in eine Wikiseite ein.
+
+{{{[{Feed url='http://slashdot.org/index.rss' feedDetails='true'}]}}} zeigt die neuesten Inhalte des [Slashdot|http://slashdot.org] Feeds an.
+{{{[{Feed url='http://feeds.feedburner.com/Techcrunch' entryDetails='true' max='5'}]}}} zeigt die 5 neuesten Einträge des Techcrunch feeds an.
+
+Parameter (mit Standard-Werten):\\
+* {{url='<Die URL des darzustellenden RSS Feeds>'}}
+* {{max='10'              Die maximale Anzahl darzustellender Feed Einträge}}
+* {{feedDetails='false'   true/false: Sollen Einzelheiten des Feeds dargestellt werden}}
+* {{entryDetails='false'   true/false: Sollen Einzelheiten der Einträge dargestellt werden}}
+* {{cacheTime='300'       Der Feed Inhalt wird für diese Anzahl Sekunden gepuffert, das erhöht die Performance}}
+
+
+!! Color Code Plugin
+Dieses Plugin hebt Text gemäß einer angegebenen Syntax farblich hervor.
+
+{{{[{ColorCode syntax='sql'
+
+select count(*) from dual
+
+}]}}}
+
+Parameter:\\
+{{syntax='sql | c | java | vm'}}.
+* {{sql}} - SQL syntax highlighting (Oracle flavor)
+* {{c}}  - C & C++, full C++ '98 keyword set
+* {{java}} - Java
+* {{vm}} - Velocity template syntax highlighing
+
+Sie finden noch weitere Beispiele auf der [Plugin|http://www.ecyrd.com/JSPWiki/wiki/ColorCodePlugin_page] Webseite.
+
+!! Include Plugin
+Dieses Plugin bettet eine andere Wikiseite, die wiederum andere Wikiseiten einbetten kann, oder eine sprachabhängige Wiki-Vorlage oder eine sprachabhängige Text-Resource ein.\\
+\\
+||Parameter ||Option||Inhalt und Bedeutung
+|{{id}}       |ja     |Die ID der einzubettenden internen Wikiseite
+|{{src}}      |ja     |URL einer einzubettenden externen Wikiseite.
+|{{template}} |ja     |Pfad zu einer einzubettenden Wiki-Vorlage (relativ zu {{~/webapps/cb}})
+|{{message}}  |ja     |Name einer einzubettenden Text-Resource.
+|{{control}}  |ja     |Soll das Einbetten interaktiv gesteuert werden können ? {{true~|false}}
+\\
+Beispiele:
+{{{
+[{Include id='1004'}]
+[{Include message='user.name.label'}]
+}}}
+\\
+
+!! HTML Plugin
+Dieses Plugin bettet HTML Markup oder eine externe HTML Seite ein.
+
+{{{[{Html
+
+<b>fett</b> normal <em>kursiv</em>
+}]}}}
+
+zeigt: __fett__ normal ''kursiv''.
+
+{{{[{Html id='2124'}]}}} zeigt den Inhalt der HTML Seite mit Dokument-Nr. 2124 an.
+
+Falls die HTML-Seite kein Dokument, sondern eine Anlage ist, dann benutzen Sie folgende Syntax:
+{{{
+[{Html src='175'}]
+[{Html src='markup.html'}]
+[{Html src='Andere Seite/markup.html'}]
+}}}
+
+
+!! Math und Latex Plugins
+
+Das __Math__ Plugin stellt mathematische Formeln dar.\\
+\\
+Die [Formeln|http://en.wikibooks.org/wiki/LaTeX/Mathematics] müssen dazu in [LaTeX Syntax|http://de.wikipedia.org/wiki/LaTeX] formuliert werden und werden in der Wiki Ausgabe als Grafik eingebettet.\\
+\\
+Sie können auch das mächtigere __Latex__ Plugin direkt verwenden.\\
+Beide Plugins benötigen die Installation der LaTeX Laufzeitumgebung gemäss [dieser Anleitung|https://codebeamer.com/cb/wiki/87998].\\
+\\
+\\
+Beispiele:\\
+{{{[{Math
+
+2\sum_{i=1}^n a_i \;\int_a^b f_i(x)g_i(x)\,dx
+}]}}}
+
+zeigt diese mathematische Formel:
+[{Math align='center' fontsize='16'
+
+2\sum_{i=1}^n a_i \;\int_a^b f_i(x)g_i(x)\,dx
+}]
+
+Das __Latex__ Plugin ist flexibler, benötigt dazu aber auch ein komplett LaTeX formattiertes Dokument:\\
+{{{[{Latex title='Beispieltext'
+
+\documentclass{article}
+\begin{document}
+Hier sollte der Latex Text stehen
+\end{document}
+}]}}}
+
+Wird angezeigt als:
+
+[{Latex title='Beispieltext'
+
+\documentclass{article}
+\pagestyle{empty}
+\begin{document}
+Hier sollte der Latex Text stehen
+\end{document}
+}]
+
+Die folgende Vorlage zeigt, wie man Formelidentifikatoren benutzt:
+
+{{{
+[{Math
+
+\( x > y \)
+}]
+}}}
+
+Wird angezeigt als:
+
+[{Math
+
+\( x > y \)
+}]
+
+oder
+
+{{{
+[{Math
+
+\[
+\frac{\frac{1}{x}+\frac{1}{y}}{y-z}
+\]
+}]
+}}}
+
+Wird angezeigt als:
+
+[{Math
+
+\[
+\frac{\frac{1}{x}+\frac{1}{y}}{y-z}
+\]
+}]
+
+Parameter:\\
+*{{id='Dokument-Nr'}} - Optionale ID des Dokuments, das den anzuzeigenden LaTeX Text enthält.
+*{{src='URL/Name der Anlage'}} - Name der Anlage bzw. URL des externen Dokuments, welche(s) den anzuzeigenden LaTeX Text enthält.
+*{{text='Text'}} - Alternativ/Optional der darzustellende Text direkt.
+*{{title='Titel'}} - Optionale Überschrift/Titel der Grafik
+*{{usePng='true'}} - Soll eine PNG Grafik (true) oder eine GIF Grafik (false) erzeugt werden.
+*{{cache='true'}} - Soll die Grafik gecachet werden
+*{{density='120'}} - Die Auflösung (DPI) für die zu erzeugende Grafik
+*{{timeout='30'}} - Timeout (in Sek.) für die Grafik-Erzeugung.
+
+
+!!Emoticons
+
+[{TablePlugin
+
+|| Symbole ||< || Emoticons ||< ||< ||<
+| {{{(/)}}} | (/) | {{{:)}}} | :) | {{{(doh)}}} | (doh)
+| {{{(x)}}} | (x) | {{{:(}}} | :( | {{{(devil)}}} | (devil)
+| {{{(!)}}} | (!) | {{{;)}}} | ;) | {{{(angel)}}} | (angel)
+| {{{(+)}}} | (+) | {{{:D}}} | :D | {{{(rotfl)}}} | (rotfl)
+| {{{(-)}}} | (-) | {{{:O}}} | :O | |
+| {{{(?)}}} | (?) | {{{:P}}} | :P | |
+| {{{(y)}}} | (y) | {{{B)}}} | B) | |
+| {{{(n)}}} | (n) | {{{:@}}} | :@ | |
+| {{{(*)}}} | (*) | {{{|)}}} | ~|) | |
+| {{{(heart)}}} | (heart) | {{{:*}}} | :* | |
+}]
+
+Sie können für Emoticons auch die Form mit drei Zeichen verwenden, z.B. {{{:-)}}} ist äquivalent zu {{{:)}}}.
+
+!! Traceability Browser
+Das Traceability Browser Plugin zeigt eine Tabelle, welche jegliche Anzahl von Trackern oder Trackertypen in gewünschter Reinfolge korreliert und Abhängigkeiten (ein- und/oder ausgehende Assoziationen und/oder Referenzen) zwischen den Einträgen anderer, benachbarter und selektierter Tracker und/oder Trackertpyen anzeigt. Es wird die gleiche Tabelle wie im Traceability Browser erzeugt.
+
+Parameters:\\
+*{{title='Traceability Browser'}} Titel des Plugins (optional).
+*{{initialTrackerList='1234 -7,1235'}} Entspricht der initialen Tracker Liste und ist eine Komma separierte Liste von Tracker IDs (optionaler Weise gefilter durch die Angabe von View IDs, voneinander getrennt durch Leerzeichen).
+*{{initialTrackerItemId='1234'}} Sie können das Traceability Browser Plugin im Tracker Eintrag Modus nutzen. In diesem Fall ist der initiale Parameter ein Tracker Eintrag und kein Tracker. Nur die Ebenen werden als Spalten angezeigt (keine initiale Tracker Spalte). Falls diese Option aktiviert ist, wird der initialTrackerList Parameter ignoriert.
+*{{trackerList='0,1234 1235,2 3 1236'}} Ist eine Komma separierte Liste bestehend aus Tracker und Tracker Typ IDs und definiert die Ebenen. Innerhalb einer Ebene können mehr Tracker/Tracker Typ IDs durch Leerzeichen getrennt definiert werden. "Alle" können durch die Angabe von "0" definiert werden.
+*{{showIncomingAssociations='true|false'}} Sollen eingehende Assoziationen angezeigt werden (Standardwert: true).
+*{{showOutgoingAssociations='true|false'}} Sollen ausgehende Assoziationen angezeigt werden (Standardwert: true).
+*{{showIncomingRelations='true|false'}} Sollen eingehende Referenzen angezeigt werden (Standardwert: true).
+*{{showOutgoingRelations='true|false'}} Sollen ausgehende Referenzen angezeigt werden (Standardwert: true).
+*{{excludeFoldersAndInformation='true|false'}} Sollen Verzeichnisse und Tracker Einträge vom Typ Informationen ausgenommen werden (Standardwert: false).
+*{{showChildren='true|false'}} Sollen Kinder angezeigt werden oder nicht (Standardwert: true).
+*{{showDescription='true|false'}} Sollen Beschreibungen angezeigt werden oder nicht (Standardwert: false).
+*{{showSCMCommits='true|false'}} Sollen SCM Commit Typ Items angezeigt werden oder nicht (Standardwert: false).
+*{{ignoreRedundants='true|false'}} Sollen redundante Tracker Items in den weiteren Leveln ignoriert werden (Standardwert: siehe general.xml).
+*{{hideHeader='true|false'}} Sollen Informationen (Trycker Typen, Tracker, Zähler) im Tabellenkopf versteckt werden (Standardwert: false).
+*{{hideWikiBox='true|false'}} Soll die Wikibox und der Plugin Titel versteckt werden (Standardwert: false).
+*{{reverseArrows='true|false'}} Soll die Richtung der Pfeile im Kopf der Ergebnistabelle umgekehrt werden (Standardwert: false).
+*{{preset='Name of preset'}} Lädt eine gespeicherte Einstellung anhand des Namens. Wenn dieser Paramter genutzt wird, werden alle vorherige Optionen ignoriert. Dieser Parameter kann nur innerhalb des Projekt Kontextes genutzt werden.
+
+Beispiele:\\
+{{{
+[{TraceabilityBrowser initialTrackerList='12345' trackerList='0,2 12356'}]
+}}}
+Zeigt einen Traceability Browser. Der initiale Tracker wird der Tracker mit der ID 12345 sein. Level 1 entsprichten "Allen" Items, Level 2 Items vom Typ "Fehler" oder Tracker mit der ID 12356. Alle Relationsarten und -richtungen werden angezeigt.
+{{{
+[{TraceabilityBrowser initialTrackerItemId='1234' trackerList='0,0' showIncomingAssociations='true' showIncomingRelations='true' showOutgoingAssociations='false' showOutgoingRelations='false'}]
+}}}
+Zeigt eingehende Assoziationen und Referenzen vom Item 1234 in zwei Ebenen (Zeigt alle Items, keine Filterung nach Tracker Typ oder Tracker).
+{{{
+[{TraceabilityBrowser preset='Preset_Name'}]
+}}}
+Zeigt einen Traceability Browser der eine gespeicherte Vorlage mit dem Name "Preset_Name" repräsentiert.
+
+!! Traceability Matrix
+Das Traceability Matrix Plugin rendert den Traceability Report zwischen einem oder mehr Trackern und ihrer Ansichten in Matrix Form.
+
+Parameter:\\
+*{{horizontalTrackersAndViews='Enthält IDs oder Keys von Trackern und optionalerweise ihrer Ansichten, die auf der horizontalen Achse angezeigt werden'}}.
+ Das Format der Option ist folgendes: "<tracker-id>/<view-id>,<tracker-key>/<view-id>...". Ein "/" trennt Tracker ID von View ID während ein "," mehrere Einträge voneinander trennt.
+*{{verticalTrackersAndViews='Enthält IDs oder Keys von Trackern und optionalerweise ihrer Ansichten, die auf der vertikalen Achse angezeigt werden'}}.
+*{{title='Optionaler Titel der Plugin Ausgabe'}}.
+*{{max='100'}} Maximale Anzahl der Issues, welche auf der horizontalen/vertikalen Achse angezeigt werden.
+*{{includeFolders='false'}} Soll Issues aus Verzeichnissens angezeigt werden (Standardwert: false)?
+*{{defaultView='-2'}} Die ID der Standardview, falls die View aus der horizontalen/vertikalen ID Liste fehlen sollte. Der Standardwert ist -2, was der "Alle Einträge" Ansicht für Tracker entspricht.
+*{{allowEditing='false'}} Entscheidet, ob die Abhängigkeiten zwischen Issues wie auf der Traceability Matrix Verwaltungsseite bearbeitet werden können.
+
+Zusätzlich zu den Parametern kann die Matrix ein [Velocity script|http://velocity.apache.org/engine/releases/velocity-1.7/user-guide.html] enthalten.
+Dieses Script wird während des Renderns der Matrix für jede Zelle aufgerufen und erlaubt Ihnen das Aussehen und den Inhalt jeder Zelle anzupassen.
+Die Zelle entspricht der Ausgabe des Scripts. Das Script hat Zugriff auf folgende Variablen:
+*{content} Der ursprüngliche Inhalt der Zelle. Soll dieser Inhalt auch in der modifizierten Zelle angezeigt werden muss ${content} im Script genutzt werden.
+*{cssClass} Die ursprüngliche CSS Klasse der Zelle. Der Wert kann geändert werden, falls eine andere Klasse gewünscht ist.
+*{cssStyle} Der ursprüngliche CSS Style der Zelle. Modifizieren Sie dies, um den Style der Zelle zu individualisieren.
+*{horizontalTrackerItem} Die gegenwärtigen Issue/Tracker Items der Reihe (links).
+*{verticalTrackerItem} Das gegenwärtige Issue in der Spalte (oberhalb).
+*{suspectedLink} Wahrheitswert; enthält die Zelle vermutlich einen Link.
+*{dependency} Die TraceabilityMatrixController.TraceDependencyMapEntry Instanz definiert die Abhängigkeiten zwischen horizontalen/vertikalen Einträgen.
+*{direction} Die Richtung der Abhängigkeiten zwischen Issues. Mögliche Werte sind: 'NONE', 'H2V', 'V2H', 'BI'.
+*{resolver} Die TrackerItemFieldHandler's Instanz kann benutzt werden um individuelle Felder in den Issues aufzulösen.
+*{request}, {pageContext} und viele andere Standard JSP Attribute...
+
+
+Hier ist ein Beispiel mit modifzierten Zell-Inhalt
+{{{
+[{TraceabilityMatrix horizontalTrackersAndViews='1250' verticalTrackersAndViews='1250'
+
+#set($field = "Software safety classification")
+#set($safetyHorizontal = $resolver.getItemFieldValueByFieldName($horizontalTrackerItem, $field))
+#set($safetyVertical = $resolver.getItemFieldValueByFieldName($verticalTrackerItem, $field))
+
+#set($color ="")
+#if ($safetyHorizontal == "A" || $safetyVertical == "A")
+  #set($color ="green")
+#end
+#if ($safetyHorizontal == "B" || $safetyVertical == "B")
+  #set($color ="orange")
+#end
+#if ($safetyHorizontal == "C" || $safetyVertical == "C")
+  #set($color ="red")
+#end
+
+#if ($color != "")
+ #set($cssStyle = "background-color: ${color};")
+#end
+
+${content}
+}]
+}}}
+
+!! Risk Traceability Matrix
+Das Risk Traceability Matrix Plugin rendert einen Traceability Bericht für zwei oder mehr Trackern basierend auf ihre Assoziation in einer Matrix Form.
+
+Sie können eine Komma separierte Liste von Tracker IDs im {{trackers}} Parameter spezifizieren. Die generierte Matrix enthält dann die angegebenen Tracker in exakt dieser Reinfolge, eine Spalte pro Tracker.
+
+{{{
+[{RiskTraceabilityMatrix trackers='1035,1032,1034,1029'}]
+}}}
+
+Die Zeilen der Matrix enthalten Tracker Items. Standardmäßig werden alle Items angezeigt (mit Respekt der Generierungsregeln, siehe weiter unten), es besteht aber die Möglichkeit bestimmte Tracker Items auszuschließen. Um das zu tun, müssen die IDs oder Keys der Tracker in Klammern nach dem übergeordneten Tracker in die Liste eingetragen werden. Mehrere IDs werden dabei mit einem "-" voneinander getrennt.
+Beispiel:
+
+{{{
+[{RiskTraceabilityMatrix trackers='1035(1123),1032,1034(1341-1322-1345),1029'}]
+}}}
+
+Die Matrix wird basierend auf folgende Regeln generiert:
+*Die erste Spalte enthält alle Items des ersten Trackers (Ausnahme: manuell ausgeschlossene).
+*Alle weitere Spalten enthalten nur die Items, die Assoziationen zu mindestens einem Item aus der vorherigen Spalte enthalten. Auch hier gilt: manuell ausgeschlossene Items werden nicht angezeigt.
+*Falls der Tracker vom Typ Test Case ist, wird das Ergebnis der letzten Ausführung in der Zelle angedeutet.
+*Für jedes Item in einer Spalte existiert mindestens eine Zelle rechts davon. Diese Zelle ist aber möglicherweise leer.
+
+Weitere, optionale Parameter:
+*{{title}} Fügt einen Titel zur Matrix hinzu.
+*{{cssClass}} Fügt ein oder mehrere CSS Klassen zum Wiki Plugin Container hinzu.
+*{{cssStyle}} Fügt ein oder mehrere CSS Style Regeln zum Wiki Plugin Container hinzu.
+*{{showAssociations}} bestimmt, ob Assoziationen zwischen Items während der Erstellung der Matrix berücksichtigt werden. Kann {'true'}} oder {{'false'}} sein, Standardwert ist {{'true'}}.
+*{{showRelations}} bestimmt, ob Relationen (über Feld: Referenzen) zwischen Items während der Erstellung der Matrix berücksichtigt werden. Kann {'true'}} oder {{'false'}} sein, Standardwert ist {{'true'}}.
+
+! Beispiel
+
+In diesem Beispiel werden Buchstaben als IDs verwendet um es leichter nachvollziehbar zu gestalten:
+
+Angenommen wir haben 4 Tracker mit den IDs A, B, C, D
+*A hat 2 Items: A1,A2
+*B hat 3 Items: B1,B2,B3
+*C hat 5 Items: C1,C2,C3,C4,C5
+*D hat 6 Items: D1,D2,D3,D4,D5,D6
+
+Assoziationen:
+*B1,B2 sind abgeleitet von A1 (Assoziationen A1->B1, A1->B2)
+*B3 ist abgeleitet von A2 (Assoziation A2->B3)
+*C1,C2 sind abgeleitet von B1 (Assoziationen B1->C1, B1->C2)
+*C3,C4 sind abgeleitet von B2 (Assoziationen B2->C3, B2->C4)
+*C5 ist abgeleitet von B3 (Assoziation B3->C5)
+*D1,D2 sind abgeleitet von C1 (Assoziationen C1->D1, C1->D2)
+*D3 ist abgeleitet von C2 (Assoziation C2->D3)
+*D4 ist abgeleitet von C3 (Assoziation C3->D4)
+*D5 ist abgeleitet von C4 (Assoziation C4->D5)
+*D6 ist abgeleitet von C5 (Assoziation C5->D6)
+
+{{{
+[{RiskTraceabilityMatrix trackers='A,B,C(C5),D'}]
+}}}
+
+wird folegende Matrix generieren:
+
+[{Table
+
+|A1
+|B1
+|C1
+|D1
+
+|^
+|^
+|^
+|D2
+
+|^
+|^
+|C2
+|D3
+
+|^
+|B2
+|C3
+|D4
+
+|^
+|^
+|C4
+|D5
+
+|A2
+|B3
+|
+|
+
+}]

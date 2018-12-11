@@ -1,0 +1,7 @@
+#!/bin/sh
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+# Processing only if it was NOT started by codeBeamer smart scm servlet.
+if [ -z "$CODEBEAMER_SMART_SCM_SERVLET" ]
+then
+	exec "/your_install_dir/scmloop/scmloop" -mode $1 -nodeid $HG_NODE -source $HG_SOURCE -hgurl $HG_URL "$@"
+fi

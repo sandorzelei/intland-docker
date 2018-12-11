@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html
+		xmlns:v='urn:schemas-microsoft-com:vml'
+		xmlns:o='urn:schemas-microsoft-com:office:office'
+		xmlns:w='urn:schemas-microsoft-com:office:word'
+		xmlns='http://www.w3.org/TR/REC-html40'
+		lang="${language}"
+	>
+<head>
+#*
+
+	This is the decoration around the Velocity template found in the docx template.
+	This adds the html head/body  so the Velocity template can be kept simpler
+
+*#
+<title>$!{title}</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<link rel="file-list" href="mydocument_files/filelist.xml"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Language" content="${language}"/>
+<style type="text/css">
+## page definition for MS Word
+@page {
+		size: 21cm 29.7cm;  /* A4 */
+		margin: 3.5cm 2cm 2.5cm 2cm;
+		mso-page-orientation: portrait;
+##		mso-header: url("/headerfooter.htm") h1;
+	mso-header-margin: 1cm;
+##		mso-footer: url("/headerfooter.htm") f1;
+	mso-footer-margin: 1cm;
+}
+
+@page Section1 { }
+div.Section1 { page:Section1; }
+p.MsoHeader, p.MsoFooter { font-size: 12px; }
+p.MsoHeader table, p.MsoFooter table { width: 100%; }
+p.MsoHeader table td, p.MsoFooter table td { color: #777; }
+p.MsoHeader table { border-bottom: 1px solid #777; }
+p.MsoFooter table { border-top: 1px solid #777; }
+
+</style>
+<link rel="stylesheet" href="/mhtml-export.css" type="text/css" media="all" />
+</head>
+<body class="newskin wikiModule $!{roundtripExportPart}Part" lang="${language}" >
+<div class="Section1">
+$!{decorated}
+</div>
+</body></html>
+

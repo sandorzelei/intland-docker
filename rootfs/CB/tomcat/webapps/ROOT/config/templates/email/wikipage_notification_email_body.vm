@@ -1,0 +1,86 @@
+
+<div class="heading">
+$!{toptext}: [#${wikiPage.id}] #linkWikiPage(${wikiPage})
+</div>
+
+#account(${originator})
+
+#partHeader("${textFormatter.getMessage('issue.details.label')}")
+
+#tableOpen()
+
+##trTitle("${textFormatter.getMessage('issue.details.label')}" "document")
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.description.label')}")
+	#tdText($textFormatter.format(${wikiPage.description}, ${wikiPage.descriptionFormat}, ${wikiContext}))
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.project.label')}")
+	#tdText("#linkProject(${wikiPage.project})")
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.owner.label')}")
+	#tdText("#linkUser(${wikiPage.owner})")
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.status.label')}")
+	#tdText(${textFormatter.getMessageWithDefault("document.status.${wikiPage.status.name}", ${wikiPage.status.name})})
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.lastModifiedAt.label')}")
+	#tdText("${textFormatter.formatDate($recipient, ${wikiPage.lastModifiedAt})}")
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.fileSize.label')}")
+	#tdNumber(${wikiPage.fileSize})
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.version.label')}")
+	#set($revisionText = ${wikiPage.version})
+	#if(${contentUpdated})
+		#set($revisionText = "$revisionText #newTablet()")
+	#end
+	#tdText($revisionText)
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.account.label')}")
+	#tdText("#linkUser(${originator})")
+#trClose()
+
+##if( ${originator.phone} )
+##	#trOpen()
+##		#tdField("Phone")
+##		#tdText(${originator.Phone})
+##	#trClose()
+##end
+
+#if( ${originator.company} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.company.label')}")
+		#tdText($textFormatter.escape(${originator.company}))
+	#trClose()
+#end
+
+#if( ${originator.country} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.country.label')}")
+		#tdText($textFormatter.getCountryName(${originator.country}))
+	#trClose()
+#end
+
+#if( ${geoLocationResolver.canonicalRemoteAddress} )
+	#trOpen()
+		#tdField("Host")
+		#tdText($textFormatter.escape(${geoLocationResolver.canonicalRemoteAddress}))
+	#trClose()
+#end
+
+#tableClose()

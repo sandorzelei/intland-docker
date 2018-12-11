@@ -1,0 +1,37 @@
+## $Revision$ $Date$
+
+<h3>
+${issues.size()} ${textFormatter.getMessage('issue.committed.label')} ${repository}
+#if(${since})
+  #if(${until})
+  	between ${since} and ${until}
+  #else
+  	since ${since}
+  #end
+#elseif(${until})
+	until ${until}
+#end
+</h3>
+
+#if($issues.size() > 0)
+  <table border="1" cellpadding="4" frame="box" rules="cols" style="border-collapse: separate;border-spacing: 4px;">
+	<tr>
+      <th>${textFormatter.getMessage('issue.id.label')}</th>
+      <th>${textFormatter.getMessage('issue.summary.label')}</th>
+    </tr>
+	#foreach($item in $issues)
+	  <tr>
+	    <td>
+		  #if($item.closed)
+			[<SPAN CLASS="closedItem">${item.keyAndId}</SPAN>]
+		  #else
+			[${item.keyAndId}]
+		  #end
+	    </td>
+	    <td>
+	      <A HREF="${cbBaseUrl}${item.urlLink}">${item.summary}</A>
+	    </td>
+	  </tr>
+	#end
+  </table>
+#end

@@ -1,0 +1,122 @@
+#parse("./includes/guide-macros.vm")
+
+<div class="newskin">
+#wikiBoxOpen(${command})
+	#set($browseTrackerUrl = "${contextPath}/tracker")
+
+	#define($title) #i18n('testing.guide.plugin.title') #end
+	#wikiBoxTitle("$!{title}")
+
+	<table class="guide" cellspacing="0">
+			<tbody>
+				#if($isLicensed)
+					<tr>
+						#set($requirementsCreated = (${requirementStats.allItems} > 0))
+						<td class="iconic">#stepSign(true $requirementsCreated)</td>
+						#stepLinkAndDescription("/trackers/documentView/create.spr?tracker_id=${requirementTracker.id}" "testing.guide.plugin.define.requirements")
+						#stepAdvice("testing.guide.plugin.define.requirements", ${requirementStats}, "/tracker/${requirementTracker.id}")
+					</tr>
+					<tr>
+						#set($testCasesCreated = ($testCaseStats.allItems > 0))
+						<td class="iconic">#stepSign(true $testCasesCreated)</td>
+						#stepLinkAndDescription("/trackers/documentView/create.spr?tracker_id=${testCaseTracker.id}" "testing.guide.plugin.define.testcases")
+						#stepAdvice("testing.guide.plugin.define.testcases", ${testCaseStats}, "/tracker/${testCaseTracker.id}")
+					</tr>
+					<tr>
+						#set($releasesCreated = ($releaseStats.allItems > 0))
+						<td class="iconic">#stepSign(true $releasesCreated)</td>
+						#stepLinkAndDescription("/tracker/${releaseTracker.id}/create" "testing.guide.plugin.define.releases")
+						#stepAdvice("testing.guide.plugin.define.releases", ${releaseStats}, "/tracker/${releaseTracker.id}")
+					</tr>
+					<tr>
+						#set($testConfigurationsCreated = ($testConfigurationStats.allItems > 0))
+						<td class="iconic">#stepSign(true $testConfigurationsCreated)</td>
+						#stepLinkAndDescription("/tracker/${testConfigurationTracker.id}/create" "testing.guide.plugin.define.configs")
+						#stepAdvice("testing.guide.plugin.define.configs", ${testConfigurationStats}, "/tracker/${testConfigurationTracker.id}")
+					</tr>
+					<tr>
+						#set($testSetsCreatable = $testCasesCreated)
+						#set($testSetsCreated = ($testSetStats.allItems > 0))
+						<td class="iconic">#stepSign($testSetsCreatable $testSetsCreated)</td>
+						#stepLinkAndDescription("/tracker/${testSetTracker.id}/create" "testing.guide.plugin.define.testsets" $testSetsCreatable)
+						#stepAdvice("testing.guide.plugin.define.testsets", ${testSetStats}, "/tracker/${testSetTracker.id}" $testSetsCreatable)
+					</tr>
+					<tr>
+						#set($testRunsInitiable = $testConfigurationsCreated && $testSetsCreated)
+						#set($testRunsInitiated = ($testRunStats.allItems > 0))
+						<td class="iconic">#stepSign($testRunsInitiable $testRunsInitiated)</td>
+						<td class="step">
+							#set($initiateTestRunsText = ${textFormatter.getMessage("testing.guide.plugin.define.testruns")})
+							#stepLink("${request.contextPath}/tracker/${testSetTracker.id}" "${initiateTestRunsText}" $testRunsInitiable)
+							<br><small>#i18n("testing.guide.plugin.define.testruns.description")<small>
+						</td>
+						<td class="advice">
+							<small>
+								#if($testRunsInitiated)
+									<a href="${request.contextPath}/tracker/${testRunTracker.id}?view_id=-2">
+										#i18n("testing.guide.plugin.define.testruns.satisfied", $testRunStats.allItems)
+									</a>
+									#i18n("testing.guide.plugin.define.testruns.defined")
+								#else
+									#if($testRunsInitiable)
+										<img src="$adviceIconUrl"> #i18n("testing.guide.plugin.define.testruns.advice")
+									#else
+										#if(!$testConfigurationsCreated)
+											<img src="$adviceIconUrl"> #i18n("testing.guide.plugin.define.testruns.advice.define.configs")
+										#else
+											<img src="$adviceIconUrl"> #i18n("testing.guide.plugin.define.testruns.advice.define.testsets")
+										#end
+									#end
+								#end
+							</small>
+						</td>
+					</tr>
+					<tr>
+						#set($testRunsExecutable = ($testRunStats.openItems > 0))
+						#set($testRunsCompleted = ($testRunStats.allItems > $testRunStats.openItems))
+						<td class="iconic">#stepSign($testRunsExecutable $testRunsCompleted)</td>
+						#set($executeTestRunsText = ${textFormatter.getMessage("testing.guide.plugin.execute.testruns")})
+						<td class="step">
+							#stepLink("${request.contextPath}/tracker/${testRunTracker.id}" "${executeTestRunsText}" $testRunsExecutable)
+							<br><small>#i18n("testing.guide.plugin.execute.testruns.description")<small>
+						</td>
+						<td class="advice">
+							<small>
+								#if($testRunsExecutable)
+									<a href="${request.contextPath}/tracker/${testRunTracker.id}?view_id=-1">
+										#i18n("testing.guide.plugin.execute.testruns.satisfied" $testRunStats.openItems)
+									</a> #i18n("testing.guide.plugin.execute.testruns.defined")
+								#else #if($testRunsInitiable)
+									<img src="$adviceIconUrl"> #i18n("testing.guide.plugin.execute.testruns.advice")
+								#else #if(!$testConfigurationsCreated)
+									<img src="$adviceIconUrl"> #i18n("testing.guide.plugin.execute.testruns.advice.define.configs")
+								#else
+									<img src="$adviceIconUrl"> #i18n("testing.guide.plugin.execute.testruns.advice.define.testsets")
+								#end #end #end
+							</small>
+						</td>
+					</tr>
+					<tr>
+						<td class="iconic">#stepSign($testRunsCompleted $testRunsCompleted)</td>
+						#set($analyseTestResultsText = ${textFormatter.getMessage("testing.guide.plugin.analyze.results")})
+						<td class="step">
+							#stepLink("${request.contextPath}/trackers/coverage/coverage.spr?tracker_id=${requirementTracker.id}" "${analyseTestResultsText}" $testRunsCompleted)
+							<br><small>#i18n("testing.guide.plugin.analyze.results.description")<small>
+						</td>
+						<td class="advice">
+							<small>#if(!$testRunsCompleted) <img src="$adviceIconUrl">#i18n("testing.guide.plugin.analyze.results.advice") #end</small>
+						</th>
+					</tr>
+				#else
+					<tr>
+						<td>
+							<b>#i18n("testing.guide.plugin.tm.license.error")</b>
+							<br><br>
+							#i18n("testing.guide.plugin.tm.license.error.suffix")
+						</td>
+					</tr>
+				#end
+			</tbody>
+	</table>
+#wikiBoxClose()
+</div>

@@ -1,0 +1,34 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		function isAnyOptionSelected(name) {
+			var selected = $("select[name=params\\[" + name + "\\]]").multiselect("getChecked");
+
+			return selected.size() !== 0;
+		}
+
+		$("select[name=params\\[sourceTrackerId\\]]").on("change", function() {
+			if (isAnyOptionSelected("sourceTrackerId")) {
+				$("select[name=params\\[referringTrackerType\\]]").multiselect("disable");
+			} else {
+				$("select[name=params\\[referringTrackerType\\]]").multiselect("enable");
+			}
+		});
+
+		$("select[name=params\\[referringTrackerType\\]]").on("change", function() {
+			if (isAnyOptionSelected("referringTrackerType")) {
+				$("select[name=params\\[sourceTrackerId\\]]").multiselect("disable");
+			} else {
+				$("select[name=params\\[sourceTrackerId\\]]").multiselect("enable");
+			}
+		});
+
+		if (isAnyOptionSelected("sourceTrackerId")) {
+			$("select[name=params\\[referringTrackerType\\]]").multiselect("disable");
+		} else {
+			if (isAnyOptionSelected("referringTrackerType")) {
+				$("select[name=params\\[sourceTrackerId\\]]").multiselect("disable");
+			}
+		}
+	});
+</script>

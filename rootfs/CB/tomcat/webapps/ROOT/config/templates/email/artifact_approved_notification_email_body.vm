@@ -1,0 +1,20 @@
+#parse("notification_email_header.vm")
+
+#artifactApprovalReason(${artifact})
+
+${textFormatter.getMessage('document.label')} #if(${artifactApprovalHistoryEntry.approved}) #if(${artifactApprovalHistoryEntry.step.finalStep}) ${textFormatter.getMessage('artifact.approval.approved')} #else ${textFormatter.getMessage('artifact.approval.released')} #end #else <span style="color: #AA0000">${textFormatter.getMessage('artifact.approval.rejected')}</span>#end:
+
+<div class="heading">
+[#${artifact.id}] #linkArtifact(${artifact})
+</div>
+#account(${originator})
+
+#partHeader("${textFormatter.getMessage('document.version.label')}") ${artifactApprovalHistoryEntry.version}
+
+#partHeader("${textFormatter.getMessage('artifact.approval.workflow.step.label')}") <span class="#if(${artifactApprovalHistoryEntry.approved})approvedStep#else rejectedStep#end">$textFormatter.escape(${artifactApprovalHistoryEntry.step.name})</span>
+#if(${artifactApprovalHistoryEntry.step.finalStep} && ${artifactApprovalHistoryEntry.approved})
+	${textFormatter.getMessage('artifact.approval.released.message', ${artifactApprovalHistoryEntry.version})}
+#end
+#partHeader("${textFormatter.getMessage('artifact.approval.comment.label')}") $textFormatter.escape(${artifactApprovalHistoryEntry.comment})
+
+#parse("notification_email_footer.vm")

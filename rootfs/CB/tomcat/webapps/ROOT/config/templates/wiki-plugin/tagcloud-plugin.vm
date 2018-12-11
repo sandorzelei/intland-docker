@@ -1,0 +1,22 @@
+## $Revision: 23955:cdecf078ce1f $
+
+<div class="labellist" style="text-align: center;">
+#if(!$labels.empty())
+	#foreach($label in $labels)
+		#set($displayLabeledContentUrl = "$contextPath/proj/label/displayLabeledContent.do?labelId=${label.id}")
+		#set($fontSize = 8 + 16*$fontSizeScaler*${label.popularity})
+		#if($label.mostRecentlyUsedAt)
+			## label used at least once
+			#set($color = 128 - 128*$colorScaler*($label.mostRecentlyUsedAt.time - $minUsedAt.time))
+			#set($color = $math.toInteger($color))
+		#else
+			## label never used
+			#set($color = 160)
+		#end
+
+		<a href="${displayLabeledContentUrl}" style="font-size: ${fontSize}pt; color: rgb(${color}, ${color}, ${color});}">$textFormatter.escape($label.displayName)}</a>
+	#end
+#else
+	$textFormatter.getMessage('tags.none')
+#end
+</div>

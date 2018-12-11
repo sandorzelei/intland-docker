@@ -1,0 +1,19 @@
+## $Revision: 23955:cdecf078ce1f $ $Date: 2009-11-27 19:54 +0100 $
+<h3>$textFormatter.getMessage('user.issues.label') ${user.name}</h3>
+#tableOpen()
+	#foreach($trackerItem in $trackerItems)
+		#trOpen()
+			#tdText("#linkTrackerItem(${trackerItem})")
+			#tdSeparator()
+			#tdText("$textFormatter.getMessageWithDefault('tracker.${trackerItem.tracker.name}.label', ${trackerItem.tracker.name}) $textFormatter.getMessage('document.lastModifiedBy.short') ${trackerItem.submitter.name}")
+		#trClose()
+	#end
+#tableClose()
+
+<span style="font-size: smaller; color: #888888;">
+	#if(${trackerItems.size()} == 1)
+		(${trackerItems.size()} $textFormatter.getMessage('cmdb.category.item.label'))
+	#else
+		(${trackerItems.size()} $textFormatter.getMessage('cmdb.category.items.label'))
+	#end
+</span>

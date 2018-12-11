@@ -1,0 +1,4 @@
+## Renders a widget within a widget container suitable to add to a dashboard using Javascript
+#parse("/dashboard/dashboard-macros.vm")
+
+#renderWidget($widget, $renderingContext, $editable)

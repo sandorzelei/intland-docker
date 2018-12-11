@@ -1,0 +1,72 @@
+#wikiBoxOpen(${command})
+	#wikiBoxTitle("$!{command.title}", "#if(${release})${release.name}#end ${textFormatter.getMessage('cmdb.release.stats.current.velocity.title')}")
+	<table ${tableAttributes}>
+		<tbody>
+			#trOpen
+				#if((${isEnabledItemVelocity} && ${lastKnownData.openItems}) || (${isEnabledStoryPointVelocity} && ${lastKnownData.openStoryPoints}))
+					#if(${isEnabledItemVelocity})
+						<td ${itemContainerAttributes}>
+							#if(${isEnabledStoryPointVelocity})
+							<div ${textContainerAttributes}>
+							#end
+							#if(${lastKnownData.openItems} > 0)
+								#if(${lastKnownData.openItems} > 1)
+									${textFormatter.getMessage('cmdb.release.stats.current.velocity.issues.done.plural', ${lastKnownData.openItems}, ${itemCounterAttributesInfo}, ${itemCounterTag})} $textFormatter.formatDate(${user}, ${lastKnownData.lastDate}, true)
+									<div class="statistics">${textFormatter.getMessage('cmdb.release.stats.current.velocity.statistics', ${lastKnownData.resolvedItems}, ${lastKnownData.newItems}, ${resolvedCounterAttributes}, ${newCounterAttributes})}</div>
+								#else
+									${textFormatter.getMessage('cmdb.release.stats.current.velocity.issues.done', ${lastKnownData.openItems}, ${itemCounterAttributesInfo}, ${itemCounterTag})} $textFormatter.formatDate(${user}, ${lastKnownData.lastDate}, true)
+									<div class="statistics">${textFormatter.getMessage('cmdb.release.stats.current.velocity.statistics', ${lastKnownData.resolvedItems}, ${lastKnownData.newItems}, ${resolvedCounterAttributes}, ${newCounterAttributes})}</div>
+								#end
+							#elseif(${lastKnownData.openItems} == 0)
+								${textFormatter.getMessage('cmdb.release.stats.current.velocity.no.issues.done', ${itemCounterAttributesWarn}, ${itemCounterTag})} $textFormatter.formatDate(${user}, ${lastKnownData.lastDate}, true)
+								<div class="statistics">${textFormatter.getMessage('cmdb.release.stats.current.velocity.statistics', ${lastKnownData.resolvedItems}, ${lastKnownData.newItems}, ${resolvedCounterAttributes}, ${newCounterAttributes})}</div>
+							#else
+								#set($openItems = 0 - $lastKnownData.openItems)
+								${textFormatter.getMessage('cmdb.release.stats.current.velocity.issues.added', ${openItems}, ${itemCounterAttributesWarn}, ${itemCounterTag})} $textFormatter.formatDate(${user}, ${lastKnownData.lastDate}, true)
+								<div class="statistics">${textFormatter.getMessage('cmdb.release.stats.current.velocity.statistics', ${lastKnownData.resolvedItems}, ${lastKnownData.newItems}, ${resolvedCounterAttributes}, ${newCounterAttributes})}</div>
+							#end
+							#if(${isEnabledStoryPointVelocity})
+							</div>
+							#end
+						</td>
+					#end
+					#if(${isEnabledStoryPointVelocity})
+						<td ${storyPointContainerAttributes}>
+							#if(${isEnabledItemVelocity})
+							<div ${textContainerAttributes}>
+							#end
+
+						#if(${lastKnownData.openStoryPoints} > 0)
+							#if(${lastKnownData.openStoryPoints} > 1)
+								${textFormatter.getMessage('cmdb.release.stats.current.velocity.story.points.done.plural', ${lastKnownData.openStoryPoints}, ${itemCounterAttributesInfo}, ${itemCounterTag})} $textFormatter.formatDate(${user}, ${lastKnownData.lastDate}, true)
+								<div class="statistics">${textFormatter.getMessage('cmdb.release.stats.current.velocity.statistics', ${lastKnownData.resolvedStoryPoints}, ${lastKnownData.newStoryPoints}, ${resolvedCounterAttributes}, ${newCounterAttributes})}</div>
+							#else
+								${textFormatter.getMessage('cmdb.release.stats.current.velocity.story.points.done', ${lastKnownData.openStoryPoints}, ${itemCounterAttributesInfo}, ${itemCounterTag})} $textFormatter.formatDate(${user}, ${lastKnownData.lastDate}, true)
+								<div class="statistics">${textFormatter.getMessage('cmdb.release.stats.current.velocity.statistics', ${lastKnownData.resolvedStoryPoints}, ${lastKnownData.newStoryPoints}, ${resolvedCounterAttributes}, ${newCounterAttributes})}</div>
+							#end
+						#elseif(${lastKnownData.openStoryPoints} == 0)
+							${textFormatter.getMessage('cmdb.release.stats.current.velocity.no.story.points.done', ${itemCounterAttributesWarn}, ${itemCounterTag})} $textFormatter.formatDate(${user}, ${lastKnownData.lastDate}, true)
+							<div class="statistics">${textFormatter.getMessage('cmdb.release.stats.current.velocity.statistics', ${lastKnownData.resolvedStoryPoints}, ${lastKnownData.newStoryPoints}, ${resolvedCounterAttributes}, ${newCounterAttributes})}</div>
+						#else
+							#set($openStoryPoints = 0 - $lastKnownData.openStoryPoints)
+							${textFormatter.getMessage('cmdb.release.stats.current.velocity.story.points.added', ${openStoryPoints}, ${itemCounterAttributesWarn}, ${itemCounterTag})} $textFormatter.formatDate(${user}, ${lastKnownData.lastDate}, true)
+							<div class="statistics">${textFormatter.getMessage('cmdb.release.stats.current.velocity.statistics', ${lastKnownData.resolvedStoryPoints}, ${lastKnownData.newStoryPoints}, ${resolvedCounterAttributes}, ${newCounterAttributes})}</div>
+						#end
+						</td>
+						#if(${isEnabledItemVelocity})
+							</div>
+						#end
+					#end
+				#else
+					<td>
+						#if(${release})
+							${textFormatter.getMessage('cmdb.release.stats.current.velocity.not.enough.data')}
+						#else
+							${textFormatter.getMessage('cmdb.release.stats.burndown.chart.not.sprint')}
+						#end
+					</td>
+				#end
+			#trClose
+		</tbody>
+	</table>
+#wikiBoxClose()

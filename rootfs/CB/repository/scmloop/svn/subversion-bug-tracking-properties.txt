@@ -1,0 +1,10 @@
+$Id$
+
+The subversion properties as below must be configured to use subclipce and/or tortoise with CodeBeamer.
+The content of "bugtraq:url" depends on your Codebeamer installation.
+
+bugtraq:append			false
+bugtraq:message			#%BUGID%
+bugtraq:number			true
+bugtraq:url				https://codebeamer.com/cb/issue/%BUGID%
+bugtraq:warnifnoissue	true

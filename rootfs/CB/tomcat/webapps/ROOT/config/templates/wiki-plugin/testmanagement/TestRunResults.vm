@@ -1,0 +1,932 @@
+#*
+  Renders the Results of a TestRun
+
+  TODO: escaping
+  TODO: null/ empty handling
+*#
+
+<!-- command: #esc(${command}) -->
+
+#if ("$!{testRun}" == "")
+<div class="testRunResultsPlugin">
+	<div class="warning">#i18n('table.nothing.found')</div>
+</div>
+#else
+
+<!--
+	TODO: rendering testRun: ${testRun}
+-->
+
+## if this is in Word export mode ?
+#set($exporting = ${command.export})
+
+#if($exporting)
+	## export dates as absolute, don't print out things like "Today"
+	${textFormatter.setAbsoluteDates(true)}
+#end
+
+#set($tr = ${testRun.delegate})
+
+#macro(linkReferables $refs $linkParams)
+  #foreach($ref in $refs)
+  	#if( $velocityCount>1 ),#end
+  	#if( "$!{ref}" != "") ${dtoFieldRenderers.renderIcon($ref, $request.contextPath)} #end
+   	#linkReferableDtoWithParams($ref "" $linkParams)
+  #end
+#end
+
+#macro(showAssignedTo $assignedTo)
+#* AssignedTo is a list of users/roles etc... *#
+	#foreach($assigned in $!{assignedTo})
+		#if ("$!{assigned}" != "")
+			#if( $velocityCount>1 ),#end
+
+	  		#if ($assigned.class.name.contains("UserDto"))
+	  			#linkUserShort($!{assigned})
+	  		#else
+	  			#* Role *#
+	  			## #linkReferableDto($!{assigned})	 #* Role *#
+	  			#esc($!{assigned.name})
+	  		#end
+	  	#end
+	#end
+#end
+
+<div class="testRunResultsPlugin" id="testRunResultsPlugin_${pluginId}">
+
+<style type="text/css">
+  .testRunResultsPlugin >table td,
+  .testRunResultsPlugin table.testStepResults td {
+  		padding: 5px;
+  		vertical-align: top;
+  }
+
+  .testRunResultsPlugin table.testRunSummaryTable td {
+  		width: 16%;
+  }
+
+  .testRunSummaryTable {
+  		margin-bottom: 10px;
+  }
+
+	.filterByResult {
+		cursor: pointer;
+	}
+
+	.filterSelected {
+		background-color: #f5f5f5 !important;
+		// border: solid 1px red;
+	}
+</style>
+
+<script type="text/javascript">
+	function reload(el, params) {
+		var url = contextPath + "/ajax/testrun/testRunResults.spr?task_id=${testRun.delegate.id}&";
+		var target = $(el).closest(".testRunResultsPlugin").closest(".wikiContent").parent();
+		target.html("<img src='" + contextPath + "/images/ajax_loading_horizontal_bar.gif'/>");
+		target.load(url + params);
+	}
+
+	$(function() {
+		var thisPlugin = $("#testRunResultsPlugin_${pluginId}");
+		var filterElements = $(thisPlugin).find(".filterByResult");
+
+		var getFilterValue = function(el) {
+			var filter = $(el).closest("[data-result]").attr("data-result");
+			return filter;
+		}
+
+		$(filterElements).on("click", function() {
+			var filterValue = getFilterValue(this);
+			return reloadFiltered(filterValue);
+		});
+
+		var filterByResultVal = '${command.testRunResult}';
+		$(filterElements).each(function() {
+			var filter = getFilterValue(this);
+			if (filter == filterByResultVal) {
+				$(this).closest("tr").addClass("filterSelected");
+			}
+		});
+	});
+</script>
+
+#set($CSS_CLASS_HALFWIDTH = " halfwidth")
+#if($exporting)
+	## TODO: Word does not correctly parse the CSS class if that has multiple classes: only the 2nd css class seems to be used ????
+	## as workaround removing this from Word export
+	#set($CSS_CLASS_HALFWIDTH = "")
+#end
+
+#macro(printClosedAt $closedAtDate)
+	#if ("$!{closedAtDate}" == "")
+  		<span class="noResult">#i18n('testrun.results.plugin.not.completed.yet')</span>
+	#else
+  		$!{textFormatter.formatDate(${user}, $!{closedAtDate}, true)}
+  	#end
+#end
+
+#macro(paging $showAsSelectBox)
+#set($showingAll = ($command.isShowingAll()))
+#if (${command.numPages} > 1)
+	#if ($showAsSelectBox)
+		#i18n("testrun.filter.item.number.filter"):
+		<select class="filter" style="margin-left: 10px;" id="paging"
+			onchange="return reloadFiltered();"
+		>
+			#set($start = 1)
+			#foreach($p in [1..${command.numPages}])
+				<option value="page=${p}"
+					#if ("$p" == "${command.page}") selected="selected" #end
+				>#set($end = ${start} + ${command.pageSize} - 1)
+				#if ($end > ${command.numTestCases}) #set($end = ${command.numTestCases}) #end
+				#${start} - ${end}
+				#set($start = $end + 1)
+				</option>
+			#end
+			<option value="page=-2"
+                #if ($showingAll) selected="selected" #end
+            >#i18n("testrun.filter.item.number.filter.show.all")</option>
+		</select>
+	#else
+## unused old school links for paging
+#*
+		<style type="text/css">
+			.pageLink {
+				margin-right: 5px;
+			}
+		</style>
+		#foreach($p in [1..${command.numPages}])
+			#if ("$p" == "${command.page}") <b class="pageLink">$p</b> #else
+				<a class="pageLink" href="#" onclick="reloadPage(this, $p); return false;" >$p</a>
+			#end
+		#end
+		<a class="pageLink" href="#" onclick="showAllPages(this); return false;" >All</a>
+*#
+	#end
+#end
+#end
+
+
+#* Summary info about an TestRun *#
+<table class="testRunSummaryTable$!{$CSS_CLASS_HALFWIDTH}">
+  <tr>
+  	<td class="labelCell">Tracker:</td>
+  	<td class="valueCell">#linkReferableDto($!{tr.tracker})</td>
+
+  	<td class="labelCell">#i18n('tracker.type.Testset'):</td>
+  	<td class="valueCell">#linkReferableDto($!{testRun.testSet})</td>
+
+  	<td class="labelCell">#i18n('tracker.field.Priority.label'):</td>
+  	<td class="valueCell">$!{tr.namedPriority.name}</td>
+  </tr>
+  <tr>
+  	<td class="labelCell">#i18n('tracker.field.Status.label'):</td>
+  	<td class="valueCell">#showTestRunStatus($!{testRun})</td>
+
+  	<td class="labelCell">#i18n('tracker.field.Result.label'):</td>
+  	<td class="valueCell">#showTestRunResult($!{testRun.testRunResult})</td>
+
+  	<td class="labelCell">#i18n('testrun.results.plugin.completed.at'):</td>
+  	<td class="valueCell">#printClosedAt($!{tr.closedAt})</td>
+  </tr>
+
+  <tr>
+  	<td class="labelCell">#i18n('tracker.type.Release'):</td>
+  	<td class="valueCell">#linkReferables($!{testRun.releases})</td> #* TODO: multiple releases possible ? *#
+
+  	<td class="labelCell">#i18n('tracker.field.Test Configuration.label'):</td>
+  	<td class="valueCell">#linkReferableDto($!{testRun.testConfiguration})</td>
+
+  	<td class="labelCell">#i18n('testrunner.build.label'):</td>
+  	<td class="valueCell">$!{testRun.build}</td>
+  </tr>
+
+  <tr>
+  	<td class="labelCell">#i18n('user.issues.submittedBy'):</td>
+  	<td class="valueCell">#linkUserShort($!{tr.submitter})</td>
+
+  	<td class="labelCell">#i18n('tracker.field.Modified by.label'):</td>
+  	<td class="valueCell">#linkUserShort($!{tr.modifier})</td>
+
+  	<td class="labelCell">#i18n('user.issues.assignedTo'):</td>
+	<td class="valueCell">#showAssignedTo($!{tr.assignedTo})</td>
+  </tr>
+
+  <tr>
+  	<td class="labelCell">#i18n('tracker.field.Running Time.label'):</td>
+  	<td class="valueCell">$!{testRun.runtimeFormatted}</td>
+
+  	<td class="labelCell">#i18n('testrun.results.plugin.reported.items'):</td>
+  	<td class="valueCell" colspan="3">#linkReferables($!{testRun.reportedBugs})</td>
+  </tr>
+</table>
+
+#if ("$!{tr.description}" != "")
+<div class="testRunDescription">
+	<h3>#i18n('tracker.field.description.label')</h3>
+	${textFormatter.format("${tr.description}", "${tr.descriptionFormat}", ${request}, ${tr})}
+</div>
+#else
+	## description is empty: leave some gap between the tables
+	#if($exporting)
+		<div>&nbsp;</div>
+	#end
+#end
+
+## check if this TestRun has TestCases at all
+#if ($testRun.isTestRunsMissing())
+<div class="warning" style='margin:0;'>#i18n('testrun.results.plugin.no.result.yet')</div>
+#else
+
+#* Table about the number of Tests run *#
+<style type="text/css">
+   .testRunExecutedCount {}
+   .testRunPassedCount { color: #00a85d !important; } /* green */
+   .testRunFailedCount { color: #b31317 !important;	/* red */ }
+   .testRunBlockedCount { color: #777777 !important;	/* grey */ }
+   .testRunSkippedCount { color: #ffab46 !important; } /* slight orange */
+   .testRunRemainingCount { }
+
+   .testRunExecutedCount, .testRunPassedCount ,.testRunFailedCount, .testRunBlockedCount, .testRunSkippedCount, .testRunRemainingCount {
+   		font-weight: bold;
+   		text-align: right;
+   		min-width: 4em;
+   }
+
+   .testRunResultsPlugin td.testRunExecutedChart:hover {
+   		background-color: none !important;
+   }
+
+   .testRunResultsPlugin .testRunExecutedChart .highchartbox {
+   		border: none !important;
+   }
+
+   .testRunResultsPlugin .testRunProgressCounts {
+   		margin-top: 10px;
+   }
+
+   .testRunResultsPlugin .showAll {
+	   display: inline-block;
+	   margin-left: 15px;
+	   font-weight: normal;
+   }
+
+   .testRunResultsPlugin .warning {
+	   display: inline-block;
+	   font-weight: normal;
+	   margin: 0 0 0 15px;
+	   padding-top: 5px;
+	   padding-bottom: 5px;
+	   background-position: 10px 5px;
+   }
+
+</style>
+
+<table class="testRunProgressCounts">
+  #set($label = "#i18n('testrun.results.plugin.stats.executed.testcases')")
+  <tr title="${label}" data-result="executed" >
+    <td class="labelCell filterByResult">${label}:</td>
+    <td class="testRunExecutedCount filterByResult" >${testCaseRunStats['Executed']}</td>
+
+## TODO: the pie chart is not rendered in Word somehow, so removing this
+#if (! $exporting)
+	    <td class="testRunExecutedChart" rowspan="6" style="margin:0; padding:0;border:0;" >
+	#define($chartMarkup)
+	   [{ PieChart title='' threed='false' width='300' height='150' legend='false' seriespaint='#f1f1f1,#00a85d,#b31317,#777777,#ffab46'
+
+	    Remaining, ${testCaseRunStats['Remaining']}
+		Passed, ${testCaseRunStats['Passed']}
+		Failed, ${testCaseRunStats['Failed']}
+		Blocked, ${testCaseRunStats['Blocked']}
+		#if (${testCaseRunStats['Skipped']} > 0)
+			Skipped, ${testCaseRunStats['Skipped']}
+		#end
+		}]
+	#end
+
+	## render the pie chart's wiki
+	$textFormatter.format("${chartMarkup}", "W", $wikiContext)
+    </td>
+#end
+  </tr>
+  #set($label = "#i18n('testrun.results.plugin.stats.remaining.testcases')")
+  <tr title="${label}" data-result="remaining">
+    <td class="labelCell filterByResult" >${label}:</td>
+    <td class="testRunRemainingCount filterByResult" >${testCaseRunStats['Remaining']}</td>
+  </tr>
+  #set($label = "#i18n('testrun.results.plugin.stats.passed.testcases')")
+  <tr title="${label}" data-result="passed">
+    <td class="labelCell filterByResult" >${label}:</td>
+    <td class="testRunPassedCount filterByResult" >${testCaseRunStats['Passed']}</td>
+  </tr>
+  #set($label = "#i18n('testrun.results.plugin.stats.failed.testcases')")
+  <tr title="${label}" data-result="failed" >
+    <td class="labelCell filterByResult" >${label}:</td>
+    <td class="testRunFailedCount filterByResult" >${testCaseRunStats['Failed']}</td>
+  </tr>
+  #set($label = "#i18n('testrun.results.plugin.stats.blocked.testcases')")
+  <tr title="${label}" data-result="blocked">
+    <td class="labelCell filterByResult" >${label}:</td>
+    <td class="testRunBlockedCount filterByResult" >${testCaseRunStats['Blocked']}</td>
+  </tr>
+  #if (${testCaseRunStats['Skipped']} > 0)
+	  #set($label = "#i18n('testrun.results.plugin.stats.skipped.testcases')")
+	  <tr title="${label}">
+	    <td class="labelCell" >${label}:</td>
+	    <td class="testRunSkippedCount" >${testCaseRunStats['Skipped']}</td>
+	  </tr>
+  #end
+</table>
+
+## HERE
+
+#* The summary of executed TestCases *#
+<h3>
+	#if("$!{testRunResultFilter}" != "")
+		#set($resultCode = "testrun.filter.$!{testRunResultFilter}.label")
+		#i18n($resultCode)
+		<span class="warning">#i18n('testrun.filter.warning')</span>
+	#else
+		#i18n('testrun.results.plugin.tests.summary.label'):
+	#end
+</h3>
+
+#*
+<pre>
+command: ${command}
+</pre>
+*#
+
+#if (${command.totalNumOfTestCases} > 1) ## don't show filter if only 1 TestCase here
+#* paging and filtering *#
+<div class="actionBar" style="padding: 10px;margin-bottom: 10px;border-bottom:none;">
+<form id="filterForm">
+#i18n("testrun.filters.result"):
+ <select class="filter" name="testRunResult" style="margin-left:10px;" onchange="return reloadFiltered();">
+ 	<option value="">#i18n("testrun.filter.option.all")</option>
+ 	#foreach ($resultFilter in $testRunFilters)
+ 		<option value="${resultFilter}" #if("${resultFilter}" == "${command.testRunResult}") selected="selected" #end >
+ 			#i18n("testrun.filter.option.${resultFilter}")
+ 		</option>
+ 	#end
+ </select>
+
+<input style="margin-left:10px;margin-right:10px;" class="filter" name="filterText" value="$!{command.filterText}" placeholder="#i18n('testrun.filter.by.text')" >
+#paging(true)
+<input style="margin-left:10px;" type="submit" class="actionButton" onclick="return reloadFiltered();" value="#i18n('testrun.filter.submit')"/>
+#if ($command.totalNumOfTestCases > $command.numTestCases)
+<input style="margin-left:5px;" type="submit" class="actionButton" onclick='return reloadFiltered("", true);' value="#i18n('testrun.filter.item.number.filter.clear.filter')" />
+#end
+</form>
+
+</div>
+#end
+<script>
+	function reloadFiltered(resultFilterVal, clearFilter) {
+	    var $filterText = $("input[name='filterText']");
+	    var filterText = $filterText.val();
+	    if (filterText.length > 0 && filterText.length < 3) {
+	        $filterText.css({"border": "solid 2px red"});
+	        alert('#i18n("testrun.filter.by.text.min.length")');
+	        return false;
+        }
+
+		#if (${command.totalNumOfTestCases} <= 1)
+			// only 1 TestCase: filtering does nothing
+		#else
+		var form = $("#filterForm");
+		var params = [];
+		form.find(".filter").each(function() {
+			var el = $(this);
+			if (clearFilter) {
+				el.val("");
+			} else {
+				var name = el.attr("name");
+				var val = el.val();
+				if (resultFilterVal != null && name == "testRunResult") {
+
+					// force the passed value
+					val = resultFilterVal;
+				}
+
+				// if has "name" attribute add that too
+				params.push(name ? (encodeURIComponent(name) + "=" + encodeURIComponent(val)) : val);
+			}
+		});
+		var urlParams = params.join("&");
+		reload(form, urlParams);
+		#end
+	}
+</script>
+
+
+<style type="text/css">
+	.testRunResultsPlugin table.halfwidth {
+		min-width: 70%;
+		box-sizing: border-box;
+	}
+
+	## responsive design:
+	@media screen and (max-width: 1200px) {
+		.testRunResultsPlugin table.halfwidth {
+			width: 100%;
+		}
+	}
+
+	.testRunResultsPlugin table tr:hover {
+		background-color: #f5f5f5 !important;
+	}
+	.testRunResultsPlugin table td {
+		vertical-align: top;
+	}
+	.testRunResultsPlugin table th {
+	    background: none;
+	    font-weight: normal;
+	    color: #666666;
+	    text-align: left;
+	    padding: 5px;
+
+	    border-bottom: solid 1px #d1d1d1;
+	}
+	.testRunResultsPlugin a:hover {
+		text-decoration: none;
+	}
+
+	.testRunResultsPlugin .rowSeparated {
+		border-top: solid 1px #f5f5f5 !important;
+	}
+
+	.testRunResultsPlugin .noResult {
+		color: #666666;
+		font-size: 10px;
+	}
+
+	.testRunResultsPlugin tbody.parameterisedChildren {
+		display:none;
+	}
+
+	.testRunResultsPlugin tbody.parameterisedChildren .testRunParametersWiki {
+		## border: solid 1px red !important;
+	}
+
+	.testRunResultsPlugin tbody.parameterisedChildren .TestRunParametersPlugin {
+		## border: solid 1px blue !important;
+		margin: 0 20px !important;
+		width: 95%;
+		box-sizing: border-box;
+	}
+
+	.testRunResultsPlugin tbody.parameterisedChildren .showDetailsImage {
+		float:left;
+	}
+	.testRunResultsPlugin .showDetailsImage img {
+		margin-top: 4px;
+	}
+
+	.testRunResultsPlugin .conclusionPart {
+		margin: 0 0 0 25px !important;
+		box-sizing: border-box;
+	}
+
+#if (! ${exporting})
+	.testRunResultsPlugin .testCaseRunsExecutedSummary {
+		margin-left: -15px !important;
+	}
+#end
+
+	.testRunResultsPlugin .testCaseRunsExecutedSummary tbody:hover {
+		background-color: #f5f5f5 !important;
+	}
+
+	.testRunResultsPlugin .testCaseRunsExecutedSummary tbody.parameterisedChildren:hover {
+		background-color: transparent !important;
+	}
+</style>
+
+#macro(showTestRunResult $testRunResult $skipped)
+ #if ($testRunResult)
+ 	#if($exporting)
+ 	    ## Note: Word ignores the multiple CSS classes on the TestRunResult tablet, so using special markup and CSS for this
+ 		<span class="testRunResult${testRunResult}">&nbsp;${testRunResult}&nbsp;</span>
+ 	#else
+ 		$!{testRunResult.renderAsHtml($request)}
+ 	#end
+ #else
+    #if($skipped)
+    	## no result means-> SKIPPED
+    	<span class='testRunResultTablet testRunPartial' >#i18n('testrunner.skipped.parameter.badge')</span>
+    #else
+ 		<span class="noResult">#i18n('testcase.not.ran.yet')</span>
+ 	#end
+ #end
+#end
+
+#macro(linkTestCases $testCases $postfix)
+  #set($linkParams = "target='$newBrowserWindowTarget'")
+
+  #foreach($ref in $testCases)
+  	#if( $velocityCount>1 ),#end
+
+	#if (! $exporting)	## TODO: the icon does not appear in Word, so removing it
+    	## render the icon for the TrackerItemDto
+  		${dtoFieldRenderers.renderIcon($ref, $request.contextPath)}
+  	#end
+
+   	#set($url = "${cbBaseUrl}${ref.getUrlLink()}?version=${ref.version}")		## a link correct TestCase version!
+	#set($desc = "#getItemSummary($ref)")
+	#if ("$!{desc}" == "")
+	 	#set($desc = "$!{ref.interwikiLink}")
+	#end
+	#if ($exporting) <p style="mso-outline-level:4;" > #end		## add special p so this will appear in the Word export's TOC: note we could use H4 too, but that adds some margin
+	<a href="${url}" $!{linkParams} >
+		[${ref.keyAndId}]&nbsp;${desc}
+		#if(! $exporting)${uiGenerator.renderReferenceSettingBadges($ref, $request)}$!{postfix}#else (${ref.version}) #* badge does not look good in Word *##end</a>#if ($exporting) </p> #end
+  #end
+#end
+
+## Generate the anchor url for a TestCaseRun
+#macro(testCaseRunAnchor $testCaseRun)
+  #set($anchor="TestCaseRun_${testCaseRun.delegate.id}")
+#end
+
+#macro(showTestRunStatus $testCaseRun)
+ ## nice rendering of the status
+ $!{decorator.initForTrackerItem($testCaseRun.delegate)}
+ $!{decorator.status}
+#end
+
+## Render the TestCaseRun's result or its status if has no result (not run yet)
+#macro(showTestCaseResultOrStatus $testCaseRun)
+   #if(${testCaseRun.isCompleted()})
+   	   ## for completed always show the result even if that is empty: happens when the TestSetRun is closed using Finish Run button
+   	   #showTestRunResult($!{testCaseRun.testRunResult} true)
+   #elseif(${testCaseRun.isCompletedOrSuspended()} && ${testCaseRun.testRunResult})
+       #showTestRunResult($!{testCaseRun.testRunResult})
+   #else
+   	   #showTestRunStatus($testCaseRun)
+   #end
+#end
+
+#if (! ${exporting})
+<script type="text/javascript">
+	function showTestRunDetails(link) {
+		var $a = $(link);
+		if ($a.closest("tr").hasClass("withParams")) {
+			var $tbody = $a.closest("tbody").next();
+			$tbody.toggle();
+
+			updateLinkImage(link);
+		} else {
+			$("#testRunDetails").removeClass("collapsingBorder_collapsed").addClass("collapsingBorder_expanded");
+
+			var $anchor = $a.attr("href");
+			var $block = $($anchor).closest(".testCaseRunDetails").first();
+			flashChanged($block, "white", function() {
+				// remove the background color set by flash so :hover will highlight the TestCaseRun properly
+				$block.css({"background-color": ""});
+			});
+		}
+	}
+
+	function updateLinkImage(link) {
+		var $img = $(link).closest("tr").find(".showDetailsImage img");
+
+		// change the image in as the details shown or hidden
+		var src = $img.attr("src");
+		if (src.indexOf("plus.png") != -1) {
+			src = src.replace("plus.png", "minus.png");
+		} else {
+			src = src.replace("minus.png", "plus.png");
+		}
+		$img.attr("src", src);
+	}
+
+	function showTestRunDetailsOfRow(link) {
+		$(link).closest("tr").find(".showTestRunDetailsLink").click();
+	}
+</script>
+#end
+
+#macro(testRunDetailCells $testCaseRun)
+  <td> #* show result if it has or show the status: TODO: color this *#
+   #testCaseRunAnchor($testCaseRun)
+##   #if(not $noLink)
+   <a class="showTestRunDetailsLink" href="#${anchor}" onclick="showTestRunDetails(this);" title="${clickHint}">
+##   #end
+   	   #showTestCaseResultOrStatus($testCaseRun)
+   	   ## <img src="${contextPath}/images/newskin/action/incoming_ref.png" title="${clickHint}" />
+##   #if(not $noLink)
+	</a>
+###end
+  </td>
+  <td>
+    #printClosedAt($!{testCaseRun.delegate.closedAt})
+  </td>
+  <td>
+  	## show the user who completed this
+  	#if(${testCaseRun.isCompleted()})
+  		#linkUserShort($!{testCaseRun.delegate.modifier})
+  	#else
+  		--
+  	#end
+  </td>
+#end
+
+#macro(testRunConclusionRow $testCaseRun)
+ #set($conclusion="")
+ #set($conclusion=${testCaseRun.getConclusion($simpleMessageResolver)})
+ #if ("$!{conclusion}" != "")
+ 	<tr>
+ 		#* render the Conclusion: this is a wiki *#
+ 		<td></td>
+ 		<td colspan="4">
+ 			<div class="conclusionPart">
+ 			<b>#i18n('testrun.field.conclusion'):</b>
+ 			$textFormatter.format(${conclusion}, ${testCaseRun.getConclusionFormat()}, ${request}, ${testCaseRun.delegate})
+ 			</div>
+ 		</td>
+ 	</tr>
+ #end
+#end
+
+#macro(showtestRunParams $testCaseRun)
+  #set($prefix = "<div class='testRunParametersWiki'>")
+  #set($postfix = "</div>")
+
+  #if("$!{testCaseRun.usedParameterHash}" != "")
+    ## render parameters
+    $!{prefix}
+	    #set($paramWiki = ${testCaseRun.parametersAsWiki})
+	    #renderStepWiki($paramWiki $testCaseRun)
+	$!{postfix}
+  #end
+#end
+
+#macro(showDetailsImage $numParams)
+ #if(! ${exporting})
+   <a href="#" onclick="showTestRunDetailsOfRow(this);return false;" class="showDetailsImage"
+   		title="#i18n('testrun.results.plugin.details.of.testparams.label', ${numParams})"
+   ><img src="${contextPath}/images/newskin/action/button_ghost_plus.png"></a>
+ #end
+#end
+
+#macro(showTestRunAttachments $testCaseRun)
+ #set($tr = ${testCaseRun.delegate})
+ #if(${tr.attachments})
+   	<p><b>#i18n('attachments.label'):</b><br/>
+  	#foreach($att in ${tr.attachments})
+     	#set ($url = "${cbBaseUrl}/item/${tr.id}/attachment/${att.id}")
+     	<span style="margin-left:20px">
+     		<img src="${request.contextPath}${plugin.renderMimeIcon($att, $request)}" border="0" width="16" height="16" style="background-color:${freshColor}" />
+     		<a href="${url}" target="_blank">#esc(${att.name})</a>
+     	</span>
+    #end
+  	</p>
+ #end
+#end
+
+#set ($clickHint = "#i18n('testrun.results.plugin.click.details.hint')")
+#if($childTestCaseRuns.size() == 0)
+	<span>#i18n('tracker.traceability.no.items.label')</span>
+#else
+<table class="testCaseRunsExecutedSummary$!{$CSS_CLASS_HALFWIDTH}">
+<thead>
+   <tr>
+   	 <th style='width:1px; border: none;' ></th>
+     <th>#i18n('tracker.type.Testcase')</th>
+     <th>#i18n('testrun.results.plugin.test.result')
+     	#if(! ${exporting}) <img src="${contextPath}/images/newskin/action/help.png" title="${clickHint}" /> #end</th>
+     <th>#i18n('testrun.results.plugin.completed.at')</th>
+     <th>#i18n('testrun.results.plugin.completed.by')</th>
+   </tr>
+</thead>
+#end
+
+#foreach($testCaseRun in $childTestCaseRuns)
+ #set($parameterisedChildren = ${testCaseRun.getChildTestCaseRuns()})
+ #set($hasParams = ${parameterisedChildren.size()} > 0)
+
+ #set($cssClass = "")
+ #if($velocityCount>1) #set($cssClass = "rowSeparated") #end
+ #if($hasParams) #set($cssClass = "$!{cssClass} withParams") #end
+
+#if(! ${exporting})
+ <tbody>
+#end
+ <tr class="${cssClass}">
+  <td>
+  #if($hasParams)
+  	#showDetailsImage("${parameterisedChildren.size()}")
+  #end
+  </td>
+  <td>
+  #linkTestCases($testCaseRun.testCases)</td>
+  #testRunDetailCells($testCaseRun ${hasParams})
+ <tr>
+ #testRunConclusionRow($testCaseRun)
+#if(! ${exporting})
+ </tbody>
+#end
+
+ ## print out parameterised variants of this TestRun
+ #set($parameterisedChildren = ${testCaseRun.getChildTestCaseRuns()})
+ #if(${hasParams})
+#if(! ${exporting})
+ 	<tbody class="parameterisedChildren">
+#end
+ 	  ##<tr><td>Parameterised</td></tr>
+ 		#foreach($parameterised in ${parameterisedChildren})
+ 			<tr class="rowSeparated">
+ 				<td></td>
+ 				<td>#showtestRunParams($parameterised)</td>
+ 				#testRunDetailCells(${parameterised})
+ 			</tr>
+ 			#testRunConclusionRow($parameterised)
+ 		#end
+#if(! ${exporting})
+ 	</tbody>
+#end
+ #end
+#end
+#if($childTestCaseRuns.size() > 0)
+</table>
+#end
+
+## render a collapsing-border: this is closed by default
+#macro (collapsingBorder $legend $body $id $cssClass)
+#if($exporting)
+	<h3>${legend}</h3>
+	${body}
+#else
+<fieldset class="collapsingBorder relations-box separatorLikeCollapsingBorder collapsingBorder_collapsed ${cssClass}" id="$!{id}" >
+	<legend class="collapsingBorder_legend">
+		<a href="#" class="collapseToggle" onclick="CollapsingBorder.toggle(this, null, ''); return false;" title="Show or hide ${legend}">${legend}</a>
+	</legend>
+	<div class="collapsingBorder_content">${body}</div>
+</fieldset>
+#end
+#end
+
+#define($testRunDetails)
+##<h3>Details of Test Runs:</h3>
+#macro (renderStepWiki $stepWiki $testCaseRun)
+	$textFormatter.format(${stepWiki}, "W", ${request}, ${testCaseRun.delegate})
+#end
+
+<style type="text/css">
+  .testRunResultsPlugin table.testStepResults {
+    margin: 10px 0px;
+  }
+
+  .testRunResultsPlugin .criticalColumn, .testRunResultsPlugin .stepIndexColumn {
+  	  width: 2em;
+  }
+
+  .testRunResultsPlugin .testCaseRunDetails:hover,
+  .testRunResultsPlugin .testCaseRunDetails:hover .TestRunParametersPlugin * {
+	  background-color: #f5f5f5;
+  }
+
+  .testRunResultsPlugin .testCaseRunDetails {
+  	  border-top: solid 1px #f5f5f5;
+  	  padding: 0 5px;
+  }
+
+  .testRunResultsPlugin .TestRunParametersPlugin {
+  	  width: 50%;
+  }
+
+  .testRunResultsPlugin img.tableIcon, .testRunResultsPlugin img {
+  	  vertical-align: middle;
+  }
+
+  .testRunResultsPlugin .testRunParametersWiki {
+  	  margin-bottom: 2px;
+  	  margin-left: 2px;
+  }
+
+  .testRunResultsPlugin .testStepIndex {
+  	  font-weight: normal;
+  	  color: #666666;
+  	  font-size:11px;
+  }
+
+  .testRunResultsPlugin .testRunDetailsCollapsing {
+  	  margin-top: 10px;
+  }
+
+  .testRunResultsPlugin .testRunDetailsCollapsing fieldset.collapsingBorder_collapsed legend.collapsingBorder_legend a.collapseToggle {
+  	  background-image: url("../stylesheet/../images/newskin/action/button_ghost_plus.png");
+  }
+
+  .testRunResultsPlugin .testRunDetailsCollapsing fieldset.collapsingBorder_expanded legend.collapsingBorder_legend a.collapseToggle {
+  	  background-image: url("../stylesheet/../images/newskin/action/button_ghost_minus.png");
+  }
+
+</style>
+
+<div class="testCaseRunsExecutedDetails">
+#foreach($testCaseRun in $testCaseRuns)
+  <div class="testCaseRunDetails">
+  #testCaseRunAnchor($testCaseRun)
+##  <p>
+       <a id="${anchor}" name="${anchor}"></a>
+       #define($resultBlock)
+		  	## display TestCaseRun's result or its status
+  	   		#set($url = "${cbBaseUrl}${testCaseRun.delegate.urlLink}")
+  	   		## Note: using externalLink CSS class for Word export so this will be pointing outside of Word back to the CB instance instead of jumping within the document
+  	   		&nbsp;<a href="${url}" class="externalLink" target="_blank">#set($out= "#showTestCaseResultOrStatus($testCaseRun)")${out.trim()}</a>
+       #end
+
+       #linkTestCases($testCaseRun.testCases "${resultBlock}")
+##  </p>
+
+  ## reported bugs
+  #set($reportedBugs = ${testCaseRun.reportedBugs})
+  #if (! ${reportedBugs.isEmpty()})
+  	<p>
+  	  <b>#i18n('testrun.results.plugin.reported.items'):</b>
+  	  #set($linkParams = "target='_blank'")
+  	  #linkReferables($reportedBugs, $linkParams)
+  	</p>
+  #end
+
+  #showTestRunAttachments($testCaseRun)
+
+  ## TODO: pre-action, post-action, is this interesting?
+  #showtestRunParams($testCaseRun)
+
+  #set($steps = $testCaseRun.stepsResults)
+  #if ($steps && (! $steps.isEmpty()))
+  	## render Test-steps
+
+	 #set($displayCritical = false)
+	 #foreach ($step in ${steps})
+		 #if (${step.critical}) #set($displayCritical = true) #end
+	 #end
+
+	<table class="testStepResults$!{$CSS_CLASS_HALFWIDTH}">
+		<thead>
+	  	<tr>
+	  	   <th class="stepIndexColumn">#i18n('testrun.results.plugin.step.index')</th>
+		    #if ($displayCritical)
+				<th class="criticalColumn">#i18n('tracker.field.Critical.label')?</th>
+			#end
+		   <th>#i18n('tracker.field.Action.label')</th>
+		   <th>#i18n('tracker.field.Expected result.label')</th>
+		   <th>#i18n('tracker.field.Actual result.label')</th>
+		   <th>#i18n('tracker.field.Result.label')</th>
+		</tr>
+		</thead>
+		<tbody>
+		#foreach($step in ${steps})
+		<tr>
+		   <td class="testStepIndex">#${velocityCount}</td>
+			#if ($displayCritical)
+			   <td>#if (${step.critical})
+			        <img src="${request.contextPath}/images/newskin/action/testrun-critical.png" title="#i18n('tracker.field.Critical.label')"/>
+			       #else
+			         -
+			       #end</td>
+			#end
+		   <td class="thumbnailImages480px">#renderStepWiki(${step.action}, $testCaseRun)</td>
+		   <td class="thumbnailImages480px">#renderStepWiki(${step.expectedResult}, $testCaseRun)</td>
+		   <td class="thumbnailImages480px">#renderStepWiki(${step.actualResult}, $testCaseRun)</td>
+		   <td>#showTestRunResult($!{step.result})</th>
+		</tr>
+		#end
+		</tbody>
+	</table>
+  #else
+    ## show the no-steps information
+    <p>#i18n('testrun.results.plugin.testcase.has.no.steps')</p>
+  #end
+
+ #set($conslusion="")
+ #set($conclusion=${testCaseRun.getConclusion($simpleMessageResolver)})
+ #if ("$!{conclusion}" != "")
+ 	<p class="thumbnailImages480px">
+		#* render the Conclusion: this is a wiki *#
+		<b>#i18n('testrun.field.conclusion'):</b>
+		$textFormatter.format(${conclusion}, ${testCaseRun.getConclusionFormat()}, ${request}, ${testCaseRun.delegate})</td>
+	</p>
+ #end
+ </div>
+
+#end
+</div>
+#end ## define
+
+#if($testCaseRuns.size() > 0)
+<div class="testRunDetailsCollapsing">
+#collapsingBorder("#i18n('testrun.results.plugin.details.of.testruns.block.label')" "${testRunDetails}" "testRunDetails")
+</div>
+#end
+
+#end ## isTestRunsMissing() check
+
+
+</div>
+
+#end

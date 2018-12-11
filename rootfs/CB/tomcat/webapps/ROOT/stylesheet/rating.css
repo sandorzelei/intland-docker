@@ -1,0 +1,353 @@
+/**
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+/*
+ *	CSS for star-rating. See rating.js for details.
+ */
+.rating {
+    cursor: pointer;
+    clear: both;
+    display: block;
+}
+
+.rating:after {
+    content: '.';
+    display: block;
+    height: 0;
+    width: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.star {
+    float: left;
+    overflow: hidden;
+    text-indent: -999em;
+    cursor: pointer;
+}
+
+.star a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+/* for disabled rating control use normal cursor */
+.rating-disabled, .rating-disabled .star {
+	cursor: default;
+}
+
+/**
+ * Showing the rating star images from a sprite.
+ */
+.star, .star a, .star div {
+	background: url("../images/sprite-rating-stars.png") no-repeat 0 0px;
+	/* star-inactive.png*/
+	background-position: -0px -0px ;
+	width: 16px; height:16px;
+}
+
+div.rating div.on a, div.rating div.on div {
+    background: url("../images/sprite-rating-stars.png") no-repeat 0 0px;
+	/* star-active.png*/
+	background-position: -21px -0px ;
+	width: 16px; height:16px;    
+}
+
+div.rating div.hover a {
+    background: url("../images/sprite-rating-stars.png") no-repeat 0 0px;
+	/* star-active.png*/
+	background-position: -21px -0px ;
+	width: 16px; height:16px;    
+}
+
+/**
+ * container for ratings widget (same look as .labellist)
+ */
+.actionMenuBar.large .ratingwidget {
+	width: 80px;
+	margin-top: 10px;
+}
+.ratingwidget {
+	font-size: 8pt;
+	height: 12px;
+}
+
+.ratingwidget a {
+	font-size: 8pt;
+}
+
+.ratingwidget {
+	color: black;
+}
+
+/* style when the rating/voting is being submitted */
+.rating-submitting, .rating-submitting a {
+	cursor: wait;
+}
+
+/**
+ * Fixes that partial (below 100% width) rating stars does not look good on FireFox/IE7 when inside a table
+ */
+td .rating .star a {
+   float:left;
+}
+
+/*
+ * set the width to avoid wrapping the stars vertically
+ */
+.rating {
+	width: 80px; /* 5x16*/
+}
+
+/** classes for forum post's rating */
+/* float the widget right, so will be in one line with the edit/delete icons */
+.forumsModule .ratingwidget {
+	float: right;
+	padding-left: 10px;
+}
+
+
+/* -------- voting CSS widget definitions -------------*/
+.votingwidget {
+	padding-right: 14px;
+}
+.votingwidget a, .votingwidget a:hover, .votingwidget a:active{
+	margin: 0;
+	text-decoration: none !important;
+	outline: none;
+}
+.no-vote, .yes-vote {
+	padding-left:16px; padding-bottom: 8px;/* sets the width and height */
+	background: none no-repeat;
+}
+
+/*
+   Using CSS sprite for yes/no voting icons,
+ */
+.vote-sprite {
+	background-image: url("../images/sprite-voting.png");
+	width: 17px; height:17px;
+} 
+
+/* vote_up_off.png*/
+.yes-vote {
+	.vote-sprite;
+	background-position: -44px 0;
+}
+/* vote_down_off.png*/
+.no-vote {
+	.vote-sprite;
+	background-position: -66px 0;
+}
+/* vote_up.png*/
+.yes-vote:hover, .voted-as-positive .yes-vote {
+	.vote-sprite;
+	background-position: 0 0;
+}
+/* vote_down.png*/
+.no-vote:hover, .voted-as-negative .no-vote {
+	.vote-sprite;
+	background-position: -22px 0;
+}
+.votingwidget_disabled {
+	/* vote_up_disabled.png*/
+	.yes-vote {
+		cursor: default;
+		background-position: -88px 0 !important;
+	}
+	/* vote_down_disabled.png*/
+	.no-vote {
+		cursor: default;
+		background-position: -110px 0 !important;
+	}
+}
+
+/* cursor should not be hand when over your last vote */
+.voted-as-positive .yes-vote, voted-as-negative .no-vote {
+	cursor: default;
+}
+
+.votingtotal {
+	font-weight: bold;
+	font-size: 11pt;
+	vertical-align: top;
+	color: white;
+}
+.actionBar .votingtotal {
+	color: #2b2b2b;
+}
+
+.vote-positive, .voted-total-positive .votingtotal{
+	/*color: green;*/
+	/*color: white; */
+	color: #008000;
+}
+.vote-negative, .voted-total-negative .votingtotal {
+	/*color: red;*/
+	color: #FF3D3D;
+	/*color: #FF9700; */ /* same orange as on issues pages */
+	/*color: purple;*/
+}
+
+/* slightly different colors in tootip because of the yellow background */
+.yui-tt .vote-positive {
+	color: green;
+}
+.yui-tt .vote-negative {
+	color: red;
+}
+
+@ratingFontSize: 13px;
+@ratingTooltipWidth: 350px;
+
+.ratingDialog {
+	overflow:hidden !important;
+}
+
+@votingTooltipWidth: auto;
+
+.votingTooltipDialog {
+	width: @votingTooltipWidth;
+	max-width: @votingTooltipWidth;
+	background-color: white !important;
+	
+	.closeRatingButton {
+		display:none !important;
+	}
+}
+
+.ratingTooltipDialog {
+	max-width: @ratingTooltipWidth;
+	width: @ratingTooltipWidth;
+	overflow: hidden !important;
+	
+	padding: 10px;
+	font-size: 11px;
+	position:relative;
+	
+	/** hide dialog title */
+	.ui-dialog-titlebar {
+		display: none;
+	}
+	.ui-dialog-content {
+		padding: 0 !important;
+		margin: 5px; 
+	}
+	
+	.vote-positive, .voted-total-positive .votingtotal {
+		color: green;
+	}
+	
+	* {
+		font-size: @ratingFontSize;
+		white-space: nowrap;
+	}
+	
+	textarea.ratingComment {
+		width: 98%;
+		/*width: 186px;*/
+		height: 5em;
+	}
+	
+	.yourRating {
+	/*	padding-left: 10px;*/
+	}
+	
+	/* the save button */
+	.button {
+	/*
+		float: right;
+		margin-top:  -30px;
+		margin-right:  2px;
+		*/	
+	}
+	
+	/* fix for IE8 */
+	textarea {
+		white-space: pre-wrap;
+	}
+	
+	.closeRatingButton {
+		display: block;
+		/*float:right;*/
+		width: 12px;
+		height: 12px;
+		background-image: url("../images/newskin/action/closewindow.png");	/* TODO: this close icon does not look good */
+		background-repeat: no-repeat;
+		
+		position: absolute;
+		top: 0px;
+		right: 0px;
+	}
+	
+	@ratingProgressHeight: 14px;
+	
+	.ratingPercent {
+		display: inline-block;
+		position: relative;
+		background-color: #ABABAB;
+		height: @ratingFontSize;		
+		width: 170px;
+		margin: 2px 10px;
+		
+		>div {
+			position: absolute;
+			background-color: #d8923a;
+			height: @ratingFontSize;
+		}
+		
+		label {
+			color: #2B2B2B;
+ 			left: 0;
+    		position: absolute;
+    		text-align: center;
+    		top: 0;
+    		width: 100%;	
+    		font-size: 10px;	
+		}
+	}
+		
+	.rating {
+		margin: 0 20px;
+	}
+	
+	table td {
+	/*	vertical-align: middle;*/
+	}
+	
+	table.ratingDetails {
+		margin: 10px 0;
+	}
+	
+}
+
+/* disabled rating stars */
+.ratingDisabled {
+	cursor: default;
+	* {
+		cursor: default;
+	}
+}
+
+/** The rating/voting images inserted to comments: */
+img[alt="CB:/images/rating1.png"],
+img[alt="CB:/images/rating2.png"],
+img[alt="CB:/images/rating3.png"],
+img[alt="CB:/images/rating4.png"],
+img[alt="CB:/images/rating5.png"],
+img[alt="CB:/images/vote_up.png"],
+img[alt="CB:/images/vote_down.png"] {
+	vertical-align: bottom;
+	margin-right: 5px;
+}

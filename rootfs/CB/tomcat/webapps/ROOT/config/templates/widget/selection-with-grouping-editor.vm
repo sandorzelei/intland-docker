@@ -1,0 +1,33 @@
+#if ($projectSelector)
+	${projectSelector}
+#end
+
+<div class="form-field">
+	<label for="${fieldName}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+	<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end multiple="multiple">
+		#foreach ($selectionOptionGroup in $selecOptionGroups)
+			<optgroup label="${selectionOptionGroup.name}">
+				#foreach ($selectOption in $selectionOptionGroup.options)
+					<option value="$selectOption.id"  #if ($selectOption.selected) selected="selected" #end>$selectOption.value</option>
+				#end
+			</optgroup>
+		#end
+	</select>
+
+	<script type="text/javascript" src="${selectOptionGroupsJsUrl}"></script>
+	<script type="text/javascript">
+		jQuery(function($) {
+			#if ($isMultipleChoiceAllowed)
+				codebeamer.dashboard.multiSelect.init("${selectorId}", "${eventName}");
+			#else
+				codebeamer.dashboard.multiSelect.initSingleSelect("${selectorId}", "${eventName}");
+			#end
+
+			codebeamer.dashboard.multiSelect.attachEventListener("projectSelector:project:changed", function(projectIds) {
+				codebeamer.dashboard.selectOptionGroupEditor.getSelectOptionGroups(projectIds, "${getSelectGroups}", "${selectorId}");
+			});
+		});
+	</script>
+
+</div>

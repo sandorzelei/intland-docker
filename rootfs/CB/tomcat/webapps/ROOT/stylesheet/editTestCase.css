@@ -1,0 +1,146 @@
+/* this removes the folder icons from the test steps tree */
+.testStepsContainer li a ins {
+	display:none !important;
+}
+
+#editor {
+	height: 8em;
+}
+
+.mini-toggler-up {
+	position: relative;
+	top: -60px;
+	left: 15px;
+}
+
+.actionBar {
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
+
+.newskin #opener-east {
+	display: block;
+	position: relative;
+	right: 5px;
+	top: 75px;
+	margin-top: -15px;
+}
+
+#testCasePane,
+#testCaseLibraryPane {
+	padding: 0 !important;
+	box-sizing: border-box;
+}
+
+#testAccordion .treeFilterBox {
+	margin: 0;
+	box-sizing: border-box;
+}
+
+#testAccordion .pane .header {
+	position: relative;
+	top: 0;
+	background-color: #fff0aa;
+	padding: 10px;
+	font-weight: normal;
+}
+
+#testAccordion .pane {
+	height: 92%;
+	height: calc(100% - 40px);
+	overflow: hidden;
+}
+
+#testCaseLibraryTreePane {
+	overflow-y: auto;
+}
+
+#testCaseTreePane {
+	height: 50%;
+}
+
+#testCaseLibraryTreePane {
+	height: 37%;
+}
+
+#testStepsOfTestCase, #testStepsOfLibraryTestCase {
+	height: 30%;
+}
+
+#testStepsOfLibraryTestCase {
+	overflow: auto;
+}
+
+#testCaseTreePane,
+#testStepsOfTestCase,
+#testCaseLibraryTreePane,
+#testStepsOfLibraryTestCase {
+	padding: 5px 5px 10px 5px;
+}
+
+#testCaseTreePane {
+	overflow: auto;
+	box-sizing: border-box;
+}
+
+#testStepsOfTestCase {
+	overflow-y: scroll;
+	overflow-x: auto;
+}
+
+body > .ui-layout-center {
+	overflow: hidden; /* without this, the appearing scroll bar would interfere with panes width calculation */
+}
+
+.testStepsTableContainer {
+	padding-top: 10px;
+	padding-bottom: 50px;
+}
+
+#testAccordion .actionBar .treeFilterBox {
+	margin: 0 5px 5px 0;
+}
+
+#testCaseLibraryPane #configureLibrary {
+	margin-left: 5px;
+}
+
+.jstree .used {
+	font-style: italic;
+	background-color: #e1e1e1;
+}
+
+.treeFilters {
+	position: relative;
+}
+
+.treeFilterDiv {
+    margin-right: 155px;
+    overflow: hidden;
+}
+
+.toolsContainer {
+	box-sizing: border-box;
+	position: absolute;
+	right: 15px;
+	top: 6px;
+	white-space: nowrap;
+}
+
+.filterReferenceTestCases {
+	font-size: 12px;
+	font-weight: normal !important;
+	margin: 0px !important;
+}
+
+.filterReferenceTestCases input {
+	vertical-align: text-bottom;
+	margin-right: 2px !important;
+}
+
+.referenceTestCase > a, .referenceTestCase > a:hover {
+	background-image: url("../images/newskin/action/incoming_ref.png") !important;
+	background-position: center right !important;
+	background-repeat: no-repeat !important;
+	padding-right: 20px !important;
+}

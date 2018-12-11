@@ -1,0 +1,105 @@
+#parse("notification_email_header.vm")
+
+<div class="heading">
+## set ${toptext} to print out something on the top
+#partHeader($!{toptext})
+[#${artifact.id}] #linkArtifact(${artifact})
+</div>
+
+#account(${originator})
+
+#partHeader("${textFormatter.getMessage('issue.details.label')}")
+
+#tableOpen()
+
+##trTitle("${textFormatter.getMessage('issue.details.label')}" "document")
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.description.label')}")
+	#tdText($textFormatter.format(${artifact.description}, ${artifact.descriptionFormat}, ${wikiContext}))
+#trClose()
+
+#if( ${artifact.parent} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('document.directory.label')}")
+		#tdText("#linkArtifactParent(${artifact})")
+	#trClose()
+#end
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.project.label')}")
+	#tdText("#linkProject(${artifact.project})")
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.owner.label')}")
+	#tdText("#linkUser(${artifact.owner})")
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.status.label')}")
+	#tdText(${textFormatter.getMessageWithDefault("document.status.${artifact.status.name}", ${artifact.status.name})})
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.lastModifiedAt.label')}")
+	#tdText("${textFormatter.formatDate($recipient, ${artifact.lastModifiedAt})}")
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.fileSize.label')}")
+	#tdNumber(${artifact.fileSize})
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('document.version.label')}")
+	#set($revisionText = ${artifact.version})
+	#if(${contentUpdated})
+		#set($revisionText = "$revisionText #newTablet()")
+	#end
+	#tdText($revisionText)
+#trClose()
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('user.account.label')}")
+	#tdText("#linkUser(${originator})")
+#trClose()
+
+##if( ${originator.phone} )
+##	#trOpen()
+##		#tdField("Phone:")
+##		#tdText(${originator.Phone})
+##	#trClose()
+##end
+
+#if( ${originator.company} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.company.label')}")
+		#tdText($textFormatter.escape(${originator.company}))
+	#trClose()
+#end
+
+#if( ${originator.country} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.country.label')}")
+		#tdText($textFormatter.escape(${originator.country}))
+	#trClose()
+#end
+
+#if( ${geoLocationResolver.geoLocation} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('user.geoLocation.label')}")
+		#tdText("#linkGeoIP(${geoLocationResolver.geoLocation})")
+	#trClose()
+#end
+
+#if( ${geoLocationResolver.canonicalRemoteAddress} )
+	#trOpen()
+		#tdField("Host")
+		#tdText($textFormatter.escape(${geoLocationResolver.canonicalRemoteAddress}))
+	#trClose()
+#end
+
+#tableClose()
+
+#parse("notification_email_footer.vm")

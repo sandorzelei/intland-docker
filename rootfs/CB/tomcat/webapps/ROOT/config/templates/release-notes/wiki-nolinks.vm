@@ -1,0 +1,21 @@
+!! $textFormatter.escapeWikiMarkup(${version.project.name}) $textFormatter.escapeWikiMarkup(${version.name}) - Release Notes
+
+#foreach($tracker in $trackerItemsGrouped.keySet())
+! $textFormatter.escapeWikiMarkup(${tracker.name})
+#set($trackerItems = $trackerItemsGrouped.get($tracker))
+#foreach($trackerItem in $trackerItems)
+* ${trackerItem.keyAndId} - $textFormatter.escapeWikiMarkup(${trackerItem.summary})
+#end
+#end
+
+#if($isKnownIssues)
+!! ${textFormatter.getMessage('cmdb.version.knownIssues')}
+
+#foreach($tracker in $knownTrackerItemsGrouped.keySet())
+! $textFormatter.escapeWikiMarkup(${tracker.name})
+#set($trackerItems = $knownTrackerItemsGrouped.get($tracker))
+#foreach($trackerItem in $trackerItems)
+* ${trackerItem.keyAndId} - $textFormatter.escapeWikiMarkup(${trackerItem.summary})
+#end
+#end
+#end

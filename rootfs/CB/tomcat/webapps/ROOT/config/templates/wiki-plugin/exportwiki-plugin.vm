@@ -1,0 +1,20 @@
+##$RCSfile$ $Revision$ $Date$
+## Init optional parameters
+#if($revision)
+	#set( $baseline = "&amp;revision=${revision}" )
+#end
+#if($outputPath)
+	#set( $path = "&amp;path=${outputPath}" )
+#end
+#if($headerText)
+	#set( $header = "&amp;header=${headerText}" )
+#end
+#if($footerText)
+	#set( $footer = "&amp;footer=${footerText}" )
+#end
+#if($resolution)
+	#set( $dpi = "&amp;dpi=${resolution}" )
+#end
+<a href="${contextPath}/proj/wiki/exportWikiPage.spr?wikiPageId=${wikiPageIds}$!{baseline}&amp;format=${outputFormat}$!{path}$!{header}$!{footer}$!{dpi}">
+	${linkText}
+</a>

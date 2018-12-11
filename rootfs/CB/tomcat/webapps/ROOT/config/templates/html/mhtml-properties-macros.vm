@@ -1,0 +1,34 @@
+#*
+  Render the markup which becomes an editable select box in the properties part of the round-trip docx
+  @param name The field/property name
+  @param name The actual value
+  @param values The possible values as list
+*#
+#macro(editableSelectBox $name $value $values)
+	#set($id = ${idgen.getNextId()})
+	##id: ${id}<br/>
+
+	<w:PermStart w:id="${id}" w:edGrp="everyone"/>
+	<w:Sdt ShowingPlcHdr="t" DocPart="DefaultPlaceholder_22675704${id}" DropDown="t" ID="8600497${id}" Title="${name}" SdtTag="${name}" >
+	  #foreach ($v in $values) <w:ListItem ListValue="${v}" DataValue="${v}"></w:ListItem> #end
+	  <span class=MsoPlaceholderText><span lang=HU style='color:gray;mso-ansi-language: HU'>#if ("$!{value}" == "")Choose ${name}#else${value}#end </span></span>
+	</w:Sdt>
+	<w:PermEnd w:id="${id}"/>
+#end
+
+#macro(editableEntityPropertySelectBox $entity $name)
+#set($value = "") ## clear the value because Velocity does not do that in the next statement if the RHS is null !
+#set($value = ${choicesProvider.getValue($entity, $name)})
+#if(${exportOptions.propertiesEditable})
+	#set($values = ${choicesProvider.getChoices($entity, $name)})
+	#if(${values.isEmpty()}) $!{value} #else #editableSelectBox($name $value $values) #end
+#else
+## fields are not editable, just show the current value
+$!{value}
+#end
+#end
+
+<!--
+## dates should be rendered as full dates not like "today"
+$!{textFormatter.setAbsoluteDates(true)}
+-->

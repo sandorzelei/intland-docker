@@ -1,0 +1,18 @@
+.ganttTeaserContainer {
+	overflow: hidden;
+	position: relative;
+}
+
+.ganttTeaserContainer div.warning {
+	margin-left: 10px;
+}
+
+.ganttTeaserText {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 24px;
+	font-weight: bold;
+	margin-left: -292px;
+	text-align: center;
+}

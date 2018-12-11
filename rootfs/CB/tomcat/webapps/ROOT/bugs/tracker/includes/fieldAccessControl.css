@@ -1,0 +1,105 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+div.accessPermissionsDialog {
+	padding: 1em !important;
+}
+
+div.accessPermissionsDialog .accessPerms ~ button {
+	width: 90% !important;
+}
+
+td.accessPermsStatus {
+	padding-top: 0.5em !important;
+	vertical-align: top !important;
+	text-align: right;
+	white-space: nowrap;
+}
+
+td.accessPermsStatus > label {
+	font-weight: bold;
+}
+
+td.accessPermsStatus.unused > label {
+	color: gray;
+}
+
+div.accessPerms {
+ 	vertical-align: middle !important;
+}
+
+span.accessPerm {
+	padding : 2px;
+	margin-right: 5px;
+	border-width: 1px;
+ 	border-style: solid;
+ 	border-color: silver;
+ 	vertical-align: middle;
+}
+
+span.accessPerm > label {
+	font-weight: bold;
+}
+
+span.access {
+   	margin-left: 4px;
+   	width: 32px;
+   	height: 16px;
+   	padding: 0 0 0 0px;
+   	display: inline-block;
+   	background-position: center !important;
+}
+
+span.access.read {
+    background: url('../../../images/viewtopic.gif') no-repeat right bottom;
+}
+
+span.access.edit {
+    background: url('../../../images/edittopic.gif') no-repeat right bottom;
+}
+
+select.fieldAccessMode {
+	font-weight: bold;
+}
+
+a.noAccessPerms {
+	color: gray !important;
+}
+
+a.fullAccessPermsWarn{
+	background: url('../../../images/newskin/action/permission-alert.png') no-repeat right center;
+	padding-right: 16px;
+}
+
+a.noAccessPermsWarn {
+	color: gray !important;
+	background: url('../../../images/newskin/action/permission-alert.png') no-repeat right center;
+	padding-right: 16px;
+	position: relative;
+    top: -2px;
+}
+
+a.accessControl.brokenLink {
+	color: red !important;
+	background: url('../../../images/delete.png') no-repeat right center;
+	padding-right: 18px;
+	position: relative;
+    top: -2px;
+}
+
+a.accessControl.cyclicLink {
+	color: red !important;
+	background: url('../../../images/icon_reject.png') no-repeat right center;
+	padding-right: 18px;
+	position: relative;
+    top: -2px;
+}

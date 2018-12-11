@@ -1,0 +1,19 @@
+<table class="embedded">
+	<thead>
+		<tr>
+			<th>${textFormatter.getMessage("tracker.field.Result.label")}</th>
+			<th class="number">#</th>
+		</tr>
+	</thead>
+	<tbody>
+		#foreach($key in $data.keySet())
+			#set($labelCode = "tracker.coverage.status.${key.name().toLowerCase()}.label")
+			#set($c = $key.name().toUpperCase().substring(0,1))
+			#set($t = $key.name().toLowerCase().substring(1))
+			#trOpen
+				<th><span class="testRunResultTablet testRun$c$t">${textFormatter.getMessage($labelCode)}</span></th>
+				<td class="number">${data.get($key)}</td>
+			#trClose
+		#end
+	</tbody>
+</table>

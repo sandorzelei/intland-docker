@@ -1,0 +1,140 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+td.optional {
+ 	vertical-align: top;
+}
+
+td.empty {
+ 	vertical-align: top;
+ 	padding-top: 14px !important;
+}
+
+table.columns {
+	width: auto !important;
+}
+
+table.columns th {
+	border: 1px solid silver !important;
+	padding: 2px 8px 2px 8px !important;
+	background-color: #F8F8F8;
+	font-size: 13px;
+	font-weight: normal;
+	color: black;
+}
+
+select.fieldSelector, select.sortFieldSelector, select.filterSelector {
+	margin-top: 8px !important;
+}
+
+span.sort {
+   	width: 10px;
+   	height: 10px;
+   	display: inline-block;
+   	padding: 0 0 0 0px;
+   	margin-left: 4px;
+}
+
+span.sort.ascending {
+    background: url('../../../images/displaytag/arrow_up.png') no-repeat;
+}
+
+span.sort.descending {
+    background: url('../../../images/displaytag/arrow_down.png') no-repeat;
+}
+
+ol.filters {
+ 	margin: 0px;
+ 	padding: 0px 0px 0px 4px;
+}
+
+ol.root > li.filter {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px 0px 0px 0px !important;
+}
+
+ol.filters li.filter {
+	list-style-type: none;
+	margin: 0px;
+ 	padding: 0px 0px 0px 10px;
+}
+
+div.filterHandle label {
+	font-weight: bold;
+}
+
+ul.charts {
+ 	margin: 0px;
+ 	padding: 0px 0px 0px 4px;
+	list-style-type: none;
+}
+
+span.chartConfig {
+	white-space: nowrap;
+}
+
+label.chartLabel {
+	font-weight: bold;
+}
+
+select.chartSelector {
+	margin-top: 8px !important;
+}
+
+.newskin.IE .ui-multiselect-menu { /* fix for IE8 where multiselect dropdown collapses to a few pixels in width */
+	width: auto !important;
+}
+
+.removeButton {
+	background: url('../../../images/newskin/action/delete-grey-16x16.png') no-repeat;
+	width: 16px;
+	display: inline-block;
+	cursor: pointer;
+	margin-left: 3px;
+	position: relative;
+	top: -1px;
+}
+
+.removeButton:hover {
+	background-image: url("../../../images/newskin/action/delete-grey-16x16_on.png");
+}
+
+.editCriteria {
+	margin-left: 1em;
+	cursor: pointer !important;
+	color: #0093b8 !important;
+}
+
+.editCriteria:hover {
+	text-decoration: underline !important;
+}
+
+.criteria li a {
+	text-decoration: none !important;
+	cursor: default;
+}
+
+.removeButton {
+    height: 12px;
+    top: 1px;
+    background-size: contain;
+    width: 12px;
+}
+
+.fields .edit-link {
+	margin-left: 0px;
+}
+
+.manageFilterContainer a {
+	margin-left: 10px;
+}

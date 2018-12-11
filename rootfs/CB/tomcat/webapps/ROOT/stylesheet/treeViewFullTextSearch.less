@@ -1,0 +1,61 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+#treePane.searchFiltered {
+	li.result > a {
+		background-color: #ccc;
+		border: none;
+		border-radius: 3px;
+		margin: 0 0 1px 0;
+		padding: 2px 7px 2px 3px;
+		&.jstree-clicked {
+			color: white !important;
+			background-color: #333;
+			border: 2px solid black;
+		}
+		&.jstree-hovered {
+			color: #555 !important;
+		}
+		&.jstree-hovered.jstree-clicked {
+			color: #efefef !important;
+		}
+	}
+	li.titleResult > a {
+		background-color: #ffeea0;
+		&.jstree-clicked {
+			color: white !important;
+			background-color: #ffa500;
+			border: 2px solid #e68d08;
+		}
+		&.jstree-hovered {
+			color: #e68d08 !important;
+		}
+		&.jstree-hovered.jstree-clicked {
+			color: #ffeea0 !important;
+		}
+	}
+
+	li.idResult > a {
+		background-color: #99d9ea;
+		&.jstree-clicked {
+			color: white !important;
+			background-color: #0093b8;
+			border: 2px solid #0093b8;
+		}
+		&.jstree-hovered {
+			color: #0093b8 !important;
+		}
+		&.jstree-hovered.jstree-clicked {
+			color: #99d9ea !important;
+		}
+	}
+}

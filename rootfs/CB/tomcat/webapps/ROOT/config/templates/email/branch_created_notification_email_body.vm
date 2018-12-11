@@ -1,0 +1,21 @@
+#parse("notification_email_header.vm")
+
+#if($exception)
+		${textFormatter.getMessage('tracker.branching.notification.error.subject')}:
+		<div class="comment-box error" style="margin-top:5px;">
+			${exception.toString()}
+		</div>
+#else
+	<div class="heading">
+		${textFormatter.getMessage('tracker.branchign.notification.success.title')}:
+	</div>
+
+	<div>
+		#foreach ($entry in $branches.entrySet())
+		    #set($branchUrl = "${cbBaseUrl}${entry.key.urlLink}")
+		    <a href="$branchUrl">${entry.value}</a><br/>
+		#end
+	</div>
+#end
+
+#parse("notification_email_footer.vm")

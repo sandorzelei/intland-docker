@@ -1,0 +1,16 @@
+#parse("notification_email_header.vm")
+
+#define($footerText) 
+#trackerItemReason(${trackerItem})
+#end
+
+<div class="heading">
+${textFormatter.getMessage('comment.created.title')} #linkTrackerItem(${trackerItem})
+</div>
+
+#account(${originator})
+
+#partHeader("${textFormatter.getMessage('comment.description.label')}") 
+#partStart() $textFormatter.format(${comment.description}, ${comment.descriptionFormat}, ${wikiContext}) #partEnd()
+
+#parse("notification_email_footer.vm")

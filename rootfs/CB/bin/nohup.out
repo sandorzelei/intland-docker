@@ -1,0 +1,156 @@
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version:        Apache Tomcat/8.5.34
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server built:          Sep 4 2018 22:28:22 UTC
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server number:         8.5.34.0
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Name:               Linux
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Version:            4.15.0-42-generic
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Architecture:          amd64
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Java Home:             /usr/lib/jvm/java-8-oracle/jre
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Version:           1.8.0_191-b12
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Vendor:            Oracle Corporation
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_BASE:         /home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_HOME:         /home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Xss1m
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Xms64M
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Xmx8143M
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:InitialCodeCacheSize=256m
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:ReservedCodeCacheSize=256m
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:+PrintCodeCache
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:+UseCodeCacheFlushing
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:+HeapDumpOnOutOfMemoryError
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.io.tmpdir=/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat/tmp
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.awt.headless=true
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.home=/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.base=/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcodebeamer.home=/home/szelei/Downloads/aaa/CB-9.3.0-PRE5
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dsun.io.serialization.extendedDebugInfo=false
+Dec 11, 2018 10:37:57 AM org.apache.catalina.core.AprLifecycleListener lifecycleEvent
+INFO: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]
+Dec 11, 2018 10:37:57 AM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+Dec 11, 2018 10:37:57 AM org.apache.tomcat.util.net.NioSelectorPool getSharedSelector
+INFO: Using a shared selector for servlet write/read
+Dec 11, 2018 10:37:57 AM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["https-jsse-nio-8443"]
+Dec 11, 2018 10:37:57 AM org.apache.tomcat.util.net.NioSelectorPool getSharedSelector
+INFO: Using a shared selector for servlet write/read
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 684 ms
+Dec 11, 2018 10:37:57 AM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Catalina]
+Dec 11, 2018 10:37:57 AM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/8.5.34
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat/webapps/ROOT]
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deployment of web application directory [/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat/webapps/ROOT] has finished in [143] ms
+Dec 11, 2018 10:37:57 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat/webapps/cb]
+Dec 11, 2018 10:37:58 AM org.apache.jasper.servlet.TldScanner scanJars
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Dec 11, 2018 10:37:58 AM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring root WebApplicationContext
+CodeCache: size=262144Kb used=17721Kb max_used=18328Kb free=244422Kb
+ bounds [0x00007f0d9c000000, 0x00007f0dac000000, 0x00007f0dac000000]
+ total_blobs=5219 nmethods=4702 adapters=429
+ compilation: enabled
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version:        Apache Tomcat/8.5.34
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server built:          Sep 4 2018 22:28:22 UTC
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server number:         8.5.34.0
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Name:               Linux
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Version:            4.15.0-42-generic
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Architecture:          amd64
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Java Home:             /usr/lib/jvm/java-8-oracle/jre
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Version:           1.8.0_191-b12
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Vendor:            Oracle Corporation
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_BASE:         /home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_HOME:         /home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Xss1m
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Xms64M
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Xmx8143M
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:InitialCodeCacheSize=256m
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:ReservedCodeCacheSize=256m
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:+PrintCodeCache
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:+UseCodeCacheFlushing
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -XX:+HeapDumpOnOutOfMemoryError
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.io.tmpdir=/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat/tmp
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.awt.headless=true
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.home=/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.base=/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcodebeamer.home=/home/szelei/Downloads/aaa/CB-9.3.0-PRE5
+Dec 11, 2018 10:46:12 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dsun.io.serialization.extendedDebugInfo=false
+Dec 11, 2018 10:46:12 AM org.apache.catalina.core.AprLifecycleListener lifecycleEvent
+INFO: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]
+Dec 11, 2018 10:46:12 AM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+Dec 11, 2018 10:46:13 AM org.apache.tomcat.util.net.NioSelectorPool getSharedSelector
+INFO: Using a shared selector for servlet write/read
+Dec 11, 2018 10:46:13 AM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["https-jsse-nio-8443"]
+Dec 11, 2018 10:46:13 AM org.apache.tomcat.util.net.NioSelectorPool getSharedSelector
+INFO: Using a shared selector for servlet write/read
+Dec 11, 2018 10:46:13 AM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 596 ms
+Dec 11, 2018 10:46:13 AM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Catalina]
+Dec 11, 2018 10:46:13 AM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/8.5.34
+Dec 11, 2018 10:46:13 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory [/home/szelei/Downloads/aaa/CB-9.3.0-PRE5/tomcat/webapps/ROOT]
+Dec 11, 2018 10:46:13 AM org.apache.jasper.servlet.TldScanner scanJars
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+Dec 11, 2018 10:46:13 AM org.apache.catalina.core.ApplicationContext log
+INFO: Initializing Spring root WebApplicationContext
+CodeCache: size=262144Kb used=17381Kb max_used=17504Kb free=244762Kb
+ bounds [0x00007f7f04000000, 0x00007f7f14000000, 0x00007f7f14000000]
+ total_blobs=5289 nmethods=4771 adapters=429
+ compilation: enabled

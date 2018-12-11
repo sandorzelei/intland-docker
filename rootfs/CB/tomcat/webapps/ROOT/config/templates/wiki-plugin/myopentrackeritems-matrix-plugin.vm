@@ -1,0 +1,150 @@
+## $Revision$ $Date$
+#parse ("myopentrackeritems-plugin-common.vm")
+
+## Template to fetch values from ProjectEntry.stats
+#set($valtemplate = '${source1}.stats.$sel.prefix$flt.prefix')
+
+<script type="text/javascript">
+<!--
+
+#*
+Generate data necessary for JavaScript part
+*#
+
+var projectsM_${pluginId} = new Array(#foreach( $item in $projectsList )#if( $velocityCount!=1 ),#end "${item.projectName}"#end);
+var projectIDsM_${pluginId} = new Array(#foreach( $item in $projectsList )#if( $velocityCount!=1 ),#end "$!{item.project.Id}"#end);
+var workSetIDsM_${pluginId} = new Array(#foreach( $item in $projectsList )#if( $velocityCount!=1 ),#end "$!{item.workingSet.Id}"#end);
+var selectorParamsM_${pluginId} = new Array ( #printParametersSet($selectors) );
+var filterParamsM_${pluginId} = new Array ( #printParametersSet($filters) );
+var valuesM_${pluginId} = new Array();
+## #evaluate() directive introduced in 1.6 only!
+## #evaluate( "${source1}.${source2}.$src1"  ) - Should work!
+#set( $projCnt = 0 )
+#foreach ( $project in $projectsList )
+        valuesM_${pluginId}[${projCnt}] = new Array();
+        #set( $selCnt = 0 )
+        #foreach( $sel in $selectors )
+                valuesM_${pluginId}[${projCnt}][${selCnt}] = new Array(#set($comma="")#foreach( $flt in $filters )#set($source1 = '$project')$comma #set( $val = $render.eval($ctx,  $valtemplate ) )$render.eval($ctx, $val  )#if(${comma} != ",") #set($comma = ",") #end#end );
+                #set( $selCnt = $selCnt + 1 )
+        #end
+        #set( $projCnt = $projCnt + 1 )
+#end
+// -->
+</script>
+
+<form name="myOpenItemsMatrix" action="#">
+<div id="projectsListMatrixPlugin_${pluginId}">
+#wikiBoxOpen(${command})
+
+#define($userControls)
+	<div style="padding-top:15px;">
+        <select id="projectsListMatrix_${pluginId}" name="projectsMatrix" onChange="makeFiltersMatrix_${pluginId}(this.selectedIndex)">
+        	#foreach( $project in $projectsList )
+        		<option>${project.projectName}</option>
+        	#end
+        </select>
+
+        #if(${selectedWorkingSetName})
+        	${textFormatter.getMessage('my.open.issues.of')}
+        	#if (${selectedWorkingSetURL})
+           		<a href="${selectedWorkingSetURL}" title="${textFormatter.getMessage('workingset.customize.tooltip')}" >${textFormatter.getMessageWithDefault(${selectedWorkingSetName}, ${selectedWorkingSetName})}</a>
+           	#else
+           		${textFormatter.getMessageWithDefault(${selectedWorkingSetName}, ${selectedWorkingSetName})}
+           	#end
+        #end
+	</div>
+#end
+
+#wikiBoxTitle(${title}, ${title}, ${userControls}, "left projectsListMatrix")
+
+	<table class="embedded">
+		<thead>
+            <tr>
+				<th></th>
+                #foreach( $flt in $filters )
+                	<th class="number">${flt.name}</th>
+                #end
+            </tr>
+        </thead>
+		<tbody>
+    		## prepare values for 'valtemplate'
+    		#set($project = $projectsList.get($defaultProjectSelection) )
+    		#set($source1 = '$project')
+
+            #set( $selCounter = 0 )
+            #foreach( $sel in $selectors )
+                #trOpen()
+    				#tdText( "${sel.name}:" )
+                    #set( $fltCounter = 0 )
+                    #foreach( $flt in $filters )
+        				#set( $val = $render.eval($ctx,  $valtemplate ) )
+                        <td class="number"><a id='hrefmatrix${selCounter}${fltCounter}_${pluginId}' href='#'>$render.eval($ctx,  $val)</a></td>
+                        #set( $fltCounter = $fltCounter + 1 )
+                    #end
+                #trClose()
+                #set( $selCounter = $selCounter + 1 )
+			#end
+			#if ((${showNewIssue} == true) && (${numProjects} != 0))
+				<tfoot>
+    				<tr>
+    					<th style="font-size:80%;" colspan="10">
+    						<a onclick="createNewIssue(this, 'projectsListMatrix');" title="${textFormatter.getMessage('my.open.issues.new.issue.tooltip')}" href="#">${textFormatter.getMessage('my.open.issues.new.issue.label')}</a>
+    					</th>
+    				</tr>
+				</tfoot>
+			#end
+		</tbody>
+    </table>
+#wikiBoxClose()
+</div>
+</form>
+
+<script type="text/javascript">
+<!--
+
+function makeSelectorLinkMatrix_${pluginId}( projectIndex, selectorIndex ) {
+        var proj = (projectIDsM_${pluginId}[projectIndex] != "") ? "&proj_id=" + projectIDsM_${pluginId}[projectIndex] : "";
+		var wset = (workSetIDsM_${pluginId}[projectIndex] != "") ? "&workingset_id=" + workSetIDsM_${pluginId}[projectIndex] : "";
+        result = "${contextPath}/browseIssues.spr?user_id=${userId}" + selectorParamsM_${pluginId}[selectorIndex] + proj + wset;
+        return result;
+}
+
+// Build selection for filters
+function makeFiltersMatrix_${pluginId}(index){
+    for (sel = 0; sel < ${selectors.size()}; sel++) {
+        var projectValues = valuesM_${pluginId}[index][sel];
+        var projectValuesCnt = projectValues.length;
+        for (var i = 0; i < projectValuesCnt; i++) {
+                var href = document.getElementById( ["hrefmatrix" + sel + i + "_${pluginId}"] );
+                href.href = makeSelectorLinkMatrix_${pluginId}( index, sel ) + filterParamsM_${pluginId}[i];
+                href.innerHTML = projectValues[i];
+        }
+    }
+}
+
+// Build the projects selector
+function makeProjectsMatrix_${pluginId}() {
+        var projectsList = document.getElementById("projectsListMatrix_${pluginId}");
+        projectsList.options.length = 0; // Doesn't work in IE;/
+        for (var i = 0; i < ${projectsList.size()}; i++){
+                projectsList.options[i] = new Option(projectsM_${pluginId}[i] + " (" + valuesM_${pluginId}[i][0][0] + ")", i);
+        }
+        projectsList.selectedIndex = $defaultProjectSelection;
+}
+
+// Init selectors
+function initMatrix_${pluginId}() {
+    makeProjectsMatrix_${pluginId}();
+    makeFiltersMatrix_${pluginId}($defaultProjectSelection);
+}
+
+$(function(){
+	initMatrix_${pluginId}();
+});
+
+// -->
+</script>
+
+
+
+

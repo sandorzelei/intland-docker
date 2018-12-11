@@ -1,0 +1,1 @@
+#showProjectNameInSubjects("${textFormatter.getMessage('wiki.notification.comment.modified.mentioned.subject')} [#${artifact.id}] ${artifact.name}")

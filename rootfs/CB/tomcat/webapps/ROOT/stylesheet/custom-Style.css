@@ -1,0 +1,24 @@
+/* Style of custom tab in the project toolbar. */
+
+/* The style of the background of the selected tab. */
+.toolbar_custom_selected .currentTabCenter {
+	/*background-image: url("../images/newstyle/header_elements/bg_hrepeat_search.gif");*/
+	background-color: #FFFF66;
+}
+
+/* The style of the text appears in the tab. */
+.toolbar_custom_selected .currentTabCenter .toolbarTopMenu a,.toolbar_custom_selected .currentTabCenter .toolbarTopMenu a:hover {
+	color: black;
+}
+
+.menubar_custom {
+	color: white;
+	/*background-image: url("../images/newstyle/header_elements/bg_hrepeat_search.gif");*/
+	background-color: #FFFF66;
+}
+
+.menubar_custom a, .menubar_custom a:hover {
+	color: white;
+}
+
+/* End of Custom Style */

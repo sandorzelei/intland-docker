@@ -1,0 +1,83 @@
+/* css for repository-card.jsp */
+.repositoryCard {
+	border: 1px solid #CCC;
+	margin-bottom: 0.5em;
+}
+
+.repositoryCard .header {
+	background: #EEE;
+	padding: 0.5em;
+}
+
+.repositoryCard .body {
+	padding: 0.5em;
+}
+
+.repositoryCard .repoName {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+.repositoryCard .parentRepositoryContainer {
+	font-size: 100%;
+}
+.repositoryCard .parentRepositoryContainer .repoName {
+	font-size: 100%;
+}
+
+.repositoryCard .repoInfo {
+	margin-left: 4em;
+}
+
+.repositoryCard .repoDescription {
+	margin: 0.5em 0;
+}
+.compactRepositoryCard .repoDescription {
+	max-height: 10em;
+	overflow: auto;
+}
+
+.repositoryCard table.repoDetails {
+	width:100%;
+}
+
+.repositoryCard table.repoDetails td {
+	vertical-align: top;
+	white-space: nowrap;
+	padding-right: 0.5em;
+}
+
+.repositoryCard table.repoDetails td.stretch {
+	width: 45%;
+}
+
+.repositoryCard a.pendingRequests {
+	color: #C00 !important;
+	font-weight: bold;
+}
+
+fieldset.collapsingBorder {
+	margin:0;
+}
+
+.forksContainer {
+	margin-left: 20px;
+}
+
+/** fixes IE menu rendering */
+.IE .biggerMenuArrow {
+	width: 14px;
+	height: 14px;
+}
+.repositoryCard .yuimenubar {
+	margin-left: 3px;
+}
+
+.repositoryCard .pullURLs .closedItem,
+.repositoryCard .pushURLs .closedItem {
+	vertical-align: top;
+}
+
+.repositoryCard .actionBarIcon {
+	position: static !important;
+}

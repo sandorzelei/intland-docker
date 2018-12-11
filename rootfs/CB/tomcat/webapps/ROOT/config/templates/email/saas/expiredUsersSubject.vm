@@ -1,0 +1,1 @@
+${cbBaseUrl}: ${newUsers.size()} new users, ${expiredUsers.size()} users are expired and ${halftimeUsers.size()} are close to half-time of evaluation

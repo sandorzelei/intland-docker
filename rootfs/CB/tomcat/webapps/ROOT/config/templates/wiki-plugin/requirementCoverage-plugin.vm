@@ -1,0 +1,41 @@
+#wikiBoxOpen(${command})
+    ## chart
+    #if($command.chart)
+
+		#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.coverageHistogram.label")}, "")
+
+        <span id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </span>
+
+        <script type="text/javascript">
+        	var artifactCountTrends_${pluginId} = {
+        		updateChart: function() {
+
+        			var url = "${chartSupport.chartURL}";
+
+        			chartRendererSupport.updateChart('${contextPath}', "chart_${pluginId}", url, ${command.width}, ${command.height});
+        		}
+        	}
+        </script>
+    #end
+    #if($command.table)
+    	#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.table.coverageHistogram.label")}, "")
+    	<table class="embedded">
+    		<thead>
+    			<tr>
+    				<th></th>
+    				<th class="number">#</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			#foreach($count in $data.keySet())
+    				#trOpen
+    					<th>${textFormatter.getMessage("tracker.view.table.coverageHistogram.firstColumn.label", ${count})}</th>
+    					<td class="number">${textFormatter.getMessage("tracker.view.table.coverageHistogram.secondColumn.label", ${data.get($count)})}</td>
+    				#trClose
+    			#end
+    		</tbody>
+    	</table>
+    #end
+#wikiBoxClose()

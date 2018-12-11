@@ -1,0 +1,6 @@
+<span class="userPhotoPlaceholder tableIcon">
+	<span class="userIntials">
+		<img class="tableIcon" src="${url}" alt="" style="border-radius: 50%;"/>
+	</span>
+</span>
+<a href="${contextPath}/userdata/${userId}">${username}</a>

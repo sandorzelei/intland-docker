@@ -1,0 +1,31 @@
+## Velocity template generates default content for SCM pull requests
+## context:
+## - user - The current user
+## - changeSets	- List<ScmChangeSetDto> the ordered list of changes from oldest to newest
+##
+## as output it should set the "subject" property will be used as subject/name for the pull-request
+##
+${textFormatter.setAbsoluteDates(true)}
+#set($name = " ")
+#if (${referencedIssues.size()} == 1)
+  Affects: \\
+  [ISSUE:${referencedIssues.get(0).id}]
+  #if (${changeSets.size()} == 1)
+    #set($name = "${changeSets.get(0).message}")
+  #elseif (${referencedIssues.get(0).summary})
+    #set($name = "${referencedIssues.get(0).summary}")
+  #else
+	#set($name = "${referencedIssues.get(0).id}")
+  #end
+#else
+  #if (${referencedIssues.size()} > 0)
+    Affects: \\
+    #foreach($issue in $referencedIssues)
+      [ISSUE:${issue.id}]#if( $velocityCount < ${referencedIssues.size()} ) \\ #end
+
+    #end
+  #end
+  #if (${changeSets.size()} == 1)
+    #set($name = "${changeSets.get(0).message}")
+  #end
+#end

@@ -1,0 +1,63 @@
+	.stat {
+		width: 16px;
+	    height: 16px;
+	    display: inline-block;
+	    border-radius: 8px;
+	    background-repeat: no-repeat;
+	    margin-bottom: -3px;
+	}
+
+	.stat.REJECTED {
+		background-color: #cc3f44;
+		background-image: url("../../images/vote_down.png");
+	}
+
+	.stat.ACCEPTED {
+		background-color: #27c27c;
+		background-image: url("../../images/vote_up.png");
+	}
+
+	.stat.NOT_REVIEWED {
+		background-image: url("../../images/icon_vote.png");
+	}
+
+	div.progressBarContainer {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		width: 50%;
+	}
+
+	div.progressBarContainer .miniprogressbar {
+		width: 100%;
+	}
+
+	div.reviewStatsBox {
+		margin-bottom: 20px;
+
+		.versionSettingBadge {
+			display: inline-block;
+		    top: -3px;
+		    position: relative;
+		}
+
+		.progressBarContainer {
+			display: inline-block;
+		}
+
+		&.merge-request {
+			background-color: #fff7eb;
+
+			.propertyTable > tbody > tr {
+				background-color: #fff7eb;
+			}
+		}
+	}
+
+	.reviewStatsBox.closed {
+		display: none;
+	}
+
+
+	strong.review-item-name {
+		display: block;
+	}

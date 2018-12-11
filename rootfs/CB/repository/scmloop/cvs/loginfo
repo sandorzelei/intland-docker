@@ -1,0 +1,7 @@
+# Please, add/uncomment the appropriate line below to CVSROOT/loginfo!
+#
+# Windows (Replace path "C:\scmloop" with appropriate path):
+#DEFAULT cmd /c C:\scmloop\scmloop.bat -repositoryId ID-OF-YOUR-REPOSITORY -mode loginfo %{sVv}
+#
+# Unix (Replace path "/usr/local/bin" with appropriate path):
+#DEFAULT /usr/local/bin/scmloop -repositoryId ID-OF-YOUR-REPOSITORY -mode loginfo %{sVv}

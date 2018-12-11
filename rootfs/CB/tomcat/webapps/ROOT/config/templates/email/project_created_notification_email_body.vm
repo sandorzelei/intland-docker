@@ -1,0 +1,56 @@
+#parse("notification_email_header.vm")
+
+<div class="heading">
+${textFormatter.getMessage('project.creation.notification.title')}: [#${project.id}] #linkProject(${project})
+</div>
+
+#account(${originator})
+
+#partHeader("${textFormatter.getMessage('issue.details.label')}")
+
+#tableOpen()
+
+##trTitle("${textFormatter.getMessage('issue.details.label')}" "project")
+
+#if( ${project.startDate} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('project.startDate.label')}")
+		#tdText("${textFormatter.formatDate($recipient, ${project.startDate})}")
+	#trClose()
+#end
+
+#if( ${project.endDate} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('project.closeDate.label')}")
+		#tdText("${textFormatter.formatDate($recipient, ${project.endDate})}")
+	#trClose()
+#end
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('project.category.label')}")
+	#tdText(${textFormatter.getMessageWithDefault("project.category.${project.category}.label", ${project.category})})
+#trClose()
+
+#if( ${project.status} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('project.status.label')}")
+		#tdText(${project.status})
+	#trClose()
+#end
+
+
+#trOpen()
+	#tdField("${textFormatter.getMessage('project.description.label')}")
+	#tdText($textFormatter.format(${project.description}, ${project.descriptionFormat}, ${wikiContext}))
+#trClose()
+
+#if( ${geoLocationResolver.canonicalRemoteAddress} )
+	#trOpen()
+		#tdField("${textFormatter.getMessage('project.host.label')}")
+		#tdText(${geoLocationResolver.canonicalRemoteAddress})
+	#trClose()
+#end
+
+#tableClose()
+
+#parse("notification_email_footer.vm")

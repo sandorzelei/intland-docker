@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- $Revision$ $Date$ -->
+
+<decorators defaultdir="/decorators">
+	<decorator name="main" page="main.jsp"/>
+	<decorator name="popup" page="popup.jsp"/>
+	<decorator name="test" page="test.jsp" />
+	<decorator name="installer" page="installer.jsp" />
+
+	<excludes>
+		<pattern>/runBuild*</pattern>
+		<pattern>/sysadmin/deleteProjects.spr*</pattern>
+		<pattern>/proj/deleteProject.spr*</pattern>
+		<pattern>/user/photo/*</pattern>
+		<pattern>/logo/*</pattern>
+		<pattern>/listForumMessages*</pattern>
+		<pattern>/viewForumMessage*</pattern>
+		<pattern>/tmp.spr*</pattern>
+		<pattern>/displayDocument/*</pattern>
+		<pattern>/artifacts/zip.spr*</pattern>
+		<pattern>/audit/export.spr*</pattern>
+		<pattern>/ajax/*</pattern>
+		<pattern>/webfolder*</pattern>
+		<pattern>/officeedit*</pattern>
+		<pattern>/checkissuechanged*</pattern>
+		<pattern>/social/*</pattern>
+		<pattern>/dndupload/*</pattern>
+		<pattern>/remote-api*</pattern>
+		<pattern>/git/*</pattern>
+		<pattern>/hg/*</pattern>
+		<pattern>/saas/register.spr*</pattern>
+		<pattern>/scmShowFileRevision*</pattern>
+	</excludes>
+</decorators>

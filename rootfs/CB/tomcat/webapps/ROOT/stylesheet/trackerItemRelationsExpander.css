@@ -1,0 +1,12 @@
+.newskin .relationsExpander fieldset.separatorLikeCollapsingBorder legend.collapsingBorder_legend {
+	border-bottom: 0px;
+	padding: 0px;
+}
+
+.newskin .relationsExpander fieldset.separatorLikeCollapsingBorder legend.collapsingBorder_legend a {
+	font-weight: normal;
+}
+
+.newskin .relationsExpander fieldset.separatorLikeCollapsingBorder {
+	margin: 0px;
+}

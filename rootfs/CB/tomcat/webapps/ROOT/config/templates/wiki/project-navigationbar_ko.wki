@@ -1,0 +1,28 @@
+%%information
+This sidebar is visible beside all project pages. \\
+Click ''edit'' in the top-right menu to modify its content.
+%%
+
+__Tasks__ \\
+#foreach($taskTracker in $taskTrackers)
+[Add a task|CB:${taskTracker.createContainedUrlLink}] \\
+#end
+#foreach($changeRequestTracker in $changeRequestTrackers)
+[Request a change|CB:${changeRequestTracker.createContainedUrlLink}] \\
+#end
+#foreach($bugTracker in $bugTrackers)
+[Report a bug|CB:${bugTracker.createContainedUrlLink}] \\
+#end
+\\
+__Requirements Management__ \\
+[Requirements Dashboard] \\
+[Requirements Guide] \\
+\\
+__QA & Test Management__ \\
+[QA-Test Dashboard] \\
+[QA-Test Guide] \\
+\\
+__Release Management__ \\
+#foreach($versionCategory in $versionCategories)
+[Project Roadmap|CMDB:#if(${versionCategory.templateId})${versionCategory.templateId}#else${versionCategory.id}#end] \\
+#end

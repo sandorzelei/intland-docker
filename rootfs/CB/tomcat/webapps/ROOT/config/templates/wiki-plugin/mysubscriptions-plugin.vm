@@ -1,0 +1,25 @@
+#wikiBoxOpen(${command})
+#wikiBoxTitle("$textFormatter.getMessage('my.subscriptions.label')")
+	<table>
+		#trOpen()
+			<td>
+				<a href='${contextPath}/${url}?type=1'>$textFormatter.getMessage('user.subscribed.trackers')</a> (${trackers.size()})
+			</td>
+		#trClose()
+		#trOpen()
+			<td>
+				<a href='${contextPath}/${url}?type=2'>$textFormatter.getMessage('user.subscribed.wikipages')</a>
+			</td>
+		#trClose()
+		#trOpen()
+			<td>
+				<a href='${contextPath}/${url}?type=3'>$textFormatter.getMessage('user.subscribed.documents')</a>
+			</td>
+		#trClose()
+		#trOpen()
+			<td>
+				<a href='${contextPath}/${url}?type=4'>$textFormatter.getMessage('user.subscribed.workitems')</a>
+			</td>
+		#trClose()
+	</table>
+#wikiBoxClose()

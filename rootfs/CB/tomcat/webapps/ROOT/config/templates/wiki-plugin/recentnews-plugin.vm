@@ -1,0 +1,26 @@
+#wikiBoxOpen(${command})
+    <table>
+    	<thead>
+			<tr><th>#if(!$isCurrentProject)${project.name} - #end $textFormatter.getMessage('recent.news.plugin.recent.label')</th></tr>
+    	</thead>
+    	<tbody>
+        	#if (${news.size()} != 0)
+        		#foreach ($item in $news)
+        			#trOpen()
+            			<td width="99%">
+            				<a href="${contextPath}${item.urlLink}">
+            					$textFormatter.escape(${textFormatter.abbreviate(${item.subject}, 30)})
+            				</a>
+            				<br/>
+            				<span class="subtext">$textFormatter.formatDate(${user}, ${item.submittedAt})</span>
+            			</td>
+        			#trClose()
+        		#end
+        	#else
+        		#trOpen()
+        			#tdText("$textFormatter.getMessage('recent.news.plugin.recent.none')")
+        		#trClose()
+        	#end
+    	</tbody>
+    </table>
+#wikiBoxClose()

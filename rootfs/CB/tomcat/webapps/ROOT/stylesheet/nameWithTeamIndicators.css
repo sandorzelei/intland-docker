@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+.nameWithTeamIndicators.table {
+	display: table;
+}
+
+.nameWithTeamIndicators.table .table-row {
+	display: table-row;
+}
+
+.nameWithTeamIndicators.table .table-row .table-cell {
+	display: table-cell;
+}
+
+.nameWithTeamIndicators.table .table-row .table-cell.limited-height {
+	line-height: 0.25;
+}
+
+.nameWithTeamIndicators .teamCircle {
+	line-height: 0.25;
+	font-size: 13px;
+	cursor: pointer;
+}

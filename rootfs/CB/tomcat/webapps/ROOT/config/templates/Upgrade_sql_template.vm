@@ -1,0 +1,15 @@
+#macro(notRunYet $statementId)
+#if (${databaseUpgradeHelper.notRunYet($statementId)})
+true##
+#else
+false##
+#end
+#end
+
+#macro(startStatement $statementId)
+    ${databaseUpgradeHelper.getStartStatement($statementId)}
+#end
+
+#macro(finishStatement $statementId)
+    ${databaseUpgradeHelper.getFinishStatement($statementId)}
+#end

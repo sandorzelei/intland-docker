@@ -1,0 +1,62 @@
+$rowCounter.reset()
+<table class="embedded pendingApprovals">
+	<thead>
+		<tr><th>$textFormatter.getMessage('pending.approvals.label')</th></tr>
+	</thead>
+	#if (${pendingApprovals} && !${pendingApprovals.empty})
+		<tbody>
+			#foreach($hist in ${pendingApprovals})
+				#set($art = ${hist.artifact})
+				#trOpen()
+					<td title="${textFormatter.getMessage('pending.approvals.view')}">
+						#set ($params = "revision=${hist.version}")
+						#linkReferableDtoWithParams(${art} ${params})  ## link to artifact's pending revision
+
+						## calculate url showing the artifact and immediately starting approval
+						#set ($url = "${cbBaseUrl}${art.urlLink}")
+						#set ($params = "${params}&amp;startApproving=true")
+						#set ($url = ${textFormatter.buildUrl(${url},${params})})
+						<a href="${url}" title="${textFormatter.getMessage('pending.approvals.handle')}">${hist.step.name}</a>.
+						<br/>
+						<span class="subtext">
+							${textFormatter.formatDate($user, ${art.lastModifiedAt})}	## modification date
+							$textFormatter.getMessage('document.lastModifiedBy.short') #linkUserShort($!{art.lastModifiedBy})	## last modifier
+						</span>
+					</td>
+				#trClose()
+			#end
+		</tbody>
+	#else
+		<tbody>
+			<tr><td>$textFormatter.getMessage('pending.approvals.none')</td></tr>
+		</tbody>
+	#end
+</table>
+
+$rowCounter.reset()
+<table class="embedded myArtifactsInApproval">
+	<thead>
+		<tr><th colspan="100">$textFormatter.getMessage('pending.changes.label')</th></tr>
+	</thead>
+	#if (${myArtifactsInApproval} && !${myArtifactsInApproval.empty})
+		<tbody>
+			#foreach($art in ${myArtifactsInApproval})
+				#trOpen()
+					<td title="${textFormatter.getMessage('pending.approvals.view')}"> ## link to the approving revision
+						#set ($params = "revision=${art.version}")
+						#linkReferableDtoWithParams(${art} ${params})
+						#set ($pendingHistory = ${myArtifactsInApprovalWithPendingStep.get(${art})})
+						${pendingHistory.step.name}.<br/>
+						<span class="subtext">
+							$textFormatter.formatDate($user, ${art.lastModifiedAt})
+						</span>
+					</td>
+				#trClose()
+			#end
+		</tbody>
+	#else
+		<tbody>
+			<tr><td>$textFormatter.getMessage('pending.changes.none')</td></tr>
+		</tbody>
+	#end
+</table>

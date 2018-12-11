@@ -1,0 +1,39 @@
+<div class="form-field">
+	<div id="query-column-${selectorId}">
+		<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+
+		<select id="${selectorId}"  #if ($postParamater) name="params[${fieldName}]" #end multiple="multiple">
+		</select>
+	</div>
+
+	<script type="text/javascript" src="${queryEditorJsUrl}"></script>
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			var selectedValues = $.parseJSON(decodeURIComponent('${selectedColumns}'));
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:changed", function(data) {
+				codebeamer.dashboard.queryEditor.getQueryColumns("${queryCustomColumnsUrl}", "${queryColumnsUrl}", "${selectorId}", "${queryColumnsByIdUrl}", selectedValues, ${isGrouped}, data.id, "queryColumnsSelector:columns:changed");
+			});
+
+			codebeamer.dashboard.multiSelect.init("${selectorId}", "queryColumnsSelector:columns:changed");
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:advancedQuery:changed", function(value) {
+
+				$("#query-column-${selectorId}").hide();
+
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:changed", function(value) {
+
+				$("#query-column-${selectorId}").show();
+
+			});
+
+			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:cleared", function(value) {
+				codebeamer.dashboard.multiSelect.clear("${selectorId}");
+			});
+		});
+	</script>
+
+</div>

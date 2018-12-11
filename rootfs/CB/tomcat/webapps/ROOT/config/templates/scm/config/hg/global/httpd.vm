@@ -1,0 +1,27 @@
+LoadModule wsgi_module modules/mod_wsgi.so
+LoadModule authn_file_module modules/mod_authn_file.so
+LoadModule auth_basic_module modules/mod_auth_basic.so
+LoadModule authz_user_module modules/mod_authz_user.so
+
+#Replace PYTHON_HOME with the absolute path of your Python installation directory.
+WSGIPythonPath PYTHON_HOME
+
+<Directory "${repoDir}">
+	Options ExecCGI FollowSymlinks
+
+	AddHandler wsgi-script .wsgi
+
+	AllowOverride None
+	Order allow,deny
+	Allow from all
+</Directory>
+
+<Location /hg>
+	AuthType Basic
+	AuthName "Mercurial Repository"
+	AuthUserFile "${repoDir}/.htaccess"
+
+	Require valid-user
+</Location>
+
+WSGIScriptAlias /hg "${repoDir}/scmweb/hgwebdir.wsgi"

@@ -1,0 +1,778 @@
+#selectButton {
+    min-height: 25px;
+    padding: 2px 20px;
+}
+
+#export {
+	cursor: pointer;
+}
+
+.traceabilityBrowserCont table.tb .infiniteScrollTop td {
+	height: 0;
+	padding: 0;
+}
+
+.traceabilityBrowserCont table.tb th,
+.traceabilityBrowserCont table.tb td {
+	white-space: normal;
+}
+
+.traceabilityBrowserCont table.tb th {
+	font-weight: bold;
+	padding: 0.5em 0.5em 0.3em 0.5em;
+	background-color: #f5f5f5;
+	color: #5f5f5f;
+	border-bottom: 1px solid #d1d1d1;
+	vertical-align: top;
+	text-align: left;
+	&.referenceType {
+		text-align: center;
+	}
+}
+
+.traceabilityBrowserCont table.tb th span.trackerName {
+	position: relative;
+	top: -3px;
+}
+
+.traceabilityBrowserCont table.tb td {
+	vertical-align: top;
+	padding: 0.5em;
+	border-collapse: collapse;
+	border: 1px solid #f5f5f5;
+}
+
+.traceabilityBrowserCont .hover {
+	background-color: #f5f5f5;
+}
+
+.traceabilityBrowserCont table.tb td.name {
+	border-left: none;
+	border-right: none;
+	width: 350px;
+	&.warningCell {
+		height: 23px;
+		vertical-align: middle;
+	}
+	.limitWarning {
+		font-size: 11px;
+		font-style: italic;
+		color: #ababab;
+	}
+}
+
+.traceabilityBrowserCont table.tb td.name .tableIcon {
+  	position: relative;
+  	top: 3px;
+  	margin-right: 5px !important;
+}
+
+.traceabilityBrowserCont table.tb .testRunResultTablet {
+  	margin-left: 5px;
+}
+
+.traceabilityBrowserCont table.tb td.name .empty {
+	color: #858585;
+}
+
+.traceabilityBrowserCont table.tb td.referenceType {
+	border-right: none;
+	padding-left: 2px;
+	padding-right: 2px;
+	width: 20px;
+	text-align: center;
+	color: #ababab;
+	padding-top: 9px;
+}
+
+.traceabilityBrowserCont table.tb th.referenceType {
+	.levelReferenceSetting.customFilter {
+		color: #b31317 !important;
+	}
+}
+
+.traceabilityBrowserCont table.tb td.referenceType img {
+	margin-bottom: 2px;
+  	position: relative;
+  	top: 3px;
+}
+
+.traceabilityBrowserCont table.tb th span.levelHeader {
+	position: relative;
+	left: -12px;
+	top: -4px;
+	color: #858585;
+	font-size: 11px;
+	&.customFilter {
+		color: #b31317 !important;
+	}
+}
+
+.traceabilityBrowserCont .exportButton {
+	background: url("${exportToExcelImgUrl}") no-repeat 0 -2px;
+	padding-left: 18px;
+	margin-left: 1em;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.traceabilityBrowserCont h3 {
+	padding: 0;
+	margin: 0.5em;
+}
+
+.traceabilityBrowserCont h3 span.title {
+	padding-right: 1em;
+	border-right: 1px solid #d1d1d1;
+}
+
+.traceabilityBrowserCont .referenceSettingBadge {
+	margin-left: 5px;
+	margin-top: 4px;
+	padding-bottom: 1px;
+  	position: relative;
+  	top: -1px;
+	display: inline-block;
+	&.active {
+		padding: 0 3px 1px 3px;
+	}
+  	&.branchBadge {
+	  	padding: 1px 3px 1px 3px;
+	}
+}
+
+.traceabilityBrowserCont .badgeContainer {
+	font-size: 0;
+  	white-space: nowrap;
+  	.badgeContainerPlaceholder {
+		visibility: hidden;
+	  	display: inline-block;
+		margin-left: -6px;
+	}
+	span.arrow {
+		position: relative;
+		top: 3px;
+	}
+	.udBadge {
+		position: relative;
+		top: -1px;
+	}
+}
+
+span.assocType {
+	margin-left: 0.5em;
+  	position: relative;
+  	top: 3px;
+}
+
+#referenceTypeCont {
+	margin: 0 0.5em 0.5em 0.5em;
+}
+
+#referenceTypeCont td {
+	padding: 0.2em;
+}
+
+.referencingTypes {
+	margin-bottom: 1em;
+  	width: 100%;
+}
+
+.referencingTypes td {
+	padding: 0.3em;
+	vertical-align: middle;
+}
+
+.referencingTypes img.refType,
+.referencingTrackers img.refType {
+	position: relative;
+	top: 3px;
+}
+
+.referencingTrackers img.refType {
+	padding-left: 0.5em;
+}
+
+td.referencingTrackers {
+	border: 0 !important;
+	padding: 0.4em !important;
+	background-color: #ccf4ff;
+	white-space: nowrap;
+}
+
+td.referencingTrackers.refCode {
+	width: 20px !important;
+}
+
+th.referencingTrackers {
+	width: 200px;
+	text-align: left;
+	background-color: #ccf4ff;
+	font-weight: bold;
+	padding: 0.5em;
+	color: #5f5f5f;
+	border-bottom: 1px solid #d1d1d1;
+	height: 15px;
+}
+
+td.refCode {
+	width: 20px;
+}
+
+.configImg {
+	display: block;
+	position: relative;
+	float: right;
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
+	top: 1px;
+	right: 20px;
+}
+
+.showHiddenTrackers {
+	font-size: 12px !important;
+	font-weight: normal !important;
+	display: inline-block !important;
+	padding-left: 0.2em;
+	position: relative;
+	top: -1px;
+}
+
+#showAssociations, #showRelations, #excludeFolders {
+	position: relative;
+	top: 1px;
+}
+
+.checkboxLabel {
+	color: black !important;
+	font-weight: normal !important;
+}
+
+.refTrackers {
+	float: right;
+	display: block;
+}
+
+.tableContainer td.traceabilityTable {
+	vertical-align: top;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+.helpLink {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url("../../images/newskin/action/help.png") center no-repeat;
+	cursor: pointer;
+	position: relative;
+	top: 2px;
+}
+
+.tooltip {
+	background: white;
+	max-width: 600px;
+	padding: 0.5em;
+	margin: 0;
+}
+
+.tooltip p {
+	font-size: 12px;
+}
+
+.tooltip p a {
+	color: #0093b8;
+	text-decoration: none;
+}
+
+.tooltip p a:hover {
+	text-decoration: underline;
+}
+
+.tooltip h3 {
+	font-size: 14px;
+}
+
+span.actionBarSection {
+	margin-right: 1.5em;
+}
+
+.actionBar .actionBarLink {
+	margin: 0 1em;
+}
+
+#saveSettingDialog {
+	display: none;
+}
+
+.entityContainer {
+  height: 22px;
+  border: 1px solid #ddd;
+  display: inline-block;
+  margin: 3px 3px 1px 1px;
+  background-color: white;
+}
+
+.entityContainerPlaceholder {
+  	display: inline-block;
+  	height: 26px;
+  	width: 0;
+}
+
+.entityContainer.trackerEntity {
+  background-color: #fdeef4;
+}
+
+.entityContainer.draggable .issueHandle {
+  display: inline-block;
+  width: 10px;
+  height: 22px;
+  background-color: #5f5f5f;
+  background-image: url("../../../images/newskin/action/dragbar-dark.png");
+  background-position: 3px center;
+  background-repeat: no-repeat;
+  cursor: move;
+}
+
+.entityContainer .icon {
+  position: relative;
+  top: -3px;
+  padding: 0 5px;
+}
+
+.entityContainer .name {
+  position: relative;
+  top: -6px;
+  padding-right: 5px;
+}
+
+.entityContainer .deleteButton {
+  display: inline-block;
+  width: 16px;
+  height: 22px;
+  background: url("../../../images/newskin/action/delete-grey-12x12.png") no-repeat center center;
+  cursor: pointer;
+}
+
+.controlContainer {
+  display: block;
+  margin-bottom: 1.5em;
+}
+
+.controlContainer table {
+  width: 100%;
+}
+
+.controlContainer .label {
+  font-weight: bold;
+  width: 12%;
+  padding: 5px;
+  line-height: 0.9em;
+}
+
+.controlContainer .levelContainer {
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 1px;
+  min-height: 26px;
+
+  &.filterLevelContainer {
+	  padding: 0;
+	  .reportSelectorTag {
+		  background-color: transparent;
+		  padding: 4px;
+		  border-bottom: none;
+
+		  .addButton {
+			  top: 0 !important;
+		  }
+
+		  .addOrderByButton {
+			  position: relative;
+			  top: -1px;
+		  }
+
+		  .logicButton {
+			  top: 3px;
+		  }
+	  }
+  }
+
+  .numberOfItems {
+  	display: none;
+  	float: right;
+  	padding: 0.4em;
+  	.ignore {
+  		font-size: 14px;
+  		color: #b31317;
+  		font-weight: bold;
+  		text-transform: uppercase;
+  		padding-right: 0.5em;
+  	}
+  	.resultNumber {
+  		font-size: 14px;
+  		font-weight: bold;
+  	}
+  }
+
+  &.highlighted {
+    background-color: #ccffe8;
+  }
+
+  &.highlighted.dropHover {
+    background-color: #99ffd1;
+  }
+
+}
+
+.controlContainer .levelContainer.withoutControl {
+  border: 1px solid transparent;
+}
+
+.controlContainer .addButton,
+.controlContainer .addInitialButton {
+  	display: inline-block;
+  	color: #0093b8;
+  	cursor: pointer;
+  	position: relative;
+  	top: -5px;
+  	margin-left: 0.5em;
+  	line-height: 0;
+}
+
+.controlContainer .addButton:hover,
+.controlContainer .addInitialButton:hover {
+  	text-decoration: underline;
+}
+
+.controlContainer .viewSelector,
+.controlContainer .branchSelector {
+	display: inline-block;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	position: relative;
+	top: -7px;
+	font-size: 12px;
+	width: auto;
+
+	option.defaultView {
+		background-color: #c9f4ff;
+	}
+}
+
+.controlContainer .branchSelector {
+	margin-left: 3px;
+	padding-left: 5px;
+}
+
+.ui-multiselect-menu.branchSelector {
+	min-width: 225px !important;
+	max-width: 250px;
+	.ui-multiselect-header {
+		padding: 0px 3px 4px 0 !important;
+	}
+	.ui-multiselect-close {
+		display: none;
+	}
+	.ui-multiselect-filter {
+		display: block !important;
+		width: 100%;
+		input {
+			width: 93%;
+		}
+	}
+	.ui-multiselect-checkboxes li {
+		padding-top: 3px !important;
+		padding-bottom: 3px !important;
+	}
+}
+
+.context-menu-item.disabled {
+  color: #BDBDBD;
+  cursor: default;
+}
+
+.ignoredLevel {
+  opacity: 0.5;
+}
+
+.countContainer {
+	position: relative;
+	top: -3px;
+	font-size: 11px;
+}
+
+#traceabilitySuggestedTable {
+	display: inline-block;
+	width: 200px;
+	margin-left: 10px;
+}
+
+#traceabilityAddCustomTrackerDialog {
+    td {
+    	padding: 0.3em;
+    	vertical-align: middle;
+
+    	&.label {
+    		font-weight: bold;
+    	}
+    }
+	.selector {
+		padding: 0.3em;
+		width: 300px;
+	}
+
+	.trackerSelectorHelper {
+		display: none;
+	}
+
+  	.branchTracker{
+	  	color: #187a6d;
+	}
+}
+
+.context-menu-list {
+	max-width: none !important;
+}
+
+.stickyTableHeader {
+	position: fixed;
+	top: 0;
+	z-index: 1;
+}
+
+.levelSettingContainer {
+  	background-color: white;
+  	border: 1px solid #ababab;
+  	padding: 0.5em;
+  	width: 350px;
+  	display: block;
+
+  	h4 {
+	  	padding: 0;
+	  	margin: 0 0 1em 0;
+	}
+
+	.levelSettingTitle {
+	  	font-weight: bold;
+	  	margin-bottom: 0.5em;
+		label {
+		  	font-weight: normal;
+		}
+	}
+}
+
+.traceabilityBrowserPluginTable {
+  	td.referenceType img {
+	  	cursor: default !important;
+	}
+  	td.name img.statusIcon {
+	  	position: relative;
+	  	top: 3px;
+	}
+  	span.assocType {
+	  	position: relative !important;
+	  	margin-right: 0 !important;
+	  	img {
+			position: static !important;
+		  	margin: 0 !important;
+		  	cursor: default !important;
+	  	}
+	}
+}
+
+#relations-box {
+	.collapsingBorder_content {
+		padding: 0;
+	}
+	.traceabilityTabTopArrow {
+		position: absolute;
+		width: 16px;
+		height: 9px;
+		background: url("../../../images/newskin/action/traceability_tab_top_arrow.png");
+		margin-left: 6px;
+		margin-top: 9px;
+	}
+	.traceabilityTabTopArrowPlaceholder {
+		position: absolute;
+		width: 16px;
+		height: 10px;
+		border-left: 1px solid #5f5f5f;
+		margin-left: 6px;
+		margin-top: 18px;
+	}
+	.traceabilityTabBottomArrow {
+		position: absolute;
+		width: 19px;
+		height: 14px;
+		background: url("../../../images/newskin/action/traceability_tab_bottom_arrow.png");
+		margin-left: 5px;
+	}
+	.traceabilityTabItemTitle {
+		padding: 0 5px 3px 0;
+		margin: 0.3em 0;
+		img {
+			display: inline-block;
+			margin-right: 4px;
+			position: relative;
+			top: 3px;
+		}
+	}
+	.traceabilityBrowserPluginTable {
+		width:calc(~'100% - 24px');
+		margin-left: 24px;
+		td.name {
+			padding: 2px;
+		}
+		td.referenceType {
+			padding-top: 5px;
+		}
+	}
+	.traceabilitySettingCont {
+		display: inline-block;
+		font-size: 11px;
+		label {
+			cursor: pointer;
+		}
+		input {
+			position: relative;
+			top: 2px;
+			margin-left: 2em;
+		}
+		span {
+			margin-left: 2em;
+			margin-right: 0.5em;
+		}
+	}
+}
+
+.traceabilityDescriptionBox {
+	display: block;
+	margin-top: 0.3em;
+	width: 500px;
+	overflow: hidden;
+}
+
+.switchToTrackers, .switchToFilter {
+	font-weight: normal;
+	position: relative;
+	top: 8px;
+	left: -1px;
+}
+
+.traceabilityNoItems {
+	padding: 10px;
+	display: block;
+}
+
+.selectTrackerTable td {
+	vertical-align: top;
+}
+
+.initialFilterTable {
+	width: 100%;
+	background-color: white;
+	.goButton {
+		width: 5%;
+		padding: 0 5px;
+	}
+	.reportSelectorTag {
+		background: transparent !important;
+		border-bottom: none !important;
+	}
+}
+
+.traceabilityContextMenu .context-menu-item > .context-menu-list {
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.level-mixin(@level) {
+  padding-left: 24 + @level * 10px!important;
+}
+
+.level-mixin-suggestion(@level) {
+  padding-left: @level * 10px!important;
+}
+
+.traceabilityContextMenu .branchItem {
+	  color: #187a6d !important;
+	  &.level-1 {
+		  .level-mixin(1);
+	  }
+	  &.level-2 {
+		  .level-mixin(2);
+	  }
+	  &.level-3 {
+		  .level-mixin(3);
+	  }
+	  &.level-4 {
+		  .level-mixin(4);
+	  }
+	  &.level-5 {
+		  .level-mixin(5);
+	  }
+	  &.level-6 {
+		  .level-mixin(6);
+	  }
+
+	  &.context-menu-disabled {
+  		color: #BDBDBD !important;
+  	  }
+}
+
+.referencingTrackers .branchTracker,
+.referencingTypes .branchTracker {
+	color: #187a6d !important;
+	&.level-1 {
+		.level-mixin-suggestion(1);
+	}
+	&.level-2 {
+		.level-mixin-suggestion(2);
+	}
+	&.level-3 {
+		.level-mixin-suggestion(3);
+	}
+	&.level-4 {
+		.level-mixin-suggestion(4);
+	}
+	&.level-5 {
+		.level-mixin-suggestion(5);
+	}
+	&.level-6 {
+		.level-mixin-suggestion(6);
+	}
+}
+
+.buttonContainerTable {
+  	width: 100%;
+  	td.label {
+	  	width: 12%;
+	}
+  	.button {
+	  	margin-top: 5px;
+	}
+}
+
+#noFollowWarning {
+  	display: inline-block;
+	background-position: 6px 2px;
+	padding: 4px 10px 4px 30px;
+	min-height: auto;
+	margin: 0 0 0 1em;
+  	background-image: url("../../../images/newskin/action/testrun-block.png");
+}
+
+  /* Tooltip classes */
+
+  .traceabilityTable .code[data-hover-tooltip] .tableIcon {
+	vertical-align: middle;
+  }
+
+  .traceabilityTable .code[data-hover-tooltip] .itemLink {
+	vertical-align: middle;
+	margin-left: 3px;
+  }

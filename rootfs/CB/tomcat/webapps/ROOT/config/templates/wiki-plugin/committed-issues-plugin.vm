@@ -1,0 +1,117 @@
+##
+## Plugin renders issues committed on an SCM repository
+##
+
+<link rel="stylesheet" href="${contextPath}/bugs/tracker/versionsview/versionsView.css" type="text/css" media="all" />
+#*
+  Overriding some styling of the versionsView.css
+*#
+<style type="text/css">
+	table.committedIssuesPlugin {
+		width: 100%;
+		border: 1px solid #ababab;
+	}
+	.committedIssuesPlugin th {
+		padding: 5px;
+	}
+	.committedIssuesPlugin .stats,
+	.committedIssuesPlugin .version {
+		background-color: #EEE;
+		margin: 0;
+	}
+	.committedIssuesPlugin .stats {
+		padding: 0;
+	}
+	.committedIssuesPlugin .version {
+		padding: 5px;
+	}
+	.committedIssuesPlugin .issuelist {
+		margin: 0;
+	}
+	.committedIssuesPlugin .changeSet {
+		margin: 0;
+		width: 30em;
+	}
+	.committedIssuesPlugin .version {
+  		padding-top: 5px;
+  		padding-bottom: 5px;
+  		border: 0px;
+	}
+</style>
+
+#set($htmlId = "committedIssuesPlugin_${plugin.pluginId}")
+<table class="committedIssuesPlugin $!{command.cssClass}" style="$!{command.cssStyle}" border="0" cellpadding="0" cellspacing="0">
+	#if(${command.title} != '')
+    	<tr style="text-align:left;">
+    		<th>
+				#if($!{command.title})
+					${command.title}
+				#else
+				    ${textFormatter.getMessage("scm.committedissues.plugin.committed.issues.label")}
+				#end
+			</th>
+    	</tr>
+	#end
+	#if(${command.showStats} && ${issues.size()} > 0)
+	<tr>
+		<td class='stats'>
+			<div class="version">
+    			#set($progressbarTitle = ${textFormatter.getMessage("cmdb.version.issues.countBar.tooltip")})
+        		<div class="progressbar" title="${progressbarTitle}">
+        			<div style="width:${progressPercentage}%;"></div>
+        			<label>${progressPercentage}%</label>
+        		</div>
+
+        		#set($statsNumbersTitle = ${textFormatter.getMessage("cmdb.version.issues.count.tooltip")})
+        		<span class="statsNumbers" title="${statsNumbersTitle}">
+        			<small class="subtext">${textFormatter.getMessage("cmdb.version.issues.count.closed", ${resolvedAndClosedTrackerItems})}</small>
+        			<small class="subtext">${textFormatter.getMessage("cmdb.version.issues.count.open", ${openTrackerItems})}</small>
+        		</span>
+			</div>
+			<div style="clear:both;"></div>
+		</td>
+	</tr>
+	#end
+	<tr><td>
+		<div class="version" id="${htmlId}">
+		#if(${issues.size()} > 0)
+    		## Note: this renders the same as VersionUtils.renderVersionsJSONToHTML(...) javascript code
+    		<table class='issuelist'>
+    			#foreach($issue in $trackerItemsAsMaps)
+    				#set ($cssClass = "")
+    				#if (${issue.resolvedOrClosed}) #set($cssClass="closed") #else #set($cssClass="open") #end
+    				#if (${issue.overdue}) #set($cssClass="${cssClass} overdue") #end
+    				#if (${issue.overtime}) #set($cssClass="${cssClass} overtime") #end
+    				#trOpen($cssClass)
+    					<td class='subtext'>$issue.priority</td>
+    					<td class='subtext issueKey'>$issue.keyAndId </td>
+    					<td class='issueName'><a href='${issue.url}'>${issue.name}</a></td>
+    					<td class='subtext'>${issue.status}</td>
+    					<td class='subtext'>
+    						#foreach ($assignee in ${issue.assignedTo})
+    							#if ($velocityCount >1),#end
+    							${assignee}
+    						#end
+    					</td>
+    					<td class='subtext' style='width:20%'>${issue.project}&rarr;${issue.tracker}</td>
+                        <td class='subtext'>
+							#set($changeSets = ${issuesAndCommits.get(${issue.id})})
+							##${changeSets.size()} commit(s):
+							<ul class="changeSet">
+								#foreach($changeSet in $changeSets)
+									<li><a href="${contextPath}${changeSet.urlLink}">#esc(${changeSet.description})</a></li>
+								#end
+                            </ul>
+						</td>
+    				#trClose()
+    			#end
+    		</table>
+		#else
+			${textFormatter.getMessage("scm.committedissues.plugin.no.issues.found")}
+		#end
+		#if(${command.max} == ${issues.size()})
+            <span class="subtext" >${textFormatter.getMessage("scm.committedissues.plugin.committed.issues.limited", ${command.max})}</span>
+		#end
+		</div>
+	</td></tr>
+</table>

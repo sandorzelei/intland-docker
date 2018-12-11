@@ -1,0 +1,89 @@
+#if($isTraceabilityBrowserPage && $page > 1)
+	#set($previousPage = $page - 1)
+	<tr id="infiniteScrollTop" class="infiniteScrollTr infiniteScrollTop" data-page="$previousPage" data-permanent-link="${permanentLink}">
+		#set($columnIndex = 0)
+		#foreach($htmlParameter in $htmlParameters)<td></td><td data-index="${columnIndex}" data-count="${counts.get($columnIndex)}"></td>#set($columnIndex = $columnIndex + 1)#end
+	</tr>
+#end
+#set($index = 0)
+#foreach($row in $rows)
+	<tr>
+		#foreach($cell in $row.cells)
+			#if(!$command.initialTrackerItemId || ($command.initialTrackerItemId && $index > 0))
+				#set($typeLabel = "tracker.traceability.browser.${cell.type}.type")
+				<td title="$textFormatter.getMessage($typeLabel)" class="referenceType"#if($cell.rowSpan > 1) rowspan="${cell.rowSpan}#end">
+					#if($cell.item)
+						#if ($cell.type == 'INCOMING_ASSOCIATION')❮A
+						#elseif ($cell.type == 'OUTGOING_ASSOCIATION')A❯
+						#elseif ($cell.type == 'INCOMING_REFERENCE')❮R
+						#elseif ($cell.type == 'OUTGOING_REFERENCE')R❯
+						#elseif ($cell.type == 'CHILD')C❯
+						#end
+					#end
+				</td>
+				<td class="name#if($cell.limitWarningNode || $cell.ignoreRedundantsNode) warningCell#end"#if($cell.rowSpan > 1) rowspan="${cell.rowSpan}"#end#if(${cell.item.interwikiLink}) data-hover-tooltip="true" data-wikilink="${cell.item.interwikiLink}"#end#if(${cell.item.version}) data-revision="${cell.item.version}"#end>
+					#if($cell.item)
+						<img class="statusIcon" style="background-color: ${coloredEntityIconProvider.getIconBgColor($cell.item)}" src="${contextPath}${coloredEntityIconProvider.getIconUrl($cell.item)}"#if(${cell.item.interwikiLink}) data-hover-tooltip-target#end>
+						#set($cellSummary = "#getItemSummary(${cell.item})")
+						<a target="${newBrowserWindowTarget}" href="${contextPath}${cell.item.urlLink}#if($cell.version)?version=${cell.version}#end#if($cell.baselineId)?revision=${cell.baselineId}#end" title="[${cell.item.keyAndId}] ${cell.item.project.name} - ${cell.item.tracker.name} - ${cellSummary}">[${cell.item.keyAndId}]#if($cell.commitType) ${cell.item.description}#else ${cellSummary}#end </a>
+
+						#if($cell.propagateSuspect || $cell.version || $cell.item.isBranchItem())
+							<span class="badgeContainer">
+									<span class="badgeContainerPlaceholder"></span>
+								#if($cell.propagateSuspect)
+									#if($cell.reverseSuspect)
+										<span data-tracker-item-id="${cell.referenceTargetTrackerItemId}"#if($cell.associationId) data-association-id="${cell.associationId}"#end#if(${cell.referenceTargetTrackerItemId}) data-target-tracker-item-id="${cell.item.id}"#end title="${textFormatter.getMessage('association.propagatingSuspects.label')} (${textFormatter.getMessage('tracker.field.reversedSuspect.label')})" class="referenceSettingBadge psSettingBadge#if($cell.suspected) active#if(!$cell.version && !$cell.baselineId) clearable#end#end">$textFormatter.getMessage('tracker.view.layout.document.reference.suspected')<span class="reverseSuspectImg"></span>
+										#if($cell.suspected && !$cell.baselineId)
+											<span class="referenceSettingBadgeClearSuspect" data-tracker-item-id="${cell.referenceTargetTrackerItemId}" data-association-id="${cell.associationId}"#if(${cell.referenceTargetTrackerItemId}) data-target-tracker-item-id="${cell.item.id}"#end title="Clear"></span>
+										#end
+										</span>
+									#else
+										<span data-tracker-item-id="${cell.item.id}"#if($cell.associationId) data-association-id="${cell.associationId}"#end#if(${cell.referenceTargetTrackerItemId}) data-target-tracker-item-id="${cell.referenceTargetTrackerItemId}"#end title="${textFormatter.getMessage('association.propagatingSuspects.label')}" class="referenceSettingBadge psSettingBadge#if($cell.suspected) active#if(!$cell.version && !$cell.baselineId) clearable#end#end">$textFormatter.getMessage('tracker.view.layout.document.reference.suspected')
+										#if($cell.suspected && !$cell.baselineId)
+											<span class="referenceSettingBadgeClearSuspect" data-tracker-item-id="${cell.item.id}" data-association-id="${cell.associationId}"#if(${cell.referenceTargetTrackerItemId}) data-target-tracker-item-id="${cell.referenceTargetTrackerItemId}"#end title="${textFormatter.getMessage('tracker.view.layout.document.reference.clear.suspected')}"></span>
+										#end
+										</span>
+										#if($cell.bidirectionalSuspect)
+											<span class="arrow arrow-up#if($cell.outgoingSuspected) active#end"></span>
+											<span class="arrow arrow-down#if($cell.incomingSuspected) active#end"></span>
+										#end
+									#end
+								#end
+								#if($cell.version)
+									<span class="referenceSettingBadge versionSettingBadge">v ${cell.version}</span>
+								#end
+								#if($cell.item.isBranchItem() && $cell.item.branch)
+									<span class="referenceSettingBadge branchBadge">${cell.item.branch.name}</span>
+								#end
+									</span>
+						#end
+						#if($cell.propagateDependencies)
+							<span class="udBadge#if($cell.unresolvedDependencies) active#end" data-item-id="${cell.item.id}" data-association-id="${cell.associationId}">
+								<i class="fa fa-exclamation"></i>$textFormatter.getMessage("association.unresolved.dependencies.compact.label")
+							</span>										
+						#end
+						#if($showDescription)
+							<div class="traceabilityDescriptionBox thumbnailImages300px">${textFormatter.format(${cell.item.description}, ${cell.item.descriptionFormat}, ${httpServletRequest}, ${cell.item})}</div>
+						#end
+					#else
+						#if($cell.limitWarningNode)
+							<span class="limitWarning">${textFormatter.getMessage('tracker.traceability.browser.limit.reached.label')}</span>
+						#elseif($cell.ignoreRedundantsNode)
+							<span class="limitWarning">${textFormatter.getMessage('tracker.traceability.browser.ignore.redundants.label')}</span>
+						#else
+						--
+						#end
+						#if($showDescription)
+							<div class="traceabilityDescriptionBox"></div>
+						#end
+					#end
+				</td>
+			#end
+			#set($index = $index + 1)
+		#end
+	</tr>
+#end
+#if($isTraceabilityBrowserPage)
+	#set($nextPage = $page + 1)
+	<tr id="infiniteScrollBottom" class="infiniteScrollTr" data-page="$nextPage" data-permanent-link="${permanentLink}"></tr>
+#end

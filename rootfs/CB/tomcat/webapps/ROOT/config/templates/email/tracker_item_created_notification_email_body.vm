@@ -1,0 +1,57 @@
+#parse("notification_email_header.vm")
+
+#define($footerText)
+#trackerItemReason(${trackerItem})
+#end
+
+<div class="heading">
+#linkTrackerItem(${trackerItem})
+</div>
+
+#account(${originator})
+
+#set($showProperties = false)
+#if(${isCodebeamerCom})
+	#if ($trackerItem.tracker.id == 94520) ## Leads tracker on cb.com
+	  #set($showProperties = true)
+	#end
+#end
+## #set($showProperties = true)
+
+#if ($showProperties)
+	## show the properties of the newly created item
+	#set($fieldHandler = ${fieldHandler.getInstance($originator)})
+	#set($layout = ${fieldHandler.getItemLayout($trackerItem)})
+<!--
+	<pre>
+		fieldHandler: ${fieldHandler}
+		originator: ${originator}
+		trackerItem: ${trackerItem}
+		layout: ${layout}
+	</pre>
+-->
+
+	<h3>Properties</h3>
+	#set($skipFields=["ID", "Tracker", "Summary", "Description", "Description Format", "Flags", "Submitted at", "Submitted by", "Modified at", "Modified by"])
+	<table border="0" cellpadding="1" cellspacing="1" >
+		#foreach($field in $layout.getFlatFieldList())
+			#set($label = ${field.label})
+
+			#if (! $skipFields.contains($label))
+				#set($val = "")
+				#set($val = ${field.getValue($trackerItem)})
+				#if ($val && "$!{val}" != "")
+					<tr><td>${label}:</td><td>$!{val}</td></tr>
+				#end
+			#end
+		#end
+	</table>
+#end
+
+
+#if ( ${trackerItem.description} && ${trackerItem.description} != "" )
+	#partHeader("${textFormatter.getMessage('issue.description.label')}")
+	#partStart() $textFormatter.format(${trackerItem.description}, ${trackerItem.descriptionFormat}, ${wikiContext}) #partEnd()
+#end
+
+#parse("notification_email_footer.vm")

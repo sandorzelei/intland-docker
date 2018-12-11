@@ -1,0 +1,20 @@
+## renders the photo, username and the date for an audit entry
+##
+## @param user The user to render
+## @param date The date of the audit entry
+#macro(renderUserInfo $user $date)
+    <div class="user-photo">$userPhotoTool.render($user, false)</div>
+    <div>
+        <a href="$contextPath/userdata/$user.id">$user.name</a>
+        <div>$textFormatter.formatDate($user, $date)</div>
+    </div>
+#end
+
+
+#macro(getStringWithDefault $string $default)
+    #if ($string)
+        $string
+    #else
+        $default
+    #end
+#end

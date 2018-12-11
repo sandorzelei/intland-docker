@@ -1,0 +1,156 @@
+#* Template for new/compact layout *#
+#wikiBoxOpen(${command}, "trackerListPlugin compactTrackerListPlugin")
+    #set($browseTrackerUrl = "${contextPath}/tracker")
+
+	#if($revisionId)
+		#set($revisionUrlFragment = "?revision=${revisionId}") ## note: question mark, not an ampersand!
+		#set($menuItemsAvailable = "Follow, adminTrackerSubscriptions")
+	#else
+		#set($revisionUrlFragment = "")
+		#set($menuItemsAvailable = "newTrackerItem, customizeTracker, Follow, transitionsGraph, adminTrackerSubscriptions, traceabilityBrowser")
+	#end
+
+	#if(! ${command.showMenus})
+		#set($revisionUrlFragment = "")
+		#set($menuItemsAvailable = "")
+	#end
+
+   <script src="${contextPath}${uiGenerator.getVersionedURL('/js/TrackerListPlugin.js')}"></script>
+   <link rel="stylesheet" href="${contextPath}${uiGenerator.getVersionedURL('/config/templates/wiki-plugin/tracker-list-plugin.less')}" type="text/css" media="all" />
+   <script type="text/javascript">
+        $(function() {trackerListPluginNew.init('$menuItemsAvailable')});
+   </script>
+
+    #set($filterbyTrackerTypeAdded = false)
+
+    <table class="compact-tracker-lists-wrapper">
+        <tr>
+            #set($index = 1)
+            #foreach($statsEntry in $stats.entrySet())
+                #set($sumOpenItems = 0)
+                #set($code = $statsEntry.key)
+				#set($bucket = $statsEntry.value)
+
+				#if(! $bucket.isEmpty())
+                <td class="container">
+                    #if($items == "both")
+                        #if($code == $LABEL_WORK_ITEM)
+                            #set($groupType = " work-items")
+                        #elseif($code == $LABEL_CONFIGURATION_ITEM)
+                            #set($groupType = " configuration-items")
+                        #else
+                            #set($groupType = "")
+                        #end
+                        <div class="tracker-group-name$!{groupType}"><span class="name">$textFormatter.getMessage($code)</span></div>
+                    #end
+                    <table cellspacing="0" class="displaytag #if($command.sortable) sortable #end">
+                        <thead>
+                            <tr>
+                                <th colspan="3" class="stretched" style="vertical-align: middle;">
+                                	#if (! $filterbyTrackerTypeAdded && ! $isExportMode)
+                                		#set ($filterbyTrackerTypeAdded = true)  ## only add it once, that will filter everything
+										<div class="filterContainer">
+	                                    	<select class="filterbyTrackerType" multiple="multiple" size="1" title="$textFormatter.getMessage('tracker.list.filter.label')"></select>
+	                                    </div>
+                                    #end
+
+#*	## don't show "showall" checkbox
+                                    <label class="showAllContainer" for="showAll-${pluginId}$index" title="$textFormatter.getMessage('tracker.showAll.tooltip')">
+                                        #if (${bucket.hasHidden})
+                                            <input class="showAllCheckbox" id="showAll-${pluginId}$index" type="checkbox" #if (${showAll}) checked="checked" #end autocomplete="off" > $textFormatter.getMessage('tracker.label.showHidden')
+                                        #end
+                                    </label>
+*#
+
+                                    #if("$!{configURL}" != "")
+                                    	<a href="${configURL}" class="configURL" title="This is an invisible link used to save new order after drag-drop sorting" ></a>
+                                    #end
+                                </th>
+                                <th class="tracker-key stats">$textFormatter.getMessage('tracker.key.label')</th>
+	                            #if(!$revisionId)
+									<th class="tracker-open-count number stats">$textFormatter.getMessage('issue.filter.all.label')</th>
+	                            #end
+                                <th class="tracker-modified-at date lastColumn stats">$textFormatter.getMessage('tracker.modifiedAt.label')</th>
+                            </tr>
+                        </thead>
+                          #set($stats = $bucket)
+
+	                            	#foreach($trackerStat in $stats)
+	                            		#set($tracker = $trackerStat.tracker)
+										#set($cssClass = "")
+				                        #set($attrs = "")
+										#set($hidden = (! (${tracker.visible} || ${showAll})) )
+
+				                    	#if ($hidden)
+				                    		#set($cssClass = "hidden")
+				                    	#end
+
+				                    	#set($attrs = "$!{attrs} data-trackertype='${tracker.type.name}' ")
+
+	                                    #trOpenWithLastRow($bucket $!{cssClass} $!{attrs})
+	                                        <td class="status-icon-minwidth">
+												#if($command.sortable)	<div class="issueHandle" title="$textFormatter.getMessage('tracker.list.drag.handle')"></div> #end
+												#if($command.showMenus)
+													${ajaxTaggingRenderedPerTracker.get($tracker)}
+												  ## $uiGenerator.renderAjaxTagging(${request}, ${tracker}, true)
+	                                        	  ## $uiGenerator.renderNotificationBox($request, $GroupType_TRACKER, $trackerSubscriptionsMap.get($trackerStat.tracker.id))
+	                                        	#end
+	                                            <img style="background-color:${coloredEntityIconProvider.getIconBgColor($tracker)}; margin-right:0;" src="${contextPath}${coloredEntityIconProvider.getIconUrl($tracker)}">
+	                                        </td>
+	                                        <td class="tracker-name">
+	                                            #set($url = "${contextPath}${tracker.urlLink}")
+	                                            <a href="${url}${revisionUrlFragment}">$textFormatter.getMessageWithDefault("tracker.${tracker.name}.label", ${tracker.name})</a>
+	                                        </td>
+	                                        <td class="tracker-context-menu action-column-minwidth" data-tracker-id="$tracker.id">
+	                                        	#if($command.showMenus)
+													<img class="menuArrowDown menu-trigger#if($alwaysDisplayContextMenuIcons) always-display-context-menu#end" src="$contextPath/images/space.gif"/>
+													<span class="menu-container"></span>
+												#end
+	                                        </td>
+	                                        <td class="tracker-key">
+	                                            $textFormatter.escape(${tracker.keyName})
+	                                        </td>
+			                                #if(!$revisionId)
+												<td class="tracker-open-count number stats">
+													#if (! ${hidden})
+														#set($sumOpenItems = $sumOpenItems + $trackerStat.openItems)
+													#end
+													#set($url = "${browseTrackerUrl}/${tracker.id}?view_id=${UNRESOLVED_VIEW}&reset=open")
+													#set($openTitle = "$textFormatter.getMessage('tracker.view.Open.label')")
+													<a href="$url" title="$openTitle">$textFormatter.formatLong(${trackerStat.openItems})</a>
+													/
+													#set($allUrl = "${browseTrackerUrl}/${tracker.id}?view_id=${ALL_ITEMS_VIEW}")
+													#set($allTitle = "$textFormatter.getMessage('tracker.view.All Items.label')")
+													<a href="$allUrl" title="$allTitle">$textFormatter.formatLong(${trackerStat.allItems})</a>
+												</td>
+												<td class="tracker-all-items-count number stats" style="display: none;">
+													<a href="$allUrl" title="$allTitle">$textFormatter.formatLong(${trackerStat.allItems})</a>
+												</td>
+			                                #end
+	                                        <td class="tracker-modified-at date lastColumn stats">
+	                                            #if(${trackerStat.modifiedAt})
+	                                                $textFormatter.formatDate(${user}, ${trackerStat.modifiedAt}, false)
+	                                            #else
+	                                                --
+	                                            #end
+	                                        </td>
+	                                    #trClose()
+	                                 #end
+	                    #if (!$revisionId)
+                            <tfoot>
+                                <tr class="summary-row">
+                                    <th colspan="4" style="padding-left:0;" >$textFormatter.getMessage('tracker.summary.label'):</th>
+									<th class="number">$textFormatter.formatLong(${sumOpenItems})</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+	                    #end
+                    </table>
+                </td>
+				#end
+                #set($index = $index + 1)
+            #end
+        </tr>
+    </table>
+	<a class="trackerList_toDetailedLayout" href="#">$textFormatter.getMessage('tracker.detailedLayout.label')</a>
+#wikiBoxClose()

@@ -1,0 +1,33 @@
+LoadModule dav_module modules/mod_dav.so
+LoadModule dav_svn_module modules/mod_dav_svn.so
+
+# It might be necessary that you have to add the line below to "/etc/sysconfig/apache2"
+#APACHE_SERVER_FLAGS="  -D SVN_AUTHZ"
+LoadModule authz_svn_module modules/mod_authz_svn.so
+#Use the line below if apache cannot load modules/mod_authz_svn.so.
+#LoadModule authz_svn_module /usr/lib/apache2/modules/mod_authz_svn.so
+
+# These modules are necessary to use basic authentication from a file
+# managed by codeBeamer
+LoadModule authn_file_module modules/mod_authn_file.so
+LoadModule auth_basic_module modules/mod_auth_basic.so
+LoadModule authz_user_module modules/mod_authz_user.so
+
+<Location /svn>
+#	AuthBasicAuthoritative Off # http://httpd.apache.org/docs/2.2/mod/mod_auth_basic.html
+
+	DAV svn
+	SVNParentPath "${repoDir}/svn/"
+	#SVNListParentPath on
+
+	AuthzSVNAccessFile "${repoDir}/acl.svn"
+
+	AuthName "Subversion Repository"
+	AuthType Basic
+	AuthUserFile "${repoDir}/.htaccess"
+
+	# http://svnbook.red-bean.com/en/1.7/svn.ref.mod_dav_svn.conf.html
+	#SVNAdvertiseV2Protocol off
+
+	require valid-user
+</Location>

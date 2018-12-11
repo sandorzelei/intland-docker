@@ -1,0 +1,3 @@
+## $Id: adam.berkes 2009-11-27 11:14 +0100 23930:2de84ee3a382 cb-5.4 $
+
+$textFormatter.getMessageWithDefault("cb.registration.notification.subject", "New {0} registration", ${installed.type})

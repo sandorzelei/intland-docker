@@ -1,0 +1,10 @@
+#parse("notification_email_header.vm")
+
+<div class="comment-box">
+	Dear ${recipient.realName}, <br/>
+	${user.realName} did ${transition.name} #linkTrackerItem(${subject})
+</div>
+
+whatever that means to you ...
+
+#parse("notification_email_footer.vm")

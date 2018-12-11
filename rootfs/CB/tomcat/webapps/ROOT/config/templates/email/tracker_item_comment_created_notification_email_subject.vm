@@ -1,0 +1,1 @@
+#showProjectNameInSubjects("${textFormatter.getMessage('comment.created.subject')} ${trackerItem}")

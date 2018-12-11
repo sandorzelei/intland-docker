@@ -1,0 +1,19 @@
+<head>
+<link rel="stylesheet" href="${contextPath}/bugs/tracker/versionsview/versionsView.css" type="text/css" media="all" />
+</head>
+
+<div class="releaseStatsPlugin">
+## TODO: standard "wikibox" wrapper breaks the plugin's look
+###wikiBoxOpen()
+#set($title = "Release stats for ${version.name}")
+###wikiBoxTitle("${title}")
+
+#if("$!{version}" != "")
+<h4>Release stats for #linkReferableDto(${version})</h4>
+
+${statsHTML}
+
+###wikiBoxClose()
+#end
+
+</div>

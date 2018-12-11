@@ -1,0 +1,1011 @@
+
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+/**
+ * CSS for documentView.jsp
+ */
+.reqcommenteditor {
+	font-size: 13px;
+}
+.attachmentFiles, .attachmentText {
+	margin-left: 2em;
+}
+.attachmentFile {
+	margin-right: 2em;
+	white-space:nowrap;
+}
+
+#requirements table.references td.reficon {
+	padding: 2px 5px;
+}
+
+#requirements .description {
+	img, table {
+		max-width: 100%;
+	}
+
+	.wrapped-plugin-content {
+		img, table {
+			max-width: none;
+		}
+	}
+}
+
+#requirements .helpIcon img {
+	max-width: none;
+}
+
+/* buttons section for edit properties of a req */
+table.editPropertiesButtons td {
+	padding-left: 20px;
+	font-size: 8pt;
+	vertical-align:middle;
+}
+table.editPropertiesButtons * {
+	font-size: 8pt;
+}
+table.editPropertiesButtons .menuArrowDown {
+	vertical-align: top;
+}
+table.editPropertiesButtons a {
+	font-weight: bold;
+}
+
+/* property editor */
+#requirements .editorContainer {
+	padding-bottom: 5px;
+}
+
+.reqContextMenu {
+	margin-bottom: -10px;
+	display: inline-block;
+}
+
+.reqContextMenu .menuArrowDown {
+	background-color: white !important;
+	visibility: hidden;
+}
+
+#requirements .requirementTr:hover .reqContextMenu .menuArrowDown {
+	visibility: visible;
+}
+
+.attachmentMenu {
+	float: right;
+}
+
+.statusDiv {
+	cursor: default;
+}
+
+.noMarginExpander {
+	margin: 0;
+}
+
+.newskin #rightPane .actionBarWithUploadWidget {
+	margin-top: 3px;
+}
+.newskin #west #headerDiv {
+	height: 24px;
+}
+
+.newskin #west #headerDiv .action {
+	margin-right: 0px !important;
+	cursor: pointer;
+}
+
+.actionBar {
+	height: 20px;
+
+	&.reportSelectorActionBar {
+		height: auto;
+		padding: 3px 3px 2px 10px;
+		.reportSelectorColumn {
+			padding-right: 10px;
+		}
+	}
+}
+
+.newskin .okcancel {
+	padding-right: 5px;
+}
+
+.newskin #requirements table.contextMenuTable tr {
+	vertical-align: top;
+	border-bottom: none;
+	background-color: transparent;
+}
+
+.inplaceEditableIconContainerPlaceholder {
+	padding: 0 0 0 5px !important;
+	width: 24px;
+}
+
+.requirementTr .editable.highlighted {
+	min-height: 16px;
+}
+
+.newskin #opener-east {
+	position: absolute !important;
+	top: 10px;
+	right: 18px;
+	z-index: 10;
+}
+
+#east {
+	overflow-y: hidden;
+}
+
+#east > .header.actionBar {
+	width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	display: block;
+	height: 31px;
+}
+
+#browseTrackerForm div.date-filters {
+	display: inline;
+	position: absolute;
+	right: 12px
+}
+
+#panes.eastPaneHidden div.date-filters {
+	margin-right: 30px;
+}
+
+a.diff-link {
+	display: none;
+}
+
+a.diff-link img {
+	cursor: pointer !important;
+}
+
+.cbModalDialog, .yui-panel {
+	border: 0px !important;
+}
+
+.qq-upload-text {
+	position: relative;
+}
+
+#properties-tab {
+	padding: 0 !important;
+	overflow: hidden !important;
+}
+
+#properties-tab .actionBar {
+	display: none;
+}
+
+.attributes {
+	height: 90%;
+}
+
+.attributes .overflow {
+	height: 100%;
+}
+
+.attributes .saveControls .yuimenubaritem {
+	width: 100%;
+}
+
+.attributes .saveControls .fieldValue,
+.attributes .saveControls .yuimenubaritemlabel {
+	text-align: center;
+}
+
+#issuePropertiesPane {
+	overflow: hidden;
+	.overflow {
+		overflow-y: auto;
+	}
+	.accordion {
+		> .issue-description,
+		> .issue-comments {
+			overflow-x: auto;
+		}
+	}
+}
+
+.highlighted .rating-container.initialized {
+	top: 4px;
+}
+
+.rating-icon(@stars) {
+	background-image: url("../images/newskin/item/rate_@{stars}.png");
+}
+
+.rating-icon-hover(@stars) {
+	background-image: url("../images/newskin/item/rate_@{stars}_on.png");
+}
+
+ul.ui-multiselect-checkboxes {
+	min-height: 300px;
+}
+
+.ui-multiselect-menu.queryConditionSelector ul.ui-multiselect-checkboxes {
+	min-height: auto;
+}
+
+.item-icon {
+	cursor: pointer;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.transition-action-menu {
+	display: inline-block;
+
+	.menuArrowDown {
+		visibility: hidden !important;
+		width: 0px;
+		height: 0px;
+		margin-top: -1px;
+	}
+
+	.displayTitleWrapper {
+		width: 10px;
+		position: relative;
+		top: 2px;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.newskin .displaytag tr {
+	background-color: white;
+
+	&:hover {
+		background-color: white !important;
+	}
+}
+
+.newskin .displaytag tr.odd {
+	background-color: #f5f5f5;
+
+	&:hover {
+		background-color: #f5f5f5 !important;
+	}
+}
+
+.newskin .ditch-tabs-right-aligned tr:hover {
+	background-color: transparent !important;
+}
+
+#requirements .requirementTr:hover, #requirements .requirement-active, #requirements .requirementTr.selected {
+	td.control-bar {
+		border-right: 5px solid #0093b8;
+
+		.controls {
+			background-color: #ccf4ff;
+
+			.edit-overlay-container {
+				background-image: url("../images/newskin/item/edit_on.png");
+			}
+
+			.comments {
+				.comment-bubble {
+					background-color: #0093b8;
+				}
+
+				.comment-bubble-arrow {
+					background-image: url("../images/newskin/item/comment_bg_on.png");
+				}
+			}
+
+			.rating-container {
+				background-image: url("../images/newskin/item/rate_0_on.png");
+
+				&.rated-5 {
+					background-image: url("../images/newskin/item/rate_5.png");
+				}
+
+				&.rated-4 {
+					.rating-icon-hover(4);
+				}
+
+				&.rated-3 {
+					.rating-icon-hover(3);
+				}
+
+				&.rated-2 {
+					.rating-icon-hover(2);
+				}
+
+				&.rated-1 {
+					.rating-icon-hover(1);
+				}
+			}
+
+			.referring-items {
+				cursor: pointer;
+				background-image: url("../images/newskin/action/add_on.png");
+			}
+		}
+
+		.controls.compact {
+			border-right: 0px;
+		}
+	}
+
+	td.textSummaryData {
+		background-color: #F5FFFF;
+	}
+	img.menuArrowDown {
+		visibility: visible;
+	}
+}
+
+td.control-bar {
+	width: 35px !important;
+	max-width: 35px;
+	background-color: #F5F5F5;
+	text-align: center;
+	border-right: 5px solid transparent;
+
+	.controls {
+		padding-top: 6px;
+		padding-bottom: 5px;
+		width: 40px;
+		margin-top: -11px;
+
+		div {
+			display: block;
+		}
+
+		.rating-container {
+			display: inline-block;
+		}
+
+		.edit-overlay-container {
+			min-width: 16px;
+			height: 19px;
+			margin: 5px 0px;
+			cursor: pointer;
+			display: inline-block;
+			background-repeat: no-repeat;
+			background-image: url("../images/newskin/item/edit_off.png");
+			background-position: center;
+
+			.edit-overlay {
+				display: none;
+				padding: 5px;
+				z-index: 200;
+				background-color: white;
+				position: relative;
+				border: 1px solid #d1d1d1;
+				height: 20px;
+				top: -5px;
+				white-space: nowrap;
+				left: 5px;
+
+				.edit-button {
+					width: 16px;
+					height: 16px;
+					display: inline-block;
+					padding: 2px;
+					background-repeat: no-repeat;
+
+					&.edit-description {
+						background-image: url("../images/newskin/item/edit_on.png");
+					}
+
+					&.edit-summary {
+						background-image: url("../images/newskin/item/edit_summary_on.png");
+					}
+
+					&.edit-in-word {
+						background-image: url("../images/newskin/action/icon_word.png");
+					}
+				}
+			}
+
+			&:hover {
+				height: 19px;
+
+				.edit-overlay {
+					display: block;
+				}
+			}
+		}
+
+		.comments {
+			margin: 5px 0px;
+			cursor: pointer;
+
+			.comment-bubble {
+				color: white;
+				background-color: #ababab;
+				height: 11px;
+				width: 12px;
+				display: inline-block;
+				margin-right: -4px;
+				margin-top: 1px;
+			}
+
+			.comment-bubble-arrow {
+				background-image: url("../images/newskin/item/comment_bg_off.png");
+				margin-top: -4px;
+			}
+		}
+
+		.referring-items {
+			cursor: pointer;
+			background-image: url("../images/newskin/action/add_off.png");
+			height: 12px;
+			background-repeat: no-repeat;
+			background-position: center;
+
+			&.folder-menu {
+				margin-top: 6px;
+			}
+		}
+	}
+}
+
+.IE .comment-bubble-arrow {
+	padding-top: 1px;
+}
+
+div.document-view-container, div.review-container {
+	height: 100%;
+	&#reportSelectorResult {
+		height: auto !important;
+	}
+}
+
+.context-menu-list {
+	max-width: 600px;
+}
+
+.newskin #docbaselineinfo {
+	border: 1px solid #ffd9ab;
+}
+
+.newskin #requirements .name {
+	.edited + .reqContextMenu {
+		display: none;
+	}
+
+	span.no-numbering {
+		margin-left: -4px;
+	}
+}
+
+.newskin .wikiContent table.wikitable th {
+	background-color: #f5f5f5;
+}
+
+.multiselect-option-icon {
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+}
+
+#middleHeaderDiv {
+	overflow: hidden;
+
+	.yuimenu.inlinemenu {
+		position: fixed;
+	}
+}
+
+#issuePropertiesPane .quick-icons li {
+	width: 33%;
+}
+
+#accordion {
+	overflow: hidden;
+}
+
+#accordion .quick-icons li {
+	border-bottom: 0px;
+	border-right: 1px solid #e4e4e4;
+	margin-bottom: -4px;
+}
+
+#accordion .icons-4 li {
+	width: 24%;
+}
+
+#accordion .icons-3 li {
+	width: 32%;
+}
+
+#accordion .icons-2 li {
+	width: 49%;
+}
+
+#accordion .icons-1 {
+	display: none;
+}
+
+#accordion .quick-icons li.properties {
+	border-right: 0px;
+}
+
+#accordion .tab {
+	padding: 8px;
+}
+
+td.requirementTd .description div.drop-target {
+	width: 100%;
+	background-color: #0093b8;
+	opacity: 0.9;
+	height: 55px;
+	margin-left: -13px;
+	position: absolute;
+
+	.target-box {
+		color: white;
+		border: 1px dashed white;
+		padding: 5px;
+		width: 150px;
+		display: inline-block;
+		text-align: center;
+		margin-right: 15px;
+		border-radius: 1px;
+		position: relative;
+		top: 6px;
+
+		&.target-association-type {
+			background-color: lighten(#0093b8, 5%);
+		}
+	}
+}
+
+.requirementTr .name {
+	.dnd-icon {
+		width: 3px;
+		height: 12px;
+		display: inline-block;
+		background-repeat: no-repeat;
+		padding: 3px;
+	}
+
+	&:hover .dnd-icon {
+		background-image: url("../images/newskin/action/dragbar-dark.png");
+	    cursor: move;
+	    background-position: 3px center;
+	    background-color: #d1d1d1;
+	    height: 19px;
+	    display: inline-block;
+	    top: 6px;
+	    position: relative;
+	    margin-top: -7px;
+	}
+}
+
+.changed-baseline .requirementTd {
+	background-color: #fff7eb;
+}
+
+#treePane li.highlighted-filter-result > a {
+	color: white !important;
+    background-color: #ffa500;
+    border: 2px solid #e68d08;
+}
+
+a.jump-to-level {
+	font-weight: normal;
+	font-size: 11px;
+}
+
+.ui-tooltip {
+	max-width: 600px;
+	max-height: 450px;
+	overflow: auto;
+}
+
+.edited .nested-summary * {
+    box-sizing: border-box;
+}
+
+.summary-preview {
+    border-top: solid 1px #d1d1d1;
+}
+
+.edited .nested-summary, .summary-preview {
+	font-size: 15px;
+    padding: 2px 3px;
+
+    .nested-summary-container {
+        display: table;
+        width: 100%
+    }
+    input.nested-summary-editor {
+        display: table-cell;
+        height: 23px;
+	    margin: 3px 0;
+	    font-weight: bold;
+	    width: 100%;
+	}
+
+	&.markup-mode {
+		border-left: 1px solid #d1d1d1;
+		border-right: 1px solid #d1d1d1;
+		border-bottom: 0px;
+	}
+
+	.releaseid {
+        display: table-cell;
+		padding: 7px;
+	    font-weight: bold;
+	    color: #777;
+	    padding-right: 10px;
+	    width: 1px;
+    }
+}
+
+.editable.edited {
+	input.nested-summary-editor:focus, textarea:focus {
+  		box-shadow: 0 0 5px #0093b8;
+		border: 1px solid #0093b8;
+		outline: none;
+	}
+}
+.editable .wysiwygHideWaypoint {
+    margin-top: 25px;
+}
+
+#requirements .summary-preview {
+	border: 1px solid #d1d1d1;
+    min-height: 28px;
+
+    .releaseid, h3.name {
+        position: relative;
+        top: 7px;
+    }
+    .releaseid {
+        display: inline;
+    }
+	h3.name {
+		font-size: 15px;
+		display: inline;
+	}
+}
+
+.description > .nested-summary {
+	display: none;
+}
+
+.name.hidden {
+	position: absolute;
+	left: -150px;
+}
+
+li.non-matching-striked > a {
+	text-decoration: line-through !important;
+
+	&:hover {
+		text-decoration: line-through underline;
+	}
+}
+
+span.locked {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background-image: url("../images/newskin/action/lock.png");
+}
+
+.reqContextMenu {
+	float: right;
+}
+
+.newskin a.jstree-search {
+	background-color: #ffeea0;
+	&.jstree-clicked {
+		color: white !important;
+		background-color: #ffa500;
+		border: 2px solid #e68d08;
+	}
+	&.jstree-hovered {
+		color: #e68d08 !important;
+	}
+	&.jstree-hovered.jstree-clicked {
+		color: #ffeea0 !important;
+	}
+}
+
+.control-bar span.compact-mode-button {
+	display: none;
+}
+
+.control-bar.compact span.compact-mode-button {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background-image: url("../images/newskin/action/doc_view_arrow_grey.png");
+	background-repeat: no-repeat;
+	padding: 3px 13px;
+	background-position: center;
+	cursor: pointer;
+
+	&:hover, &.active {
+		background-image: url("../images/newskin/action/doc_view_arrow_blue.png");
+	}
+
+	&.active {
+		background-color: #ccf4ff;
+	}
+}
+
+.control-bar.compact div.controls {
+	position: absolute;
+	left: 40px;
+	background-color: #ccf4ff;
+	display: none;
+	margin-top: 0px;
+	z-index: 300;
+}
+
+.compact-view-mode-switch {
+    cursor: pointer;
+    display: inline-block !important;
+    width: 12px !important;
+	height: auto !important;
+    vertical-align: middle;
+	position: relative;
+	top: -2px;
+
+    .switch {
+    	height: 16px;
+	    width: 16px;
+	    background-size: cover;
+	    margin-left: 1px;
+		border: none !important;
+		position: relative;
+		top: -2px;
+
+    	&.off {
+    		background-image: url("../images/newskin/actionIcons/icon_compact_mode.png");
+    	}
+
+    	&.on {
+    		background-image: url("../images/newskin/actionIcons/icon_compact_mode_off.png");
+    	}
+    }
+}
+
+.actionBarColumn .actionBarIcon.menuArrowDown {
+	margin-right: 3px !important;
+	margin-left: 3px !important;
+	background-position: 0 -2px;
+}
+
+.name.empty-name {
+	display: none;
+}
+
+.ui-layout-pane-center {
+	overflow: hidden;
+}
+
+#release-pane, #library-tab, #test-plan-pane {
+	display: none;
+}
+
+#issuePropertiesPane .quick-icons {
+	display: none;
+}
+
+#issuePropertiesPane .addCommentWithOfficeEdit {
+	margin-left: -33px;
+	margin-top: 8px;
+}
+
+.addAssociationControl {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.issue-review div.progressBarContainer {
+	width: 90%;
+	float: left;
+}
+
+.reviewStatsBox .versionSettingBadge {
+	float: left;
+	margin-top: 13px;
+	margin-right: 10px;
+}
+
+.reviewStatsBox strong {
+	display: block;
+}
+
+/* hide the multiselect menus by default because they will be incorrectly positioned when loaded theórough ajax
+ * to the center panel.
+ */
+.newskin .ui-multiselect-menu.ui-widget {
+	display: none;
+}
+
+/*
+ * do not show the upload area when the description is not editable
+ */
+.readonly-description .fileUpload_dropZone {
+	display: none !important;
+}
+
+.requirementTr .ajaxplugin .treetable {
+	.menuTrigger .menuArrowDown {
+		display: none;
+	}
+	.textSummaryData {
+		background: transparent !important;
+	}
+}
+
+.copy-node, .suspected-node, .unresolved-dependencies-node {
+	i.jstree-icon.jstree-themeicon.jstree-themeicon-custom {
+		margin-right: 20px;
+	}
+
+	i.jstree-icon.jstree-themeicon.jstree-themeicon-custom::after {
+	    width: 14px;
+	    content: '*';
+	    color: transparent;
+	    display: block;
+	    margin-left: 20px;
+	    height: 14px;
+	    background-repeat: repeat-x, repeat;
+	    background-size: contain;
+	}
+}
+
+.copy-node i.jstree-icon.jstree-themeicon.jstree-themeicon-custom::after {
+	background-image: url('../images/newskin/action/copy.png') !important;
+	position: relative;
+	top: 1px;
+}
+
+.suspected-node i.jstree-icon.jstree-themeicon.jstree-themeicon-custom::after {
+	background-image: url('../images/newskin/action/suspected.png') !important;
+	position: relative;
+	top: 1px;
+}
+
+.unresolved-dependencies-node:not(.suspected-node):not(.copy-node) i.jstree-icon.jstree-themeicon.jstree-themeicon-custom::after {
+	background-image: url('../images/newskin/action/no_test_case.png') !important;
+	position: relative;
+	top: 1px;
+}
+.unresolved-dependencies-node.suspected-node:not(.copy-node), .unresolved-dependencies-node.copy-node:not(.suspected-node) {
+	i.jstree-icon.jstree-themeicon.jstree-themeicon-custom {
+		margin-right: 38px;
+		position: relative;
+		&::before {
+			width: 14px;
+		    content: '*';
+		    color: transparent;
+		    display: block;
+		    margin-left: 20px;
+		    height: 14px;
+		    background-repeat: repeat-x, repeat;
+		    background-size: contain;		
+		
+			background-image: url('../images/newskin/action/no_test_case.png') !important;
+			position: absolute;
+			top: 1px;
+			left: 15px;
+		}
+	}
+}
+.suspected-node.copy-node {
+	i.jstree-icon.jstree-themeicon.jstree-themeicon-custom {
+		margin-right: 38px;
+	}
+
+	i.jstree-icon.jstree-themeicon.jstree-themeicon-custom::after {
+		background-image: url('../images/newskin/action/suspected-copy.png')!important;
+		width: 28px;
+	}
+}
+
+.suspected-node.unresolved-dependencies-node.copy-node {
+	i.jstree-icon.jstree-themeicon.jstree-themeicon-custom {
+		margin-right: 52px;
+	}
+
+	i.jstree-icon.jstree-themeicon.jstree-themeicon-custom::after {
+		background-image: url('../images/newskin/action/suspected-unresolved-copy.png')!important;
+		width: 46px;
+	}
+}
+
+.issue-details h3 {
+	display: inline;
+}
+
+.simpleDropdownMenu,
+#middleHeaderDiv>.actionLink {
+	position: relative;
+	top: 1px;
+}
+
+.newskin #middleHeaderDiv .reportSelectorActionBarTable {
+	width: auto;
+}
+
+.newskin #middleHeaderDiv.westClosed .reportSelectorActionBarTable {
+	margin-left: 20px;
+}
+
+.newskin #middleHeaderDiv.eastClosed {
+	padding-right: 25px;
+}
+
+.newskin #middleHeaderDiv #opener-west {
+	margin-top: -19px;
+	position: static;
+}
+
+.actionMenuBar .viewsMenuContainer.large .viewsMenu .active {
+	margin-top: -2px;
+}
+
+/* setting default color and icon for new spring nodes */
+#releaseTreePane li .jstree-anchor .jstree-icon {
+	background-color: #ababab;
+	background-image: url("../images/issuetypes/version.png");
+	background-position: center center;
+    background-size: auto;
+}
+
+#issuePropertiesPane .referenceSettingBadge.updatedBadge, #issuePropertiesPane .referenceSettingBadge.conflictBadge {
+	cursor: default;
+}
+
+.branch-badge-group {
+	margin-left: 10px;
+	margin-top: 9px;
+	display: block;
+}
+
+.FF .breadcrumbs-summary.strong.tail {
+	position: relative;
+	top: -2px;
+}
+
+.IE11 .breadcrumbs-summary.strong.tail {
+	position: relative;
+	top: -1px;
+}
+
+#breadcrumbs .breadcrumbs-separator {
+  	position: relative;
+  	top: -2px;
+}
+
+.reportSelectorSelectedViewLabel {
+  	top: 1px !important;
+}
+
+.FF .reportSelectorSelectedViewLabel {
+  	top: 2px !important;
+}
+
+.status-filter-multiselect {
+	height: auto !important;
+	ul.ui-multiselect-checkboxes {
+		min-height: 0;
+	}
+}

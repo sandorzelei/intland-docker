@@ -1,0 +1,18 @@
+<div class="form-field">
+	<label for="${selectorId}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+	<input id="${selectorId}" name="params[${fieldName}]" type="hidden"></input>
+
+	<button id="${inputFieldId}" type="button" class="ui-multiselect ui-widget ui-state-default ui-corner-all ui-date-range">
+		<span class="range">${initialDateSelectorValue}</span>
+		<span class="fromDate"></span>
+		<span class="toDate"></span>
+	</button>
+
+	<script type="text/javascript" src="${selectorUtilsJsUrl}"></script>
+	<script type="text/javascript" src="${dateRangeEditorJsUrl}"></script>
+	<link rel="stylesheet" type="text/css" href="${selectorUtilsLessUrl}"></link>
+
+	<script type="text/javascript">
+		codebeamer.dashboard.dateRangeEditor.initialize("${inputFieldId}", "${selectorId}", "${existingFromDate}", "${existingToDate}");
+	</script>
+</div>

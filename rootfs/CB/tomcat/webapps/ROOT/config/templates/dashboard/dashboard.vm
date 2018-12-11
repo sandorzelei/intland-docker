@@ -1,0 +1,47 @@
+## Renders a dasboard layout
+#parse("/dashboard/dashboard-macros.vm")
+
+#set($widgets = ${layout.widgets})
+#set($fullWidthWidgets = ${layout.fullWidthWidgets})
+#set($layoutType = ${layout.getLayoutType()})
+
+<script type="text/javascript" src="${waypointJsUrl}"></script>
+
+## the container div for the whole dashboard
+<div class="dashboard-container ${layoutType.name()}">
+
+	## render the full width widgets on the top of the dashboard
+	#foreach($widget in $fullWidthWidgets)
+		<div class="dashboard-column width-100 column-0 pinned">
+			#lazyRenderWidget($widget, $renderingContext, $editable)
+		</div>
+	#end
+
+	## render the columns
+	#foreach($column in $widgets)
+		#set($foreachIndex = ${foreach.index})
+		<div class="dashboard-column width-50 column-${foreachIndex}">
+
+			#set($widgetIndex = -1)
+			## render the widgets in the column
+			#foreach($widget in $column)
+				#if ($widget && !$widget.pinned)
+					#if ($widgetIndex == -1)
+						#set($widgetIndex = $foreach.index)
+						#if ($fullWidthWidgets.isEmpty())
+							#lazyRenderWidget($widget, $renderingContext, $editable)
+						#else
+							#renderWidgetContainer($widget, $renderingContext, $editable)
+						#end
+					#else
+						#renderWidgetContainer($widget, $renderingContext, $editable)
+					#end
+				#end
+			#end
+
+			<div class="column-footer" style="#if($column.size() == 0) display: none; #else visibility: hidden; #end">
+				<div class="buttonLabel">$addWidgetButtonLabel</div>
+			</div>
+		</div>
+	#end
+</div>

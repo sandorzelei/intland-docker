@@ -1,0 +1,133 @@
+/**
+ * CSS customizations on YUI's menu
+ */
+.yui-skin-cb .yuimenu {
+	z-index: 15 !important; /* must be higher than 11 that is used by the Ditchnet tab control */
+}
+
+.yui-skin-cb .yuimenu .bd {
+	border: 1px solid #CCC;
+	background: #F5F5F5;
+	padding: 4px 0px;
+
+	overflow: auto;
+}
+
+/* section header & separator */
+.yui-skin-cb .yuimenu h6 {
+	color: #ababab;
+	margin: 5px 0 5px 0;
+	padding: 5px 10px 0 0;
+	font-size: 11px;
+	font-weight: normal;
+	/* thin border separating the groups */
+	border-color: #CCCCCC;
+	border-style:solid;
+	border-width: 1px 0 0;
+	text-align: right;
+}
+
+div.bd > h6:first-child { /* leave no padding if title is first in the popup */
+	padding-top: 0;
+}
+
+.yui-skin-cb .yuimenu .yuimenuitem {
+	text-align: left;
+}
+
+/*
+   Disabled menu items
+ */
+.yui-skin-cb .yuimenuitem a.disabled {
+	color: #A6A6A6 !important;
+	cursor: default;
+}
+
+.yui-skin-cb .yuimenu .yuimenuitemlabel {
+	color: #000;
+	text-decoration: none;
+	font-weight: normal;
+	padding: 1px 20px; /* 16x16 icons expected with 4px margin = 20px padding for icons */
+	margin: 0;
+}
+
+.yui-skin-cb .yuimenu .withicon {
+	padding-left: 0;
+}
+
+.yui-skin-cb .yuimenu img {
+	padding: 0;
+	margin-right: 4px;
+}
+
+.yui-skin-cb .yuimenu .yuimenuitemlabel-selected {
+	color: #FFF;
+	background-color: #AAA;
+	text-decoration: none;
+}
+
+.yui-skin-cb .yuimenu .yui-menu-shadow-visible {
+	top: 2px;
+	right: -4px;
+	left: 2px;
+	bottom: -2px;
+	background-color: #000;
+	-moz-opacity: 0.10;
+	opacity: .10;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=10)";	/* IE8 */
+	filter: alpha(opacity=10);  /* For IE6/7 */
+	visibility: visible;
+	z-index: -1;
+}
+
+/*
+   copied from standard menu.css to make the background of selected line cover the whole menu
+ */
+.yui-skin-cb .yuimenuitemlabel,
+.yui-skin-cb .yuimenubaritemlabel {
+    white-space: nowrap;
+    display:block;
+    text-decoration:none;
+}
+
+/**
+ * Checked menus
+ */
+.yui-skin-cb .yuimenuitem-checked,
+.yui-skin-cb .yuimenuitem-checked-selected > .yuimenuitemlabel-selected {
+	background-image:	url(menuitem_checkbox.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.yui-skin-cb .yuimenuitem-checked-selected {
+    background-image: url(menuitem_checkbox_selected.png);
+}
+
+.yui-skin-cb .yuimenuitem-checked-disabled {
+    background-image: url(menuitem_checkbox_disabled.png);
+}
+
+/**
+ * Cascading submenus
+ * TODO: use a css sprite!
+ * 		be careful; these may look like the "maintab_arrow_right_black.gif  maintab_arrow_right_gray.gif  maintab_arrow_right_white.gif" files,
+ *		but not: a small transparent 8px padding is added to the images!
+ */
+.yui-skin-cb .yuimenuitem-hassubmenu {
+    background-image: url("menuitem_submenuindicator.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.yui-skin-cb .yuimenuitem-hassubmenu-disabled {
+    background-image: none;
+}
+
+.yui-skin-cb .yuimenuitem-hassubmenu-selected,
+.yui-skin-cb .yuimenuitem-hassubmenu-selected > .yuimenuitemlabel-selected {
+    background-image: url("menuitem_submenuindicator_selected.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+

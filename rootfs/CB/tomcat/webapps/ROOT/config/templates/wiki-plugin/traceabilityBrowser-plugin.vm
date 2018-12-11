@@ -1,0 +1,141 @@
+<link rel="stylesheet" href="${contextPath}/bugs/tracker/traceabilityBrowser/traceabilityBrowser.less" type="text/css" media="all" />
+<script type="text/javascript" src="${contextPath}/bugs/tracker/traceabilityBrowser/traceability.js"></script>
+
+#if (!${hideWikiBox})
+	#wikiBoxOpen(${command}, "traceabilityBrowserPlugin")
+#end
+#if(${command.title})
+	#wikiBoxTitle("${textFormatter.getMessageWithDefault(${command.title}, ${command.title})}")
+#end
+
+<div class="traceabilityBrowserCont"#if($isTraceabilityBrowserPage && $showSuggestions) style="white-space: nowrap;"#end>
+#if($rows.size() > 0)
+	#set($trueString = 'true')
+	#set($falseString = 'false')
+
+	<table id="traceabilityPlugin_${pluginId}" class="traceabilityBrowserPluginTable tb"#if($isTraceabilityBrowserPage) style="margin-bottom: 20px;#if($showSuggestions) display: inline-block; vertical-align: top;#end"#end>
+		<thead>
+			<tr class="traceabilityHeaderRow">
+			#if($command.initialTrackerItemId)
+				#set($index = 1)
+			#else
+				#set($index = 0)
+			#end
+			#foreach($htmlParameter in $htmlParameters)
+				#set($levelFilter = $levelReferenceTypes.get($index))
+				#set($isDefault = ${levelFilter.get('isDefault')})
+				<th class="referenceType">
+					#if($index > 0)
+						#if($isTraceabilityBrowserPage)
+							<a title="#if(!$isDefault && $index > 0)${textFormatter.getMessage('tracker.traceability.browser.custom.level.hint')} #end${textFormatter.getMessage('tracker.traceability.browser.filter.level')}" href="#" class="levelReferenceSetting#if(!$isDefault && $index > 0) customFilter#end" data-default="#if($isDefault)$trueString#else$falseString#end" data-index="$index"
+								data-assocIn="#if(${levelFilter.get('assocIn')} == false)$falseString#else$trueString#end"
+								data-assocOut="#if(${levelFilter.get('assocOut')} == false)$falseString#else$trueString#end"
+								data-refIn="#if(${levelFilter.get('refIn')} == false)$falseString#else$trueString#end"
+								data-refOut="#if(${levelFilter.get('refOut')} == false)$falseString#else$trueString#end"
+								data-folder="#if(${levelFilter.get('folder')} == false)$falseString#else$trueString#end"
+								data-child="#if(${levelFilter.get('child')} == false)$falseString#else$trueString#end"
+							>❯</a>
+						#else
+							#if($reverseArrows)❮#else❯#end
+						#end
+					#end</th>
+				<th><span#if(!$isDefault && $index > 0 && $isTraceabilityBrowserPage) title="${textFormatter.getMessage('tracker.traceability.browser.custom.level.hint')}"#end class="levelHeader#if(!$isDefault && $index > 0 && $isTraceabilityBrowserPage) customFilter#end"#if($hideHeader) style="top: 0"#end>#if($index == 0)#if(${htmlParameter.isCbQL()})${textFormatter.getMessage('tracker.traceability.browser.initial.filter')}#else${textFormatter.getMessage('tracker.traceability.browser.initial.trackers')}#end#else${textFormatter.getMessage('tracker.traceability.browser.level')}  $index#end</span>
+					#if(!$hideHeader)
+						#set($trackerIndex = 0)
+						#foreach($tracker in $htmlParameter.trackers)
+							<img src="${contextPath}${coloredEntityIconProvider.getIconUrl($tracker)}" style="background-color: ${coloredEntityIconProvider.getIconBgColor($tracker)}">
+							#set($trackerLabel = "tracker.${tracker.name}.label" )
+							<span class="trackerName">${textFormatter.getMessageWithDefault($trackerLabel, ${tracker.name})}
+								#if($htmlParameter.branches.get($trackerIndex))
+									(${htmlParameter.branches.get($trackerIndex).name})
+								#end
+							</span>
+							#set($trackerIndex = $trackerIndex + 1)
+						#end
+						#foreach($trackerType in $htmlParameter.trackerTypes)
+							<img src="${contextPath}#if($trackerType.id == 0)/images/issuetypes/issue.png#else${coloredEntityIconProvider.getIconUrl($trackerType)}#end" style="background-color: ${coloredEntityIconProvider.getIconBgColor($trackerType)}">
+							<span class="trackerName">
+								#if($trackerType.id == 0)
+									${textFormatter.getMessage('tracker.traceability.browser.all')}
+								#else
+									#if($trackerType.id == 901) ## Change Set (SCM Commit)
+										${textFormatter.getMessage('SCM commits')}
+									#else
+										#set($pluralLabel = "tracker.type.${trackerType.name}.plural" )
+										${textFormatter.getMessage('tracker.traceability.browser.all.trackers', ${textFormatter.getMessageWithDefault($pluralLabel, ${trackerType.name})})}
+									#end
+								#end
+							</span>
+						#end
+						#if($htmlParameter.isCbQL())
+							<img src="${contextPath}/images/issuetypes/issue.png" style="background-color: #5f5f5f">&nbsp;
+						#end
+						<span data-index="$index" class="countContainer" title="${textFormatter.getMessage('tracker.traceability.browser.count.hint')}">(<span class="countNumber">${counts.get($index)}</span>)</span>
+					#end
+				</th>
+				#set($index = $index + 1)
+			#end
+			</tr>
+		</thead>
+		<tbody>
+		#parse("traceabilityBrowser-plugin-tableBody.vm")
+		</tbody>
+	</table>
+	#if($isTraceabilityBrowserPage && $showSuggestions)
+		<table id="traceabilitySuggestedTable" class="referencingTrackers">
+			<tr>
+				<th colspan="3" class="referencingTrackers">&#10095; ${textFormatter.getMessage('tracker.traceability.browser.info.refTypes.title')}</th>
+			</tr>
+			#foreach($entity in $preferredSuggestions)
+				<tr>
+					#if(!${entity.trackerType})
+						<td class="referencingTrackers"></td>
+					#end
+					<td class="referencingTrackers refCode">#if(!${entity.branch})<img style="background-color: ${entity.iconBgColor}" src="${contextPath}${entity.iconUrl}">#end</td>
+					<td class="referencingTrackers" colspan="#if(${entity.trackerType})2#else 1#end"><b><a class="referenceTracker #if(${entity.branch}) branchTracker level-$entity.branchLevel#end" href="#" data-id="${entity.id}"#if(${entity.trackerType}) data-tracker-type-id="${entity.id}"#else data-tracker-type-id="${entity.trackerTypeId}"#end>${entity.name}</a></b></td>
+				</tr>
+			#end
+			#foreach($entity in $suggestions)
+				<tr>
+					#if(!${entity.trackerType})
+						<td class="referencingTrackers"></td>
+					#end
+					<td class="referencingTrackers refCode">#if(!${entity.branch})<img style="background-color: ${entity.iconBgColor}" src="${contextPath}${entity.iconUrl}">#end</td>
+					<td class="referencingTrackers" colspan="#if(${entity.trackerType})2#else 1#end"><a class="referenceTracker #if(${entity.branch}) branchTracker level-$entity.branchLevel#end" href="#" data-id="${entity.id}"#if(${entity.trackerType}) data-tracker-type-id="${entity.id}"#else data-tracker-type-id="${entity.trackerTypeId}"#end>${entity.name}</a></td>
+				</tr>
+			#end
+		</table>
+	#end
+#else
+	<span class="traceabilityNoItems">$textFormatter.getMessage('tracker.traceability.no.items.label')</span>
+#end
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		if ($("#relations-box").length > 0) {
+			codebeamer.Traceability.initTraceabilityTab();
+		}
+	});
+</script>
+
+#if($rows.size() > 0)
+	<script type="text/javascript">
+		$(function() {
+			codebeamer.Traceability.highlightCells($("#traceabilityPlugin_${pluginId}"));
+			codebeamer.ReferenceSettingBadges.init($("#traceabilityPlugin_${pluginId}"));
+			#if($isTraceabilityBrowserPage)
+				codebeamer.Traceability.setStickyHeader();
+				codebeamer.Traceability.initInfiniteScroll($("#traceabilityPlugin_${pluginId}"));
+				codebeamer.Traceability.initReferenceTypeSelectors($("#traceabilityPlugin_${pluginId}"));
+				#if($showSuggestions)
+					codebeamer.Traceability.initSuggestionsTable();
+				#end
+			#end
+		});
+	</script>
+#end
+
+#if (!${hideWikiBox})
+	#wikiBoxClose()
+#end

@@ -1,0 +1,144 @@
+<style type="text/css">
+
+	.riskMatrixDiagram table.embedded {
+		width: auto !important;
+		margin-top: 0 !important;
+	}
+
+	.riskMatrixDiagram td.field {
+		vertical-align: middle !important;
+		border-right: 1px solid #f5f5f5;
+		width: 80px;
+		height: 25px;
+	}
+
+	.riskMatrixDiagram td.field span.item {
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.riskMatrixDiagram td.field span.item:hover {
+		text-decoration: underline;
+	}
+
+	.riskMatrixDiagram td.yAxisLabel {
+		font-size: 10px;
+		padding-right: 1em !important;
+		text-align: left !important;
+	}
+
+	.riskMatrixDiagram td.xAxisLabel {
+		font-size: 10px;
+	}
+
+	.riskMatrixDiagram td.axis-y {
+		width: 25px !important;
+		background: url("${contextPath}/images/wiki_plugins/risk_matrix_diagram/axis-y-arrow.png") no-repeat;
+		background-position: center bottom 10px;
+	}
+
+	.riskMatrixDiagram td.y-axis-position {
+		vertical-align: bottom !important;
+		padding-bottom: 165px !important;
+	}
+
+	.riskMatrixDiagram td.y-axis-position-export {
+		vertical-align: top !important;
+	}
+
+	.riskMatrixDiagram td.axis-x {
+		text-align: left !important;
+		background: url("${contextPath}/images/wiki_plugins/risk_matrix_diagram/axis-x-arrow.png") no-repeat;
+		background-position: left 10px center;
+		padding-left: 165px !important;
+	}
+
+	.riskMatrixDiagram .missingValues {
+		text-align: left !important;
+		border: 0 !important;
+		padding: 0 !important;
+	}
+
+	.riskMatrixDiagram .missingValues .item {
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.riskMatrixDiagram .missingValues .warning {
+		padding-top: 15px;
+		margin: 0;
+	}
+</style>
+
+<div id="riskMatrixDiagramPlugin_${pluginId}">
+	#wikiBoxOpen(${command})
+	#if(${command.title})
+		#wikiBoxTitle("${command.title}")
+	#end
+
+	#if ($tableModel)
+		<div class="riskMatrixDiagram">
+			#if ($command.showMitigationReqWarning)
+				<div class="warning">${textFormatter.getMessage('tracker.riskMatrix.mitigation.req.warning')}</div>
+			#end
+			<table class="embedded">
+				<tbody>
+					#set($rowIndex = 0)
+					#set($length = $tableModel.size() - 1)
+					#foreach($row in $tableModel)
+						#if($rowIndex < $length)
+						<tr>
+							#if($rowIndex == 0)
+								<td class="axis-y ${yAxisExtraClass}" rowspan="${rows}" title="${yAxisLabel}">${yAxisLabel.substring(0,1).toUpperCase()}</td>
+							#end
+							#set($colIndex = 0)
+							#foreach($cell in $row)
+								#if($rowIndex == $rows && $colIndex == 0)
+									<td></td>
+								#end
+								<td class="${cell.CSSstyle}"#if($cell.CSSstyle == 'field')
+									#if($cell.content != '') title="${textFormatter.getMessage('tracker.riskMatrix.item.tooltip')}" #end
+									data-likelihood-value="${cell.getData('likelihood')}" #* Store values and hexa color codes *#
+									data-severity-value="${cell.getData('severity')}"
+									data-bg-color="${cell.getData('backgroundColor')}"
+									data-fg-color="${cell.getData('foregroundColor')}"
+									data-bg-color-by-default="${cell.getData('bgColorByDefault')}"
+									style="background-color: ${cell.getData('backgroundColor')}; color: ${cell.getData('foregroundColor')}"#end> #* Inline CSS because of Word export *#
+								#if($cell.content != '')$cell.content#end
+								</td>
+								#set($colIndex = $colIndex + 1)
+							#end
+						</tr>
+						#end
+						#set($rowIndex = $rowIndex + 1)
+					#end
+				<tr>
+					<td colspan="2"></td>
+					<td class="axis-x" colspan="${cols}" title="${xAxisLabel}">${xAxisLabel.substring(0,1).toUpperCase()}</td>
+				</tr>
+				#if($tableModel.get($length).get(0).content)
+				<tr>
+					#set($missingColspan = $cols + 2)
+					<td class="missingValues" colspan="${missingColspan}">$tableModel.get($length).get(0).content</td>
+				</tr>
+				#end
+				</tbody>
+			</table>
+		</div>
+	#else
+		${textFormatter.getMessage('tracker.riskMatrix.noItems')}
+	#end
+
+	#wikiBoxClose()
+</div>
+
+<script type="text/javascript">
+
+	$(function() {
+		$(document).off('click', '#riskMatrixDiagramPlugin_' + '${pluginId}' + ' span.item');
+		$(document).on('click', '#riskMatrixDiagramPlugin_' + '${pluginId}' + ' span.item', function() {
+			inlinePopup.show("${contextPath}/bugs/showTrackerItems.spr?type=RiskMatrixDiagram&initial_tracker_type_id=${initialTrackerType.id}&based_on=${command.countBasedOn}&item_id_list=" + $(this).data('item-ids'));
+		});
+	});
+
+</script>

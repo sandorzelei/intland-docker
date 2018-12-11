@@ -1,0 +1,9 @@
+#wikiBoxOpen(${command}, "trackerHistoryAuditTrailPlugin")
+    #if(${noReportId})
+        <span class="error" style="padding-left: 40px;">
+            ${textFormatter.getMessage('dashboard.reviewlist.widget.queryId.missing.error')}
+        </span>
+    #else
+        ${content}
+    #end
+#wikiBoxClose()

@@ -1,0 +1,1358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<tlib-version>1.2</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>CodeBeamer user interface taglib</short-name>
+	<uri>uitaglib</uri>
+
+	<function>
+		<name>escapeJavaScript</name>
+		<function-class>org.apache.commons.lang.StringEscapeUtils</function-class>
+		<function-signature>java.lang.String escapeJavaScript(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>escapeHtml</name>
+		<function-class>org.apache.commons.lang.StringEscapeUtils</function-class>
+		<function-signature>java.lang.String escapeHtml(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>unescapeHtml</name>
+		<function-class>org.apache.commons.lang.StringEscapeUtils</function-class>
+		<function-signature>java.lang.String unescapeHtml(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>sanitizeHtml</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.XSSPreventionTools</function-class>
+		<function-signature>java.lang.String sanitizeHtml(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>removeXSSCodeAndHtmlEncode</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.XSSPreventionTools</function-class>
+		<function-signature>java.lang.String removeXSSCodeAndHtmlEncode(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>removeXSSCodeAndJavascriptEncode</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.XSSPreventionTools</function-class>
+		<function-signature>java.lang.String removeXSSCodeAndJavascriptEncode(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>replaceNewLine</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.String replaceNewLine(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isPropertyPresent</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.Boolean isPropertyPresent(java.lang.Object, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isTrackerItem</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.Boolean isTrackerItem(com.intland.codebeamer.persistence.dto.base.BaseDto)</function-signature>
+	</function>
+
+	<function>
+		<name>isReferable</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.Boolean isReferable(com.intland.codebeamer.persistence.dto.base.BaseDto)</function-signature>
+	</function>
+
+	<function>
+		<name>isReference</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.Boolean isReference(com.intland.codebeamer.persistence.dto.base.BaseDto)</function-signature>
+	</function>
+
+	<function>
+		<name>isArtifact</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.Boolean isArtifact(com.intland.codebeamer.persistence.dto.base.BaseDto)</function-signature>
+	</function>
+
+	<function>
+		<name>isTrackerItemReferenceWrapper</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.Boolean isTrackerItemReferenceWrapper(com.intland.codebeamer.persistence.dto.base.BaseDto)</function-signature>
+	</function>
+
+	<function>
+		<name>isUser</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.Boolean isUser(com.intland.codebeamer.persistence.dto.base.BaseDto)</function-signature>
+	</function>
+
+    <function>
+		<name>isBaseline</name>
+		<function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+		<function-signature>java.lang.Boolean isBaseline(java.lang.Integer)</function-signature>
+	</function>
+
+    <function>
+        <name>getTabLabelWithCount</name>
+        <function-class>com.intland.codebeamer.utils.Utils</function-class>
+        <function-signature>java.lang.String getTabLabelWithCount(java.lang.String, java.lang.Integer)</function-signature>
+    </function>
+
+    <function>
+        <name>getKnowledgeBaseUrl</name>
+        <function-class>com.intland.codebeamer.utils.Utils</function-class>
+        <function-signature>java.lang.String getKnowledgeBaseUrl(java.lang.String, java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <name>isItemsTrackerSupportsDocumentView</name>
+        <function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+        <function-signature>java.lang.Boolean isItemsTrackerSupportsDocumentView(com.intland.codebeamer.persistence.dto.TrackerItemDto)</function-signature>
+    </function>
+
+    <function>
+        <name>encodeForHtml</name>
+        <function-class>com.intland.codebeamer.controller.support.shared.BeanUtils</function-class>
+        <function-signature>java.lang.String encodeForHtml(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <name>getStringWithDefaultValue</name>
+        <function-class>com.intland.codebeamer.utils.Utils</function-class>
+        <function-signature>java.lang.String getStringWithDefaultValue(java.lang.String, java.lang.String)</function-signature>
+    </function>
+
+	<!-- Actions -->
+	<tag>
+		<name>actionGenerator</name>
+		<tagclass>com.intland.codebeamer.taglib.actionmenu.ActionGeneratorTag</tagclass>
+		<attribute>
+			<name>actionListName</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>builder</name>
+			<rtexprvalue>true</rtexprvalue>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>subject</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- optional attribute to filter actions, and only keep keys listed in 'allowedKeys' in the action-list -->
+		<attribute>
+			<name>allowedKeys</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- optional attribute to filter actions, and drop few keys listed in 'deniedKeys' -->
+		<attribute>
+			<name>deniedKeys</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- if the body of the tag is rendered when no actions found by the builder. Defaults to true. -->
+		<attribute>
+			<name>renderBodyWithoutActions</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- If exception is thrown when the builder is not found. Defaults to true. -->
+		<attribute>
+			<name>throwExceptionOnMissingBuilder</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>actionUrl</name>
+		<tagclass>com.intland.codebeamer.taglib.actionmenu.ActionUrlTag</tagclass>
+		<attribute>
+			<name>builder</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>subject</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actions</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>letterIcon</name>
+		<tagclass>com.intland.codebeamer.taglib.tracker.LetterIcon</tagclass>
+		<attribute>
+			<name>elementName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>elementId</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>color</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>actionLink</name>
+		<tagclass>com.intland.codebeamer.taglib.actionmenu.ActionLinkTag</tagclass>
+		<attribute>
+			<name>builder</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>subject</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actions</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>keys</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>withIcon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>hideLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>actionComboBox</name>
+		<tagclass>com.intland.codebeamer.taglib.actionmenu.ActionComboBoxTag</tagclass>
+		<attribute>
+			<name>actions</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>keys</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Optional attribute defines the html id</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				If the tag automatically generates the javascript for the actions rendered.
+				The generated javascript will call either the onClick or forward to the url in the action when an option is selected.
+			</description>
+			<name>automaticJavascriptGeneration</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				If the an successful onchange event will submit the form which contains the combo-box
+				Can be used only if automaticJavascriptGeneration is used.
+			</description>
+			<name>submitForm</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Javascript Event callback, will be called before submitting the form.</description>
+			<name>onBeforeSubmit</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>actionMenu</name>
+		<tagclass>com.intland.codebeamer.taglib.actionmenu.ActionMenuTag</tagclass>
+		<attribute>
+			<name>builder</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>subject</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actions</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>keys</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- optional attribute -->
+		<attribute>
+			<name>forceOpenInNewWindow</name>
+			<required>false</required>
+		</attribute>
+		<!-- optional attribute to add CSS class or style -->
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>inline</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>leftAligned</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>lazyInit</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>ignoreCollision</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>ignoreLayout</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>actionIconMode</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>iconUrl</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>alwaysDisplayContextMenuIcons</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>actionLinkList</name>
+		<tagclass>com.intland.codebeamer.taglib.actionmenu.ActionLinkListTag</tagclass>
+		<attribute>
+			<name>builder</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>subject</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actions</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>keys</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- optional attribute to add CSS class or style -->
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+		</attribute>
+	</tag>
+
+	<tag-file>
+		<name>applyCheckbox</name>
+		<path>/WEB-INF/tags/ui/applyCheckbox.tag</path>
+	</tag-file>
+
+	<tag>
+		<name>combinedActionMenu</name>
+		<tag-class>com.intland.codebeamer.taglib.actionmenu.CombinedActionMenuTag</tag-class>
+		<attribute>
+			<name>builder</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>subject</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>actions</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>keys</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<!-- optional attribute to add CSS class or style -->
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>cssStyle</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>inline</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>leftAligned</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>buttonKeys</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>activeButtonKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>hideMoreArrow</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<!-- Breadcrumb -->
+	<tag>
+		<name>breadcrumbs</name>
+		<tagclass>com.intland.codebeamer.taglib.breadcrumb.BreadCrumbsTag</tagclass>
+		<attribute>
+			<name>projectAware</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showProjects</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showLast</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>linkLast</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showTrailingId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>commentsUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>historyUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>strongBody</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>breadcrumbsId</name>
+		<tagclass>com.intland.codebeamer.taglib.breadcrumb.BreadCrumbsIdTag</tagclass>
+	</tag>
+
+	<!-- Others -->
+	<tag-file>
+		<name>duration</name>
+		<path>/WEB-INF/tags/ui/duration.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>displaytagPaging</name>
+		<path>/WEB-INF/tags/ui/displaytagPaging.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>actionMenuBar</name>
+		<path>/WEB-INF/tags/ui/actionMenuBar.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>actionBar</name>
+		<path>/WEB-INF/tags/ui/actionBar.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>globalMessages</name>
+		<path>/WEB-INF/tags/ui/globalMessages.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>helpLink</name>
+		<path>/WEB-INF/tags/ui/helpLink.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>userPhoto</name>
+		<path>/WEB-INF/tags/ui/userPhoto.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>submission</name>
+		<path>/WEB-INF/tags/ui/submission.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>vcard</name>
+		<path>/WEB-INF/tags/ui/vcard.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>baselineInfoBar</name>
+		<path>/WEB-INF/tags/ui/baselineInfoBar.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>branchInfoBar</name>
+		<path>/WEB-INF/tags/ui/branchInfoBar.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>breadCrumbNavigation</name>
+		<path>/WEB-INF/tags/ui/breadCrumbNavigation.tag</path>
+	</tag-file>
+
+	<!-- drop in replacement for c:url tag automatically adds codebeamer's version string to url
+		to refresh caches when cb version changes -->
+	<tag>
+		<name>urlversioned</name>
+		<tagclass>com.intland.codebeamer.taglib.UrlVersioned</tagclass>
+
+		<attribute>
+				<description>
+					Name of the exported scoped variable for the
+					processed url. The type of the scoped variable is
+					String.
+				</description>
+				<name>var</name>
+				<required>false</required>
+				<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+				<description>
+					Scope for var.
+				</description>
+				<name>scope</name>
+				<required>false</required>
+				<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+				<description>
+					URL to be processed.
+				</description>
+				<name>value</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+				<description>
+					Name of the context when specifying a relative URL
+					resource that belongs to a foreign context.
+				</description>
+				<name>context</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<!-- tag showing a jQuery datepicker popup -->
+	<tag-file>
+		<name>calendarPopup</name>
+		<path>/WEB-INF/tags/ui/calendarPopup.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>delayedScript</name>
+		<path>/WEB-INF/tags/ui/delayedScript.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>showSpringErrors</name>
+		<path>/WEB-INF/tags/ui/showSpringErrors.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>showErrors</name>
+		<path>/WEB-INF/tags/ui/showErrors.tag</path>
+	</tag-file>
+
+	<tag>
+		<name>notificationBox</name>
+		<tagclass>com.intland.codebeamer.taglib.NotificationBoxTag</tagclass>
+
+		<attribute>
+			<name>entityTypeId</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>entityId</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>entitySubscription</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag-file>
+		<name>rating</name>
+		<path>/WEB-INF/tags/ui/rating.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>inProgressDialog</name>
+		<path>/WEB-INF/tags/ui/inProgressDialog.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>rightAlign</name>
+		<path>/WEB-INF/tags/ui/rightAlign.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>wikiStructureBrowser</name>
+		<path>/WEB-INF/tags/ui/wikiStructureBrowser.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>title</name>
+		<path>/WEB-INF/tags/ui/title.tag</path>
+	</tag-file>
+
+	<tag>
+		<name>pageTitle</name>
+		<tagclass>com.intland.codebeamer.taglib.PageTitleTag</tagclass>
+
+		<attribute>
+			<name>printBody</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>prefixWithIdentifiableName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag-file>
+		<name>collapsingBorder</name>
+		<path>/WEB-INF/tags/ui/collapsingBorder.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>ajaxTagging</name>
+		<path>/WEB-INF/tags/ui/ajaxTagging.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>infoPanel</name>
+		<path>/WEB-INF/tags/ui/infoPanel.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>splitTwoColumnLayoutJQuery</name>
+		<path>/WEB-INF/tags/ui/splitTwoColumnLayoutJQuery.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>twoColumnLayout</name>
+		<path>/WEB-INF/tags/ui/twoColumnLayout.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>verticalMiddleAligned</name>
+		<path>/WEB-INF/tags/ui/verticalMiddleAligned.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>lazyTabPane</name>
+		<path>/WEB-INF/tags/ui/lazyTabPane.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>selectRolesTable</name>
+		<path>/WEB-INF/tags/ui/selectRolesTable.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>listMembersOfRole</name>
+		<path>/WEB-INF/tags/ui/listMembersOfRole.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>changeSetAuthor</name>
+		<path>/WEB-INF/tags/ui/changeSetAuthor.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>changeSetFiles</name>
+		<path>/WEB-INF/tags/ui/changeSetFiles.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>pathBreadcrumb</name>
+		<path>/WEB-INF/tags/ui/pathBreadcrumb.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>fileUpload</name>
+		<path>/WEB-INF/tags/ui/fileUpload.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>treeControl</name>
+		<path>/WEB-INF/tags/ui/treeControl.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>artifactSelector</name>
+		<path>/WEB-INF/tags/ui/artifactSelector.tag</path>
+	</tag-file>
+
+	<tag>
+		<name>UserSetting</name>
+		<tagclass>com.intland.codebeamer.taglib.config.UserSetting</tagclass>
+		<attribute>
+			<name>userId</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>setting</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>var</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>defaultValue</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>coloredEntityIcon</name>
+		<tagclass>com.intland.codebeamer.taglib.ColoredEntityIconTag</tagclass>
+		<attribute>
+			<name>subject</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>contentType</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>iconUrlVar</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>iconBgColorVar</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>renderAsHTML</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag-file>
+		<name>colorPicker</name>
+		<path>/WEB-INF/tags/ui/colorPicker.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>progressBar</name>
+		<path>/WEB-INF/tags/ui/progressBar.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>testingProgressBar</name>
+		<path>/WEB-INF/tags/ui/testingProgressBar.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>testingProgressStats</name>
+		<path>/WEB-INF/tags/ui/testingProgressStats.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>treeFilterBox</name>
+		<path>/WEB-INF/tags/ui/treeFilterBox.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>testSteps</name>
+		<path>/WEB-INF/tags/ui/testSteps.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>testStepsNewRowTemplate</name>
+		<path>/WEB-INF/tags/ui/testStepsNewRowTemplate.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>testStepReferenceLink</name>
+		<path>/WEB-INF/tags/ui/testStepReferenceLink.tag</path>
+	</tag-file>
+
+
+	<tag-file>
+		<name>trackerItemAttachmentLink</name>
+		<path>/WEB-INF/tags/ui/trackerItemAttachmentLink.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>subscriptionInfo</name>
+		<path>/WEB-INF/tags/ui/subscriptionInfo.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>editWikiInOverlay</name>
+		<path>/WEB-INF/tags/ui/editWikiInOverlay.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>nameWithTeamIndicators</name>
+		<path>/WEB-INF/tags/ui/nameWithTeamIndicators.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>itemLink</name>
+		<path>/WEB-INF/tags/ui/itemLink.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>itemLinkTitle</name>
+		<path>/WEB-INF/tags/ui/itemLinkTitle.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>wikiLink</name>
+		<path>/WEB-INF/tags/ui/wikiLink.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>itemDependenciesBadge</name>
+		<path>/WEB-INF/tags/ui/itemDependenciesbadge.tag</path>
+	</tag-file>
+
+	<tag>
+		<name>tooltipWrapper</name>
+		<tagclass>com.intland.codebeamer.taglib.TooltipWrapper</tagclass>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<name>dto</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag-file>
+		<name>branchBaselineBadge</name>
+		<path>/WEB-INF/tags/ui/branchBaselineBadge.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>trackerSelector</name>
+		<path>/WEB-INF/tags/ui/trackerSelector.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>reportSelector</name>
+		<path>/WEB-INF/tags/ui/reportSelector.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>queryConditionWidget</name>
+		<path>/WEB-INF/tags/ui/queryConditionWidget.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>systemMonitoringChart</name>
+		<path>/WEB-INF/tags/ui/systemMonitoringChart.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>systemMonitoringChartSynchronizer</name>
+		<path>/WEB-INF/tags/ui/systemMonitoringChartSynchronizer.tag</path>
+	</tag-file>
+
+	<tag>
+	    <name>velocity</name>
+	    <tag-class>com.intland.codebeamer.taglib.velocity.VelocityViewTag</tag-class>
+	    <body-content>tagdependent</body-content>
+	    <attribute>
+	      <name>id</name>
+	      <required>false</required>
+	      <rtexprvalue>true</rtexprvalue>
+	      <description><![CDATA[An id unique to this particular usage of the VelocityViewTag in the application.  This id will then be used to cache the body in a StringResourceLoader repository and will also identify it in log messages.  Setting this automatically sets the cache attribute to "true".]]></description>
+	    </attribute>
+	    <attribute>
+	      <name>cache</name>
+	      <required>false</required>
+	      <rtexprvalue>true</rtexprvalue>
+	      <description><![CDATA[Either "true" or "false" to indicate whether the body content template should be cached by the StringResourceLoader.  This is automatically set to true if an id is set.  If set to true without an id value, then the template will be used as its own id.  It is false by default.]]></description>
+	    </attribute>
+	    <attribute>
+	      <name>var</name>
+	      <required>false</required>
+	      <rtexprvalue>true</rtexprvalue>
+	      <description><![CDATA[A variable name whose value should be set to the rendered result of this tag.]]></description>
+	    </attribute>
+	    <attribute>
+	      <name>scope</name>
+	      <required>false</required>
+	      <rtexprvalue>true</rtexprvalue>
+	      <description><![CDATA[This property is meaningless unless a 'var' attribute is also set.  When it is, this determines the scope into which the resulting variable is set.]]></description>
+	    </attribute>
+	    <attribute>
+	      <name>template</name>
+	      <required>false</required>
+	      <rtexprvalue>true</rtexprvalue>
+	      <description><![CDATA[The name of a template to be requested from the configured Velocity resource loaders and rendered into the page (or variable if the 'var' attribute is set) using the current context.  If this tag also has body content, then the body will be rendered first and placed into the context used to render the template as '$bodyContent'; this approximates the "two-pass render" used by the VelocityLayoutServlet.]]></description>
+	    </attribute>
+	    <attribute>
+	      <name>bodyContentKey</name>
+	      <required>false</required>
+	      <rtexprvalue>true</rtexprvalue>
+	      <description><![CDATA[This property is meaningless unless a 'template' attribute is set and the tag has body content in it.  When it is, this changes the key under which the rendered result of the body content is placed into the context for use by the specified template.  The default value is "bodyContent" and should be sufficient for nearly all users.]]></description>
+	    </attribute>
+	    <attribute>
+	    	<name>script</name>
+	        <required>false</required>
+	        <rtexprvalue>true</rtexprvalue>
+	        <description><![CDATA[The velocity script to use instead of the body. If this is not empty the body is ignored!]]></description>
+	    </attribute>
+	    <attribute>
+	    	<name>exportVariablesRegexp</name>
+	        <required>false</required>
+	        <rtexprvalue>true</rtexprvalue>
+	        <description><![CDATA[any variables matching with this regexp will be exported to the pageContext from the Velocity scope after the script's run!]]></description>
+	    </attribute>
+  </tag>
+
+	<tag>
+		<name>password</name>
+		<tag-class>com.intland.codebeamer.taglib.PasswordTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Path to property for data binding</description>
+			<name>path</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Enable/disable HTML escaping of rendered values.</description>
+			<name>htmlEscape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "class" - HTML Optional Attribute. Used when the bound field has errors.</description>
+			<name>cssErrorClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Equivalent to "style" - HTML Optional Attribute</description>
+			<name>cssStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will disable the HTML element.</description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Standard Attribute</description>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>maxlength</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute</description>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Event Attribute</description>
+			<name>onselect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>HTML Optional Attribute. Setting the value of this attribute to 'true' (without the quotes) will make the HTML element readonly.</description>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Common Optional Attribute</description>
+			<name>autocomplete</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Show the placeholder</description>
+			<name>showPlaceholder</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+
+	<tag>
+		<name>trackerItemPath</name>
+		<tag-class>com.intland.codebeamer.ui.view.TrackerItemPath</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The TrackerItem to render with its parents as links</description>
+			<name>item</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Enable/disable HTML escaping of rendered values.</description>
+			<name>htmlEscape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showVersionBadges</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>versionedLinks</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rewriteRevisionToVersion</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+
+	<tag>
+		<name>renderSuspectedBadgeForReference</name>
+		<tagclass>com.intland.codebeamer.taglib.SuspectedBadgeForReferenceRenderer</tagclass>
+
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>wrapper</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>renderBranch</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+
+	</tag>
+
+	<tag-file>
+		<name>noSummaryPlaceholder</name>
+		<path>/WEB-INF/tags/ui/noSummaryPlaceholder.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>message</name>
+		<path>/WEB-INF/tags/ui/infoMessagePanel.tag</path>
+	</tag-file>
+
+	<tag>
+		<name>detectServiceDeskUser</name>
+		<tagclass>com.intland.codebeamer.taglib.ServiceDeskUserDetector</tagclass>
+
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>isMac</name>
+		<tagclass>com.intland.codebeamer.taglib.MacintoshUserAgent</tagclass>
+
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>osSpecificHotkeyTooltip</name>
+		<tagclass>com.intland.codebeamer.taglib.OsSpecificHotkeyTooltip</tagclass>
+
+		<attribute>
+			<name>code</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>modifierKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>breadcrumbTitle</name>
+		<tagclass>com.intland.codebeamer.taglib.BreadcrumbTitleRenderer</tagclass>
+
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>item</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>user</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>referenceLimitWarning</name>
+		<tagclass>com.intland.codebeamer.taglib.ReferenceLimitWarning</tagclass>
+
+		<attribute>
+			<name>actualReferenceCount</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>isNumberOfItemsExceedLimit</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+</taglib>

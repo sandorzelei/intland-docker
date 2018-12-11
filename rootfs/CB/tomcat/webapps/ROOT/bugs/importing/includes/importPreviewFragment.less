@@ -1,0 +1,133 @@
+.hasError {
+	color: red;
+}
+
+.dataChanged {
+	background-color: #ffffe0;
+	padding: 10px !important;
+}
+
+/* style for not updatable data */
+.notUpdateableData {
+	color: orange !important;
+	text-decoration: line-through;
+}
+
+
+#previewTable {
+	&.hideNoDataChanged {
+		tr.noDataChanged {
+			display: none;
+		}
+		tr.head {
+			display: table-row !important;	/* never hide header row */
+		}
+	}
+
+	tr.insertRow {
+		display: table-row !important;	/* never hide the rows will be inserted */
+	}
+
+	.invalidfield {
+		display: block;
+		margin-top: 4px;
+	}
+
+	th {
+		white-space: normal;
+	}
+	.columnField {
+		white-space: nowrap;
+		font-weight: bold;
+	}
+	.columnIndex {
+		white-space: nowrap;
+	}
+
+	.checkbox-column-minwidth {
+		white-space: nowrap !important;
+		padding-right: 15px;
+
+		img {
+			vertical-align: text-bottom;
+		}
+	}
+	td {
+		color: #666666;
+	}
+
+	tr.selectedRow td {
+		color: #1e1e1e;
+	}
+
+	label.badge {
+		float:right;
+		display:block;
+		margin: 5px 5px;
+		padding: 1px 5px;
+		color: white !important;
+		font-weight: bold;
+
+		a {
+			color: white !important;
+			text-decoration: none !important;
+		}
+	}
+
+	tr.originalValueRow {
+		border-bottom: solid 1px #d1d1d1;
+
+		&, & td {
+			background-color: #f8f8f8;	/* very light gray */
+		}
+
+		td.checkbox-column-minwidth {
+			background-color: white;
+			text-align: right;
+			padding-right: 5px;
+
+			img {
+				margin-right: 12px;
+			}
+		}
+
+		td.dataChanged {
+			/* .dataChanged;*/
+			background-color: transparent;
+		}
+	}
+
+	.saveError .invalidfield {
+		padding: 5px;
+		float:left;
+	}
+}
+
+tr.updateRow label.badge {
+	background-color: #00a85d; // dark green
+}
+tr.insertRow {
+    label.badge {
+		background-color: #1e9ebf; /* blue */
+	}
+	td {
+		.dataChanged;	/* the new rows should be highlighted */
+	}
+}
+
+span.rowIdx {
+	display: inline-block;
+	*display: inline; /* IE7 */
+	*zoom: 1; /* IE7 */
+	text-align: right;
+	min-width: 3em;
+}
+
+
+#notUpdateableDataExplanation {
+	display:none;
+}
+
+span.information {
+	padding-top: 15px;
+}

@@ -1,0 +1,1750 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+#planner .panes-container {
+	width: 100%;
+}
+
+#planner .panes-container td {
+	vertical-align: top;
+}
+
+#planner #rightPane {
+	height: 100% !important;
+}
+
+/* Common for all panes */
+
+#planner {
+
+	.left-pane,
+	.center-pane,
+	.right-pane {
+	}
+
+	.header.actionBar {
+		padding-left: 5px !important;
+	}
+
+	ol.version-list, ol.team-list {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			display: block;
+			border: 1px solid #ddd;
+			white-space: nowrap;
+			overflow-x: hidden;
+		}
+	}
+
+	// TODO remove
+	//.chooseReferences {
+	//	background-color: white;
+	//	min-width: 200px;
+	//	tr:hover {
+	//		background-color: transparent;
+	//	}
+	//}
+
+	.userSelector td {
+		overflow: visible !important;
+	}
+
+	#closer-east {
+		margin-top: -2px;
+	}
+
+	.pagelinks {
+		strong, a {
+			visibility: hidden;
+		}
+		border-top: none !important;
+		.incrementalScrollLoading {
+			width: 100%;
+			display: block;
+			height: 11px;
+			background: url("../images/ajax-loading_16.gif") no-repeat center center;
+		}
+	}
+}
+
+// TODO remove
+//#centerDiv {
+//	position: static !important; /* fix to let context-aware popups overlay right panel even if they run out of the center */
+//}
+
+/* Side panes */
+
+#planner .ui-layout-east {
+	overflow: hidden;
+}
+
+#planner .left-pane .overflow,
+#planner .right-pane .overflow {
+	width: auto;
+	overflow-y: auto;
+	padding: 15px 10px 15px 15px;
+	font-family: arial;
+}
+
+#planner .left-pane .filter:hover,
+#planner .right-pane .filter:hover {
+	cursor: pointer;
+}
+
+#planner .left-pane .virtual,
+#planner .right-pane .virtual {
+	background-color: #efefef;
+	color: #0093b8;
+	font-size: 13px;
+}
+
+#planner .left-pane-toggle {
+	margin-bottom: 0.5em;
+	display: inline-block;
+	background: url("../images/newskin/actionIcons/icon-close-up-left2.png") no-repeat;
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	margin-top: -20px;
+	left: 8px;
+}
+
+#planner .left-pane-toggle.left-pane-is-hidden {
+	background-image: url("../images/newskin/actionIcons/icon-close-up-right2.png");
+}
+
+#planner .action-lane {
+	display: inline-block;
+	&.left {
+		position: relative;
+		top: 3px;
+		left: 10px;
+		a {
+			display: inline-block;
+			margin-right: 10px;
+			font-weight: bold;
+		}
+	}
+	&.right {
+		display: none;
+	}
+}
+
+#panes.eastPaneHidden .action-lane.right {
+	padding-right: 30px;
+}
+
+#opener-east {
+	z-index: 9999;
+  	top: -18px !important;
+}
+
+#opener-west {
+	top: -15px !important;
+	left: -4px;
+  	margin-right: 0 !important;
+}
+
+/* Left pane */
+
+#planner .left-pane {
+	/* for width, see also UserSetting.PLANNER_LEFT_PANE_WIDTH */
+	min-width: 200px;
+}
+
+#planner .left-pane .overflow {
+	text-align: left;
+	min-width: 90px;
+	padding: 0;
+}
+
+#planner .action-lane .filter-text {
+	padding: 1px;
+	margin-top: -2px;
+	font-size: 12px;
+	width: 15em;
+}
+
+#planner .left-pane li {
+	margin-bottom: 0;
+	margin-top: 0;
+	padding: 0 0 4px 13px;
+}
+
+#planner {
+
+	.left-pane {
+
+		.ui-resizable-handle.ui-resizable-e {
+			&:hover,
+			&.being-dragged {
+				background: #c4e1a4;
+			}
+		}
+
+		.version-list, .team-list {
+
+			li.version, li.team {
+				font-size: 14px;
+				.knob {
+					float: left;
+					margin-top: 2px;
+					width: 11px;
+					height: 100%;
+					margin-left: -11px;
+					margin-right: 7px;
+					cursor: move !important;
+
+					background-color: #5f5f5f;
+					background-image: url(../images/newskin/action/agile/dragndrop_grip.png);
+					background-position: 4px center;
+					background-repeat: no-repeat;
+				}
+			}
+
+			li.team .knob {
+				background-image: none;
+				height: 50px;
+				display: block;
+				width: 4px;
+				margin-left: -13px;
+				margin-top: -7px;
+				top: 4px;
+				position: relative;
+				cursor: pointer !important;
+			}
+
+			li.version,
+			li.virtual,
+			li.team {
+				background: #f5f5f5;
+				margin-bottom: -1px; /* collapse neighbouring borders */
+				border-right: none;
+				&:first-of-type {
+					border-top: none;
+				}
+				.storyPointsContainer {
+					padding-left: 0;
+				}
+			}
+
+			li + li.version.is-release,
+			li.virtual.project-backlog {
+				margin-top: 5px !important;
+			}
+
+			li .state-indicator {
+				float: right;
+				width: 12px;
+				height: 12px;
+				margin-top: 8px;
+				margin-right: 10px;
+				background: none;
+			}
+			li:hover .state-indicator {
+				background: url("../images/newskin/filter_list/icon_checkmark.png") repeat-x left center;
+			}
+			li.selected .state-indicator,
+			li.selected:hover .state-indicator {
+				background: url("../images/newskin/filter_list/icon_x_grey.png") repeat-x left center;
+			}
+
+			.filter.selected,
+			.filter.selected:hover {
+				background-color: white;
+				border-color: #aaa;
+				margin-bottom: 0;
+				z-index: 4;
+				position: relative;
+				border-right: none;
+			}
+
+			.simpleDropdownMenu .yuimenubaritemlabel {
+				overflow: hidden;
+			}
+
+		}
+
+		.sprints-accordion, .teams-accordion {
+			padding: 0 !important;
+		}
+
+		.sprints-accordion {
+			li .expander {
+				top: 6px;
+			}
+		}
+
+		.relations-accordion {
+			ol {
+				list-style-type: none;
+				padding: 0;
+				margin: -8px 0 0;
+				.IE8 & {
+					margin-top: 0;
+				}
+				li {
+					background: #fafafa;
+					border: 1px solid #eee;
+					border-radius: 6px;
+					margin: 0 0 5px;
+					padding: 5px 20px 5px 10px;
+					font-weight: bold;
+					cursor: pointer;
+					background-repeat: no-repeat;
+					background-position: right 7px center;
+					box-sizing: border-box;
+					-moz-box-sizing: border-box;
+					color: black;
+				  	&.release {
+						background: transparent;
+						border: none;
+					  	padding: 3px;
+					  	.tableIcon {
+							position: relative;
+							top: 2px;
+							margin-right: 5px;
+						}
+					}
+					&.dark {
+						color: white;
+					}
+					.IE8 & {
+						background-position: 95% center;
+					}
+					.item-name {
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						display: block;
+						overflow: hidden;
+					}
+				  	&.grouped .item-name {
+					  	white-space: normal;
+					  	font-weight: bold;
+						padding: 5px 20px 5px 5px;
+					}
+				  	&.grouped {
+					  	padding: 0;
+					  	.issueHandle {
+						  	border-radius: 6px;
+						}
+					}
+				  	&.sortablePlaceholder {
+					  	background-color: #ccffe8;
+					  	border-radius: unset;
+					  	border: none;
+					  	height: 30px;
+					}
+					&:hover {
+						background-image: url("../images/newskin/action/agile/icon_relations_hover_black.png");
+						&.dark {
+							background-image: url("../images/newskin/action/agile/icon_relations_hover.png");
+						}
+					  	&.release {
+						  	background-image: none;
+						}
+					}
+					&.selected,
+					&.selected:hover {
+						background-image: url("../images/newskin/action/agile/icon_relations_deselect_black.png");
+						&.dark {
+							background-image: url("../images/newskin/action/agile/icon_relations_deselect.png");
+						}
+						&.release {
+							background-image: none;
+						}
+					}
+					&.colored {
+						border: none;
+					}
+				}
+				.level-2 {
+					margin-left: 10px;
+
+					.simpleDropdownMenu {
+						float: right;
+						margin-top: -3px;
+						visibility: hidden;
+
+						.menuArrowDown {
+							display: inline-block;
+						}
+					}
+
+					&:hover .simpleDropdownMenu {
+						visibility: visible;
+					}
+				}
+				li:not(.level-2) {
+					margin-top: 8px;
+				}
+			}
+		}
+	}
+}
+
+#planner .left-pane li.version,
+#planner .left-pane li.virtual {
+	overflow: hidden;
+}
+
+#planner .left-pane li.version.menu-open {
+	position: static !important; /* jQuery droppable would other wise set as relative, which make popup menus cropped */
+}
+
+#planner .left-pane li.version .yuimenubaritem,
+#planner .left-pane li.version.drag-in-progress .yuimenubaritem,
+#planner .left-pane li.version:hover.drag-in-progress .yuimenubaritem {
+	visibility: hidden;
+}
+
+#planner .left-pane li.version:hover .yuimenubaritem {
+	visibility: visible;
+}
+
+#planner .left-pane .title {
+	color: black;
+	margin-top: 5px;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;
+}
+
+#planner .left-pane .backlog .title {
+  	font-weight: normal;
+}
+
+#planner .left-pane .virtual .title {
+	margin-bottom: 1.5em;
+}
+
+#planner .left-pane li.team .title {
+	margin-bottom: 5px;
+}
+
+#planner .left-pane .issue-count {
+	margin-right: 5px;
+	margin-top: 5px;
+	visibility: hidden;
+	.FF & {
+		float: left;
+	}
+}
+
+#planner .left-pane li.team .issue-count {
+	visibility: visible;
+}
+
+#planner .left-pane .issue-count .issueCountContainer {
+	background-color: #d1d1d1;
+	color: #373737;
+	font-weight: normal;
+	font-size: 9px;
+	border-radius: 2px;
+	min-width: 15px;
+	text-align: center;
+	height: 13px;
+	padding: 0 5px;
+	margin: 1px 0 0 0;
+	line-height: 13px;
+	vertical-align: middle;
+}
+
+
+#planner .left-pane .issue-count .numbers {
+	/*background-image: url(../images/newskin/action/version-sp-icon.png);
+	background-position: right 3px;
+	background-repeat: no-repeat;
+	padding: 0 9px 0 0;*/
+	padding: 0; /* REMOVE this if you uncomment the lines above */
+	margin: 3px;
+}
+
+#planner .left-pane .issue-count .numbers .numbers-spacer {
+	display: inline-block;
+	width: 10px;
+}
+
+#planner .left-pane .version .release-date {
+	display: block;
+	color: #5f5f5f;
+	font-size: 11px;
+	margin-top: 0.2em;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+#planner .left-pane .version .simpleDropdownMenu {
+	margin-right: 8px;
+	margin-top: 2px;
+}
+
+#planner .left-pane .team {
+    position: relative;
+
+    .simpleDropdownMenu {
+        visibility: hidden;
+        position: absolute;
+        right: 6px;
+        top: 24px;
+        z-index: 1;
+    }
+}
+
+#planner .left-pane .team:hover .simpleDropdownMenu {
+	visibility: visible;
+}
+
+#planner .left-pane .version .simpleDropdownMenu li {
+	border: 0;
+}
+
+#planner .left-pane .version .simpleDropdownMenu .yuimenubaritem,
+#planner .left-pane .version .simpleDropdownMenu img.menuArrowDown {
+	margin: 0;
+	padding: 0;
+}
+
+/* Center pane */
+
+#planner .center-pane {
+	overflow: hidden;
+	height: 100%;
+
+	.version-breadcrumbs {
+		margin: 13px 0;
+		display: block;
+		a {
+			font-size: 16px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 19px;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.scrollable {
+		margin-bottom: 1em;
+	}
+}
+
+#planner .center-pane.left-pane-is-hidden {
+	margin-left: 15px;
+}
+
+#planner .center-pane .overflow {
+	overflow-x: auto;
+	overflow-y: auto;
+	margin: 0;
+	padding: 15px 15px 0;
+	border: none;
+	border-left: 1px solid #aaa;
+}
+
+#planner .center-pane .nothing-found-message + .version-header .version-breadcrumbs {
+	// first version header does not need to have a top margin to save some space
+	margin-top: 0;
+}
+
+// New design
+
+#planner #west {
+	z-index: 3 !important;
+}
+
+#planner .newGroupItemContainer {
+  	float: right;
+  	.newGroupItem {
+		background: url("../images/newskin/actionIcons/icon-add-blue.png") no-repeat;
+		padding-left: 20px;
+  	}
+  	&.backlogNewGroupItem {
+	  	position: relative;
+	  	top: -5px;
+	}
+}
+
+#planner .trackerItems {
+	width: 100%;
+	border: none;
+	margin: 0 0 15px 0;
+	tr.selected {
+		//background-color: #f5f5f5;
+	}
+  	tr.multipleSelected {
+	  	background-color: #f5f5f5;
+	}
+	tr.empty td {
+		border: none !important;
+	}
+	th {
+		background: white;
+		color: #bbb;
+		font-weight: normal;
+		font-size: 11px;
+		text-align: left;
+		padding: 0.3em;
+		&.rankTh {
+			padding-top: 7px;
+		  	&.withMultipleSelection {
+			  	text-align: right;
+			}
+		}
+	  	.removeColumn {
+		  	top: 0 !important;
+			width: 9px !important;
+			height: 9px !important;
+		}
+	}
+	td {
+		padding: 0.5em;
+	}
+	td.issueHandle, th.issueHandleHeader {
+		width: 1px !important;
+		padding: 5px 4px 5px 5px !important;
+	}
+	td.rankTd {
+		font-size: 11px;
+		color: #666666;
+		text-align: center;
+		padding-top: 9px;
+	  	width: 20px;
+	  	.sendToOrderedBacklog {
+		  	display: inline-block;
+		  	width: 12px;
+		  	height: 12px;
+			background: url("../images/newskin/actionIcons/small/icon_add_blue.png") no-repeat center center;
+		  	cursor: pointer;
+		}
+	  	&.withMultipleSelection {
+		  	white-space: nowrap;
+		  	padding-top: 8px;
+		  	.rank {
+				display: inline-block;
+				width: 20px;
+				text-align: center;
+				margin-right: 10px;
+			}
+		  	.sendToOrderedBacklog {
+				position: relative;
+				left: -30px;
+			}
+		}
+	}
+	td.ratingTd {
+		width: 36px;
+		padding: 3px 10px 3px 3px;
+	}
+	tr:first-child td {
+		border-top: none;
+	}
+	tr:last-child td {
+		border-bottom: 1px solid #d1d1d1;
+	}
+	td:last-child {
+		border-right: 1px solid #d1d1d1;
+	}
+
+	td.releaseGrouppingLevel {
+		background-color: white;
+		border-top: 1px solid #d1d1d1;
+		border-bottom: none;
+		border-left: none;
+		border-right: none;
+		padding: 15px 0 5px 0 !important;
+		.releaseGroupName {
+			a {
+				font-size: 14px;
+				font-weight: bold;
+				padding-left: 5px;
+			}
+	 	}
+	  	.releaseAdditionalText {
+			font-size: 12px;
+	  	}
+	}
+
+	tr:first-child td.releaseGrouppingLevel {
+		padding-top: 0 !important;
+	}
+
+	tr.sortablePlaceholder {
+		border-top: 1px solid #f5f5f5 !important;
+		border-bottom: 1px solid #f5f5f5 !important;
+		td {
+			padding: 0 !important;
+			height: 30px;
+			background-color: #ccffe8;
+		}
+		td:first-child {
+			border-left: 1px dashed #d1d1d1;
+		}
+		td:last-child {
+			border-right: 1px dashed #d1d1d1;
+		}
+	}
+
+  	.groupHeaderIssueHandle {
+		background-image: url(../images/newskin/action/dragbar-dark.png);
+		background-position: 3px center;
+	  	background-repeat: no-repeat;
+		background-color: #d1d1d1;
+	  	cursor: move;
+		width: 1px !important;
+		padding: 5px 4px 5px 5px !important;
+	  	&.disabled {
+		  	cursor: auto;
+		  	background-image: none;
+		}
+	}
+
+	.groupIssueHandlePlaceholder {
+		background-color: #d1d1d1;
+	  	border-top: 1px solid #d1d1d1;
+	  	border-bottom: 1px solid #d1d1d1;
+		width: 1px !important;
+		padding: 5px 4px 5px 5px !important;
+	  	&.top {
+		  	background-color: white !important;
+		}
+	}
+
+  	.groupPlaceholderRow {
+		border-bottom: 1px solid #d1d1d1;
+		border-top: 1px solid #d1d1d1;
+		td {
+			padding: 0 !important;
+			margin: 0 !important;
+			height: 3px !important;
+			border: none !important;
+		}
+	}
+
+  	.groupPlaceholder, .groupHeaderPlaceholder {
+	  	border: none;
+		width: 10px !important;
+		padding: 0 !important;
+	  	&:hover {
+		  	background-color: transparent;
+		}
+	}
+
+  	.groupPlaceholderHelper {
+		display: inline-block;
+		background-color: white;
+		width: 100%;
+		height: 1px;
+		position: relative;
+		top: -1px;
+	}
+
+	.groupRow[data-isWorkItem=true] {
+		cursor: pointer;
+	}
+
+  	.groupRow .groupping-level {
+	  	line-height: 12px;
+		padding: 10px 0 !important;
+	  	.wikiLinkContainer {
+			display: inline;
+			position: relative;
+			top: -2px;
+		  	.wikiLink {
+			  	display: inline;
+			}
+		}
+		.itemCount {
+		 	display: inline-block;
+		  	font-weight: normal;
+		}
+		.opener {
+			display: inline-block;
+			width: 9px;
+			height: 9px;
+			position: relative;
+			left: -3px;
+			cursor: pointer;
+			background: url("../images/newskin/action/content-less.png");
+			&.opened {
+				background: url("../images/newskin/action/content-more.png");
+			}
+		  	&.disabled {
+			  	opacity: 0.5;
+			  	cursor: default;
+			}
+		}
+		.groupRank {
+			display: inline-block;
+			font-size: 11px;
+			color: #666666;
+			margin-right: 3px;
+			margin-left: 2px;
+		}
+	  	.headerNoGroup {
+		  	margin-right: 3px;
+		}
+	}
+
+  	.trackerItemPlaceholder {
+	  	border: 1px solid #d1d1d1 !important;
+	  	background-color: #ccffe8;
+	  	td {
+			color: #bbb;
+		  	text-align: center;
+		}
+	}
+
+	&.withParents {
+		tr.sortablePlaceholder {
+			td {
+				padding: 0 !important;
+				height: 30px;
+				background-color: #ccffe8;
+			}
+			td:first-child {
+				background-color: transparent;
+				border-left: none;
+			}
+			td:nth-child(2) {
+				border-left: 1px dashed #d1d1d1;
+			}
+		}
+	}
+
+	&.withParents {
+		tr.trackerItem {
+			border-top: 0;
+			td {
+				border-top: 1px solid #f5f5f5;
+				border-bottom: 1px solid #f5f5f5;
+			}
+			td:last-child {
+				border-right: 1px solid #f5f5f5;
+			}
+		}
+		.parentTd {
+			padding: 1px 0 !important;
+			border-right: none;
+
+			.parentSpan {
+				display: inline-block;
+				margin: 1px 0 1px 2px;
+				padding: 3px 5px 1px 3px;
+
+				.parentIcon {
+					display: inline-block;
+					position: relative;
+					top: 1px;
+					padding: 0 3px;
+				}
+
+				.parentName {
+					position: relative;
+					top: -2px;
+					padding-left: 3px;
+				}
+			}
+		}
+
+		tr.parent, tr.parent:hover {
+			background-color: transparent !important;
+		}
+		td.parentHandlerHeader {
+			padding: 0 !important;
+		}
+		td.parentHandler {
+			padding: 0 !important;
+			border-bottom: 0 !important;
+			border-top: 0 !important;
+			border-right: 2px solid white;
+			background-color: white;
+			&.withParent {
+				padding: 2px !important;
+			}
+			&.parentHeader {
+				border-right: 0;
+				border-top: 5px solid white !important;
+			}
+		}
+		th.parentHandlerTh {
+			border-bottom: 0;
+		}
+		td.parentHandlerControl {
+			padding: 0 !important;
+			&.withParent {
+				border-top: 5px solid white;
+				border-bottom: 4px solid white;
+			}
+		}
+		td.releaseGrouppingLevel {
+			border-top: 0;
+		}
+		td.issueHandle {
+
+		}
+	}
+
+	&.sortableHelperTable {
+		background-color: #f5f5f5;
+		z-index: 1000000;
+		position: absolute !important;
+		width: auto !important;
+		td {
+			border-top: 1px solid #d1d1d1 !important;
+		}
+	}
+
+	td.textSummaryData .wikiLinkContainer {
+		display: inline-block;
+		width: calc(~"100% - 32px");
+
+		.udBadge {
+			position: relative;
+			top: 1px;
+		}
+	}
+
+	.contextMenuContainer {
+		display: inline-block;
+		width: 32px;
+		vertical-align: top;
+	}
+
+	.editInOverlayIcon {
+		background: url("../images/newskin/action/edit-s.png") no-repeat center center;
+		width: 12px;
+		height: 12px;
+		display: inline-block;
+		visibility: hidden;
+		cursor: pointer;
+		position: relative;
+		top: -1px;
+		margin-right: 3px;
+		margin-left: 2px;
+	}
+
+	tr:hover .editInOverlayIcon {
+		visibility: visible;
+	}
+
+	tr:hover .simpleDropdownMenu {
+		visibility: visible;
+	}
+
+	.simpleDropdownMenu {
+		display: inline-block;
+		height: 15px;
+		visibility: hidden;
+		background: url(../images/newskin/action/control-m-2.png) no-repeat center center;
+		border: 0px;
+		width: 15px;
+		cursor: pointer;
+	}
+
+	td.dateData.columnEditingInProgress {
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+	}
+
+	td.textSummaryData.columnEditingInProgress {
+		padding-top: calc(~"0.5em - 2px") !important;
+		padding-bottom: calc(~"0.5em - 2px") !important;
+		.contextMenuContainer {
+			display: none;
+		}
+	}
+
+}
+
+.ui-sortable-placeholder * {
+	visibility: visible !important;
+	opacity: 1 !important;
+}
+
+.backlogControlContainer {
+	display: block;
+	width: 100%;
+	background-color: #f5f5f5;
+	.backlogControl {
+		display: inline-block;
+		width: 50%;
+		text-align: center;
+	  	padding: 5px 0 0 0;
+	  	.indicatorCont {
+		  	display: block;
+			width: 100%;
+			height: 5px;
+			position: relative;
+			top: 5px;
+			.indicator {
+				width: 0;
+				height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				border-top: 5px solid white;
+				position: relative;
+				top: 5px;
+			}
+		}
+	  	&.active {
+		  	background-color: #d1d1d1;
+		  	a {
+			  	font-weight: bold;
+			  	cursor: default;
+			}
+			a:hover {
+				text-decoration: none;
+			}
+		  	.indicator {
+				border-top: 5px solid #d1d1d1;
+			}
+		}
+	}
+}
+
+.IE11 .backlogControlContainer .backlogControl .indicatorCont .indicator {
+	top: 17px;
+}
+
+.FF .backlogControlContainer .backlogControl .indicatorCont .indicator {
+	top: 4px;
+}
+
+// -- end new design --
+
+#planner .center-pane .issuelist {
+	width: 100%;
+	border: none;
+	margin-bottom: 15px;
+
+	.tableHeader {
+		th {
+			background: white;
+			color: #bbb;
+			font-weight: normal;
+			font-size: 11px;
+			text-align: left;
+			span {
+				margin-left: 5px;
+			}
+			&.summary span {
+				margin-left: 10px;
+			}
+			&.sp {
+				text-align: right;
+				span {
+					margin-left: 0;
+					margin-right: 5px;
+				}
+			}
+		}
+	}
+}
+
+#planner .center-pane .issuelist td {
+	padding: 0.5em;
+}
+
+#planner .center-pane .issuelist td .show-on-hover {
+	display: none;
+}
+
+#planner .center-pane .issuelist td:hover .show-on-hover {
+	display: inline;
+	white-space: nowrap;
+	font-size: 9px;
+	color: #b1b1b1;
+}
+
+#planner .center-pane .issuelist tr td .no-highlight-on-hover,
+#planner .center-pane .issuelist tr td .highlight-on-hover {
+	padding: 1px 5px;
+}
+
+.IE8 #planner .center-pane .issuelist tr td .highlight-on-hover {
+	display: inline-block;
+	margin: 1px 0;
+}
+
+.IE8 #planner .center-pane .issuelist tr td .highlight-on-hover.show-on-hover {
+	display: none;
+}
+
+.IE8 #planner .center-pane .issuelist tr td:hover .highlight-on-hover.show-on-hover {
+	display: inline;
+}
+
+#planner .center-pane .issuelist tr td:hover .highlight-on-hover {
+	border: solid 1px #b1b1b1;
+	padding: 0 4px;
+	border-radius: 2px;
+}
+
+.IE8 #planner .center-pane .issuelist tr td .highlight-on-hover {
+	display: inline-block;
+	margin: 0 1px;
+}
+
+#planner .center-pane .issuelist td:first-of-type,
+#planner .center-pane .issuelist td.issueHandle {
+	width: 0;
+	padding: 0 !important;
+	padding-left: 10px !important;
+	margin: 0 !important;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#planner .center-pane .issuelist td.issueHandle.disabled {
+	background-image: none;
+	background-color: #d1d1d1;
+}
+
+#planner .center-pane .issuelist .disabled {
+	cursor: default !important;
+}
+
+#planner .center-pane .issuelist td.priority {
+	text-align: center;
+}
+
+#planner .center-pane .issuelist td.issueKey {
+	white-space: nowrap;
+}
+
+#planner .center-pane .issuelist .issueIcon {
+	margin-right: 5px;
+}
+
+#planner .center-pane .issuelist td.issueName {
+	width: 90%;
+	.highlight-on-hover {
+		display: block; /* provides nice outlining for multi-line content */
+	}
+	&.editing-in-progress {
+		padding-top: 4px;
+		padding-bottom: 4px;
+		input {
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
+	}
+	.FF &.editing-in-progress {
+		padding-bottom: 5px;
+	}
+	.IE8 &.editing-in-progress {
+		padding-top: 5px !important;
+		padding-bottom: 4px !important;
+	}
+}
+
+#planner .center-pane .issuelist td.issueStatusContainer {
+	width: 40px;
+}
+
+#planner .center-pane .issuelist td.issueAssignedTo, #planner .center-pane .issuelist td.teams {
+	> span {
+		display: block;
+		white-space: normal;
+	  	word-break: keep-all;
+	}
+	> .empty {
+		white-space: nowrap;
+	}
+	&.editing-in-progress {
+		padding: 0;
+	}
+	.chooseReferences {
+		font-size: 8px;
+		margin: 0;
+		td {
+			padding: 0 !important;
+			margin: 0 !important;
+		}
+		.box {
+			padding: 0 14px 0 4px;
+			margin: 0;
+		}
+		.yui-multibox.yui-ac .yui-ac-input {
+			font-size: 10px;
+			padding: 0;
+			margin: 0;
+		}
+	}
+}
+
+#planner .center-pane .issuelist td.issueTracker {
+	width: 70px;
+}
+
+#planner .center-pane .issuelist td.issueTargetRelease {
+	border-right: 1px solid #ddd;
+}
+
+#planner .center-pane .issuelist td.storyPoints {
+	text-align: right;
+	min-width: 30px;
+	input {
+		width: 40px;
+	}
+	&.editing-in-progress {
+		padding: 0;
+	}
+	&.aggregated {
+		font-style: italic;
+		.no-highlight-on-hover {
+			padding-left: 0;
+		}
+	}
+}
+
+#planner .center-pane .issuelist tr:hover td.storyPoints {
+	white-space: nowrap;
+}
+
+#planner .center-pane .issuelist tr:hover .simpleDropdownMenu {
+	visibility: visible;
+}
+
+#planner .center-pane .issuelist td.disabled .simpleDropdownMenu {
+    visibility: hidden;
+}
+
+#planner .center-pane .issuelist .simpleDropdownMenu {
+	margin-top: 1px;
+	visibility: hidden;
+}
+
+
+
+#planner .center-pane .load-more {
+	display: block;
+	margin: 1em auto;
+}
+
+#planner .center-pane .backlog-controls ol.navigation {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+#planner .center-pane .backlog-controls ol.navigation li {
+	background-color: #fafafa;
+	display: inline-block;
+	width: 50%;
+	text-align: center;
+	height: 3em;
+	line-height: 3em;
+	vertical-align: middle;
+	cursor: pointer;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+body.IE8 #planner .center-pane .backlog-controls ol.navigation {
+	font-size: 0;
+}
+
+body.IE8 #planner .center-pane .backlog-controls ol.navigation li {
+	zoom: 1; /* make inline-block work in IE8 */
+	font-size: 13px;
+}
+
+#planner .center-pane .backlog-controls ol.navigation li.arrow {
+	background: none;
+	height: 11px;
+}
+
+#planner .center-pane .backlog-controls ol.navigation li.arrow.selected {
+	background: url("../images/planner-backlog-control-arrow.png") no-repeat center top;
+}
+
+#planner .center-pane .backlog-controls ol.navigation li.selected {
+	background-color: #efefef;
+}
+
+#planner .center-pane .backlog-controls-loader {
+	background: url("../images/ajax-loading_10.gif") no-repeat center center;
+	padding: 20px 0;
+}
+
+#planner .center-pane .history-filter-controls {
+	margin: 1em 0;
+	text-align: right;
+}
+
+#planner .center-pane .empty-filtered {
+	text-align: center;
+	color: #858585;
+	font-size: 11px;
+}
+
+/* Right pane */
+
+#planner .right-pane {
+
+	.overflow {
+		padding: 0;
+		min-width: 90px;
+	}
+
+	select.target-scope {
+		width: 95%;
+		height: 2em;
+		margin-bottom: 10px;
+	}
+
+	.issue-details h3 img {
+		vertical-align: text-bottom;
+		margin-right: 5px;
+	}
+
+	[data-planner-role=transitions] {
+		margin-top: 10px;
+		border-top: 1px solid #f5f5f5;
+		position: relative; // fix popup menu
+	}
+}
+
+/* ------------------------------------------------------------------------------------------------------------------*/
+
+#planner .acceptsDrop {
+	background-color: #ccffe8 !important;
+	color: black !important;
+}
+
+#planner .acceptsDrop.highlighted {
+	background-color: #99ffd1 !important;
+	color: black !important;
+}
+
+#planner .refuseDrop {
+	opacity: 0.4;
+}
+
+.hidden-placeholder, .not-sortable .issuePlaceHolder {
+	display: none;
+}
+
+.issuelist {
+	overflow: auto;
+}
+
+.ui-sortable-helper {
+	background-color: #f5f5f5;
+	z-index: 1000000;
+	position: absolute !important;
+}
+
+.ui-layout-center {
+	overflow: hidden
+}
+
+.issuelist tbody tr:first-child {
+	border-top: 1px solid #ddd;
+}
+
+.issuelist tbody tr.first-row-in-table { /* split declaration because of IE8 */
+	border-top: 1px solid #ddd;
+}
+
+.issuelist tr:last-child {
+	border-bottom: 1px solid #ddd !important;
+}
+
+.issuelist tr.last-row-in-table { /* split declaration because of IE8 */
+	border-bottom: 1px solid #ddd !important;
+}
+
+.issuelist tr.selected {
+	background-color: #ffead1 !important;
+}
+
+.center-pane .overflow {
+	height: 85%;
+}
+
+fieldset.collapsingBorder {
+	padding: 5px;
+}
+
+.add-new-icon {
+	padding-left: 5px;
+	cursor: pointer;
+}
+
+div.issuelist {
+	display: none;
+}
+
+.cardboardIcon {
+	margin-top: -30px;
+}
+
+#versionStatsBox > table {
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#versionStatsBox tr.selected td a {
+	color: white;
+}
+
+#versionStatsBox tr.data-row:hover td {
+	background: url("../images/newskin/filter_list/hover_bg.png") repeat-x left center;
+}
+
+#versionStatsBox tr.data-row:hover td.selected,
+#versionStatsBox tr.data-row:hover td:hover {
+	background: url("../images/newskin/filter_list/hover_bg.png") repeat-x left center;
+}
+
+#versionStatsBox tr.data-row.selected td,
+#versionStatsBox tr.data-row.selected:hover td {
+	color: white;
+	background: #525252 url("../images/newskin/action/bg-button-pushed-dark.png") repeat-x left center;
+}
+
+#versionStatsBox tr:hover td.firstColumn .state-indicator {
+	background: url("../images/newskin/filter_list/icon_checkmark.png") repeat-x left center;
+}
+
+#versionStatsBox tr.selected td.firstColumn .state-indicator,
+#versionStatsBox tr.selected:hover td.firstColumn .state-indicator {
+	background: url("../images/newskin/filter_list/icon_x.png") repeat-x left center !important;
+}
+
+#versionStatsBox .assigneeTable.acceptsDrop td {
+	background: #ccffe8 none !important;
+	color: #2b2b2b !important;
+}
+
+#versionStatsBox .assigneeTable.acceptsDrop.highlighted td {
+	background-color: #99ffd1 !important;
+}
+
+#versionStatsBox .assigneeTable.acceptsDrop a {
+	color: #2b2b2b !important;
+}
+
+#versionStatsBox.plannerTeamCommitment {
+	min-width: 0;
+	width: auto;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#versionStatsBox.plannerTeamCommitment table {
+	width: 100%;
+}
+
+table.issuelist .editInOverlayIcon {
+	background: url("../images/newskin/action/edit-s.png");
+	background-size: cover;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	float: right;
+	margin-right: 5px;
+	margin-bottom: 2px;
+	visibility: hidden;
+	cursor: pointer;
+}
+
+table.issuelist tr:hover .editInOverlayIcon {
+	visibility: visible;
+}
+
+#planner #right-pane-quick-icons.quick-icons li {
+	width: 20%;
+}
+
+.issuelist .rating-container {
+	display: inline-block;
+	margin-left: 7px;
+	top: -2px;
+}
+
+.issuelist .rating-container.initialized {
+	top: -4px;
+}
+
+.issueIcon.menu-downloaded > div {
+	position: relative;
+	top: 3px;
+}
+
+.item-with-workflow {
+	cursor: pointer;
+
+	&:hover {
+		opacity: 0.7;
+	}
+}
+
+.ui-multiselect.ui-widget {
+	max-width: 225px;
+	max-height: 20px;
+	margin-top: -2px;
+}
+
+.color-box {
+	background-color: #5f5f5f;
+	position: relative;
+	top: -8px;
+}
+
+.FF .color-box {
+	top: 9px;
+}
+
+.subteam .color-box.big {
+	height: 12px;
+	width: 12px;
+	background-size: 10px 10px;
+	background-position: 1px;
+}
+
+li.sub-team {
+	background-color: white;
+}
+
+.accordion-header .add-icon {
+	position: relative;
+	background-image: url("../images/newskin/action/add_on.png");
+	width: 13px;
+	height: 13px;
+	display: inline-block;
+}
+
+.accordion-header.opened .add-icon {
+	background-image: url("../images/newskin/action/add_off.png");
+}
+
+.team-info-container {
+	display: inline-block;
+	padding-left: 10px;
+	width: 75%;
+}
+
+.team .storyPointsContainer {
+	position: relative;
+	top: -1px;
+}
+
+.team .expander {
+	margin-top: 5px;
+	margin-right: 8px;
+}
+
+.noChildren .color-box {
+	margin-left: 21px;
+}
+
+td.teams.not-editable > span {
+	padding: 5px;
+}
+
+td.teams {
+	min-width: 100px;
+}
+
+td.rank {
+	text-align: center;
+}
+
+li .context-menu-anchor {
+	float: right;
+}
+
+.context-menu-list {
+	max-width: 600px;
+	.context-menu-item.disabled {
+		color: #BDBDBD;
+	}
+}
+
+.accordion-content .version-list > li {
+	height: 55px;
+}
+
+
+#planner #versionStatsBox {
+	border-top: 1px solid #e2e2e2;
+}
+
+.context-menu-list.context-menu-root {
+	z-index: 91 !important;
+}
+
+.dataContainer {
+    display: none;
+}
+
+.rank.rankWarning {
+    background-color: #ffead1;
+    font-weight: 900;
+}
+
+span.locked {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background-image: url("../images/newskin/action/lock.png");
+}
+
+.addAssociationControl {
+	display: none;
+}
+
+.add-team-icon {
+	background: url("../images/newskin/actionIcons/icon_new_team_blue.png") no-repeat;
+	height: 16px;
+	width: 16px;
+	top: 0 !important;
+}
+
+.export-to-excel-icon {
+  background: url("../images/newskin/actionIcons/icon_export-to-office-blue.png") no-repeat;
+  height: 16px;
+  width: 16px;
+  top: 0 !important;
+}
+
+.add-new-version-link {
+	background: url("../images/newskin/actionIcons/icon_new_sprint_blue.png") no-repeat;
+	height: 16px;
+	width: 16px;
+	top: 0 !important;
+}
+
+.add-new-item-link {
+	background: url("../images/newskin/actionIcons/icon-add-blue.png") no-repeat;
+	height: 16px;
+	width: 16px;
+	top: 0 !important;
+}
+
+.multipleSelectionContainer {
+	display: inline-block;
+	float: right;
+	position: relative;
+	top: 3px;
+	#multipleSelection {
+		position: relative;
+		top: 1px;
+	}
+	label {
+		font-weight: normal;
+		color: black !important;
+	}
+}
+
+.multipleSelectionCheckbox {
+	margin: 0 3px 0 0 !important;
+  	float: left;
+}
+
+.allMultipleSelectionCheckbox {
+	padding: 0;
+	position: relative;
+	top: 3px;
+	left: -1px;
+}
+
+#rightHeaderDiv {
+	min-height: 19px;
+}
+
+.reportSelectorActionBar {
+	padding: 3px;
+	.reportSelectorContainer {
+		display: inherit;
+	  	margin-left: 3px;
+	  	margin-right: 5px;
+	}
+	.reportSelectorTag {
+		&.mergeToActionBar {
+			border-left: none;
+		}
+	}
+}
+
+body.FF .reportSelectorActionBar {
+	padding-bottom: 2px;
+}
+
+#planner .releaseMenu {
+	display: inline-block;
+	height: 15px;
+	background: url(../images/newskin/action/control-m-2.png) no-repeat center center;
+	border: 0px;
+	width: 15px;
+	cursor: pointer;
+	position: relative;
+	top: 2px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#planner .extendedReleaseMenu {
+	display: inline-block;
+	visibility: hidden;
+	height: 15px;
+	background: url(../images/newskin/action/control-m-2.png) no-repeat center center;
+	border: 0px;
+	width: 15px;
+	cursor: pointer;
+	float: right;
+	margin-right: 8px;
+}
+
+#planner .version-list .version:hover .extendedReleaseMenu {
+	visibility: visible;
+}
+
+.expandAll, .collapseAll {
+	position: relative;
+	top: 2px;
+}
+
+.collapseAll {
+  	margin-left: 0.5em;
+}
+
+.context-menu-item.transition .tableIcon {
+	vertical-align: middle;
+	margin-top: -2px
+}
+
+#plannerAjaxLoading {
+  	position: absolute;
+  	width: 100%;
+  	height: 50px;
+  	background: url("../images/ajax_loading_horizontal_bar.gif") center center no-repeat;
+}
+
+#planner .add-new-item-to-group {
+	background: url("../images/newskin/actionIcons/icon-add-blue.png") no-repeat;
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+	margin-left: 10px;
+	vertical-align: middle;
+	cursor: pointer;
+}

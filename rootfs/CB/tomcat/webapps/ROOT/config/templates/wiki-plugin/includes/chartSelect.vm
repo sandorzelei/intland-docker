@@ -1,0 +1,74 @@
+## Renders a select box for a chart
+##
+## @param pluginId The unique plugin id
+## @param onchange The javascript onchange event
+## @param keysAndValues a map containing the keys and values rendered in the select list
+## @param selected the selected value
+## @param the name of the chart
+#macro(renderSelect $pluginId $onchange $keysAndValues $selected $selectName $anyValue $isSingleSelect)
+	<select id="${selectName}_${pluginId}" multiple="multiple" onchange="${onchange}" autocomplete="off" >
+		#if(${isSingleSelect})
+			<option value="$anyValue" #if(${selected} == "") selected="selected" #end>${textFormatter.getMessage("tracker.filter.Any.label")}</option>
+		#end
+		#foreach($key in $keysAndValues.keySet())
+			<option value="${key}"
+	    		#if(${selected} == ${key})
+					selected="selected"
+				#end
+				>${keysAndValues.get($key)}
+			</option>
+		#end
+	</select>
+
+	<script type="text/javascript">
+		$("#" + "${selectName}_${pluginId}").multiselect({
+			header: false,
+	        multiple: #if(${isSingleSelect}) false #else true #end,
+			selectedList: 1,
+			noneSelectedText: "${textFormatter.getMessage("tracker.filter.Any.label")}",
+			minWidth: 100,
+			height: "auto",
+			classes: "chartSelect"
+	    });
+	</script>
+#end
+
+#macro(renderInput $pluginId $onchange $inputName)
+	<input id="${inputName}_${pluginId}" type="text" onkeyup="${onchange}" class="inputField"></input>
+#end
+
+#macro(renderDateRange $pluginId $onchange $inputName $selectorUtilsJsUrl $dateRangeEditorJsUrl $selectorUtilsLessUrl)
+	<input id="${inputName}_hidden_${pluginId}" type="hidden"></input>
+
+	<button id="${inputName}_${pluginId}" type="button" class="dateRangePicker ui-multiselect ui-widget ui-state-default ui-corner-all ui-date-range">
+		<span class="range"></span>
+		<span class="fromDate"></span>
+		<span class="toDate"></span>
+	</button>
+
+	<link rel="stylesheet" type="text/css" href="${selectorUtilsLessUrl}"></link>
+
+	<script type="text/javascript">
+
+		var selectorUtilsJs, dateRangeEditorJs;
+
+		selectorUtilsJsDeferred = $.getScript("${selectorUtilsJsUrl}");
+		dateRangeEditorJsDeferred = $.getScript("${dateRangeEditorJsUrl}");
+
+		// Load the depending libs parallel
+		$.when(
+			selectorUtilsJsDeferred,
+			dateRangeEditorJsDeferred
+		)
+		.done(function() {
+			codebeamer.dashboard.dateRangeEditor.initialize("${inputName}_${pluginId}", "${inputName}_hidden_${pluginId}", "", "");
+
+			setTimeout(function() {
+				$("#" + "${inputName}_hidden_${pluginId}").on("change", ${onchange});
+			}, 100);
+
+			$(document).on("change", "#" + "${inputName}_hidden_${pluginId}", ${onchange});
+
+		});
+	</script>
+#end

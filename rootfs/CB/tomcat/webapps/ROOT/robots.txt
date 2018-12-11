@@ -1,0 +1,12 @@
+User-agent: *
+Crawl-delay: 60
+Disallow: /userdata/
+Disallow: /cb/userdata
+Disallow: /images/
+Disallow: /cb/images/
+Disallow: /stylesheet/
+Disallow: /cb/stylesheet/
+Disallow: /js/
+Disallow: /cb/js/
+Disallow: /templates/
+Disallow: /cb/templates/

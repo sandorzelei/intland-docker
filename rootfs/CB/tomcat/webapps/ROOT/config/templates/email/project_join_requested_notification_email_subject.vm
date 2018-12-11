@@ -1,0 +1,7 @@
+##$RCSfile$ $Revision: 18984:ea8b6a084fe4 $ $Date: 2008-10-18 13:28 +0000 $
+
+#if( ${project.joinWithApproval} )
+${textFormatter.getMessage('project.member.join.requested.subject')} [#${project.id}] ${project.name}
+#else
+${textFormatter.getMessage('project.member.joined.subject')} [#${project.id}] ${project.name}
+#end

@@ -1,0 +1,83 @@
+#wikiBoxOpen(${command}, "testCasesByLastTestRun")
+    ## chart
+    #if($command.chart)
+    	#parse("includes/chartSelect.vm")
+
+		#set($chartControls = '')
+		#if($command.projectId)
+
+			#if($renderIntervalSelectors)
+
+				#define($statusFilterControls)
+					#renderSelect("${pluginId}" "testsByLastRun_${pluginId}.updateChart();", ${statusFilter}, ${selectedStatusFilter}, "statusFilters", "all", true)
+					<br class="responsiveChartControlBreak first" />
+				#end
+				#define($configurationsControls)
+					#renderSelect("${pluginId}" "testsByLastRun_${pluginId}.updateChart();", ${configurations}, "", "configurations", "-1", false)
+					<br class="responsiveChartControlBreak second" />
+				#end
+				#define($releaseControls)
+					#renderSelect("${pluginId}" "testsByLastRun_${pluginId}.updateChart();", ${releases}, ${selectedReleaseId}, "releases", "-1", true)
+				#end
+				#set($configurationLabel = ${textFormatter.getMessage("testrunner.configuration.label")})
+				#set($releaseLabel = ${textFormatter.getMessage("testrunner.release.label")})
+				#set($statusFilterLabel = ${textFormatter.getMessage("test.case.plugin.status.filter.label")})
+				#set($chartControls = "$statusFilterLabel: $statusFilterControls ${configurationLabel}: ${configurationsControls} ${releaseLabel}: ${releaseControls}")
+			#end
+
+		#end
+
+		#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.testsByLastRun.label")}, "${chartControls}")
+
+        <span id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </span>
+
+        <script type="text/javascript">
+        	var testsByLastRun_${pluginId} = {
+        		updateChart: function() {
+        			var chartUrl = this.createChartUrl();
+        			var tableUrl = this.createTableUrl();
+
+        			chartRendererSupport.updateChart('${contextPath}', "chart_${pluginId}", chartUrl, ${command.width}, ${command.height});
+        			chartRendererSupport.updateTable('${contextPath}', "table_${pluginId}", tableUrl);
+        		},
+				getParameter: function(select) {
+       				var result = $(select).val();
+    				if (!result) {
+    					result = -1;
+        			}
+
+        			return result.toString();
+				},
+        		createChartUrl: function() {
+					var chartUrl = "${chartSupport.chartURL}";
+
+					chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "statusFilter", 13, $("#statusFilters_${pluginId}").val());
+					chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "releaseId", 10, $("#releases_${pluginId}").val());
+
+        			chartUrl += "&configurationId=" + this.getParameter("#configurations_${pluginId}");
+
+					return chartUrl;
+        		},
+        		createTableUrl: function() {
+        			var tableUrl = contextPath + "$tableUpdateUrl";
+
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "statusFilter", 13, $("#statusFilters_${pluginId}").val());
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "releaseId", 10, $("#releases_${pluginId}").val());
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "configurationId", 16, this.getParameter("#configurations_${pluginId}"));
+
+					return tableUrl;
+        		}
+        	}
+        </script>
+    #end
+    #if($command.table)
+    	#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.testsByLastRun.label")}, "")
+		<div id="table_${pluginId}">
+    		#parse("testCasesByLastRunResult-plugin-table.vm")
+		</div>
+
+    #end
+#wikiBoxClose()
+

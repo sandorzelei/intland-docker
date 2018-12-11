@@ -1,0 +1,216 @@
+<style type="text/css">
+
+	.releaseActivityTrends {
+		min-height: 50px;
+	}
+
+	.releaseActivityTrends table th,
+	.releaseActivityTrends table td {
+		text-align: left !important;
+	}
+
+	.releaseActivityTrends table th.numberOfIssues,
+	.releaseActivityTrends table td.numberOfIssues,
+	.releaseActivityTrends table th.burnDown,
+	.releaseActivityTrends table td.burnDown {
+		text-align: center !important;
+	}
+
+	.releaseActivityTrends table td.burnDown {
+		padding: 0 !important;
+	}
+
+	.releaseActivityTrends table span.showBurnDown {
+		display: inline-block;
+		width: 14px;
+		height: 14px;
+		cursor: pointer;
+		background: url(${contextPath}/images/newskin/action/search-icon.png);
+	}
+
+	.releaseActivityTrends .empty {
+		display: none;
+	}
+
+	div.wikichartbox .releaseActivityTrends span img {
+		padding: 1px;
+		border: 1px solid #d1d1d1;
+	}
+
+	table.releaseName {
+		margin: 0;
+		border: 0;
+	}
+
+	table.releaseName td {
+		padding: 2px !important;
+		border: 0;
+	}
+
+	table.releaseName td.releaseIcon {
+		position: relative;
+		top: -2px;
+		width: 16px;
+	}
+
+</style>
+
+<div id="releaseActivityTrendsPlugin_${pluginId}">
+
+	#if($command.showDropdownFilters)
+		#define($trackerItemStatusSelector)
+			<select class="trackerItemStatusSelector">
+				#foreach($trackerItemStatus in $trackerItemStatuses)
+					<option value="$trackerItemStatus"#if($command.trackerItemStatus == $trackerItemStatus) selected#end>${textFormatter.getMessage("tracker.choice.${trackerItemStatus}.label")}</option>
+				#end
+			</select>
+		#end
+
+		#define($releaseStatusSelector)
+			<select class="releaseStatusSelector">
+				#foreach($releaseStatus in $releaseStatuses)
+					<option value="${releaseStatus}" data-ajax-url="${releaseStatusAjaxUrls.get($releaseStatus)}"#if($command.releaseStatus == $releaseStatus) selected#end>${textFormatter.getMessage("tracker.choice.${releaseStatus}.label")}</option>
+				#end
+			</select>
+		#end
+	#end
+
+	#wikiBoxOpen(${command})
+	#if($command.showDropdownFilters)
+		#wikiBoxTitle("${command.title}" "" "<form autocomplete='off'>${textFormatter.getMessage('release.activity.trends.item.status')}: ${trackerItemStatusSelector} ${textFormatter.getMessage('release.activity.trends.release.status')}: ${releaseStatusSelector}</form>")
+	#else
+		#wikiBoxTitle("${command.title}")
+	#end
+
+	<div class="releaseActivityTrends">
+		#parse("releaseactivitytrends-table-plugin.vm")
+	</div>
+
+	#wikiBoxClose()
+
+</div>
+
+<script type="text/javascript">
+	(function($) {
+
+		function toggleEmptyDiv(cont) {
+			var table = cont.find('table.releases');
+			table.show();
+			var emptyDiv = cont.find('div.empty');
+			var trs = table.find('tbody tr');
+			var trsCount = trs.length;
+			var hiddenTrs = 0;
+			trs.each(function() {
+				if ($(this).css("display") == "none") {
+					hiddenTrs++;
+				}
+			});
+			if (trsCount == hiddenTrs) {
+				table.hide();
+				emptyDiv.show();
+			} else {
+				table.show();
+				emptyDiv.hide();
+			}
+		}
+
+		function toggleItemStatusCount(status, cont) {
+			var countTds = cont.find('table.releases tbody td.numberOfIssues');
+			countTds.each(function() {
+				$(this).text($(this).data(status.toLowerCase() + '-issues'));
+			});
+			toggleEmptyDiv(cont);
+		}
+
+		function init(cont) {
+
+			var trackerItemStatusSelector = cont.find(".trackerItemStatusSelector");
+			trackerItemStatusSelector.change(function() {
+				toggleItemStatusCount($(this).val(), cont);
+			});
+
+			var releaseStatusSelector = cont.find(".releaseStatusSelector");
+			var releaseStatus = #if($command.showDropdownFilters)releaseStatusSelector.val()#else"${command.releaseStatus}"#end;
+			var statusCache = {};
+			var burnDownCache = {};
+
+			var loadTable = function(currentStatus, url, callback) {
+				var table = cont.find(".releaseActivityTrends").first();
+				trackerItemStatusSelector.prop('disabled', 'disabled');
+				releaseStatusSelector.prop('disabled', 'disabled');
+				if (statusCache.hasOwnProperty(currentStatus)) {
+					table.html(statusCache[currentStatus]);
+					callback();
+				} else {
+					table.append($("<img>", { style: "display: block;margin: 0 50%;", src: ajaxBusyIndicator.AJAX_IMAGE_PATH }));
+					$.ajax(url, {
+						type: "GET",
+						dataType: "xml"
+					}).done(function(data) {
+						var html = $(data).find('html').text();
+						table.html(html);
+						statusCache[currentStatus] = html;
+						callback();
+					}).fail(function(jqXHR, statusText, errorThrown) {
+						// check if request is aborted
+						var text = !jqXHR.getAllResponseHeaders() ? "Plugin loading stopped." : "Failed to load plugin.";
+						table.html(text);
+						callback();
+					});
+				}
+			};
+
+			var initBurnDownChart = function() {
+				cont.find(".showBurnDown").each(function() {
+					var releaseId = $(this).attr("data-releaseId");
+					if (burnDownCache.hasOwnProperty(releaseId)) {
+						$(this).closest("td").html(burnDownCache[releaseId]);
+					}
+				});
+				cont.on("click", ".showBurnDown", function() {
+					var that = $(this);
+					var releaseId = that.attr("data-releaseId");
+					$.ajax(contextPath + "/releaseActivityTrends/getBurnDownChart.spr?releaseId=" + releaseId, {
+						type: "GET"
+					}).success(function(result) {
+						burnDownCache[releaseId] = result;
+						that.closest("td").html(result);
+					});
+				});
+			};
+
+			var triggerTrackerItemStatusSelector = function() {
+				trackerItemStatusSelector.prop('disabled', false);
+				releaseStatusSelector.prop('disabled', false);
+				var trackerItemStatus = #if($command.showDropdownFilters)trackerItemStatusSelector.val()#else"${command.trackerItemStatus}"#end;
+				toggleItemStatusCount(trackerItemStatus, cont);
+			}
+
+			releaseStatusSelector.change(function() {
+				var currentStatus = $(this).val();
+				var url = releaseStatusSelector.find(":selected").data("ajax-url");
+				loadTable(currentStatus, url, function() {
+					triggerTrackerItemStatusSelector();
+					initBurnDownChart();
+				});
+			});
+
+			loadTable(releaseStatus, "${releaseStatusAjaxUrls.get($command.releaseStatus)}", function() {
+				triggerTrackerItemStatusSelector();
+				initBurnDownChart();
+			});
+
+			toggleEmptyDiv(cont);
+
+		}
+
+		$(document).ready(function() {
+			// Using a small delay because of Ajax indicator positioning
+			setTimeout(function() {
+				var cont = $('#releaseActivityTrendsPlugin_' + '${pluginId}');
+				init(cont);
+			}, 10);
+		});
+
+	})(jQuery);
+</script>

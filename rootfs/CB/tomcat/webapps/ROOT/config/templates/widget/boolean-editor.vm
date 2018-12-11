@@ -1,0 +1,42 @@
+#if (!$hideField)
+    <div class="form-field" id="${fieldName}">
+    	<div id="boolean-${selectorId}">
+    		<input id="${selectorId}_hidden" name="params[${fieldName}]" type="hidden" #if($value) value="true" #else value="false" #end></input>
+    		<input id="${selectorId}" class="checkboxInput" type="checkbox" #if($value) checked="checked" #end></input>
+    		<label for="${selectorId}" #if ($isMandatory) class="mandatory checkboxLabel" #else class="checkboxLabel" #end>${fieldLabel}</label>
+    	</div>
+    	<script type="text/javascript">
+    		jQuery(function($) {
+    			$("#${selectorId}").change(function() {
+    				$("#${selectorId}_hidden").val($(this).is(':checked'));
+    				if ($(this).is(':checked')) {
+    					$("body").trigger("boolean:enabled", "${fieldName}");
+    				} else {
+    					$("body").trigger("boolean:disabled", "${fieldName}");
+    				}
+    			});
+
+    			if ($value) {
+    				$("body").trigger("boolean:enabled", "${fieldName}");
+    			} else {
+    				$("body").trigger("boolean:disabled", "${fieldName}");
+    			}
+
+    		});
+
+    		#if ($hide)
+    			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:advancedQuery:changed", function(value) {
+
+    				$("#boolean-${selectorId}").hide();
+
+    			});
+
+    			codebeamer.dashboard.multiSelect.attachEventListener("querySelector:query:changed", function(value) {
+
+    				$("#boolean-${selectorId}").show();
+
+    			});
+    		#end
+    	</script>
+    </div>
+#end

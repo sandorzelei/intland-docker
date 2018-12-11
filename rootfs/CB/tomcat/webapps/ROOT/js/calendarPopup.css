@@ -1,0 +1,62 @@
+/**
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ *
+ * $Revision$ $Date$
+ */
+
+/*
+ CSS customizations/definitions for popup calendar
+ $Id$
+ */
+
+/* "relative" puts the calendar where the container is on screen */
+.calOuterContainer {
+	position: relative;
+	z-index:20;
+	/* holy hack for IE6 scrollbar bug on relative positioned controller
+		see: http://www.positioniseverything.net/explorer/unscrollable.html
+	*/
+	height: 1%;
+}
+.calContainer {
+	display:none; position:absolute; left:5px; top: 0px;
+}
+
+/* turn off underline next to image on IE*/
+.calendarAnchorLink, .calendarAnchorLink:hover {
+	text-decoration: none;
+}
+
+/* a bit smaller font */
+.yui-skin-sam .yui-calendar * {
+	font-size: 8pt;
+}
+
+/* turn off underline on next/prev links on FF*/
+.yui-skin-sam .yui-calendar .calnavleft, .yui-skin-sam .yui-calendar .calnavright {
+	text-decoration: none;
+}
+/* remove module color from day cells */
+.yui-skin-sam .yui-calendar .calweekdaycell {
+	background-color: transparent;
+}
+/* on FF make the calendar a bit wider */
+.yui-skin-sam .yui-calendar {
+	width: 15em;
+}
+
+/* override font color inherited from <th> */
+.yui-skin-sam .yui-calendar .calheader { color: black }
+
+/* title must not wrap */
+.yui-skin-sam .yui-calcontainer .title {
+	white-space: nowrap;
+}

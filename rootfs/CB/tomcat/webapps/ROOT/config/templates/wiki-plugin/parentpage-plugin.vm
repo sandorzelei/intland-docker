@@ -1,0 +1,7 @@
+## $Revision: 23955:cdecf078ce1f $ $Date: 2009-11-27 19:54 +0100 $
+
+#if ( ${parentPage} )
+	#linkWikiPage(${parentPage})
+#else
+	$textFormatter.getMessage('wiki.parent.none')
+#end

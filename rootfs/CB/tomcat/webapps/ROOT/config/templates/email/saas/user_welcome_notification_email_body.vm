@@ -1,0 +1,355 @@
+#set($imageURL = "/images/emails/user_welcome_notification")
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="box-sizing: border-box;padding: 0;margin: 0;">
+<head style="box-sizing: border-box;padding: 0;margin: 0;">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" style="box-sizing: border-box;padding: 0;margin: 0;">
+	<meta name="viewport" content="width=device-width, initial-scale=0.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" style="box-sizing: border-box;padding: 0;margin: 0;">
+	<title style="box-sizing: border-box;padding: 0;margin: 0;">codeBeamer Registration</title>
+	<style type="text/css" style="box-sizing: border-box;padding: 0;margin: 0;">
+		* {
+			box-sizing:border-box;
+			padding:0;
+			margin:0;
+		}
+		body {
+			background:#f5f5f5;
+			padding:10px 0 10px;
+			font:14px/150% normal Arial, Helvetica, sans-serif;
+		}
+		h1,h2,h3,h4,h5,h6 {
+			line-height:125%;
+			font-weight:normal;
+		}
+		h1 {
+			font-size:30px;
+			color:#fff;
+		}
+		h2 {
+			font-size:14px;
+			margin:0 0 30px;
+			color:#808080;
+			border-bottom:1px solid #d1d1d1;
+			padding:0 0 1px;
+			display:inline-block;
+			text-transform:uppercase;
+		}
+		ul,ol {
+			margin:0 0 0 30px;
+		}
+		ul {
+			list-style-type:square;
+		}
+		li {
+			padding:3px 0;
+		}
+		li:first-child {
+			padding-top:0;
+		}
+		li:last-child {
+			border:none;
+			padding-bottom:0;
+		}
+		a {
+			color:#00a85d;
+			text-decoration:none;
+		}
+		h1 a {
+			color:#fff;
+		}
+		.first {
+			margin-top:0;
+		}
+		.last {
+			margin-bottom:0;
+		}
+		table {
+			border-collapse:collapse;
+		}
+		td {
+			color:#545454;
+			font:14px/150% normal Arial, Helvetica, sans-serif;
+		}
+		img.stroke {
+			border:1px solid #d1d1d1;
+		}
+		.button-download {
+			display:block;
+			margin:10px 0 0;
+		}
+
+		.small {
+			width:600px;
+			margin:0 auto;
+		}
+		.small td {
+			font-size:10px;
+			color:#808080;
+		}
+		.small.top {
+			text-align:right;
+		}
+		.mainframe {
+			width:600px;
+			background:#fff;
+			border:1px solid #d1d1d1;
+			margin:0 auto;
+		}
+		.mainframe-table {
+			width:100%;
+		}
+		.header td {
+			padding:30px 30px 30px 26px;
+		}
+		.header .link-intland {
+			text-align:right;
+		}
+		.title {
+			background:#00a85d;
+		}
+		.title td {
+			padding:27px 30px 28px;
+		}
+		.title h2 {
+			margin:0 0 18px;
+			color:#abe2ca;
+			border-color:#80d4ae;
+		}
+		.date {
+			background:#454545;
+			font-size:16px;
+			width:100%;
+		}
+		.date td {
+			padding:10px 26px 10px;
+			color:#fff;
+		}
+		td.date-icon {
+			width:67px;
+			padding-right:0;
+		}
+		td.date-text {
+			padding-left:10px;
+		}
+		.webinar-description td {
+			padding:40px 30px;
+		}
+		.section-cell {
+			padding:40px 30px;
+			border-bottom:4px solid #e6e6e6;
+		}
+		.section.last .section-cell {
+			border-bottom:none;
+		}
+		.section td {
+			vertical-align:top;
+		}
+		.section table {
+			width:100%;
+		}
+		.posts {
+			margin:0 0 30px;
+		}
+		.posts.last {
+			margin:0;
+		}
+		.posts-cell {
+			width:249px;
+			padding:0 0 0 20px;
+		}
+		.posts-cell:first-child {
+			border-right:1px solid #e6e6e6;
+			padding:0 20px 0 0;
+		}
+		.posts-cell .posts-title {
+			border-right:none;
+		}
+		.thumbnail-text {
+			padding:0 0 0 10px;
+			width:476px;
+		}
+		.section.major a {
+			font-size:22px;
+			line-height:125%;
+		}
+		.section.minor {
+			background:#e5e5e5;
+			margin-top:5px;
+		}
+		.section.minor .section-cell {
+			padding:20px 30px;
+		}
+		.section.minor h2 {
+			color:#a4a4a4;
+			margin:0 0 5px;
+		}
+		.column-two-thirds {
+			width:335px;
+			padding-right:10px;
+			border-right:1px solid #e6e6e6;
+		}
+		.column-one-third {
+			text-align:center;
+			padding-left:10px;
+		}
+		.module-list {
+			list-style-type:none;
+			margin-left:0;
+		}
+		.module-list li {
+			border-bottom:0;
+			padding:5px 0;
+		}
+		.module-list img {
+			vertical-align:middle;
+		}
+		.footer {
+			background:#d1d1d1;
+		}
+		.footer td {
+			text-align:center;
+			padding:15px 0 7px;
+		}
+		.footer img {
+			border-left:1px solid #b2b2b2;
+		}
+		.footer img:first-child {
+			border:none;
+		}
+		.copy {
+			text-align:center;
+		}
+		.copy td {
+			padding:5px 0;
+			font-size:12px;
+		}
+		.small.bottom {
+			margin-bottom:40px;
+		}
+	</style>
+</head>
+<body style="box-sizing: border-box;padding: 10px 0 10px;margin: 0;background: #f5f5f5;font: 14px/150% normal Arial, Helvetica, sans-serif;">
+	<table class="small top" style="box-sizing: border-box;padding: 0;margin: 0 auto;border-collapse: collapse;width: 600px;text-align: right;">
+		<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+			<td style="box-sizing: border-box;padding: 0;margin: 0;color: #808080;font: 14px/150% normal Arial, Helvetica, sans-serif;font-size: 10px;">You're receiving this email because you created a codeBeamer account.</td>
+		</tr>
+	</table>
+	<table class="mainframe" style="box-sizing: border-box;padding: 0;margin: 0 auto;border-collapse: collapse;width: 600px;background: #fff;border: 1px solid #d1d1d1;">
+		<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+			<td style="box-sizing: border-box;padding: 0;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;">
+				<table class="header mainframe-table" style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;">
+					<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+						<td style="box-sizing: border-box;padding: 30px 30px 30px 26px;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;">
+							<a href="http://codebeamer.com" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-logo-codebeamer.png" style="box-sizing: border-box;padding: 0;margin: 0;"></a>
+						</td>
+						<td class="link-intland" style="box-sizing: border-box;padding: 30px 30px 30px 26px;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;text-align: right;">
+							<a href="https://intland.com/" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/logo4.png" style="box-sizing: border-box;padding: 0;margin: 0;"></a>
+						</td>
+					</tr>
+				</table>
+				<table class="title mainframe-table" style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;background: #00a85d;">
+					<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+						<td colspan="2" style="box-sizing: border-box;padding: 27px 30px 28px;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;">
+							<h1 style="box-sizing: border-box;padding: 0;margin: 0;line-height: 125%;font-weight: normal;font-size: 30px;color: #fff;">Welcome to codeBeamer</h1>
+						</td>
+					</tr>
+				</table>
+				<table class="section mainframe-table" style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;">
+					<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+						<td class="section-cell" style="box-sizing: border-box;padding: 40px 30px;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;border-bottom: 4px solid #e6e6e6;vertical-align: top;">
+							<table style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;">
+								<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+									<td class="column-two-thirds" style="box-sizing: border-box;padding: 0;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;width: 335px;padding-right: 10px;border-right: 1px solid #e6e6e6;vertical-align: top;">
+										<h2 style="box-sizing: border-box;padding: 0 0 1px;margin: 0 0 30px;line-height: 125%;font-weight: normal;font-size: 14px;color: #808080;border-bottom: 1px solid #d1d1d1;display: inline-block;text-transform: uppercase;">Hi ${user.realName},</h2><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										Many thanks for registering codeBeamer Cloud based trial!<br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										Your login information:<br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										Project: <strong style="box-sizing: border-box;padding: 0;margin: 0;">#linkProject(${project})</strong><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										Project autologin link: <a href="$!{projectUrlWithAutoLogin}" style="color: #00a85d;font-weight: bold;text-decoration: none;box-sizing: border-box;padding: 0;margin: 0;">${project.name}</a><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										Username: <strong style="box-sizing: border-box;padding: 0;margin: 0;">${user.name}</strong>
+										#if ("$!{user.password}" != "")
+											<br style="box-sizing: border-box;padding: 0;margin: 0;">Password: <strong style="box-sizing: border-box;padding: 0;margin: 0;">${user.password}</strong>
+										#end
+										#if ("$!{invitingUser.name}" != "")
+											<br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;">This email was sent to you because <strong style="box-sizing: border-box;padding: 0;margin: 0;">${invitingUser.realName}</strong> invited you as a member of this project.
+										#end
+										#if ("$!{invitationComment}" != "")
+											<p class="inviter-comment" style="color: #666;font-family: Arial, Helvetica, sans-serif;margin: 20px 0;padding: 0 0 0 30px;border-left: 4px solid #d6d6d6;box-sizing: border-box;">
+												<span class="inviter-comment-title" style="font-size: 14px;color: #b2b2b2;box-sizing: border-box;padding: 0;margin: 0;">Inviter's comment:</span><br style="box-sizing: border-box;padding: 0;margin: 0;">
+												${invitationComment}
+											</p>
+										#end
+										<br style="box-sizing: border-box;padding: 0;margin: 0;">Your login is valid for 30 days. For extension, please <a href="mailto:sales@intland.com" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;">contact our sales</a>.<br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										After logging in please visit our wiki pages to find out:<br style="box-sizing: border-box;padding: 0;margin: 0;"><a href="https://codebeamer.com/cb/wiki/482891#section-How+to+create+a+new+project+using+a+Smart+Template_3F" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;">How to Create New Projects</a> and <a href="https://codebeamer.com/cb/wiki/482895#section-How+to+invite+your+colleagues+for+the+evaluation_3F" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;">How to Invite New Members</a>.
+									</td>
+									<td class="column-one-third" style="box-sizing: border-box;padding: 0;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;text-align: center;padding-left: 10px;vertical-align: top;">
+										<a href="https://intland.com/video/how-to-videos/getting-started/getting-started-with-codebeamer/" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;">Watch our introduction video:<br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;"><img src="${imageURL}/cb-reg-icon-getting-started-video.png" style="box-sizing: border-box;padding: 0;margin: 0;"></a><br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										<a href="https://intland.com/videos/" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="${imageURL}/cb-reg-button-more-videos.png" style="box-sizing: border-box;padding: 0;margin: 0;"></a><br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;">
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table class="section mainframe-table" style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;">
+					<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+						<td class="section-cell" style="box-sizing: border-box;padding: 40px 30px;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;border-bottom:0;vertical-align: top;">
+							Learn more about codeBeamer's capabilities for:<br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;">
+							<ul class="module-list" style="box-sizing: border-box;padding: 0;margin: 0 0 0 30px;list-style-type: none;margin-left: 0;">
+								<li style="box-sizing: border-box;padding: 5px 0;margin: 0;padding-top: 0;border-bottom: 0;"><a href="https://intland.com/solutions/by-discipline/alm/" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-alm.png" style="box-sizing: border-box;padding: 0;margin: 0;vertical-align: middle;">&nbsp;Application Lifecycle Management</a></li>
+								<li style="box-sizing: border-box;padding: 5px 0;margin: 0;border-bottom: 0;"><a href="https://intland.com/solutions/by-discipline/demand-management/" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-demand.png" style="box-sizing: border-box;padding: 0;margin: 0;vertical-align: middle;">&nbsp;Demand Management</a></li>
+								<li style="box-sizing: border-box;padding: 5px 0;margin: 0;border-bottom: 0;"><a href="https://intland.com/solutions/by-discipline/requirements-management/" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-req.png" style="box-sizing: border-box;padding: 0;margin: 0;vertical-align: middle;">&nbsp;Requirements Management</a></li>
+								<li style="box-sizing: border-box;padding: 5px 0;margin: 0;border-bottom: 0;"><a href="https://intland.com/agile-software-development/" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-software-dev.png" style="box-sizing: border-box;padding: 0;margin: 0;vertical-align: middle;">&nbsp;Software Development</a></li>
+								<li style="box-sizing: border-box;padding: 5px 0;margin: 0;border-bottom: 0;"><a href="https://intland.com/solutions/by-discipline/qa-test-management/" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-qa.png" style="box-sizing: border-box;padding: 0;margin: 0;vertical-align: middle;">&nbsp;Quality Assurance &amp; Test Management</a></li>
+								<li style="box-sizing: border-box;padding: 5px 0;margin: 0;border: none;padding-bottom: 0;border-bottom: 0;"><a href="https://intland.com/solutions/by-discipline/devops/" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-devops.png" style="box-sizing: border-box;padding: 0;margin: 0;vertical-align: middle;">&nbsp;IT Operations Management (DevOps)</a></li>
+							</ul><br style="box-sizing: border-box;padding: 0;margin: 0;">
+							Should you have any suggestions for improvement, please feel free to <a href="https://intland.com/about-us/contact/" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;">let us know</a>.
+						</td>
+					</tr>
+				</table>
+				<table class="section mainframe-table minor" style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;background: #e5e5e5;margin-top: 5px;">
+					<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+						<td class="section-cell" style="box-sizing: border-box;padding: 20px 30px;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;border-bottom: 4px solid #e6e6e6;vertical-align: top;">
+							<table style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;">
+								<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+									<td style="box-sizing: border-box;padding: 0;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;vertical-align: top;">
+										Interested in any of our advanced smart templates?<br style="box-sizing: border-box;padding: 0;margin: 0;"><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										<ul style="box-sizing: border-box;padding: 0;margin: 0 0 0 30px;list-style-type: square;">
+											<li style="box-sizing: border-box;padding: 3px 0;margin: 0;padding-top: 0;"><strong style="box-sizing: border-box;padding: 0;margin: 0;">Medical template (IEC 62304)</strong></li>
+											<li style="box-sizing: border-box;padding: 3px 0;margin: 0;"><strong style="box-sizing: border-box;padding: 0;margin: 0;">Automotive template (ISO 26262)</strong></li>
+											<li style="box-sizing: border-box;padding: 3px 0;margin: 0;border: none;padding-bottom: 0;"><strong style="box-sizing: border-box;padding: 0;margin: 0;">Aviation template (DO-178B)</strong></li>
+										</ul><br style="box-sizing: border-box;padding: 0;margin: 0;">
+										<table style="text-align: left;width: auto;box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;">
+											<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+												<td style="vertical-align: middle;box-sizing: border-box;padding: 0;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;">
+													Please contact our sales team.&nbsp;&nbsp;
+												</td>
+												<td style="box-sizing: border-box;padding: 0;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;vertical-align: top;">
+													<a href="https://intland.com/codebeamer/resources/download-codebeamer/" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-button-contact.png" style="box-sizing: border-box;padding: 0;margin: 0;"></a>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table class="footer mainframe-table" style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;background: #d1d1d1;">
+					<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+						<td style="box-sizing: border-box;padding: 15px 0 7px;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;text-align: center;">
+							<a href="https://www.facebook.com/intlandsoftware" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-facebook.png" style="box-sizing: border-box;padding: 0;margin: 0;border-left: 1px solid #b2b2b2;border: none;"></a>
+							<a href="https://twitter.com/intland" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-twitter.png" style="box-sizing: border-box;padding: 0;margin: 0;border-left: 1px solid #b2b2b2;border: none;"></a>
+							<a href="https://plus.google.com/+Intland/about" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-google-plus.png" style="box-sizing: border-box;padding: 0;margin: 0;border-left: 1px solid #b2b2b2;border: none;"></a>
+							<a href="https://www.linkedin.com/company/intland-software" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;"><img src="$imageURL/cb-reg-icon-linkedin.png" style="box-sizing: border-box;padding: 0;margin: 0;border-left: 1px solid #b2b2b2;border: none;"></a>
+						</td>
+					</tr>
+				</table>
+				<table class="copy mainframe-table" style="box-sizing: border-box;padding: 0;margin: 0;border-collapse: collapse;width: 100%;text-align: center;">
+					<tr style="box-sizing: border-box;padding: 0;margin: 0;">
+						<td style="box-sizing: border-box;padding: 5px 0;margin: 0;color: #545454;font: 14px/150% normal Arial, Helvetica, sans-serif;font-size: 12px;">&copy; 2015 <a href="https://intland.com/" target="_blank" style="box-sizing: border-box;padding: 0;margin: 0;color: #00a85d;text-decoration: none;">Intland Software</a></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

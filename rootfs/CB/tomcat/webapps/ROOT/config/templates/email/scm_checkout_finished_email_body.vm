@@ -1,0 +1,28 @@
+#parse("notification_email_header.vm")
+
+#if (!${success})
+	#set ($cssClass="highlight")
+#end
+
+<div class="heading">
+${description} <span class="${cssClass}">#if (${success}) finished #else failed#end</span>
+		for project [#${repository.id}] #linkProject(${project})
+</div>		
+
+<p>
+Imported $textFormatter.formatLong(${numChangeSets}) Changesets in $textFormatter.formatDurationWords(${runtime})
+</p>
+
+#if (!${success})
+		#partHeader("Output of the process")
+		<div class="comment-box" style="margin-top:5px;">
+		${out}
+		</div>
+#end
+
+#if (${hasSCMRepository})
+	<a href="${cbBaseUrl}/repository/${repository.id}">Browse SCM Repository</a>
+#end
+
+
+#parse("notification_email_footer.vm")

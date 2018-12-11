@@ -1,0 +1,13 @@
+## Renders a dasboard layout
+#parse("/dashboard/dashboard-macros.vm")
+
+#foreach($column in $widgets)
+
+	#foreach($widget in $column)
+		#if ($widget)
+			#exportWidget($widget, $renderingContext)
+			<br/>
+		#end
+	#end
+
+#end

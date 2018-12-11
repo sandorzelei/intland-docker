@@ -1,0 +1,209 @@
+.toprightmenu .searchBoxContainer {
+	display: inline-block;
+}
+
+body.headerCollapsed .toprightmenu .searchBoxContainer {
+	display: none;
+}
+
+.toprightmenu .searchBoxContainer .searchContainer {
+	width: auto;
+}
+
+.toprightmenu .searchBoxContainer .searchContainer .searchField {
+	margin-left: 0px;
+}
+
+.toolbarIconContainer .searchBoxContainer {
+	display: none;
+}
+
+body.headerCollapsed .toolbarIconContainer .searchBoxContainer {
+	display: inline-block;
+	opacity: 0;
+}
+
+.searchBoxContainer .searchContainer {
+	display: inline-block;
+	border-radius: 10px;
+	overflow: hidden;
+	vertical-align: middle;
+	width: 24px;
+	margin-right: 10px;
+
+	background-color: white;
+	border: 1px solid #d1d1d1;
+
+	white-space: normal;
+
+	.searchField {
+		text-align: left;
+		padding: 0;
+		margin-left: -150px;
+
+		.toggleButton {
+			display: inline-block;
+			width: 24px;
+			height: 20px;
+			background: url("../images/newskin/header/icon-search-menu.png") no-repeat center 4px;
+			float: right;
+			cursor: pointer;
+		}
+
+		input {
+			width: 130px;
+			padding: 2px 1px 0 1px;
+			border: none;
+			margin-top: 2px;
+			margin-left: 4px;
+			font-size: 11px;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}
+
+.searchOptions {
+	position: absolute;
+	background-color: #ffffff;
+	border: 1px solid #ababab;;
+	display: none;
+	font-family: arial;
+	z-index: 10000;
+}
+
+.searchOptions .labelContainer,
+.searchOptions .inputContainer {
+	padding: 10px;
+}
+
+.searchOptions .searchButtonContainer {
+	padding: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+}
+
+.searchOptions .labelContainer {
+	font-size: 11px;
+	color: #a6a6a6;
+	padding-bottom: 0px;
+}
+
+.searchOptions .inputContainer,
+.searchOptions .labelContainer {
+	text-align: left;
+}
+
+.searchOptions .inputContainer {
+	margin: 0px;
+}
+
+.searchOptions .inputContainer .inputField {
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	list-style-type: none;
+}
+
+.searchOptions .inputContainer input {
+	position: relative;
+	top: 2px;
+}
+
+.searchOptions .inputContainer input[name=searchOnArtifact] {
+	margin-right: 7px;
+}
+
+.searchOptions .inputContainer .labelImage {
+	margin-right: 5px;
+	position: relative;
+	top: 2px;
+}
+
+.searchOptions .inputContainer .labelImageContainer {
+	width: 16px;
+	display: inline-block;
+}
+
+.searchOptions .searchOptionsSeparator {
+	color: #cccccc;
+	border-bottom: 0px;
+	margin-top: 5px;
+	maring-bottom: 5px;
+}
+
+
+.searchOptions .searchOptionsButton {
+	width: 50%;
+	margin-bottom: 5px;
+}
+
+.projectIdSelector,
+.projectIdSelector ~ button.ui-multiselect.ui-widget {
+	width: 225px !important;
+}
+
+.projectIdSelector ~ button.ui-multiselect.ui-widget,
+.projectIdSelector ~ button.ui-multiselect.ui-widget.ui-state-active {
+	border: 1px solid #d1d1d1;
+}
+
+button.ui-multiselect span {
+	white-space: normal;
+}
+
+.ui-multiselect-menu.searchBoxProjectSelector {
+	z-index: 10000 !important;
+}
+
+.searchBoxProjectSelector .ui-multiselect-header .ui-helper-reset {
+	display: none;
+}
+
+.searchBoxProjectSelector.ui-multiselect-menu label {
+	overflow: hidden;
+	width: 205px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.hiddenListElement {
+	display: none;
+}
+
+.searchOptions .linkActionLabel {
+	display: flex;
+	justify-content: space-between;
+}
+
+.searchOptions .linkActionLabel .clearAllLink,
+.searchOptions .linkActionLabel .goToHistoryLink {
+	color: #0093b8;
+}
+
+.searchOptions .linkActionLabel .clearAllLink:hover,
+.searchOptions .linkActionLabel .goToHistoryLink:hover {
+	color: #0093b8;
+	text-decoration: underline;
+}
+
+#headerPane .toprightmenu a.clearAllLink,
+#headerPane .toprightmenu a.goToHistoryLink {
+	color: #0093b8;
+}
+
+#headerPane .toprightmenu a.clearAllLink:hover,
+#headerPane .toprightmenu a.goToHistoryLink:hover {
+	color: #0093b8 !important;
+	text-decoration: underline;
+}
+
+.toolbar .tab a.clearAllLink {
+	font-size: 11px;
+}
+
+.advancedSearchLink {
+	margin-left: 10px;
+}

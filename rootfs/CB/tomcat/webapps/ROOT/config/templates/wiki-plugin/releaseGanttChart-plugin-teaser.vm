@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="$css" type="text/css" media="all" />
+<div class="ganttTeaserContainer">
+	<div class="warning">
+		${textFormatter.getMessage('license.gantt.nolicense.message')}
+	</div>
+	<div class="ganttTeaserText">
+		${textFormatter.getMessage('release.gantt.chart.teaser.first.line')}
+		<br/>
+		${textFormatter.getMessage('release.gantt.chart.teaser.second.line')}
+	</div>
+	<img src="${contextPath}/images/wiki_plugins/gantt_bg.png"/>
+</div>

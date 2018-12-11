@@ -1,0 +1,33 @@
+#!/bin/sh
+# DO NOT MODIFY THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING
+#
+# $Id$
+
+LIBEXEC_PATH="${cbCygwinPath}/libexec"
+export PATH=$PATH:$LIBEXEC_PATH:$LIBEXEC_PATH/hg:$LIBEXEC_PATH/svn
+
+CODEBEAMER_COMMITER="$1";
+export CODEBEAMER_COMMITER;
+
+#===================================================================
+# global variable(s)
+#===================================================================
+#CBURL=https://localhost:8080/cb/sshRequestProcessor
+CB_BASE_URL=http://localhost:8080/cb
+CB_PATH=/sshRequestProcessor
+CBURL="$CB_BASE_URL$CB_PATH"
+
+RESPONSE=`wget -q -O- --no-check-certificate --post-data "cmd=$SSH_ORIGINAL_COMMAND&sshuser=$CODEBEAMER_COMMITER" $CBURL` ;
+
+EXIT=$(echo $RESPONSE | awk '{ print substr( $0, 1, 1 ) }') ;
+COMMAND_OR_ERROR=$(echo $RESPONSE | awk '{ print substr( $0, 3, length($0) ) }') ;
+
+if [ "$EXIT" = "0" ] ; then
+	eval $COMMAND_OR_ERROR ;
+else
+	if [ -z "$COMMAND_OR_ERROR" ] ; then
+		echo 1>&2 "No response from codeBeamer server"
+	else
+		echo 1>&2 "$COMMAND_OR_ERROR" ;
+	fi
+fi

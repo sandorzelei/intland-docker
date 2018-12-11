@@ -1,0 +1,95 @@
+/**
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software. ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+
+#opener-west {
+	top: -16px !important;
+}
+
+.classDiagram #opener-west {
+	top: 6px !important;
+	left: -5px !important;
+}
+
+#middleHeaderDiv > table {
+	height: auto;
+  	margin-left: 10px;
+}
+
+#treePane li > .jstree-anchor > .jstree-icon,
+#treePanePopup li > .jstree-anchor > .jstree-icon {
+	background-color: #5f5f5f;
+}
+
+#treePane li.branchTracker > .jstree-anchor > .jstree-icon,
+#treePanePopup li.branchTracker > .jstree-anchor > .jstree-icon {
+	background-color: #005c50;
+}
+
+#treePane li, #treePanePopup li {
+  	.trackerKey {
+		position: relative;
+		top: 2px;
+		font-size: 11px;
+	  	margin-left: 5px;
+	}
+  	.trackerItemStat {
+		position: relative;
+	  	top: 2px;
+	  	background-color: #dddddd;
+		padding: 1px 3px;
+		border-radius: 4px;
+	  	font-size: 11px;
+  	}
+  	.trackerModifiedAt {
+		position: relative;
+		top: 2px;
+		font-size: 11px;
+	  	color: #666666;
+		margin-left: 0.5em;
+  	}
+
+  	&[data-noPermission="true"] > a {
+		font-style: italic;
+	}
+}
+
+.jstree-contextmenu .tableIcon {
+	position: relative;
+	left: -5px;
+	width: 12px;
+	display: inline-block;
+}
+
+.newskin .filterBoxContainer .treeFilterBox {
+	width: ~"calc(100% - 70px)" !important;
+}
+
+.createTracker {
+  	display: inline-block;
+  	width: 16px;
+  	height: 16px;
+  	background: url("../images/newskin/actionIcons/icon_add_blue_14.png");
+	position: relative;
+	margin-left: 5px;
+	top: 3px;
+}
+
+.trackerHomePageConfiguration {
+  	background: url("../images/newskin/actionIcons/settings-s_14.png");
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	position: relative;
+	top: 3px;
+  	margin-left: 5px;
+  	cursor: pointer;
+}

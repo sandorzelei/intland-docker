@@ -1,0 +1,46 @@
+#! /bin/sh
+#
+
+# resolve links - $0 may be a softlink
+PRG="$0"
+while [ -h "$PRG" ] ; do
+	ls=`ls -ld "$PRG"`
+	link=`expr "$ls" : '.*-> \(.*\)$'`
+	if expr "$link" : '.*/.*' > /dev/null; then
+		PRG="$link"
+	else
+		PRG=`dirname "$PRG"`/"$link"
+	fi
+done
+
+PRGDIR=`dirname "$PRG"`
+cd $PRGDIR/..
+CBPATH=`pwd`
+
+running=0
+
+pidfile=$CBPATH/tomcat/cb.pid
+if [ -f $pidfile ]
+then
+	read cbpid < $pidfile
+
+#	ps -p $cbpid > /dev/null 2>&1
+	kill -0 $cbpid > /dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		running=1
+	fi
+fi
+
+rm -f $pidfile
+
+if [ $running -eq 1 ]
+then
+	export JMXREMOTE=""
+
+	$CBPATH/bin/cb "$@" stop
+	exit 0
+else
+	echo CodeBeamer is not running
+fi
+exit 1

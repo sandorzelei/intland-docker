@@ -1,0 +1,213 @@
+<div id="releaseGanttChart_${pluginId}" class="releaseGanttChart_plugin" #if(${containerHeight} > 0) style="height: ${containerHeight}px" #end>
+
+	<link rel="stylesheet" href="$cssLibUrl" type="text/css" media="all" />
+	<link rel="stylesheet" href="$ganttLess" type="text/css" media="all" />
+
+	#if($releasesWithNoDates.size() > 0)
+		<div class="information ganttInformationBar">
+			${textFormatter.getMessage('release.gantt.chart.missing.releases.warning')}
+			<ul class="missingDateWarningUl">
+				#foreach($release in $releasesWithNoDates)
+					<li id="missing-date-warning-${release.releaseId}"><a href='${contextPath}/item/${release.releaseId}' target="_blank">#esc(${release.releaseName})</a></li>
+				#end
+			</ul>
+		</div>
+	#end
+
+	<div id="ganttChartContainer_${pluginId}" #if(${ganttChartHeight} > 0) style="height: ${ganttChartHeight}px" #end></div>
+
+	##Style is required here, otherwise JQuery Layout lib does not calculate the size of the page correctly
+	<div class="renderingModeLinkContainer" style="padding-top: 10px; padding-bottom: 10px;">
+		<a id="renderingModeLink_${pluginId}" class="renderingMode" href="#">${textFormatter.getMessage('release.gantt.chart.rendering.optimal.view')}</a>
+	</div>
+
+	<script type="text/javascript">
+		jQuery(function($) {
+
+			var isInitializationAllowed = function() {
+				var ganttChartsOnScreen, result;
+
+				result = false;
+				ganttChartsOnScreen = $("div[id^=releaseGanttChart_");
+
+				// In case of muliple Gantt charts on a wiki page only allow the first one to initialize
+				if (ganttChartsOnScreen.size() > 0 && ganttChartsOnScreen[0].id === "releaseGanttChart_${pluginId}") {
+					result = true;
+				}
+
+				return result;
+			}
+
+			var destroy = function() {
+				$("#releaseGanttChart_${pluginId}").parent().remove();
+			}
+
+			var initialize = function() {
+				if (console) {
+					console.debug("Initializing Gantt chart");
+				}
+				var tasks = {
+					data:[
+						#foreach($release in $result)
+							#if($release.plannedStartDate && $release.plannedEndDate)
+							{
+								id: ${release.id},
+								text: "${textFormatter.escape(${release.releaseName})}",
+								start_date: "${release.plannedStartDate}",
+								end_date: "${release.plannedEndDate}",
+								actualReleaseDate: "${release.actualReleaseDate}",
+								#if($release.parentId)
+									parent: ${release.parentId},
+								#end
+								open: true,
+								progress: ${release.progress},
+								allItemsCount: ${release.allItemsCount},
+								resolvedOrClosedItemsCount: ${release.resolvedOrClosedItemsCount},
+								releaseId: ${release.releaseId},
+								isReferenceRelease: ${release.referenceRelease},
+								isSprint: ${release.sprint},
+								issueBgColor: "${release.issueBgColor}",
+								releaseMethodId: ${release.releaseMethodId},
+								color: "#ababab",
+								progressColor: "#00a85d",
+								readonly: #if(${preventModification}) true #else ${release.readOnly} #end,
+								releaseReadonly: ${release.readOnly},
+								preventModification: ${preventModification},
+								isVirtualLength: ${release.virtualLength}
+							},
+							#end
+						#end
+					],
+					links: [
+						#foreach($release in $result)
+							#if($release.referenceRelease)
+								{ target: "${release.id}", source: "${release.parentId}", type: "1" },
+							#end
+						#end
+					]
+				};
+
+
+				if (typeof gantt != "undefined" && $("#ganttChartContainer_${pluginId}").size() > 0) {
+
+					codebeamer.gantt.addReleaseMethod({
+						key: -1,
+						label: "--"
+					});
+					#foreach ($entry in $releaseMethods.entrySet())
+						codebeamer.gantt.addReleaseMethod({
+							key: $entry.key,
+							label: "$entry.value"
+						});
+					#end
+
+					codebeamer.gantt.initConfig();
+
+					codebeamer.gantt.initColumns("${textFormatter.getMessage('release.gantt.chart.release.label')}", "${textFormatter.getMessage('release.gantt.chart.actual.release.date.label')}",
+						"${textFormatter.getMessage('release.gantt.chart.items.label')}", "${textFormatter.getMessage('release.gantt.chart.missing.date.label')}", "${contextPath}");
+
+					codebeamer.gantt.initLightbox("${textFormatter.getMessage('button.ok')}", "${textFormatter.getMessage('button.cancel')}",
+						"${textFormatter.getMessage('release.gantt.chart.lightbox.time.label')}", "${textFormatter.getMessage('release.gantt.chart.lightbox.description.label')}");
+
+					codebeamer.gantt.initTemplates("${textFormatter.getMessage('release.gantt.chart.default.tooltip')}", "${textFormatter.getMessage('release.gantt.chart.missing.date.tooltip')}",
+						"${textFormatter.getMessage('release.gantt.chart.permission.tooltip')}", "${textFormatter.getMessage('release.gantt.chart.modification.tooltip')}",
+						"${textFormatter.getMessage('release.gantt.chart.modification.missing.date.tooltip')}", "${textFormatter.getMessage('release.gantt.chart.start.date.tooltip')}",
+						"${textFormatter.getMessage('release.gantt.chart.end.date.tooltip')}");
+
+					gantt.init("ganttChartContainer_${pluginId}");
+
+					#if(!${preventModification})
+					codebeamer.gantt.attachEventHandlers($("#ganttChartContainer_${pluginId}"), "${textFormatter.getMessage('release.gantt.chart.save.notification')}",
+						"${textFormatter.getMessage('release.gantt.chart.error.notification')}", "${textFormatter.getMessage('release.gantt.chart.date.validation.notification')}",
+						"${textFormatter.getMessage('release.gantt.chart.empty.date.warning')}");
+					#end
+
+					gantt.parse(tasks);
+
+					$("#renderingModeLink_${pluginId}").on("click", function(event) {
+
+						if (codebeamer.gantt.isDefaultViewActive()) {
+							codebeamer.gantt.renderZoomView();
+							$(this).text("${textFormatter.getMessage('release.gantt.chart.rendering.default.view')}");
+						} else {
+							codebeamer.gantt.renderDefaultView();
+							$(this).text("${textFormatter.getMessage('release.gantt.chart.rendering.optimal.view')}");
+						}
+						event.stopPropagation();
+						event.preventDefault();
+
+						return true;
+					});
+
+					var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
+					var todayMarkerId = gantt.addMarker({
+						start_date: new Date(),
+						css: "today",
+						text: "${textFormatter.getMessage('Today')}",
+						title: date_to_str(new Date())
+					});
+					gantt.renderMarkers();
+
+					codebeamer.gantt.sortGanttChartByPlannedReleaseDate(false);
+					codebeamer.gantt.ready("#ganttChartContainer_${pluginId}", true);
+				} else {
+					if (console) {
+						console.error("Could not initialize Gantt chart, library is not loaded properly");
+					}
+					codebeamer.gantt.ready("#ganttChartContainer_${pluginId}", false);
+				}
+			};
+
+			(function loadJsLibOnceAndInitPlugin(initCallback, destroyCallback, isInitializationAllowed) {
+				var jsLibUrl = "$jsLibUrl";
+				var jsExtLibUrl = "$jsExtLibUrl";
+				var jsTooltipExtLibUrl = "$jsTooltipExtLibUrl";
+				var jsPluginScriptUrl = "$jsPluginScriptUrl";
+				if (isInitializationAllowed()) {
+					if (console) {
+						console.debug("Loading Gantt chart lib dynamically");
+					}
+
+					if (typeof gantt != "undefined" && typeof codebeamer.gantt !== "undefined") {
+						gantt.clearAll();
+						initCallback();
+					} else {
+						$.getScript(jsLibUrl).then(function() {
+							var ganttLibDeferred, gantCbDeferred, gantTooltipDeferred;
+
+							ganttLibDeferred = $.getScript(jsExtLibUrl);
+							gantCbDeferred = $.getScript(jsPluginScriptUrl);
+							gantTooltipDeferred = $.getScript(jsTooltipExtLibUrl);
+
+							// Load the depending libs parallel
+							$.when(
+								ganttLibDeferred,
+								gantTooltipDeferred,
+								gantCbDeferred,
+								$.Deferred(function(deferred) {
+									$(deferred.resolve);
+								}))
+							.done(function() {
+								initCallback();
+							})
+							.fail(function() {
+								if (codebeamer && codebeamer.gantt) {
+									codebeamer.gantt.ready("#ganttChartContainer_${pluginId}", false);
+								}
+
+								if (console) {
+									console.error("Could not initialize Gantt chart, library is not loaded properly");
+								}
+							});
+						});
+					}
+
+				} else {
+					destroyCallback();
+				}
+			})(initialize, destroy, isInitializationAllowed);
+		});
+
+	</script>
+
+</div>

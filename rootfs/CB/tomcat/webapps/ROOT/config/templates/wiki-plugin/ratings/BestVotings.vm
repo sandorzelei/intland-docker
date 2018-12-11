@@ -1,0 +1,45 @@
+<style type="text/css">
+	.bestContentPlugin td {
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+	.bestContentPlugin .vote-column {
+		text-align: right;
+	}
+	.bestContentPlugin td .vote-positive{
+		color:green;
+	}
+	.bestContentPlugin .vote-value {
+	}
+</style>
+
+#wikiBoxOpen(${command})
+	#wikiBoxTitle("$!{title}")
+    <table class="bestContentPlugin embedded $!{cssClass}" style="$!{cssStyle}">
+		<thead>
+			<tr><th>${textFormatter.getMessage('issue.label')}</th><th>${textFormatter.getMessage('votes.label')}</th></tr>
+        </thead>
+		<tbody>
+            #if (!${bestContent.empty})
+            	#foreach(${objectRatingStats} in ${bestContent})
+            	#trOpenWithLastRow(${bestContent})
+            		<td>#linkReferableDto(${objectRatingStats.referencedObject})</td>
+            		<td class="vote-column">
+            			#set ($cssClass = "")
+            			#if(${objectRatingStats.ratingTotal} > 0)
+            				#set ($cssClass = "vote-positive")
+            			#end
+            			#if(${objectRatingStats.ratingTotal} < 0)
+            				#set ($cssClass = "vote-negative")
+            			#end
+            			<span class='${cssClass} vote-value' ><b>${numberFormat.format(${objectRatingStats.ratingTotal})}</b></span>
+            			<small>${textFormatter.getMessage('votes.by.info', ${objectRatingStats.numberOfRatings})}</small>
+            		</td>
+            	#trClose()
+            	#end
+            #else
+            	<tr class="lastRow" ><td colspan="2">${textFormatter.getMessage('vote.tooltip.no.votes.yet')}</td></tr>
+    		#end
+		</tbody>
+    </table>
+#wikiBoxClose()

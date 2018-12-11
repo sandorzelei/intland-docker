@@ -1,0 +1,140 @@
+#set($stars = "************")
+
+#wikiBoxOpen(${command})
+	<table>
+    	<thead>
+    		<tr><th colspan="2">#linkUser($user)</th></tr>
+    	</thead>
+    	<tbody>
+        	#trOpen()
+				<td colspan="2">
+					$userPhotoTool.render(${user}, true)
+				</td>
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.timeZonePattern.label'):")
+
+        		#tdText("${timezone} <span class='subtext'>(${user.timeZone.ID})</span>")
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.account.label'):")
+
+        		#tdText("<a href='${contextPath}${user.urlLink}'>${user.name}</a>")
+        	#trClose()
+
+        	#if(!${isAnonymous})
+        		#trOpen()
+        			#tdField("$textFormatter.getMessage('user.lastLogin.label'):")
+
+        			#tdText($textFormatter.formatDate(${user}, ${user.lastLogin}, false))
+        		#trClose()
+        	#end
+
+        	#if(${user.geoLocation.mapUrl})
+        		#trOpen()
+        			#tdField("$textFormatter.getMessage('user.geoLocation.label'):")
+
+        			#tdText("#linkGeoIP(${user.geoLocation})")
+        		#trClose()
+        	#end
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.id.label'):")
+
+        		#tdText(${user.id})
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.firstName.label'):")
+
+        		#tdText($textFormatter.escape(${user.firstName}))
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.lastName.label'):")
+
+        		#tdText($textFormatter.escape(${user.lastName}))
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.email.label'):")
+
+        		#tdText("#linkUserEmail(${user})")
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.title.label'):")
+
+        		#tdText($!{user.title})
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.phone.label'):")
+
+        		#if($canViewPhone)#tdText($!{user.phone})#else#tdText($stars)#end
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.mobile.label'):")
+
+        		#if($canViewPhone)#tdText($!{user.mobile})#else#tdText($stars)#end
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.company.label'):")
+
+        		#if($canViewCompany)#tdText($!{user.company})#else#tdText($stars)#end
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.address.label'):")
+
+        		#if($canViewAddress)#tdText($!{user.address})#else#tdText($stars)#end
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.city.label'):")
+
+        		#if($canViewAddress)#tdText($!{user.city})#else#tdText($stars)#end
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.zip.label'):")
+
+        		#if($canViewAddress)#tdText($!{user.zip})#else#tdText($stars)#end
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.state.label'):")
+
+        		#if($canViewAddress)#tdText($!{user.state})#else#tdText($stars)#end
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.country.label'):")
+
+        		#if($canViewAddress)#tdText($!{country})#else#tdText($stars)#end
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.language.label'):")
+
+        		#tdText($!{language})
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.registryDate.label'):")
+
+        		#tdText($textFormatter.formatDate(${user}, ${user.registryDate}, false))
+        	#trClose()
+
+        	#trOpen()
+        		#tdField("$textFormatter.getMessage('user.status.label'):")
+
+        		#tdText($textFormatter.getMessage("user.${user.status}"))
+        	#trClose()
+    	</tbody>
+	</table>
+#wikiBoxClose()

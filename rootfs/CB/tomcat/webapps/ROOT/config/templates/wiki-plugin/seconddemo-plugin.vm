@@ -1,0 +1,16 @@
+## $Revision$ $Date$
+<h3>Printing Basic Information</h3>
+<ul>
+	<li>Signed in as: <i>${user.name} (${user.lastName}, ${user.firstName})</i></li>
+	<li>Reading page: <i>&quot;${wikiPage.name}&quot; (${wikiPage.lastModifiedAt})</i></li>
+	<li>Working in project: <i>&quot;${wikiPage.project.name}&quot;</i></li>
+	<li>Now: <i>${currentTime}</i></li>
+	<li>Am I the owner of this page? <i>${owner}</i></li>
+</ul>
+
+<h3>Using Link Macros</h3>
+<ul>
+	<li>View #linkUser($user)</li>
+	<li>View #linkWikiPage($wikiPage)</li>
+	<li>View #linkProject($wikiPage.project)</li>
+</ul>

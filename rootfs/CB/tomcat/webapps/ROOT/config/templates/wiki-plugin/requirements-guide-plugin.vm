@@ -1,0 +1,111 @@
+#parse("./includes/guide-macros.vm")
+
+<div class="newskin">
+#wikiBoxOpen(${command})
+	#set($browseTrackerUrl = "${contextPath}/tracker")
+	#define($title) #i18n('requirements.guide.plugin.title') #end
+
+	#wikiBoxTitle("$!{title}")
+	<table class="guide" cellspacing="0">
+			<tbody>
+				#if($isLicensed)
+					<tr>
+						#set($requirementsCreated = (${requirementStats.allItems} > 0))
+						<td class="iconic">#stepSign(true $requirementsCreated)</td>
+						#stepLinkAndDescription("/importIssue.spr?tracker_id=${requirementTracker.id}" "requirements.guide.plugin.import.requirements")
+						#stepAdvice("requirements.guide.plugin.import.requirements", ${requirementStats}, "/tracker/${requirementTracker.id}")
+					</tr>
+					<tr>
+						#set($requirementsCreated = (${requirementStats.allItems} > 0))
+						<td class="iconic">#stepSign(true $requirementsCreated)</td>
+						#stepLinkAndDescription("/trackers/documentView/create.spr?tracker_id=${requirementTracker.id}" "requirements.guide.plugin.define.requirements")
+						#stepAdvice("requirements.guide.plugin.define.requirements", ${requirementStats}, "/tracker/${requirementTracker.id}")
+					</tr>
+					<tr>
+						#set($requirementsCreated = (${requirementStats.allItems} > 0))
+						<td class="iconic">#stepSign($requirementsCreated $requirementsCreated)</td>
+						#stepLinkAndDescription("/tracker/${requirementTracker.id}?view_id=-11" "requirements.guide.plugin.define.structure" $requirementsCreated)
+						<td class="advice">
+							<small>#if(!$requirementsCreated) <img src="$adviceIconUrl">#i18n("requirements.guide.plugin.define.structure.advice") #end</small>
+						</td>
+					</tr>
+					#if($isTmLicensed)
+					<tr>
+						#set($requirementsCreated = (${requirementStats.allItems} > 0))
+						#set($testCasesCreated = ($testCaseStats.allItems > 0))
+						#set($testCasesAssociatable = $requirementsCreated && $testCasesCreated)
+						#set($requirementsFullyCovered = ($requirementsUncovered == 0))
+						<td class="iconic">#stepSign($testCasesAssociatable $requirementsFullyCovered)</td>
+						#stepLinkAndDescription("/tracker/${requirementTracker.id}?view_id=-11" "requirements.guide.plugin.associate.testcases" $testCasesAssociatable)
+						<td class="advice">
+							<small>
+								#if(!$requirementsCreated)
+									<img src="$adviceIconUrl">#i18n("requirements.guide.plugin.associate.testcases.advice.requirements")
+								#elseif(!$testCasesCreated)
+									<img src="$adviceIconUrl">#i18n("requirements.guide.plugin.associate.testcases.advice.testcases")
+								#elseif(!$requirementsFullyCovered)
+									<img src="$adviceIconUrl">#i18n("requirements.guide.plugin.associate.releases.advice.associate" $requirementsUncovered)
+								#else
+									#i18n("requirements.guide.plugin.associate.testcases.satisfied")
+								#end
+							</small>
+						</td>
+					</tr>
+					<tr>
+						#set($requirementsCreated = (${requirementStats.allItems} > 0))
+						#set($requirementsFullyCovered = ($requirementsUncovered == 0))
+						<td class="iconic">#stepSign($requirementsCreated $requirementsFullyCovered)</td>
+						#stepLinkAndDescription("/tracker/${requirementTracker.id}?view_id=-11" "requirements.guide.plugin.generate.testcases" $requirementsCreated)
+						<td class="advice">
+							<small>
+								#if(!$requirementsCreated)
+									<img src="$adviceIconUrl">#i18n("requirements.guide.plugin.generate.testcases.advice.requirements")
+								#elseif(!$requirementsFullyCovered)
+									<img src="$adviceIconUrl">#i18n("requirements.guide.plugin.generate.releases.advice.associate" $requirementsUncovered)
+								#else
+									#i18n("requirements.guide.plugin.generate.testcases.satisfied")
+								#end
+							</small>
+						</td>
+					</tr>
+					#end
+					<tr>
+						#set($releasesCreated = ($releaseStats.allItems > 0))
+						<td class="iconic">#stepSign(true $releasesCreated)</td>
+						#stepLinkAndDescription("/tracker/${releaseTracker.id}/create" "requirements.guide.plugin.define.releases")
+						#stepAdvice("requirements.guide.plugin.define.releases", ${releaseStats}, "/tracker/${releaseTracker.id}")
+					</tr>
+					<tr>
+						#set($requirementsCreated = (${requirementStats.allItems} > 0))
+						#set($releasesCreated = ($releaseStats.allItems > 0))
+						#set($releasesAssociatable = $requirementsCreated && $releasesCreated)
+						#set($requirementsFullyScheduled = ($requirementsUnscheduled == 0))
+						<td class="iconic">#stepSign($releasesAssociatable $requirementsFullyScheduled)</td>
+						#stepLinkAndDescription("/tracker/${requirementTracker.id}?view_id=-11" "requirements.guide.plugin.associate.releases" $releasesAssociatable)
+						<td class="advice">
+							<small>
+								#if(!$requirementsCreated)
+									<img src="$adviceIconUrl">#i18n("requirements.guide.plugin.associate.releases.advice.requirements")
+								#elseif(!$releasesCreated)
+									<img src="$adviceIconUrl">#i18n("requirements.guide.plugin.associate.releases.advice.releases")
+								#elseif(!$requirementsFullyScheduled)
+									<img src="$adviceIconUrl">#i18n("requirements.guide.plugin.associate.releases.advice.schedule" $requirementsUnscheduled)
+								#else
+									#i18n("requirements.guide.plugin.associate.releases.satisfied")
+								#end
+							</small>
+						</td>
+					</tr>
+				#else
+					<tr>
+						<td>
+							<b>#i18n("requirements.guide.plugin.rm.license.error")</b>
+							<br><br>
+							#i18n("requirements.guide.plugin.rm.license.error.suffix")
+						</td>
+					</tr>
+				#end
+			</tbody>
+	</table>
+#wikiBoxClose()
+</div>

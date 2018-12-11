@@ -1,0 +1,2 @@
+##$RCSfile$ $Revision$ $Date$
+<span class="error"><b>${pluginName} ${textFormatter.getMessage('wiki.plugin.failed')}:</b>${textFormatter.getMessage("$message")}</span>

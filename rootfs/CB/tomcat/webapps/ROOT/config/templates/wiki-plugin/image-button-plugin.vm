@@ -1,0 +1,40 @@
+##$RCSfile$ $Revision$ $Date$
+#set($Q = '"')
+<p><table style="width:${width}" cellspacing="0" cellpadding="0" class="imageButton">
+	<tr>
+		<td class="left_box">
+			#if (${iconUrl})
+				#set($icon = "<img src=${Q}${iconUrl}${Q} align=${Q}absmiddle${Q} border=${Q}0${Q} />")
+			#elseif (${iconText})
+				#set($icon = "<b>${iconText}</b>")
+			#else
+				#set($icon = "")
+			#end
+			<div class="icon">
+			#if (${linkHref} || ${linkOnclick})
+				<a href="${linkHref}" #if (${linkOnclick})onclick="${linkOnclick}"#end>${icon}</a>
+			#else
+				${icon}
+			#end
+			</div>
+		</td>
+		<td class="right_box" height="59" align="left" valign="top">
+			#if (${title})
+				#set($body = "<b>${title}</b><br/>${text}")
+			#else
+				#set($body = "${text}")
+			#end
+			<div class="body">
+			#if (${linkHref} || ${linkOnclick})
+				<a href="${linkHref}" #if (${linkOnclick})onclick="${linkOnclick}"#end>${body}</a>
+			#else
+				${body}
+			#end
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="bottom_left"><div>&nbsp;</div></td>
+		<td class="bottom_right"><div>&nbsp;</div></td>
+	</tr>
+</table></p>

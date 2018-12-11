@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<style type="text/css">
+		<!--
+
+		body {
+			font-family: 'arial', 'helvetica', 'verdana';
+			font-size: 12px;
+		}
+		body a {
+			color: #0093b8;
+			text-decoration: none;
+		}
+		body a:hover {
+			text-decoration: underline;
+		}
+
+		table.displaytag {
+			margin-left: 0;
+			margin-right: 0;
+			border: 0;
+			width: 100%;
+			border-collapse: collapse;
+		}
+		table.displaytag tr {
+			vertical-align: top;
+		}
+		table.displaytag th {
+			padding-right: 5px;
+			background-color: white;
+			padding-left: 10px;
+			padding-top: 18px;
+			padding-bottom: 12px;
+			padding-right: 22px;
+			border: 0;
+			border-bottom: 1px solid #d1d1d1;
+			font-family: 'arial';
+			font-size: 13px;
+			color: #666;
+			background-repeat: no-repeat;
+			font-weight: normal;
+			white-space: nowrap;
+			vertical-align: top;
+			text-align: left;
+		}
+		table.displaytag tr.odd, table.displaytag tr.even {
+			background-color: transparent;
+			border-top: 1px solid #f5f5f5;
+		}
+		.displaytag>tbody>tr>td:first-child:not(.groupping-level) {
+			padding-left: 0 !important;
+		}
+		table.displaytag td {
+			padding-left: 10px;
+			padding-right: 5px;
+			padding-top: 12px;
+			padding-bottom: 11px;
+			font-size: 13px;
+			font-family: 'arial';
+		}
+		table.displaytag td .menuArrowDown,
+		table.displaytag td .menu-container {
+			display: none;
+		}
+		table.displaytag td .tableIcon {
+			margin-right: 2px;
+			margin-bottom: -3px;
+			border: 0;
+		}
+		table.displaytag td>a {
+			font-family: 'arial';
+			font-size: 13px;
+			color: #0093b8;
+			text-decoration: none;
+		}
+		table.displaytag td>a:hover {
+			text-decoration: underline;
+		}
+		table.displaytag td.column-minwidth {
+			width: 0.1%;
+			text-align: left;
+			white-space: nowrap;
+		}
+		table.displaytag td.columnSeparator {
+			border-right: 0;
+		}
+		table.displaytag td.dateData {
+			font-size: 11px!important;
+			color: #666!important;
+		}
+		table.displaytag td.numberData {
+			font-size: 11px!important;
+			color: #666!important;
+			text-align: right;
+		}
+
+		table.displaytag .groupping-level-1 {background-color: #AFF0FF;}
+		table.displaytag .groupping-level-2 {background-color: #C9F4FF;}
+		table.displaytag .groupping-level-3 {background-color: #E1F9FF;}
+
+		table.displaytag .groupping-level-grey-1:not(.aggregate-cell) {background-color: #C3C1C3;}
+		table.displaytag .groupping-level-grey-2:not(.aggregate-cell) {background-color: #DDDBDD;}
+		table.displaytag .groupping-level-grey-3:not(.aggregate-cell) {background-color: #F6F4F6;}
+
+		table.displaytag .groupping-level-footer-1 {
+			background-color: #C3C1C3;
+			font-weight: bold;
+		}
+
+		table.displaytag .aggregate-cell {text-align: right; white-space: nowrap}
+
+		table.displaytag .groupping-level-top {
+			font-weight: bold;
+		}
+		table.displaytag .groupping-level {
+			line-height: 10px;
+			padding: 3px !important;
+		}
+
+		table.displaytag .groupping-ident-1 {padding-top: 5px !important; padding-left: 5px !important;}
+		table.displaytag .groupping-ident-2 {padding-top: 5px !important; padding-left: 15px !important;}
+		table.displaytag .groupping-ident-3 {padding-top: 5px !important; padding-left: 25px !important;}
+
+		table.displaytag .tooltip-marker {
+			display: inline-block;
+			margin-top: -4px;
+		}
+
+
+		table.displaytag .issueStatus {
+			min-width: 83px;
+			display: inline-block;
+			height: auto;
+			white-space: nowrap;
+			text-align: center;
+			padding: 2px 5px;
+			font-size: 11px;
+			font-weight: bold;
+			text-transform: uppercase;
+			color: white;
+			border-radius: 2px;
+			-moz-border-radius: 2px;
+			-webkit-border-radius: 2px;
+		}
+		.issueOverdue {
+			background: #b31317;
+		}
+		.issueStatusNew {
+			background: #b31317;
+		}
+		.issueStatusVerified {
+			background: #ffab46;
+		}
+		.issueStatusResolved {
+			background: #00a85d;
+		}
+		.issueStatusClosed {
+			background: #187a6d;
+			text-decoration: line-through !important;
+		}
+		.issueStatusFinished {
+			background: #187a6d;
+		}
+		.issueStatusObsolete {
+			text-decoration: line-through !important;
+		}
+
+		.sprite-priority-1-gif {
+			background-image: url("${cbBaseUrl}/images/newskin/item/issue-priority-highest.png");
+			width: 8px;
+			height:14px;
+		}
+		.sprite-priority-2-gif {
+			background-image: url("${cbBaseUrl}/images/newskin/item/issue-priority-high.png");
+			width: 8px;
+			height:14px;
+		}
+		.sprite-priority-3-gif {
+			background-image: url("${cbBaseUrl}/images/newskin/item/issue-priority-normal.png");
+			width: 8px;
+			height:14px;
+		}
+		.sprite-priority-4-gif {
+			background-image: url("${cbBaseUrl}/images/newskin/item/issue-priority-low.png");
+			width: 8px;
+			height:14px;
+		}
+		.sprite-priority-5-gif {
+			background-image: url("${cbBaseUrl}/images/newskin/item/issue-priority-lowest.png");
+			width: 8px;
+			height:14px;
+		}
+
+		div.heading, div.separator {
+			border-bottom: solid 1px #d1d1d1;
+			font-weight:bold;
+			font-size: 14px;
+			color: #2b2b2b;
+			padding-bottom: 8px;
+			margin-bottom: 6px;
+		}
+
+		div.footer {
+			margin-top: 30px;
+			font-size:11px;
+			line-height: 18px;
+			padding: 8px;
+			background-color: #f5f5f5;
+			border: solid 1px #d1d1d1;
+			color: #858585
+		}
+		div.footer * {
+			font-size: 11px;
+		}
+        .wikiLinkContainer .itemIcon {
+            display: inline-block;
+            padding: 0;
+        }
+        .wikiLinkContainer .itemIcon > div {
+            display: inline-block;
+            vertical-align: middle;
+        }
+		.disableduser {
+			text-decoration: line-through !important;
+		}
+
+		-->
+	</style>
+</head>
+<body>
+<div class="heading">
+	${textFormatter.getMessage('report.job.notification.header')} - <a href="${reportUrl}">${reportName}</a>
+</div>
+$body
+<div class="footer">${textFormatter.getMessage('report.job.notification.footer')}<br>
+	<a href="https://codebeamer.com">codeBeamer ${product}</a> Copyright &copy; 2001-${buildYear} <a href="http://www.intland.com">Intland Software</a>. All rights reserved.
+</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+/* removes all underlines from links */
+.colorPicker:hover,
+.palette:hover * {
+	text-decoration: none !important;
+}
+
+.palette {
+	width: 132px;
+	padding: 4px 0 0 4px;
+	background: white;
+	z-index: 20;
+}
+
+.paletteElement {
+	display: block;
+	float:left;
+	width: 18px;
+	height: 18px;
+	margin: 0 4px 4px 0;
+	cursor: pointer;
+}
+.paletteSelected {
+	background-image: url("../images/blackTick.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.colorPicker .yui-panel-container .ft {
+	display: none;
+}
+.colorPicker .yui-panel {
+	border-color: silver;
+}
+.colorPicker .yui-panel .bd {
+	padding: 0;
+}
+
+.paletteDefaultColor {
+	background-color: transparent;
+	width: 100%;
+}
+
+.yui-skin-cb a.colorPicker a.container-close {
+   right:0;
+}
+
+.colorPickerDialog .clearButton {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.colorPickerDialog .clearButton p {
+	padding: 0;
+	margin: 0;
+	font-size: 12px;
+	color: #0093b8;
+	cursor: pointer;
+}

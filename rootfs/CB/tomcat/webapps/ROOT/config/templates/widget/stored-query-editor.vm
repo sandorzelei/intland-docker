@@ -1,0 +1,51 @@
+<div class="form-field" id="${fieldName}">
+	<label for="${fieldName}" #if ($isMandatory) class="mandatory" #end>${fieldLabel}</label>
+	<div id="storedQuery-${selectorId}" class="storedQuery">
+
+		<div class="query-autocomplete-container auto-width"></div>
+
+	</div>
+
+	<input type="hidden" #if ($postParamater) name="params[${fieldName}]" #end id="combinedValue" value="${value}"
+		#if(${queryInfoDto})
+			data-name="${queryInfoDto.name}" data-group-count="${queryInfoDto.groupCount}" data-grouped-by-date="${queryInfoDto.groupedByDate}"
+		#else
+			data-name="" data-group-count="" data-grouped-by-date=""
+		#end
+	/>
+
+</div>
+
+<div class="form-field" id="query-id-hint">
+	<label class="hintLabel"></label>
+	#set($messageKey = "widget.editor.disabled.value." + "${queryFilterType}" + ".title")
+	<span class="hint" #if ($hideHint) style="display:none;" #end>${messageResolver.getMessage(${messageKey})}</span>
+</div>
+
+<script type="text/javascript" src="${storedQueryEditorJsUrl}"></script>
+
+<script type="text/javascript">
+	jQuery(function($) {
+
+		window.storedReport = JSON.parse('$report');
+
+		codebeamer.dashboard.storedQueryEditor.init({
+			selectorId: "${selectorId}",
+			storedReport: window.storedReport,
+			isRestrictedToGroupedQueries: ${isRestrictedToGroupedQueries},
+			acceptedTypesMessages: "${messageResolver.getMessage(${messageKey})}"
+		});
+
+		setTimeout(function () {
+			codebeamer.dashboard.storedQueryEditor.triggerStoredQueryEvent();
+		}, 500);
+
+		// TODO Rework
+		if (!$("#combinedValue").val()) {
+			$("#combinedValue").val($("#${selectorId}").val());
+		}
+
+	});
+
+</script>
+

@@ -1,0 +1,5 @@
+#if($isPinned)<div class="pinned-content ${justifyContent}">#end
+<div id="${id}">
+${html}
+</div>
+#if($isPinned)</div>#end

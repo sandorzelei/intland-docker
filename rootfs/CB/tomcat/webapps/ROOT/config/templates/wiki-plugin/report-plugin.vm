@@ -1,0 +1,68 @@
+## $Revision$ $Date$
+
+#macro(writeAttribute $name $value)
+	#if($value) $name="$value"#end
+#end
+
+#linkReport(${doc})&nbsp;$textFormatter.getMessage('report.result.total', ${totalSize})
+#br()
+
+#foreach($query in $queries)
+	#if(!$report.merged and ${query.tracker})
+		#bold("$textFormatter.getMessage('tracker.label.general'):&nbsp;&nbsp;#linkProject(${query.project}) &gt; #linkTracker(${query.tracker})")
+		$textFormatter.getMessage('report.query.total', ${query.size})
+	#end
+
+	<TABLE
+#writeAttribute("class" ${tableclass})
+#writeAttribute("border" ${border})
+#writeAttribute("height" ${height})
+#writeAttribute("width" ${width})
+#writeAttribute("cellpadding" ${cellpadding})
+#writeAttribute("cellspacing" ${cellspacing})
+#writeAttribute("bgcolor" ${backgroundcolor})
+	>
+	<thead>
+	<tr #writeAttribute("class" ${headerclass})>
+	#foreach($field in $query.header)
+		<th #writeAttribute("class" $field.styleClass) #writeAttribute("style" $field.style)>
+			$!textFormatter.getMessageWithDefault("tracker.field.${field.value}.label", ${field.value})
+		</th>
+	#end
+	</tr>
+	</thead>
+	<tbody>
+	#if($query.rows.size() > 0)
+		#foreach($row in $query.rows)
+		<tr #writeAttribute("class" $row.styleClass) #writeAttribute("style" $row.style)>
+			#foreach($field in $row.layout)
+				<td #writeAttribute("class" "${field.styleClass} columnSeparator")>$!{field.value}</td>
+			#end
+		</tr>
+		#end
+	#else
+	<tr>
+		#set($colspan = $query.header.size() * 2 - 1)
+		<td colspan="${colspan}">$textFormatter.getMessage('table.nothing.found')</td>
+	</tr>
+	#end
+	</tbody>
+	#if ($query.limited)
+	<tfoot>
+	<tr>
+		#set($colspan = $query.header.size() * 2 - 1)
+		<td colspan="${colspan}">$textFormatter.getMessage('report.result.truncated', ${query.resultSize}, ${query.total})</td>
+	</tr>
+	</tfoot>
+	#end
+	</TABLE>
+	#if ($velocityCount < $queries.size())#br()#end
+#end
+
+##if(!${childPages.isEmpty()})
+##	<ol>
+##		#foreach($childPage in $childPages)
+##			<li>#linkWikiPage(${childPage})</li>
+##		#end
+##	</ol>
+##end

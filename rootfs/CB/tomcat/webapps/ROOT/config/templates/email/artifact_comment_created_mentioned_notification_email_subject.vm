@@ -1,0 +1,1 @@
+${textFormatter.getMessage('comment.created.mention.subject')} [#${artifact.id}] ${artifact.name}

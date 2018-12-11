@@ -1,0 +1,38 @@
+#wikiBoxOpen(${command})
+    ## chart
+    #if($command.chart)
+		#wikiBoxTitle("$!{command.title}", "${textFormatter.getMessage('issue.count.by.label')} ${textFormatter.getMessageWithDefault('tracker.field.${command.field.displayName}.label', ${command.field.displayName})}")
+        <span id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </span>
+    #end
+
+    ## table
+    #if($command.table)
+    	#if(${command.chart} == false)
+			#wikiBoxTitle("$!{command.title}", "${textFormatter.getMessage('issue.count.by.label')} ${textFormatter.getMessageWithDefault('tracker.field.${command.field.displayName}.label', ${command.field.displayName})}")
+   		#end
+    	<table class="embedded">
+    		<thead>
+    			<tr>
+    				<th class="stretched">${textFormatter.getMessageWithDefault("tracker.field.${command.field.displayName}.label", ${command.field.displayName})}</th>
+    				<th class="number">#</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			#foreach($category in $data.keySet())
+    				#trOpen
+    					<th>
+    						#if(${command.field.members})
+    							${textFormatter.getMessageWithDefault("role.${category}.label", ${category})}
+    						#else
+    							${textFormatter.getMessageWithDefault("tracker.choice.${category}.label", ${category})}
+     						#end
+     					</th>
+    					<td class="number">${data.get($category)}</td>
+    				#trClose
+    			#end
+    		</tbody>
+    	</table>
+    #end
+#wikiBoxClose()

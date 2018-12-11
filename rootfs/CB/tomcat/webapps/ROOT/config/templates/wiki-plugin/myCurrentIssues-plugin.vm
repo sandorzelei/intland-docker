@@ -1,0 +1,25 @@
+#wikiBoxOpen(${command})
+    #if(${command.title})
+    	#wikiBoxTitle("${textFormatter.getMessageWithDefault(${command.title}, ${command.title})}: ${displayedAndTotalIssues}")
+    #else
+    	#wikiBoxTitle("${textFormatter.getMessage('my.current.issues.label')}: ${displayedAndTotalIssues}")
+    #end
+	<table>
+    	<tbody>
+            #if(!${issues.isEmpty()})
+        		#foreach($issue in ${issues})
+        			#trOpen
+						<td class="compact" style="width: 10px">${priorityRenderer.render($issue)}</td>
+                		<td style="vertical-align:middle;" >
+                		$renderedWikiLinks[$issue.id]
+						</td>
+        			#trClose
+				#end
+			#else
+				#trOpen()
+					<td>$textFormatter.getMessage('my.current.issues.none')</td>
+				#trClose()
+			#end
+    	</tbody>
+	</table>
+#wikiBoxClose()

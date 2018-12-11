@@ -1,0 +1,30 @@
+#set( $searchTitle = $textFormatter.getMessageWithDefault("search.title", "Enter Full Text Search Pattern") )
+#set( $searchSubmit = $textFormatter.getMessageWithDefault("search.submit.label", "GO") )
+#set( $searchSubmitTitle = $textFormatter.getMessageWithDefault("search.submit.tooltip", "Start Search") )
+#set( $searchPlaceholder = $textFormatter.getMessageWithDefault("search.hint", "Search...") )
+
+<div class="searchBoxPlugin $command.cssClass" style="$command.cssStyle">
+
+	<form method="get" action="${contextPath}/advancedSearch.spr">
+		<input type="hidden" name="advanced" value="true">
+		<input type="hidden" name="fromSearchPlugin" value="true">
+		#foreach ($searchIn in $command.getSearchInAsSet())
+			<input type="hidden" name="searchOnArtifact" value="${searchIn}">
+		#end
+		#if( $command.projectId )
+			<input type="hidden" name="projId" value="${command.projectId}">
+		#end
+
+		#if( $command.title )
+			<h3>$command.title</h3>
+		#end
+
+		<div class="shadowWrapper"><!--
+			--><div class="borderWrapper"><!--
+				--><input type="text" name="filter" title="${searchTitle}" maxlength="80" id="searchFilterPattern" onkeypress="return submitOnEnter(this, event)" placeholder="${searchPlaceholder}" /><!--
+				--><a class="submitButton" href="#" title="${searchSubmitTitle}" onclick="jQuery(this).closest('form').submit(); return false;">${searchSubmit}</a><!--
+			--></div><!--
+		--></div>
+	</form>
+
+</div>

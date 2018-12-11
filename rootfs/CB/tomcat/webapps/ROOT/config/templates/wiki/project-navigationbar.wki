@@ -1,0 +1,34 @@
+#if(${requirementTrackers})
+Requirements Management:
+*[Requirements Dashboard]
+*[Requirements Guide]
+
+Requirements:
+#foreach($tracker in $requirementTrackers)
+*[TRACKER:${tracker.id}]
+#end
+#end
+
+Work Items:
+#foreach($tracker in $taskTrackers)
+*[TRACKER:${tracker.id}]
+#end
+#foreach($tracker in $changeRequestTrackers)
+*[TRACKER:${tracker.id}]
+#end
+#foreach($tracker in $bugTrackers)
+*[TRACKER:${tracker.id}]
+#end
+
+QA & Test Management:
+*[QA-Test Dashboard]
+*[QA-Test Guide]
+
+#if(${versionCategories})
+Release Management:
+#foreach($versionCategory in $versionCategories)
+*[Project Roadmap|CMDB:${versionCategory.id}]
+*[Release Planner|PLANNER:${versionCategory.id}]
+#if(${CARDBOARD})*[Kanban|CARDBOARD:${CARDBOARD}]#end
+#end
+#end

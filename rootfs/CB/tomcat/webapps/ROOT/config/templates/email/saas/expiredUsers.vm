@@ -1,0 +1,28 @@
+#if(! ${newUsers.isEmpty()})
+	<h4>Following user accounts are created</h4>
+
+	#foreach ($user in $newUsers)
+	  #linkUserShort($user) #linkUserEmail($user)<br/>
+	#end
+	<br/>
+#end
+
+
+#if(! ${expiredUsers.isEmpty()})
+	<h4>Following user accounts are disabled</h4>
+
+	#foreach ($user in $expiredUsers)
+	  #linkUserShort($user) #linkUserEmail($user)<br/>
+	#end
+	<br/>
+#end
+
+#if(! ${halftimeUsers.isEmpty()})
+	<h4>Following user accounts will expire in 14 days</h4>
+
+	#foreach ($user in $halftimeUsers)
+	  #linkUserShort($user) #linkUserEmail($user)<br/>
+	#end
+#end
+
+

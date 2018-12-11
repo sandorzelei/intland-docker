@@ -1,0 +1,117 @@
+#wikiBoxOpen(${command}, "testRunsByTestSet")
+	#if($command.chart)
+		#parse("includes/chartSelect.vm")
+
+		#set($chartControls = '')
+		#if($command.projectId)
+
+			#define($testSetStatusControls)
+				#renderSelect("${pluginId}" "testRunsByTestSet_${pluginId}.updateChart();", ${testSetStatuses}, "", "testSetStatuses", "-1", true)
+				<br class="responsiveChartControlBreak first" />
+			#end
+			#define($testSetControls)
+				#renderSelect("${pluginId}" "testRunsByTestSet_${pluginId}.updateChart();", ${testSets}, "", "testSets", "-1", true)
+			#end
+
+			#set($testSetStatusLabel = ${textFormatter.getMessage("tracker.view.chart.testRunsByTestSet.status.fitler.label")})
+			#set($testSetLabel = ${textFormatter.getMessage("tracker.view.chart.testRunsByTestSet.testSets.fitler.label")})
+			#set($chartControls = "$testSetStatusLabel: $testSetStatusControls $testSetLabel: $testSetControls")
+
+		#end
+
+		#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.testRunsByTestSet.label")}, "${chartControls}")
+
+        <div id="chart_${pluginId}">
+    		${chartSupport.chartMarkup}
+        </div>
+
+        <script type="text/javascript">
+			var testRunsByTestSet_${pluginId} = {
+        		updateChart: function() {
+        			var chartUrl = this.createChartUrl();
+        		    var tableUrl = this.createTableUrl();
+
+        			chartRendererSupport.updateChart('${contextPath}', "chart_${pluginId}", chartUrl, ${command.width}, ${command.height});
+        			chartRendererSupport.updateTable('${contextPath}', "table_${pluginId}", tableUrl);
+        		},
+        		createChartUrl: function() {
+					var chartUrl = "${chartSupport.chartURL}";
+
+					chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "testSetStatusId", 16, $("#testSetStatuses_${pluginId}").val());
+					chartUrl = chartRendererSupport.replaceOrAddParameter(chartUrl, "testSetId", 10, $("#testSets_${pluginId}").val());
+
+					return chartUrl;
+        		},
+        		createTableUrl: function() {
+        			var tableUrl = contextPath + "$tableUpdateUrl";
+
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "testSetStatusId", 16, $("#testSetStatuses_${pluginId}").val());
+					tableUrl = chartRendererSupport.replaceOrAddParameter(tableUrl, "testSetId", 10, $("#testSets_${pluginId}").val());
+
+					return tableUrl;
+        		}
+        	}
+        </script>
+    #end
+
+	#if($command.table)
+    	#wikiBoxTitle("$!{command.title}", ${textFormatter.getMessage("tracker.view.chart.testRunsByTestSet.label")}, "")
+    	<div id="table_${pluginId}">
+	    	<table class="embedded">
+	    		<thead>
+	    			<tr>
+	    				<th>${textFormatter.getMessage("tracker.field.Test Set.label")}</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="0">${textFormatter.getMessage("tracker.coverage.status.passed.label")}<span class="sortIndicator"></span></div>
+    					</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="1">${textFormatter.getMessage("tracker.coverage.status.partlypassed.label")}<span class="sortIndicator"></span></div>
+	    				</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="2">${textFormatter.getMessage("tracker.coverage.status.failed.label")}<span class="sortIndicator"></span></div>
+	    				</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="3">${textFormatter.getMessage("tracker.coverage.status.blocked.label")}<span class="sortIndicator"></span></div>
+	    				</th>
+	    				<th class="number sortable">
+	    					<div data-column-index="4">${textFormatter.getMessage("tracker.coverage.status.notrun.label")}<span class="sortIndicator"></span></div>
+	    				</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+					#foreach($key in $data.keySet())
+						#set($testSetMap = ${data.get($key)})
+						#trOpen
+							#set($testSetName = ${key.name})
+							#if ($testSetName == $nullName)
+								#set($testSetName = ${textFormatter.getMessage("tracker.coverage.quick.testsets.label")})
+							#end
+							<td><a href="${contextPath}${key.urlLink}" title="$key">${testSetName}</a></td>
+							#foreach($e in $defaultOrder)
+								<td class="number">
+									#if(${testSetMap.containsKey($e)})
+										${testSetMap.get($e)}
+									#else
+										0
+									#end
+								</td>
+							#end
+						#trClose
+					#end
+	    		</tbody>
+	    	</table>
+
+	    	 <script type="text/javascript">
+				$(function() {
+					$("#table_${pluginId}").on("click", "th.sortable", function(event) {
+						var tableUrl;
+
+						tableUrl = testRunsByTestSet_${pluginId}.createTableUrl();
+
+						chartRendererSupport.sortTable(tableUrl, "table_${pluginId}", "${contextPath}");
+					});
+				});
+	        </script>
+    	</div>
+	#end
+#wikiBoxClose()

@@ -1,0 +1,57 @@
+/*
+ * Copyright by Intland Software
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information
+ * of Intland Software ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Intland.
+ */
+.rating-icon(@stars) {
+	background-image: url("../images/newskin/item/rate_@{stars}.png");
+}
+
+.rating-icon-hover(@stars) {
+	background-image: url("../images/newskin/item/rate_@{stars}_on.png");
+}
+
+.rating-container  {
+	background-image: url("../images/newskin/item/rate_0.png");
+	width: 26px;
+	height: 12px;
+	display: inline-block;
+	position: relative;
+	cursor: pointer !important;
+	margin: 3px 0px;
+	background-repeat: no-repeat;
+
+	&.initialized {
+		top: 1px;
+	}
+
+	&.rated-1 {
+		.rating-icon(1);
+	}
+
+	&.rated-2 {
+		.rating-icon(2);
+	}
+
+	&.rated-3 {
+		.rating-icon(3);
+	}
+
+	&.rated-4 {
+		.rating-icon(4);
+	}
+
+	&.rated-5 {
+		.rating-icon(5);
+	}
+
+	> .rating > .star {
+		display: none !important;
+	}
+}

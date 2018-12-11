@@ -1,0 +1,31 @@
+## $Id: zsolt 2009-11-27 16:11 +0100 23943:f5c76e8d52e5 cb-5.4 $
+
+#set($project = $repository.project)
+
+#if(${distributed})
+	#if(${allRemoved})
+		${textFormatter.getMessage('scm.commit.notification.subject')} $textFormatter.escape(${repository.name})
+	#else
+		#if(${deletedBranches})
+			${textFormatter.getMessage('scm.commit.branches.deleted.notification.subject')} $textFormatter.escape(${repository.name}) ($textFormatter.getMessage('scm.commit.notification.numberofcommits.label', ${changeSetCount}))
+		#elseif(!${isPullRequest})
+			${textFormatter.getMessage('scm.commit.notification.subject')} $textFormatter.escape(${repository.name}) ($textFormatter.getMessage('scm.commit.notification.numberofcommits.label', ${changeSetCount}))
+		#else
+			${textFormatter.getMessage('scm.pullrequest.notification.subject', $textFormatter.escape(${repository.name}), $pullRequest.targetBranch)} ($textFormatter.getMessage('scm.commit.notification.numberofcommits.label', ${changeSetCount}))
+		#end
+	#end
+#else
+	${textFormatter.getMessage('scm.commit.notification.subject')} $textFormatter.escape(${repository.name}) "$textFormatter.abbreviate(${commit.message})"
+#end
+
+#if(!${distributed})
+	#if(${commit.changeFiles.size()} == 1)
+		(1 ${textFormatter.getMessage('scm.commit.change.label')})
+	#else
+		(${commit.changeFiles.size()} ${textFormatter.getMessage('scm.commit.changes.label')})
+	#end
+#end
+
+#if(${summarizedStats} && !${isPullRequest} && !${allRemoved})
+	(+${summarizedStats.linesAdded} -${summarizedStats.linesRemoved})
+#end

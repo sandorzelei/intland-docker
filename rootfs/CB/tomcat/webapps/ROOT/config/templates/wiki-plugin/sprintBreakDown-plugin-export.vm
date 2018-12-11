@@ -1,0 +1,42 @@
+#wikiBoxOpen(${command})
+	#wikiBoxTitle("$!{command.title}", "#if(${release})${release.name}#end Sprint Break Down")
+	<table class="embedded">
+		<tbody>
+			#trOpen
+				#if(${progressBarHtml})
+					<td>
+						<table>
+							<tr>
+								<td>
+									$progressBarHtml
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 100%; text-align: center;">
+									#if(${storyProgressModel})
+										<div style="font-size:80%;">
+											#foreach($title in $storyProgressModel.get("titles"))
+												#set($i = $velocityCount - 1)
+												#if($i > 0)
+													&mdash;
+												#end
+												$title: <b style="color:$storyProgressModel.get("bgcolors").get($i)">$storyProgressModel.get("counts").get($i).intValue()</b>
+											#end
+										</div>
+									#end
+								</td>
+							</tr>
+					</td>
+				#else
+					<td>
+						#if(${release})
+							No user stories added yet.
+						#else
+							No sprint defined yet.
+						#end
+					</td>
+				#end
+			#trClose
+		</tbody>
+	</table>
+#wikiBoxClose()

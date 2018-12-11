@@ -1,0 +1,20 @@
+<map>
+	<properties>
+		<!--
+			"name" contains the CodeBeamer property and "value" the Siteminder one.
+		-->
+		<property name="name" value="sm_user" sync="false" />
+		<property name="lastName" value="usdaLastName" sync="true" />
+		<property name="firstName" value="usdaFirstName" sync="true" />
+		<property name="title" value="usdaTitle" sync="false" />
+		<property name="company" value="usdaAgencyAbbr" sync="false" default="USDA" />
+		<property name="telephoneNumber" value="usdaWorkPhone" sync="false" />
+		<property name="city" value="usdaCity" sync="false" />
+		<property name="postalCode" value="usdaZip" sync="false" />
+		<property name="address" value="usdaStreetAddress" sync="false" />
+		<property name="country" value="usdaCountry" sync="false" />
+		<property name="eauthid" value="usdaEauthId" sync="false" />
+		<property name="mail" value="usdaEmail" sync="false" />
+		<property name="state" value="usdaState" sync="false" />
+	</properties>
+</map>

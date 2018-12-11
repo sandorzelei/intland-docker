@@ -1,0 +1,119 @@
+/* Copyright (c) 2006 Yahoo! Inc. All rights reserved. */
+
+/* first or middle sibling, no children */
+.ygtvtn {
+	/* sprite for ../images/folders/tn.gif */
+	background: url(../images/sprite-tree.gif) 0 0 no-repeat; width:17px; height:22px;
+}
+
+/* first or middle sibling, collapsable */
+.ygtvtm {
+	/* sprite for url(../images/folders/tm.gif) */
+	background: url(../images/sprite-tree.gif) -21px -0px no-repeat; width:34px; height:22px;
+	cursor:pointer
+}
+
+/* first or middle sibling, collapsable, hover */
+.ygtvtmh {
+	/* sprite for url(../images/folders/tmh.gif) */
+	background: url(../images/sprite-tree.gif) -62px -0px no-repeat; width:34px; height:22px;
+	cursor:pointer
+}
+
+/* first or middle sibling, expandable */
+.ygtvtp {
+	/* sprite for  url(../images/folders/tp.gif) */
+	background: url(../images/sprite-tree.gif) -103px -0px no-repeat; width:34px; height:22px;
+	cursor:pointer
+}
+
+/* first or middle sibling, expandable, hover */
+.ygtvtph {
+	/* sprite for url(../images/folders/tph.gif) */
+	background: url(../images/sprite-tree.gif) -144px -0px no-repeat; width:34px; height:22px;
+	cursor:pointer
+}
+
+/* last sibling, no children */
+.ygtvln {
+	/* sprite for url(../images/folders/ln.gif) */
+	background: url(../images/sprite-tree.gif) -185px -0px no-repeat; width:17px; height:22px;
+}
+
+/* Last sibling, collapsable */
+.ygtvlm {
+	/* sprite for url(../images/folders/lm.gif) */
+	background: url(../images/sprite-tree.gif) -206px -0px no-repeat; width:34px; height:22px; cursor:pointer
+}
+
+/* Last sibling, collapsable, hover */
+.ygtvlmh {
+	/* sprite for  url(../images/folders/lmh.gif) */
+	background: url(../images/sprite-tree.gif) -245px -0px no-repeat; width:34px; height:22px;
+	cursor:pointer
+}
+
+/* Last sibling, expandable */
+.ygtvlp {
+	/* sprite for url(../images/folders/lp.gif) */
+	background: url(../images/sprite-tree.gif) -286px -0px no-repeat; width:34px; height:22px; cursor:pointer
+}
+
+/* Last sibling, expandable, hover */
+.ygtvlph {
+	/* sprite for url(../images/folders/lph.gif) */
+	background: url(../images/sprite-tree.gif) -325px -0px no-repeat; width:34px; height:22px;
+	cursor:pointer
+}
+
+/* Loading icon */
+.ygtvloading { background: url(../images/folders/loading.gif) 0 0 no-repeat; width:16px; height:22px; }
+
+/* the style for the empty cells that are used for rendering the depth
+ * of the node */
+.ygtvdepthcell {
+	/* sprite for url(../images/folders/vline.gif) */
+	background: url(../images/sprite-tree.gif) -366px -0px no-repeat; width:17px; height:22px;
+}
+
+.ygtvblankdepthcell { width:17px; height:22px; }
+
+/* the style of the div around each node */
+.ygtvitem { }
+
+/* the style of the div around each node's collection of children */
+.ygtvchildren { }
+* html .ygtvchildren { height:1%; }
+
+/* the style of the text label in ygTextNode */
+.ygtvlabel, .ygtvlabel:link, .ygtvlabel:visited, .ygtvlabel:hover {
+	margin-left:2px;
+	text-decoration: none;
+}
+
+/* Custom style for nodes on the path to the selected node */
+.tree-pathToSelected, .tree-pathToSelected:link, .tree-pathToSelected:visited, .tree-pathToSelected:hover {
+	text-decoration: none;
+	margin-left: 2px;
+
+	font-weight: bold;
+}
+
+/* Custom style for selected node */
+.tree-selectedNode, .tree-selectedNode:link, .tree-selectedNode:visited, .tree-selectedNode:hover {
+	text-decoration: none;
+	margin-left: 2px;
+
+	font-weight: bold;
+}
+
+/* Custom style for top of the tree and nodes */
+.treeTop {
+	width: auto;
+	height: auto;
+	float: left;
+}
+.treeTop * {
+	white-space: nowrap;
+}
+
