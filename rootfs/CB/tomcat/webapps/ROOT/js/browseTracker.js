@@ -446,7 +446,7 @@ codebeamer.trackers = codebeamer.trackers || (function () {
 	}
 
 	// destroying editors before removing their dom
-	function destroyEditors(editors) {
+	function destroyEditors(editors, isRightPane) {
 		var isToolbarRemoved = false;
 		editors.each(function() {
 			var editorId = $(this).attr('id');
@@ -460,8 +460,9 @@ codebeamer.trackers = codebeamer.trackers || (function () {
 				}
 			}
 		});
-
-		isToolbarRemoved && autoAdjustPanesHeight();
+		if (!isRightPane && isToolbarRemoved) {
+			autoAdjustPanesHeight();
+		}
 	}
 
 	// define the functions
@@ -1760,14 +1761,20 @@ codebeamer.trackers = codebeamer.trackers || (function () {
 					return;
 				}
 
-				var pane = $("#issuePropertiesPane");
-				if (pane.data("locked")) {
+				var pane = $("#issuePropertiesPane"),
+					$editors = pane.find('.editor-wrapper textarea');
+				
+				if ((pane.data("locked") && self.config.extended) || $editors.length) {
 					/*
 					 * the currently active item may be locked (edited). to prevent data loss always ask the user if he really wants to navigate
 					 * to the other issue. if yes then unlock the item and load the other one.
 					 */
 					showFancyConfirmDialogWithCallbacks(i18n.message("tracker.view.layout.document.locked.node.confirm"),
 						function () {
+							if ($editors.length) {
+								destroyEditors($editors, true);
+								codebeamer.DisplaytagTrackerItemsInlineEdit.clearNavigateAway();
+							}
 							codebeamer.common.loadProperties(id, $target, self.config.revision, editable, function () {
 								self["loadedProperty"] = id;
 							}, null, self.config.extended);
@@ -1776,7 +1783,9 @@ codebeamer.trackers = codebeamer.trackers || (function () {
 							// scroll back to the edited element
 							var $propertiesPane = $('#issuePropertiesPane');
 							var editedId = $propertiesPane.data("showingIssue");
-							codebeamer.common._scrollToElement($('tr#' + editedId));
+							if (editedId) {
+								codebeamer.common._scrollToElement($('tr#' + editedId));
+							}
 					});
 				} else {
 					codebeamer.common.loadProperties(id, $target, self.config.revision, editable, function () {
@@ -3128,7 +3137,7 @@ function createTestRunFromTestCases(testRunTrackerId) {
 	}
 }
 
-function reloadEditedIssue(issueId, affectedIssues) {
+function reloadEditedIssue(issueId, affectedIssues, skipReloadProperties) {
 	$("#planner").trigger("issueChanged");
 	if (typeof trackerObject != "undefined") {
 		if (typeof affectedIssues != "undefined" && !$.isArray(affectedIssues)) {
@@ -3163,8 +3172,9 @@ function reloadEditedIssue(issueId, affectedIssues) {
 			trackerObject.loadNode(node);
 			trackerObject.reloadIssue(editedInPropertyEditorId);
 		}
-		trackerObject.showIssueProperties(editedInPropertyEditorId, trackerObject.config.id, $propertiesPane, true, true);
-
+		if (!skipReloadProperties) {
+			trackerObject.showIssueProperties(editedInPropertyEditorId, trackerObject.config.id, $propertiesPane, true, true);
+		}
 		issueId = issueId ? issueId : editedInPropertyEditorId;
 
 		showOverlayMessage();

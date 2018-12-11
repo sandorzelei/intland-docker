@@ -15,9 +15,15 @@
 
 var codebeamer = codebeamer || {};
 codebeamer.common = codebeamer.common || (function($) {
+	var initRightPaneInlineEditing = function($propertyTable) {
+		if ($propertyTable.length) {
+			codebeamer.DisplaytagTrackerItemsInlineEdit.init($propertyTable, { documentViewMode: true });
+		}
+	};
 	var loadProperties = function(id, $target, revision, editable, callback, url, filterFields) {
-		var pane = $("#issuePropertiesPane");
-
+		var pane = $("#issuePropertiesPane"),
+			isExtendedDocumentView = typeof trackerObject != 'undefined' && trackerObject.config.extended;
+		
 		// unlock the previously edited item
 		if ($target.data("showingIssue")) {
 			unlockTrackerItem($target.data("showingIssue"));
@@ -40,7 +46,8 @@ codebeamer.common = codebeamer.common || (function($) {
 		var data = {
 			"task_id": id,
 			"editable": editable,
-			"filterFields": filterFields
+			"filterFields": filterFields,
+			"extendedDocumentView": isExtendedDocumentView
 		};
 		if (revision != null && revision != "") {
 			data["revision"] = revision;
@@ -64,7 +71,11 @@ codebeamer.common = codebeamer.common || (function($) {
 				$target.trigger("codebeamer:issueLoaded");
 
 				$target.html(data);
-
+				
+				if (!isExtendedDocumentView) {
+					initRightPaneInlineEditing($target.find('.propertyTable.inlineEditEnabled'));				
+				}
+				
 				(function initializeInnerAccordion() {
 					var originalState = $("#accordion").data("item-inner-accordion-state");
 					var accordion = $target.find(".accordion");

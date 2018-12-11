@@ -339,17 +339,19 @@ codebeamer.WYSIWYG = codebeamer.WYSIWYG || (function($) {
 
 	function _updateEditorOnOverlayModeChange($editorWrapper, editor) {
 		var isActive = $.FroalaEditor.COMMANDS.cbOverlayEditor.isActive(editor);
-
-		var $toolbar = editor.$tb.detach();
-
-		if (isActive) {
-			$editorWrapper.find(".fr-box").append($toolbar);
-		} else {
-			if (editor.opts.toolbarContainer) {
-				$(editor.opts.toolbarContainer).append($toolbar);
+		
+		if (editor.$tb) {
+			var $toolbar = editor.$tb.detach();
+	
+			if (isActive) {
+				$editorWrapper.find(".fr-box").append($toolbar);
 			} else {
-				editor.$wp.after($toolbar);
-				editor.position.refresh();
+				if (editor.opts.toolbarContainer) {
+					$(editor.opts.toolbarContainer).append($toolbar);
+				} else {
+					editor.$wp.after($toolbar);
+					editor.position.refresh();
+				}
 			}
 		}
 	}

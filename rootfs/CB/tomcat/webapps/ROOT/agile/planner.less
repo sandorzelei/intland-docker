@@ -937,8 +937,20 @@
 		margin-right: 3px;
 		margin-left: 2px;
 	}
+	
+	.editInOverlayGroupIcon {
+		background: url("../images/newskin/action/edit-blue-m.png") no-repeat center center;
+		cursor: pointer;
+		display: inline-block;
+		height: 16px;
+		margin-left: 5px;
+		position: relative;
+		top: 4px;
+		visibility: hidden;
+		width: 16px;
+	}
 
-	tr:hover .editInOverlayIcon {
+	tr:hover .editInOverlayIcon, tr:hover .editInOverlayGroupIcon {
 		visibility: visible;
 	}
 
@@ -1609,7 +1621,8 @@ span.locked {
 }
 
 .addAssociationControl {
-	display: none;
+	margin-bottom: 10px;
+	text-align: center;
 }
 
 .add-team-icon {

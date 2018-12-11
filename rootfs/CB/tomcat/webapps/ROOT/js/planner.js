@@ -1967,6 +1967,15 @@ codebeamer.planner = codebeamer.planner || (function($) {
 		});
 	};
 
+	var initRightPaneInlineEditing = function($propertyTable, $descriptionField) {
+		if ($propertyTable.length) {
+			codebeamer.DisplaytagTrackerItemsInlineEdit.init($propertyTable);
+		}
+		if ($descriptionField.length) {
+			codebeamer.DisplaytagTrackerItemsInlineEdit.initForField($descriptionField, true);
+		}
+	};
+	
 	var reloadSelectedIssue = function(callback, id) {
 		var taskId = null;
 		if (id) {
@@ -1987,7 +1996,7 @@ codebeamer.planner = codebeamer.planner || (function($) {
 		var issueDetailsContainer = container.find("> .issue-details");
 		var issueDescriptionContainer = container.find("> .issue-description");
 		var issueCommentsContainer = container.find("> .issue-comments");
-		var issueAssociationssContainer = container.find("> .issue-associations");
+		var issueAssociationsContainer = container.find("> .issue-associations");
 		var issueReferencesContainer = container.find("> .issue-references");
 
 		var $props = $(".issue-details");
@@ -2024,7 +2033,7 @@ codebeamer.planner = codebeamer.planner || (function($) {
 				inject(issueDetailsContainer, ["title", "details", "transitions"]);
 				inject(issueDescriptionContainer, "description");
 				inject(issueCommentsContainer, ["add-comment", "comments"]);
-				inject(issueAssociationssContainer, ["associations"]);
+				inject(issueAssociationsContainer, ["associations"]);
 				inject(issueReferencesContainer, ["references"]);
 
 				// make issue link open a new tab
@@ -2047,6 +2056,18 @@ codebeamer.planner = codebeamer.planner || (function($) {
 
 				codebeamer.ReferenceSettingBadges.init(container);
 
+				initRightPaneInlineEditing(issueDetailsContainer.find('.propertyTable.inlineEditEnabled'), issueDescriptionContainer.find('.fieldColumn.inlineEditEnabled'));
+				
+				var $addAssociationLink = issueAssociationsContainer.find('.addAssociationControl .actionLink');
+				if ($addAssociationLink.length) {
+					$addAssociationLink.removeAttr('onclick');
+					$addAssociationLink.on('click', function() {
+						showPopupInline(contextPath + '/proj/tracker/addAssociation.do?inline=true&from_type_id=9&from_id=' + taskId + 
+							'&callback=refreshSelectedIssueProperties', { geometry: '70%_70%' });
+						return false;
+					});
+				}
+				
 				if (callback && $.isFunction(callback)) {
 					callback.call();
 				}
@@ -4320,6 +4341,11 @@ codebeamer.planner = codebeamer.planner || (function($) {
 		$(document).on("click", ".editInOverlayIcon", function(e) {
 			editItemInOverlay($(this).closest("tr").attr("data-tt-id"), false);
 		});
+		
+		$(document).off('click', '.editInOverlayGroupIcon');
+		$(document).on('click', '.editInOverlayGroupIcon', function(e) {
+			editItemInOverlay($(this).closest('tr').attr('data-id'), false);
+		});
 	};
 
 	var initializeReleaseContextMenus = function () {
@@ -4610,38 +4636,62 @@ codebeamer.planner = codebeamer.planner || (function($) {
 	};
 
 	var initIssuePropertiesHandlers = function() {
+		var $centerPane = $("#plannerCenterPane"),
+			$rightAccordion = getRightAccordion();
 
-		var handler = function(id) {
-			var callback = function() {
-				getRightAccordion().cbMultiAccordion("enable", [0, 1, 2, 3, 4])
-					.cbMultiAccordion("open", 0);
-			};
+		var callback = function() {
+			$rightAccordion
+				.cbMultiAccordion("enable", [0, 1, 2, 3, 4])
+				.cbMultiAccordion("open", 0);
+		};
+
+		var selectIssue = function($selectedRow, id) {
+			$centerPane.find("tr[data-tt-id]").removeClass("selected");
+			$centerPane.find(".groupRow[data-id]").removeClass("selected");
+			$selectedRow.addClass("selected");					
 			emptyIssueInfoBoxes();
-			if (id !== null) {
-				reloadSelectedIssue(callback, id);
+			reloadSelectedIssue(callback, id);			
+		};	
+		
+		var handler = function($selectedRow, id) {
+			var $editors = $rightAccordion.find('.editor-wrapper textarea');
+			
+			if ($editors.length) {
+				var oldSelectedIssueId = $centerPane.find('tr[data-tt-id].selected').attr('data-tt-id');
+				showFancyConfirmDialogWithCallbacks(i18n.message('tracker.view.layout.document.locked.node.confirm'), function () {
+					$editors.each(function() {
+						var editorId = $(this).attr('id');
+
+						if (editorId) {
+							var editor = codebeamer.WYSIWYG.getEditorInstance(editorId);
+
+							editor && editor.destroy();
+						}
+					});
+					unlockTrackerItem(oldSelectedIssueId, true);
+					codebeamer.DisplaytagTrackerItemsInlineEdit.clearNavigateAway();
+					selectIssue($selectedRow, id);
+				});	
 			} else {
-				reloadSelectedIssue(callback);
+				selectIssue($selectedRow, id);
 			}
 		};
 
-		var $centerPane = $("#plannerCenterPane");
 		$centerPane.on("click", ".groupRow[data-isWorkItem=true]", function() {
-			var id = $(this).attr("data-id");
-			var wasSelected = $(this).is(".selected");
-			$centerPane.find("tr[data-tt-id]").removeClass("selected");
-			$centerPane.find(".groupRow[data-id]").removeClass("selected");
-			$(this).addClass("selected");
+			var $this = $(this), 
+				id = $this.attr("data-id"),
+				wasSelected = $this.is(".selected");
+			
 			if (!wasSelected) {
-				handler(id);
+				handler($this, id);
 			}
 		});
 		$centerPane.on("click", "tr[data-tt-id]", function() {
-			var wasSelected = $(this).is(".selected");
-			$centerPane.find("tr[data-tt-id]").removeClass("selected");
-			$centerPane.find(".groupRow[data-id]").removeClass("selected");
-			$(this).addClass("selected");
+			var $this = $(this),
+				wasSelected = $this.is(".selected");
+			
 			if (!wasSelected) {
-				handler(null);
+				handler($this, null);
 			}
 		});
 	};

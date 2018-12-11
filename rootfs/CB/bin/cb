@@ -81,8 +81,6 @@ GC_OPT="-XX:+HeapDumpOnOutOfMemoryError"
 #JAVA_SECURITY_EGD="-Djava.security.egd=file:///dev/urandom"
 CLASSPATH="${TOMCAT_HOME}/bin/commons-daemon.jar:${TOMCAT_HOME}/bin/tomcat-juli.jar:${TOMCAT_HOME}/bin/bootstrap.jar"
 
-$JASPER="-Dorg.apache.jasper.runtime.BodyContentImpl.LIMIT_BUFFER=true -Dorg.apache.jasper.runtime.JspFactoryImpl.USE_POOL=false"
-
 exec $JVM -server \
 	${HEAPSIZE} \
 	${RESERVED_CODE_CACHE_SIZE} \
@@ -97,6 +95,5 @@ exec $JVM -server \
 	"-Dcatalina.home=${TOMCAT_HOME}" \
 	"-Dcatalina.base=${TOMCAT_HOME}" \
 	"-Dcodebeamer.home=${CBPATH}" \
-        $JASPER \
 	$JVM_OPTIONS \
 	org.apache.catalina.startup.Bootstrap "$@"

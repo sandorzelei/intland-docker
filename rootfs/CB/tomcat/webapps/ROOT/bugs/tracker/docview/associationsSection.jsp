@@ -21,7 +21,7 @@
 
 <spring:message code="tracker.field.associationObjects.label" var="associationObjectsTitle"/>
 
-<c:if test="${empty revision && canCreateAssociation }">
+<c:if test="${empty revision && canCreateAssociation}">
 	<div class="addAssociationControl">
 		<ui:osSpecificHotkeyTooltip code="association.add.tooltip.label" var="addAssociationTooltip" modifierKey="ALT" />
 		<a class="actionLink" href="#" title="${addAssociationTooltip}" onclick="trackerObject.addAssociation(${item.id}); return false;"><spring:message code="association.add.label" text="Add Association"/></a>

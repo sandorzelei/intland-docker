@@ -249,6 +249,9 @@ var jQueryDatepickerHelper = {
 		});
 		field.datetimepicker('show');
 
+	},
+	
+	destroyCalendar: function(inputId) {
+		$('#' + inputId).datetimepicker('destroy');
 	}
-
 };

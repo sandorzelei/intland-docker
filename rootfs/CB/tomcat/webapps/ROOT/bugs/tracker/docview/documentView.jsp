@@ -25,6 +25,7 @@
 
 <link rel="stylesheet" href="<ui:urlversioned value="/bugs/addUpdateTask/addUpdateTask.css" />" type="text/css" media="all" />
 <link rel="stylesheet" type="text/css" href="<ui:urlversioned value='/js/jquery/dragtable/dragtable.css' />" />
+<script type="text/javascript" src="<ui:urlversioned value='/js/displaytagTrackerItemsInlineEdit.js'/>"></script>
 
 <wysiwyg:froalaConfig />
 

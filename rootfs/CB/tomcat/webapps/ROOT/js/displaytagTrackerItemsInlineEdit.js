@@ -22,7 +22,15 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 
 	var STORY_POINT_FIELD_ID = 19;
 
-	var config = {};
+	// default values are added to config with false in order to easily find the possible config options:
+	var config = {
+		plannerMode: false,
+		buildRelations: false,
+		buildTransitionMenu: false,
+		documentViewMode: false,
+		rightPaneMode: false,
+		itemDetailsMode: false		
+	};
 
 	var currentItemId = null;
 	var navigateAway = false;
@@ -68,6 +76,17 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 		if (valueToUpdate) {
 			data["valueToUpdate"] = valueToUpdate;
 		}
+		if (editor && editor.$oel) {
+			var uploadConversationId = editor.$oel.data('uploadConversationId');
+			if (uploadConversationId) {
+				data['uploadConversationId'] = uploadConversationId;
+			}
+		}
+		
+		if (config.documentViewMode || config.rightPaneMode || config.itemDetailsMode) {
+			data['renderAssignedAt'] = true;
+		}
+		
 		$.ajax({
 			url: contextPath + "/ajax/inlineEdit/saveField.spr",
 			method: "POST",
@@ -114,21 +133,38 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 				removeEditInProgressFromTable($column);
 
 				if (config && config.hasOwnProperty("plannerMode") && config.plannerMode) {
-					if (PLANNER_RELOAD_LEFT_PANE_FIELD_IDS.indexOf(fieldId) !== -1) {
+					if (config.rightPaneMode) {
 						codebeamer.planner.reloadLeftPane();
-					}
-					if (fieldId == 31) {
 						codebeamer.planner.forceReportSelectorSearch();
+					} else {
+						if (PLANNER_RELOAD_LEFT_PANE_FIELD_IDS.indexOf(fieldId) !== -1) {
+							codebeamer.planner.reloadLeftPane();
+						}
+						if (fieldId == 31) {
+							codebeamer.planner.forceReportSelectorSearch();
+						}
+						codebeamer.planner.reloadSelectedIssue();
 					}
-					codebeamer.planner.reloadSelectedIssue();
 				}
-
+				
+				if (config.documentViewMode) {
+					reloadEditedIssue(itemId, undefined, true);
+				}
+				
 				$column.data("dblclickFired", false);
 
 				if (result.hasOwnProperty("type") && result.type == "references" && config && config.hasOwnProperty("buildRelations") && config.buildRelations) {
 					refreshRelationBox(itemId);
 				}
-
+				// fixing the priority label, because it is also used in the right pane
+				if (config.rightPaneMode && fieldId == 2) {
+					var statusImg = $column.find('img');
+					if (statusImg.length) {
+						statusImg.wrap('<span class="tableIcon"></span>');
+						$column.append(statusImg.attr('title'));
+					}
+				}
+				
 				if (result.hasOwnProperty("error") && failureCallback) {
 					failureCallback();
 				} else if (successCallback) {
@@ -313,7 +349,7 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 						} else {
 							cancelEditing();
 						}
-						$(".xdsoft_datetimepicker").remove();
+						jQueryDatepickerHelper.destroyCalendar(inputId);
 					}
 				}, 300);
 			};
@@ -322,7 +358,7 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 			var inputId = "inlineEdit_date_" + itemId + "_" + fieldId;
 			var $dateContainer = $("<span>", { "class" : "inlineEditDateContainer"});
 			var $dateInput = $("<input>", { id: inputId });
-			$dateInput.val($original.text());
+			$dateInput.val($.trim($original.text()));
 			var $datePickerImg = $("<img>", { id: "calendarLink_" + inputId, "class": "calendarAnchorLink", src: contextPath + "/images/newskin/action/calendar.png"});
 			$dateContainer.append($dateInput);
 			$dateContainer.append($datePickerImg);
@@ -362,9 +398,14 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 					$select.val(result.selectedOptionId);
 				}
 				$column.append($select);
+				$select.focus();
 				$select.blur(function(e) {
 					var newValue = $select.val();
-					saveField(itemId, fieldId, newValue, $column, $original);
+					if (newValue != result.selectedOptionId) {
+						saveField(itemId, fieldId, newValue, $column, $original);
+					} else {
+						cancelEditing();
+					}
 				});
 			} else {
 				renderMemberAndReferenceEditor();
@@ -422,7 +463,7 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 			});
 		};
 
-		var renderWikiTextEditor = function(value, name) {
+		var renderWikiTextEditor = function(value, name, uploadConversationId) {
 
 			var hideTableHeaderContextMenus = function() {
 				$column.closest("table").find("th > .tracker-context-menu").hide();
@@ -461,7 +502,7 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 
 			navigateAway = true;
 
-			var isPlanner = config && config.hasOwnProperty("plannerMode") && config.plannerMode;
+			var isPlanner = config && config.hasOwnProperty("plannerMode") && config.plannerMode && !config.rightPaneMode;
 
 			if (isPlanner) {
 				var toolBarContainerHeight;
@@ -517,18 +558,18 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 					toolBarContainerHeight = $(editor.opts.toolbarContainer).height();
 					$plannerCenterPane.height($plannerCenterPane.height() - toolBarContainerHeight);
 				}
-				if ($(editor.opts.toolbarContainer).closest("#panes").length == 0) {
+				if ($(editor.opts.toolbarContainer).closest("#panes").length == 0 && !config.rightPaneMode) {
 					setStickyToolBar(editor);
 				}
 			});
 
 			var options = {
-				heightMin: 0,
-				toolbarBottom: false,
+				heightMin: config.rightPaneMode ? 100 : 0,
+				toolbarBottom: config.rightPaneMode,
 				toolbarSticky: false,
-				toolbarContainer: '#toolbarContainer'
+				toolbarContainer: config.rightPaneMode ? '' : '#toolbarContainer'
 			};
-
+			
 			var createOverlayHeader = function(id, name) {
 				var result;
 
@@ -547,7 +588,11 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 				},
 				useAutoResize: true,
 				focus: true,
-				overlayHeader: createOverlayHeader(itemId, name)
+				overlayHeader: createOverlayHeader(itemId, name),
+				uploadConversationId: uploadConversationId,
+				hideQuickInsert: config.rightPaneMode && fieldId == 80 ? true : false, // do not display quick insert for description field in right pane
+				ignorePreviouslyUploadedFiles: true,
+				insertNonImageAttachments: true
 			};
 
 			codebeamer.WikiConversion.bindEditorToEntity(newEditorId, '[ISSUE:' + itemId + ']');
@@ -594,7 +639,7 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 				}
 			});
 		};
-
+		
 		$.ajax({
 			url: contextPath + "/ajax/inlineEdit/validateField.spr",
 			method: "POST",
@@ -618,7 +663,7 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 					} else if (result.type == "color") {
 						renderColorField();
 					} else if (result.type == "wikitext") {
-						renderWikiTextEditor(result.value, name);
+						renderWikiTextEditor(result.value, name, result.uploadConversationId);
 					} else if (result.type == "url") {
 						renderURLEditor(result.value);
 					} else {
@@ -713,9 +758,21 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 		}
 	};
 
+	var startItemEditing = function($column, itemId, fieldId, name) {
+		isItemLocked(itemId).done(function(response) {
+			if (response.result == true) {
+				showFancyAlertDialog(i18n.message("This item is locked by an other user. Please try again later."));
+			} else {
+				$column.data("dblclickFired", true);
+				currentItemId = itemId;
+				renderEditor($column, itemId, fieldId, name);
+			}
+		});
+	}
+	
 	var init = function($container, settings) {
 
-		config = settings;
+		$.extend(config, settings || {});
 
 		handleLinks($container);
 		preventFormSubmitOnEnter();
@@ -726,7 +783,6 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 		}
 
 		$container.on("dblclick", ".fieldColumn, .fieldColumn a", function(e) {
-
 			e.preventDefault();
 			e.stopPropagation();
 
@@ -734,6 +790,8 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 			if (!$column.hasClass("fieldColumn")) {
 				$column = $column.closest(".fieldColumn");
 			}
+
+			config.rightPaneMode = !!$column.closest('table.propertyTable.inlineEditEnabled').length;
 
 			// Disable editing if an other edit is in progress
 			if ($column.closest("table").hasClass("editingInProgress")) {
@@ -748,6 +806,13 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 				itemId = $column.closest("tr").attr("id");
 				name = $column.closest("tr").data("name");
 			}
+			if (!itemId) {
+				 var $propertyTable = $column.closest('table.propertyTable');
+				 if ($propertyTable.length) {
+					 itemId = $propertyTable.attr('data-item-id');
+					 name = $propertyTable.attr('data-item-name');
+				 }
+			}
 
 			var classes = $column.attr("class").toString().split(" ");
 			var fieldId = null;
@@ -758,30 +823,68 @@ codebeamer.DisplaytagTrackerItemsInlineEdit = codebeamer.DisplaytagTrackerItemsI
 				}
 			}
 
-			if (!itemId || !fieldId) {
+			
+			if (!itemId || !fieldId || READ_ONLY_FIELD_IDS.indexOf(fieldId) > -1) { // Disable editing for always readonly and status fields
 				return false;
 			}
 
-			// Disable editing for always readonly and status fields
-			if (READ_ONLY_FIELD_IDS.indexOf(fieldId) > -1) {
-				return false;
-			}
-
-			isItemLocked(itemId).done(function (response) {
-				if (response.result == true) {
-					showFancyAlertDialog(i18n.message("This item is locked by an other user. Please try again later."));
-				} else {
-					$column.data("dblclickFired", true);
-					currentItemId = itemId;
-					renderEditor($column, itemId, fieldId, name);
-				}
-			});
-
+			if (config.documentViewMode && $('#' + itemId).is('.edited')) {
+				showFancyConfirmDialogWithCallbacks(i18n.message('tracker.view.layout.document.navigate.from.subtree.confirm'), function() {
+					startItemEditing($column, itemId, fieldId, name);
+				});
+			} else {
+				startItemEditing($column, itemId, fieldId, name);
+			}		
 		});
 	};
 
+	var initForField = function($field, rightPaneMode) {
+		var itemId, name, fieldId;
+		var classes = $field.attr('class').toString().split(' ');
+
+		initUnloadEvents();
+
+		if ($field.attr('data-item-id')) {
+			itemId = $field.attr('data-item-id');
+			name = $field.attr('data-item-name');
+		} 
+
+		for (var i = 0; i < classes.length; i++) {
+			if (startsWith(classes[i], 'fieldId_')) {
+				fieldId = parseInt(classes[i].replace('fieldId_', ''), 10);
+				break;
+			}
+		}
+
+		if (!itemId || !fieldId || READ_ONLY_FIELD_IDS.indexOf(fieldId) > -1) {
+			return;
+		}
+	
+		$field.on('dblclick', function(e) {
+			if ($field.hasClass('columnEditingInProgress')) {
+				return;
+			}
+
+			e.preventDefault();
+			e.stopPropagation();
+			
+			config.rightPaneMode = rightPaneMode;
+			
+			isItemLocked(itemId).done(function(response) {
+				if (response.result == true) {
+					showFancyAlertDialog(i18n.message('This item is locked by an other user. Please try again later.'));
+				} else {
+					$field.data('dblclickFired', true);
+					currentItemId = itemId;
+					renderEditor($field, itemId, fieldId, name);
+				}
+			});
+		});
+	};
+	
 	return {
 		"init": init,
+		"initForField": initForField,
 		"saveField": saveField,
 		"saveReferenceField": saveReferenceField,
 		"clearNavigateAway" : clearNavigateAway

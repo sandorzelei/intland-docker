@@ -75,6 +75,7 @@
 <script type="text/javascript" src="<ui:urlversioned value='/js/suspectedLinkBadge.js'/>"></script>
 <script type="text/javascript" src="<ui:urlversioned value='/js/trackerItemDetailsTabSupport.js'/>"></script>
 
+<script type="text/javascript" src="<ui:urlversioned value='/js/displaytagTrackerItemsInlineEdit.js'/>"></script>
 <script type="text/javascript" src="<ui:urlversioned value='/bugs/itemDetails.js'/>"></script>
 
 <link rel="stylesheet" href="<ui:urlversioned value="/stylesheet/multiselect-filter.less" />" type="text/css" media="all" />
@@ -654,7 +655,8 @@ try {
 
 </style>
 
-<table border="0" class="propertyTable" cellpadding="2" class="fieldLayoutTable">
+<c:set var="itemName"><c:out escapeXml="true" value="${task.name}" /></c:set>
+<table border="0" class="propertyTable${isItemEditable ? ' inlineEditEnabled' : ''}" cellpadding="2" class="fieldLayoutTable" data-item-id="${task.id}" data-item-name="${itemName}">
 
 	<c:if test="${(! empty testRun) && testRun.testCaseRun && not empty testRun.delegate.parent}">
 		<tr class="tableCellCounter_firstRow">
@@ -729,7 +731,7 @@ try {
 					<%	tableCellCounter.insertNewRow(); %>
 
 					<TD CLASS="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out escapeXml="false" value="${label}" /><c:if test="${not empty label}">:</c:if></TD>
-					<TD CLASS="tableItem" valign="top"><c:out escapeXml="false" value="${decorated.priorityWithIcon}" default="--" /></TD>
+					<TD CLASS="tableItem fieldColumn fieldId_${label_id}" valign="top"><c:out escapeXml="false" value="${decorated.priorityWithIcon}" default="--" /></TD>
 				</c:when>
 
 				<%-- resolution in the test run trackers --%>
@@ -737,7 +739,7 @@ try {
 					<%	tableCellCounter.insertNewRow(); %>
 
 					<TD CLASS="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out escapeXml="false" value="${label}" /><c:if test="${not empty label}">:</c:if></TD>
-					<TD CLASS="tableItem" valign="top"><c:out escapeXml="false" value="${decorated.resolutions}" default="--" /></TD>
+					<TD CLASS="tableItem fieldColumn fieldId_${label_id}" valign="top"><c:out escapeXml="false" value="${decorated.resolutions}" default="--" /></TD>
 				</c:when>
 
 				<%-- choice fields --%>
@@ -746,7 +748,7 @@ try {
 
 					<td class="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out escapeXml="false" value="${label}" /><c:if test="${not empty label}">:</c:if></td>
 
-					<td class="tableItem hideLongListOfElements" valign="top" colspan="${xcolspan}" style="white-space: normal;">
+					<td class="tableItem hideLongListOfElements fieldColumn fieldId_${label_id}" valign="top" colspan="${xcolspan}" style="white-space: normal;">
 						<div class="choice-field-wrapper">
 							<c:out escapeXml="false" value="<%= decorated.getReferences(fieldLayout) %>" default="--"/>
 							<c:if test="${label_id == ASSIGNED_TO_ID and !empty task.assignedAt}">
@@ -762,7 +764,7 @@ try {
 
 					<td class="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out escapeXml="false" value="${label}" /><c:if test="${not empty label}">:</c:if></td>
 
-					<td class="tableItem" valign="top" COLSPAN="${xcolspan}" style="white-space: normal;">
+					<td class="tableItem fieldColumn fieldId_${label_id}" valign="top" COLSPAN="${xcolspan}" style="white-space: normal;">
 						<c:set var="colorValue" value="<%= decorated.getRenderValue(fieldLayout) %>" />
 						<c:if test="${empty colorValue}">
 							<c:set var="colorValue" value="--" />
@@ -777,7 +779,7 @@ try {
 
 					<td class="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out escapeXml="false" value="${label}" /><c:if test="${not empty label}">:</c:if></td>
 
-					<td class="tableItem" valign="top" COLSPAN="${xcolspan}" style="white-space: normal;">
+					<td class="tableItem fieldColumn fieldId_${label_id}" valign="top" COLSPAN="${xcolspan}" style="white-space: normal;">
 						<c:set var="urlValue" value="<%= decorated.getRenderValue(fieldLayout) %>" />
 						<c:if test="${empty urlValue}">
 							<c:set var="urlValue" value="--" />
@@ -792,7 +794,7 @@ try {
 
 					<TD CLASS="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out escapeXml="false" value="${label}" /><c:if test="${not empty label}">:</c:if></TD>
 
-					<TD CLASS="tableItem<c:if test="${fieldLayout.isWikiTextField()}"> thumbnailImages thumbnailImages300px</c:if>" valign="top" COLSPAN="${xcolspan}" style="white-space: normal;">
+					<TD CLASS="tableItem fieldColumn fieldId_${label_id}<c:if test="${fieldLayout.isWikiTextField()}"> thumbnailImages thumbnailImages300px</c:if>" valign="top" COLSPAN="${xcolspan}" style="white-space: normal;">
 						<c:out escapeXml="false" value="<%= decorated.getRenderValue(fieldLayout) %>" default="--" />
 					</TD>
 				</c:when>
@@ -853,7 +855,7 @@ try {
 					<% tableCellCounter.insertNewRow();	%>
 					<TD CLASS="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out value="${label}" escapeXml="false" /><c:if test="${not empty label}">:</c:if></TD>
 
-					<TD CLASS="tableItem" valign="top">
+					<TD CLASS="tableItem fieldColumn fieldId_${label_id}" valign="top">
 						<c:out escapeXml="false" value="${decorated.startDate}" default="--" />
 					</TD>
 				</logic:equal>
@@ -863,7 +865,7 @@ try {
 					<% tableCellCounter.insertNewRow();	%>
 					<TD CLASS="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out value="${label}" escapeXml="false" /><c:if test="${not empty label}">:</c:if></TD>
 
-					<TD CLASS="tableItem" valign="top">
+					<TD CLASS="tableItem fieldColumn fieldId_${label_id}" valign="top">
 						<c:out escapeXml="false" value="${decorated.endDate}" default="--" />
 					</TD>
 				</logic:equal>
@@ -883,7 +885,7 @@ try {
 					<% tableCellCounter.insertNewRow();	%>
 					<TD CLASS="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out value="${label}" escapeXml="false" /><c:if test="${not empty label}">:</c:if></TD>
 
-					<TD CLASS="tableItem" valign="top">
+					<TD CLASS="tableItem fieldColumn fieldId_${label_id}" valign="top">
 						<c:out escapeXml="false" value="${decorated.storyPoints}" default="--" />
 					</TD>
 				</logic:equal>
@@ -902,7 +904,7 @@ try {
 				<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.ESTIMATED_H_LABEL_ID)%>">
 					<% tableCellCounter.insertNewRow();	%>
 					<TD CLASS="optional" <c:if test="${hideLabel}">style="display:none;"</c:if> valign="top" title="${tooltip}"><c:out value="${label}" escapeXml="false" /><c:if test="${not empty label}">:</c:if></TD>
-					<TD CLASS="tableItem" valign="top">
+					<TD CLASS="tableItem fieldColumn fieldId_${label_id}" valign="top">
 						<c:out escapeXml="false" value="${decorated.estimatedMillis}" default="--" />
 					</TD>
 				</logic:equal>
@@ -1022,7 +1024,9 @@ try {
 	<c:set var="itemDescription"><%=decorated.getDescription() %></c:set>
 	<c:set var="emptyDescription" value="${itemDescription == '' || itemDescription == '--'}" />
 	<ui:collapsingBorder id="descriptionPart" label="${label}" title="${tooltip}" hideIfEmpty="false" open="${!emptyDescription}" cssClass="descriptionBox scrollable separatorLikeCollapsingBorder officeEdit thumbnailImages thumbnailImages800px">
-		<c:out value="${itemDescription}" escapeXml="false"/>
+		<div class="fieldColumn fieldId_${DESCRIPTION_LABEL_ID}${isItemEditable ? ' inlineEditEnabled' : ''}" data-item-id="${task.id}" data-item-name="${itemName}">
+			<c:out value="${itemDescription}" escapeXml="false"/>
+		</div>
 	</ui:collapsingBorder>
 </c:if>
 </c:if>

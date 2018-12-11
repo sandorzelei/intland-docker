@@ -99,213 +99,210 @@
 						</div>
 					</c:if>
 
-					<c:set var="propertiesPanel">
-						<%
-							final int MAXCOLUMNS = 1;
-							TableCellCounter tableCellCounter = new TableCellCounter(out, pageContext, MAXCOLUMNS, 2);
-						%>
+					<c:set var="itemName"><c:out escapeXml="true" value="${item.name}" /></c:set>
+					
+					<%
+						final int MAXCOLUMNS = 1;
+						TableCellCounter tableCellCounter = new TableCellCounter(out, pageContext, MAXCOLUMNS, 2);
+					%>
 
-						<style type="text/css">
-							.issueStatus {
-								height: 13px !important;
-								vertical-align: middle;
-							}
-						</style>
+					<style type="text/css">
+						.issueStatus {
+							height: 13px !important;
+							vertical-align: middle;
+						}
+					</style>
+					
+					<table border="0" class="propertyTable${isItemEditable ? ' inlineEditEnabled' : ''}" cellpadding="2" class="fieldLayoutTable" data-planner-role="details" data-item-id="${item.id}" data-item-name="${itemName}">
+						<%-- tracker always show to get consistent layout for fields --%>
+						<%	tableCellCounter.insertNewRow(); %>
+						<td class="optional">
+							<spring:message code="${item.configItem ? 'cmdb.category.label' : 'tracker.label'}"/>:
+						</td>
+						<td class="tableItem">
+							<spring:message code="tracker.${item.tracker.name}.label" text="${item.tracker.name}" htmlEscape="true"/>
+						</td>
 
-						<table border="0" class="propertyTable" cellpadding="2" class="fieldLayoutTable" data-planner-role="details">
-							<%-- tracker always show to get consistent layout for fields --%>
-							<%	tableCellCounter.insertNewRow(); %>
-							<td class="optional">
-								<spring:message code="${item.configItem ? 'cmdb.category.label' : 'tracker.label'}"/>:
-							</td>
-							<td class="tableItem">
-								<spring:message code="tracker.${item.tracker.name}.label" text="${item.tracker.name}" htmlEscape="true"/>
-							</td>
+						<c:forEach items="${layout.fields}" var="fieldLayout">
+						<c:if test="${fieldLayout.hidden == null || !fieldLayout.hidden}">
 
-							<c:forEach items="${layout.fields}" var="fieldLayout">
-							<c:if test="${fieldLayout.hidden == null || !fieldLayout.hidden}">
+						<c:set var="label_id" value="${fieldLayout.id}" />
+						<spring:message var="label" code="tracker.field.${fieldLayout.labelWithoutBR}.label" text="${fieldLayout.labelWithoutBR}"/>
+						<c:set var="breakRow" value="${fieldLayout.breakRow}" />
+						<c:set var="colspan" value="${fieldLayout.colspan}" />
+						<c:set var="xcolspan" value="${empty colspan or colspan < 1 ? 1 : colspan}" />
 
-							<c:set var="label_id" value="${fieldLayout.id}" />
-							<spring:message var="label" code="tracker.field.${fieldLayout.labelWithoutBR}.label" text="${fieldLayout.labelWithoutBR}"/>
-							<c:set var="breakRow" value="${fieldLayout.breakRow}" />
-							<c:set var="colspan" value="${fieldLayout.colspan}" />
-							<c:set var="xcolspan" value="${empty colspan or colspan < 1 ? 1 : colspan}" />
+						<log:trace value="label_id: ${label_id} label: ${label}" />
 
-							<log:trace value="label_id: ${label_id} label: ${label}" />
+						<c:if test="${colspan gt 1}">
+							<c:set var="xcolspan" value="${colspan * 2 - 1}" />
+						</c:if>
 
-							<c:if test="${colspan gt 1}">
-								<c:set var="xcolspan" value="${colspan * 2 - 1}" />
-							</c:if>
+						<jsp:useBean id="fieldLayout" beanName="fieldLayout" type="com.intland.codebeamer.persistence.dto.TrackerLayoutLabelDto" />
 
-							<jsp:useBean id="fieldLayout" beanName="fieldLayout" type="com.intland.codebeamer.persistence.dto.TrackerLayoutLabelDto" />
+						<c:choose>
+							<%-- item status --%>
+							<c:when test="${label_id == STATUS_ID}">
+								<%	tableCellCounter.insertNewRow(); %>
 
-							<c:choose>
-								<%-- item status --%>
-								<c:when test="${label_id == STATUS_ID}">
-									<%	tableCellCounter.insertNewRow(); %>
+								<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
+								<td class="tableItem"><c:out escapeXml="false" value="${decorated.status}" default="--" /></td>
+							</c:when>
 
-									<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
-									<td class="tableItem"><c:out escapeXml="false" value="${decorated.status}" default="--" /></td>
-								</c:when>
+							<%-- item priority --%>
+							<c:when test="${label_id == PRIORITY_ID}">
+								<%	tableCellCounter.insertNewRow(); %>
 
-								<%-- item priority --%>
-								<c:when test="${label_id == PRIORITY_ID}">
-									<%	tableCellCounter.insertNewRow(); %>
+								<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
+								<td class="tableItem fieldColumn fieldId_${label_id}"><c:out escapeXml="false" value="${decorated.priorityWithIcon}" default="--" /></td>
+							</c:when>
 
-									<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
-									<td class="tableItem"><c:out escapeXml="false" value="${decorated.priorityWithIcon}" default="--" /></td>
-								</c:when>
+							<%-- resolution in the test run trackers --%>
+							<c:when test="${label_id == 15 && item.tracker.testRun}">
+								<%	tableCellCounter.insertNewRow(); %>
 
-								<%-- resolution in the test run trackers --%>
-								<c:when test="${label_id == 15 && item.tracker.testRun}">
-									<%	tableCellCounter.insertNewRow(); %>
+								<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
+								<td class="tableItem fieldColumn fieldId_${label_id}"><c:out escapeXml="false" value="${decorated.resolutions}" default="--" /></td>
+							</c:when>
 
-									<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
-									<td class="tableItem"><c:out escapeXml="false" value="${decorated.resolutions}" default="--" /></td>
-								</c:when>
+							<%-- choice fields --%>
+							<c:when test="${fieldLayout.choiceField}">
+								<%	tableCellCounter.insertNewRow(); %>
 
-								<%-- choice fields --%>
-								<c:when test="${fieldLayout.choiceField}">
-									<%	tableCellCounter.insertNewRow(); %>
+								<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
 
-									<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
+								<td class="tableItem fieldColumn fieldId_${label_id}" colspan="${xcolspan}" style="white-space: normal;">
+									<c:out escapeXml="false" value="<%= decorated.getReferences(fieldLayout) %>" default="--"/>
+									<c:if test="${label_id == ASSIGNED_TO_ID and !empty item.assignedAt}">
+										<tag:formatDate value="${item.assignedAt}" />
+									</c:if>
+								</td>
+							</c:when>
 
-									<td class="tableItem" colspan="${xcolspan}" style="white-space: normal;">
-										<c:out escapeXml="false" value="<%= decorated.getReferences(fieldLayout) %>" default="--"/>
+							<%-- user defined fields --%>
+							<c:when test="${fieldLayout.userDefined}">
+								<%	tableCellCounter.insertNewRow(); %>
 
-										<c:if test="${label_id == ASSIGNED_TO_ID and !empty item.assignedAt}">
-											<tag:formatDate value="${item.assignedAt}" />
-										</c:if>
-									</td>
-								</c:when>
+								<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
 
-								<%-- user defined fields --%>
-								<c:when test="${fieldLayout.userDefined}">
-									<%	tableCellCounter.insertNewRow(); %>
+								<td class="tableItem fieldColumn fieldId_${label_id}" colspan="${xcolspan}" style="white-space: normal;">
+									<c:out escapeXml="false" value="<%= decorated.getRenderValue(fieldLayout) %>" default="--" />
+								</td>
+							</c:when>
 
-									<td class="optional"><c:out escapeXml="false" value="${label}" />:</td>
+							<c:when test="${fieldLayout.label == TEST_CASES_FIELD_NAME}">
+								<%-- hiding Test Cases table, will show test cases as it looks on editor... --%>
+							</c:when>
 
-									<td class="tableItem" colspan="${xcolspan}" style="white-space: normal;">
-										<c:out escapeXml="false" value="<%= decorated.getRenderValue(fieldLayout) %>" default="--" />
-									</td>
-								</c:when>
+							<c:when test="${fieldLayout.label == TEST_STEPS_FIELD_NAME}">
+								<%-- hiding Test Steps table and moving it to a separate tab --%>
+							</c:when>
 
-								<c:when test="${fieldLayout.label == TEST_CASES_FIELD_NAME}">
-									<%-- hiding Test Cases table, will show test cases as it looks on editor... --%>
-								</c:when>
+							<%-- embedded tables --%>
+							<c:when test="${fieldLayout.table}">
+								<%	tableCellCounter.insertNewRow(); %>
 
-								<c:when test="${fieldLayout.label == TEST_STEPS_FIELD_NAME}">
-									<%-- hiding Test Steps table and moving it to a separate tab --%>
-								</c:when>
+								<td class="optional" valign="top"><c:out escapeXml="false" value="${label}" />:</td>
 
-								<%-- embedded tables --%>
-								<c:when test="${fieldLayout.table}">
-									<%	tableCellCounter.insertNewRow(); %>
+								<td class="tableItem fieldColumn fieldId_${label_id}" COLSPAN="${xcolspan}" style="white-space: normal;">
+									<%= decorated.getRenderValue(fieldLayout, true) %>
+								</td>
+							</c:when>
 
-									<td class="optional" valign="top"><c:out escapeXml="false" value="${label}" />:</td>
+							<c:otherwise>
 
-									<td class="tableItem" COLSPAN="${xcolspan}" style="white-space: normal;">
-										<%= decorated.getRenderValue(fieldLayout, true) %>
-									</td>
-								</c:when>
+							<%-- Submitted by --%>
+							<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.SUBMITTED_BY_LABEL_ID)%>">
+								<% tableCellCounter.insertNewRow(); %>
+								<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
 
-								<c:otherwise>
+								<td class="tableItem">
+									<tag:userLink user_id="${item.submitter.id}" />
+									<tag:formatDate value="${item.submittedAt}" />
+								</td>
+							</logic:equal>
 
-								<%-- Submitted by --%>
-								<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.SUBMITTED_BY_LABEL_ID)%>">
-									<% tableCellCounter.insertNewRow(); %>
-									<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
+							<%-- Modified by --%>
+							<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.MODIFIED_BY_LABEL_ID)%>">
+								<% tableCellCounter.insertNewRow();	%>
+								<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
 
-									<td class="tableItem">
-										<tag:userLink user_id="${item.submitter.id}" />
-										<tag:formatDate value="${item.submittedAt}" />
-									</td>
-								</logic:equal>
+								<td class="tableItem">
+									<tag:userLink user_id="${item.modifier.id}" />
+									<tag:formatDate value="${item.modifiedAt}" />
+								</td>
+							</logic:equal>
 
-								<%-- Modified by --%>
-								<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.MODIFIED_BY_LABEL_ID)%>">
-									<% tableCellCounter.insertNewRow();	%>
-									<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
+							<%-- Start date --%>
+							<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.START_DATE_LABEL_ID)%>">
+								<% tableCellCounter.insertNewRow();	%>
+								<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
 
-									<td class="tableItem">
-										<tag:userLink user_id="${item.modifier.id}" />
-										<tag:formatDate value="${item.modifiedAt}" />
-									</td>
-								</logic:equal>
+								<td class="tableItem fieldColumn fieldId_${label_id}">
+									<c:out escapeXml="false" value="${decorated.startDate}" default="--" />
+								</td>
+							</logic:equal>
 
-								<%-- Start date --%>
-								<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.START_DATE_LABEL_ID)%>">
-									<% tableCellCounter.insertNewRow();	%>
-									<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
+							<%-- End date --%>
+							<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.END_DATE_LABEL_ID)%>">
+								<% tableCellCounter.insertNewRow();	%>
+								<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
 
-									<td class="tableItem">
-										<c:out escapeXml="false" value="${decorated.startDate}" default="--" />
-									</td>
-								</logic:equal>
+								<td class="tableItem fieldColumn fieldId_${label_id}">
+									<c:out escapeXml="false" value="${decorated.endDate}" default="--" />
+								</td>
+							</logic:equal>
 
-								<%-- End date --%>
-								<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.END_DATE_LABEL_ID)%>">
-									<% tableCellCounter.insertNewRow();	%>
-									<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
+							<%-- Closed at --%>
+							<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.CLOSED_AT_LABEL_ID)%>">
+								<% tableCellCounter.insertNewRow();	%>
+								<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
 
-									<td class="tableItem">
-										<c:out escapeXml="false" value="${decorated.endDate}" default="--" />
-									</td>
-								</logic:equal>
+								<td class="tableItem">
+									<c:out escapeXml="false" value="${decorated.closedAt}" default="--" />
+								</td>
+							</logic:equal>
 
-								<%-- Closed at --%>
-								<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.CLOSED_AT_LABEL_ID)%>">
-									<% tableCellCounter.insertNewRow();	%>
-									<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
+							<%-- Spent effort --%>
+							<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.SPENT_H_LABEL_ID)%>">
+								<% tableCellCounter.insertNewRow();	%>
+								<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
 
-									<td class="tableItem">
-										<c:out escapeXml="false" value="${decorated.closedAt}" default="--" />
-									</td>
-								</logic:equal>
+								<td class="tableItem fieldColumn fieldId_${label_id}">
+									<c:out escapeXml="false" value="${decorated.spentMillis}" default="--" />
+									<c:if test="${isItemEditable and empty revision}">
+										${decorated.timeRecordingLink}
+									</c:if>
+								</td>
+							</logic:equal>
 
-								<%-- Spent effort --%>
-								<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.SPENT_H_LABEL_ID)%>">
-									<% tableCellCounter.insertNewRow();	%>
-									<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
+							<%-- Estimated effort --%>
+							<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.ESTIMATED_H_LABEL_ID)%>">
+								<% tableCellCounter.insertNewRow();	%>
+								<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
+								<td class="tableItem fieldColumn fieldId_${label_id}">
+									<c:out escapeXml="false" value="${decorated.estimatedMillis}" default="--" />
+								</td>
+							</logic:equal>
 
-									<td class="tableItem">
-										<c:out escapeXml="false" value="${decorated.spentMillis}" default="--" />
-									</td>
-								</logic:equal>
+							<%-- Spent/Estimated ratio --%>
+							<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.SPENT_ESTIMATED_H_LABEL_ID)%>">
+								<% tableCellCounter.insertNewRow();	%>
+								<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
+								<td class="tableItem">
+									<c:out escapeXml="false" value="${decorated.spentEstimatedHours}" default="--" />
+								</td>
+							</logic:equal>
+							</c:otherwise>
+						</c:choose> <%-- choose for reference fields --%>
+						</c:if>
+						</c:forEach>
 
-								<%-- Estimated effort --%>
-								<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.ESTIMATED_H_LABEL_ID)%>">
-									<% tableCellCounter.insertNewRow();	%>
-									<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
-									<td class="tableItem">
-										<c:out escapeXml="false" value="${decorated.estimatedMillis}" default="--" />
-									</td>
-								</logic:equal>
-
-								<%-- Spent/Estimated ratio --%>
-								<logic:equal name="label_id" value="<%=Integer.toString(TrackerLayoutLabelDto.SPENT_ESTIMATED_H_LABEL_ID)%>">
-									<% tableCellCounter.insertNewRow();	%>
-									<td class="optional"><c:out value="${label}" escapeXml="false" />:</td>
-									<td class="tableItem">
-										<c:out escapeXml="false" value="${decorated.spentEstimatedHours}" default="--" />
-									</td>
-								</logic:equal>
-								</c:otherwise>
-							</c:choose> <%-- choose for reference fields --%>
-							</c:if>
-							</c:forEach>
-
-						</tr>
-						</table>
-					</c:set>
-					<ui:collapsingBorder id="fields" label="${propertiesLabel}" hideIfEmpty="false" open="true" cssClass="scrollable">
-						${propertiesPanel}
-					</ui:collapsingBorder>
+					</tr>
+					</table>
 				</c:if>
 
 			</div>
-
-
 
 			<c:if test="${showDescription}">
 				<h3 class="issue-description-title accordion-header"><span class="icon"></span><c:out value="${descriptionTitle}" /></h3>
@@ -314,12 +311,12 @@
 					<spring:message var="label" code="tracker.field.Description.label"/>
 
 					<ui:collapsingBorder label="${label}" hideIfEmpty="false" open="${param.descriptionOpen}" cssClass="scrollable" id="description">
-						<div data-planner-role="description"><c:out value="${itemDescription}" escapeXml="false"/></div>
+						<div class="fieldColumn fieldId_${DESCRIPTION_LABEL_ID}${isItemEditable ? ' inlineEditEnabled' : ''}" data-planner-role="description" data-item-id="${item.id}" data-item-name="${itemName}"><c:out value="${itemDescription}" escapeXml="false"/></div>
 					</ui:collapsingBorder>
 				</div>
 			</c:if>
 
-			<c:if test="${!hideRelations }">
+			<c:if test="${!hideRelations}">
 				<h3 class="issue-references-title accordion-header"><span class="icon"></span><c:out value="${referencesTitle}" /> (${referenceCount})</h3>
 				<div class="issue-references accordion-content" data-section-id="references">
 					<div data-planner-role="references">

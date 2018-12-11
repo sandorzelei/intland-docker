@@ -775,8 +775,10 @@ codebeamer.EditorToolbars = codebeamer.EditorToolbars || (function($) {
 			if ($popup) {
 				$popup.removeClass('fr-active');
 
-				var $btn = editor.$tb.find('.fr-command[data-cmd="' + $popup.data('command') + '"]');
-				$btn.removeClass('cb-button-active');
+				if (editor.$tb) {
+					var $btn = editor.$tb.find('.fr-command[data-cmd="' + $popup.data('command') + '"]');
+					$btn.removeClass('cb-button-active');
+				}
 			}
 		});
 		if (except && !editor.$oel.data('disableFormattingOptionsOpening')) {

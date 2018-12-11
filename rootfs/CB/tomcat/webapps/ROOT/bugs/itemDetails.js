@@ -31,3 +31,14 @@ function hideLongListOfElements() {
 		   );
 	});
 }
+
+$(function() {
+	var $editablePropertyTable = $('table.propertyTable.inlineEditEnabled');
+	if ($editablePropertyTable.length) {
+		codebeamer.DisplaytagTrackerItemsInlineEdit.init($editablePropertyTable, { itemDetailsMode: true });
+	}
+	var $descriptionField = $('#descriptionPart').find('.fieldColumn.inlineEditEnabled');
+	if ($descriptionField.length) {
+		codebeamer.DisplaytagTrackerItemsInlineEdit.initForField($descriptionField, true);
+	}
+});

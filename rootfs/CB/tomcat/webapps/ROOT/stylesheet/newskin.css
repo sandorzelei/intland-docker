@@ -2189,7 +2189,11 @@ with thin border around , which should be darker a bit
 		}
 	}
 
-	.displaytag.trackerItems {
+	.fieldColumn.inlineEditEnabled:not(.columnEditingInProgress):hover {
+		cursor: pointer;
+		outline: 1px solid #e2e2e2;
+	}
+	.displaytag.trackerItems, .propertyTable {
 		td, th {
 			padding-left: 10px;
 			padding-right: 5px;
@@ -2249,15 +2253,15 @@ with thin border around , which should be darker a bit
 			}
 		}
 
-		&.inlineEditEnabled {
-
+		&.inlineEditEnabled:not(.propertyTable) {
 		 	.fieldColumn .editor-wrapper {
 				.fr-element.fr-view {
 					min-height: 0 !important;
 					padding: 0 5px !important;
 				}
 			}
-
+		}
+		&.inlineEditEnabled {
 			.inlineEditor {
 				width: 100%;
 				display: inline-block;
@@ -3847,7 +3851,7 @@ with thin border around , which should be darker a bit
 			padding-bottom: 5px !important;
 		}
 
-		tr {
+		& > tbody > tr {
 			border-top: 1px solid @lightGray;
 		}
 
@@ -4245,7 +4249,7 @@ with thin border around , which should be darker a bit
 			padding-bottom: 5px !important;
 		}
 
-		tr {
+		& > tbody > tr {
 			border-top: 1px solid @lightGray;
 		}
 
