@@ -71,11 +71,11 @@ then
 fi
 
 # Set the locale/language used by JVM. Only use UTF-8 encodings!
-REQUIRED_LOCALE=`locale -a | grep -i 'en_US.utf.*8'`
-if test $REQUIRED_LOCALE"x" = "x" ; then
-	echo "CodeBeamer requires en_US.utf8 or en_US.UTF-8 locale, which is missing. Please configure your OS and add this locale (see locale-gen command)!"
-	exit 1;
-fi
+#REQUIRED_LOCALE=`locale -a | grep -i 'en_US.utf.*8'`
+#if test $REQUIRED_LOCALE"x" = "x" ; then
+#	echo "CodeBeamer requires en_US.utf8 or en_US.UTF-8 locale, which is missing. Please configure your OS and add this locale (see locale-gen command)!"
+#	exit 1;
+#fi
 
 LANG=$REQUIRED_LOCALE
 LC_CTYPE=$LANG
