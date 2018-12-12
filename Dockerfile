@@ -1,36 +1,39 @@
-FROM alpine:latest
+FROM amazonlinux:latest
 
-RUN apk add --no-cache \ 
-      imagemagick \
-      openjdk8-jre-base=8.181.13-r0 \
-      curl \
-      procps \
-      ca-certificates \
-      wget
+RUN yum -y update
+RUN yum -y install \
+	wget \
+	tar \
+	java-1.8.0-openjdk \
+	ImageMagick \ 
+	ImageMagick-devel \
+	fontconfig \
+	freetype \ 
+	freetype-devel \ 
+	fontconfig-devel \
+	libstdc++
 
-# Install language pack
-RUN apk --no-cache add ca-certificates wget && \
-    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-bin-2.28-r0.apk && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-i18n-2.28-r0.apk && \
-    apk add glibc-bin-2.28-r0.apk glibc-i18n-2.28-r0.apk glibc-2.28-r0.apk
-
-RUN /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
-
+# Install language pack -- Start
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
+# Install language pack -- End
 
-RUN wget -q https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 -P /tmp &&\
- bzip2 -d /tmp/phantomjs-2.1.1-linux-x86_64.tar.bz2 &&\
- tar -xf /tmp/phantomjs-2.1.1-linux-x86_64.tar -C /usr/local &&\
- rm /tmp/phantomjs-2.1.1-linux-x86_64.tar &&\
- ln -s /usr/local/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
-
-
+# Setup codeBeamer - Start 
 COPY rootfs /
 RUN chmod -R g+rwX /CB
 RUN mv /configuration.template /CB/config/
+RUN chmod +x /CB/bin/cb
+RUN chmod +x /CB/bin/startup
+RUN chmod +x /CB/bin/stop
+RUN chmod +x /CB/bin/status 
+# Setup codeBeamer - End 
+
+# Install phantomjs - Start
+ADD rootfs/phantomjs-2.1.1.tar.gz /opt/phantomjs/
+RUN ln -s /opt/phantomjs/bin/phantomjs /usr/bin/phantomjs
+RUN phantomjs /opt/phantomjs/examples/hello.js
+# Install phantomjs - End  
+
 RUN chmod +x endpoint.sh
 RUN chmod +x run.sh
 
